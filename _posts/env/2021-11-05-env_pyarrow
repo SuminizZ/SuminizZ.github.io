@@ -1,0 +1,32 @@
+---
+title : "[Pyarrow] - Pyarrow 설치 관련 troubleshooting"
+categories : 
+    - Environmㄹent/ Setup
+tag : [Environment Setup, Pyarrow, 환경변수]
+toc : true
+---
+
+- pycharm 가상환경 설정
+- pyarrow 다운로드 과정에서 python32bit 사용 문제
+- conda 의 python 이 64bit 여서 base interpreter 를 conda 로 변경 > 해결
+
+- 다시 jupyter notebook 을 실행시켜 koalas 를 import 하는 과정에서 갑자기 pyarrow importing error 가 뜸
+- 해결 jupyter 상에서 uninstall -> install
+
+Re-installing pyarrow is what works for me:
+
+$ pip uninstall pyarrow -y
+
+$ pip install pyarrow
+
+- 하지만, 바로 직후에 이제는 no module named version in pyarrow 라는 에러가 또 뜨기 시작했다.
+- 구글링 결과, 이게 내가 conda 에서 install 하고, jupter 에서는 default 인 pip uninstall -> install 을 실시했기 때문이라는 글을 보았다.
+- 다시 conda 로 가서 uninstall -> install 과정을 겪고 있다
+- 이후에 어떻게 될지 모르겠으나 .... keep going
+
+
+- 결국엔 아예 conda base environment 자체가 사라졌다.....^^^^^^^^^^^^^ 
+- 소탐대실..........................
+- conda 를 삭제 후 재설치하는 과정에 봉착했다..... 제발 살려주세요
+
+[pyarrow dll error]<img src="https://user-images.githubusercontent.com/92680829/140454606-d017e66b-a48e-4b28-9d06-208967f0d2ae.png">

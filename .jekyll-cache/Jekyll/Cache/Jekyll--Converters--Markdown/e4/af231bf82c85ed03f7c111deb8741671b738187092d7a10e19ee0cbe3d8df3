@@ -1,0 +1,63 @@
+I"<p><br /></p>
+
+<h2 id="masthead">Masthead</h2>
+<p><br /></p>
+
+<ul>
+  <li>가장 상단의 로고와 카테고리 navigation 이 있는 공간이다.
+<br /></li>
+</ul>
+
+<h3 id="--logo"><strong>- Logo</strong></h3>
+<p><br /></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">_config.yml</code> 의 <strong># Site Settings</strong> 항목에 <strong>logo</strong> 에서 변경할 수 있다</li>
+  <li><code class="language-plaintext highlighter-rouge">assets/images/</code> 에 원하는 로고 파일을 저장한 뒤, 아래와 같이 해당 이미지의 경로을 logo 값에 넣어준다. <br />
+<br />
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>logo : "/assets/images/&lt;name&gt;.png"
+</code></pre></div>    </div>
+    <h3 id="--masthead-전반적인-디테일-수정"><strong>- Masthead 전반적인 디테일 수정</strong></h3>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">_sass\minimal-mistakes\_masthead.scss</code> 에서 14번째 줄 근처 <strong>&amp;__inner-wrap</strong> 내부의 값을 조절해주면 된다.</li>
+  <li>아래처럼 <strong>font-size, font-weight</strong> 값을 조절해 masthead 공간에 포함된 text 의 폰트 사이즈, 굵기를 지정해줄 수 있다.</li>
+  <li>padding 값을 조절해 전체적인 크기를 수정할 수도 있다.<br />
+<br />
+    <div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&amp;</span><span class="nt">__inner-wrap</span> <span class="p">{</span>
+  <span class="err">@include</span> <span class="err">clearfix;</span>
+  <span class="nl">margin-left</span><span class="p">:</span> <span class="nb">auto</span><span class="p">;</span>
+  <span class="nl">margin-right</span><span class="p">:</span> <span class="nb">auto</span><span class="p">;</span>
+  <span class="nl">padding</span><span class="p">:</span> <span class="m">0.5em</span><span class="p">;</span>
+  <span class="nl">max-width</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+  <span class="nl">display</span><span class="p">:</span> <span class="n">-webkit-box</span><span class="p">;</span>
+  <span class="nl">display</span><span class="p">:</span> <span class="n">-ms-flexbox</span><span class="p">;</span>
+  <span class="nl">display</span><span class="p">:</span> <span class="n">flex</span><span class="p">;</span>
+  <span class="nl">-webkit-box-pack</span><span class="p">:</span> <span class="nb">justify</span><span class="p">;</span>
+  <span class="nl">-ms-flex-pack</span><span class="p">:</span> <span class="nb">justify</span><span class="p">;</span>
+  <span class="nl">justify-content</span><span class="p">:</span> <span class="n">space-between</span><span class="p">;</span>
+  <span class="nl">font-family</span><span class="p">:</span> <span class="err">$</span><span class="n">sans-serif-narrow</span><span class="p">;</span>
+    
+  <span class="nl">font-size</span><span class="p">:</span> <span class="err">$</span><span class="n">type-size-4</span><span class="p">;</span>
+  <span class="nl">font-weight</span><span class="p">:</span> <span class="nb">bold</span><span class="p">;</span>
+</code></pre></div>    </div>
+    <p><br /></p>
+  </li>
+</ul>
+
+<h2 id="header">Header</h2>
+<p><br /></p>
+
+<h3 id="--header-에-이미지-삽입하기"><strong>- Header 에 이미지 삽입하기</strong></h3>
+<p><br /></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">./index.html</code> 에 아래 코드를 삽입한다.<br />
+<br />
+    <div class="language-md highlighter-rouge"><div class="highlight"><pre class="highlight"><code>header:
+overlay_image: assets<span class="se">\i</span>mages<span class="se">\g</span>alaxy2.jpg
+overlay_filter: 0.5
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+:ET

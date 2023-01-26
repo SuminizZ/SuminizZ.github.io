@@ -1,0 +1,333 @@
+I"�=<p><br /></p>
+
+<h1 id="deep-neural-networks-dnn"><strong>Deep Neural Networks (DNN)</strong></h1>
+<p><br /></p>
+
+<h2 id="what-is-neural-network-"><strong>What is Neural Network ?</strong></h2>
+<ul>
+  <li>every node recieves inputs and process them by it’s own activation function and sends outputs to each node of next layer</li>
+  <li>every layer has several nodes</li>
+  <li>forward &amp; backward propagation occurs for every optimization iteration</li>
+  <li>
+    <p><img src="https://user-images.githubusercontent.com/92680829/161899346-952dd9f6-5d3e-4428-98fe-21ad46997ebe.png" width="600" />
+<br /></p>
+  </li>
+  <li><img src="https://user-images.githubusercontent.com/92680829/161900602-c3199440-efd8-45bf-bd4b-8f22762c7787.png" width="550" /></li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="dnn-notations"><strong>DNN notations</strong></h2>
+<ul>
+  <li>Input layer is called layer ‘0’</li>
+  <li>L : Number of total layer</li>
+  <li>n[i]n[i] : Number of units (nodes) of layer i</li>
+  <li>a[i] : Activations (Outputs) of layer i -&gt; a[i] = g[i] ( z[i] )</li>
+  <li>w[i]  : Weights for z[i]</li>
+  <li>b[i] : Bias parameter for z[i]</li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="forward-propagation-fp"><strong>Forward Propagation (FP)</strong></h2>
+<ul>
+  <li>Generalization : suppose we have only 1 node for each layer
+    <ul>
+      <li>propagating from [l-1] layer to [l] layer</li>
+      <li>each propagation incorporates 2 steps of calculation
+        <ul>
+          <li>computes Z[l]</li>
+          <li>computes a[l] = g(Z[l]), which is the final output of layer l</li>
+        </ul>
+      </li>
+      <li><img src="https://user-images.githubusercontent.com/92680829/161901638-5f8e6f54-2fe1-4ba9-990d-dec0190e378a.png" width="200" /></li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="vectorized-implementation-of-propagation-through-dnn-with-multiple-nodes"><strong>Vectorized Implementation of Propagation through DNN with Multiple Nodes</strong></h3>
+<ul>
+  <li>now we have multiple nodes in each layer</li>
+  <li>but it’s too inefficient to compute all nodes by using for-loops</li>
+  <li>Instead, we can <strong>adapt vectorization by stacking all nodes of each layer into one Matrix</strong></li>
+  <li>Example :
+    <ul>
+      <li><img src="https://user-images.githubusercontent.com/92680829/161908504-4901aeca-1c03-441e-870e-76f8b02e271e.png" width="600" /></li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="1-vectorization-of-single-example-x-and-multiple-nodes-p"><strong>1. Vectorization of single example (x) and multiple nodes (p)</strong></h3>
+<ul>
+  <li>zi[1] (1x1) = wi[1]T (1x1) * x (nx1) + bi[1] (1x1)</li>
+  <li>a(zi[1]) : (1x1) matrix</li>
+  <li>now stack up all nodes (p) in one Matrix vertically
+    <ul>
+      <li>W[1] = (px1xn) matrix of all wi[1]T in layer 1</li>
+      <li>Z[1] = (p x 1) matrix</li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="2-vectorization-across-multiple-examples-m"><strong>2. Vectorization across multiple examples (m)</strong></h3>
+<ul>
+  <li>1) Using For-Loop : suppose we have 2 layers
+    <ul>
+      <li><img src="https://user-images.githubusercontent.com/92680829/163290862-d12e1744-e4f9-4fbf-b61b-8eb6109588e1.png" width="300" /></li>
+    </ul>
+  </li>
+  <li>2) Using Vectorization :
+    <ul>
+      <li><img src="https://user-images.githubusercontent.com/92680829/163295299-f6117a86-26f7-4ade-8378-018af0690738.png" width="250" /></li>
+    </ul>
+  </li>
+  <li><strong>Justification for Vectorized Implemenation</strong>
+    <ul>
+      <li>for simplification, assume that all b(i) equals to 0</li>
+      <li><img src="https://user-images.githubusercontent.com/92680829/163297574-494cc42a-4a86-4184-9b40-5570db865376.png" width="600" /></li>
+    </ul>
+  </li>
+  <li>To wrap up, we can implement vectorization for propagation of multiple examples and nodes without using explicit For-Loop
+    <ul>
+      <li>X here can be alternatively expressed as A[0] (outputs of layer 0, which is input layer)
+  -<strong>Note that we can’t eliminate for-loop for layers</strong></li>
+      <li><img src="https://user-images.githubusercontent.com/92680829/163295410-609f3436-1722-4ed6-b87b-1eb0263a7c03.png" width="250" /></li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="activation-functions"><strong>Activation Functions</strong></h2>
+<ul>
+  <li><img src="https://user-images.githubusercontent.com/92680829/163312344-00269c10-ea1d-486e-b81a-f1e5c99ffd38.png" width="550" /></li>
+  <li>One of the most important thing to consider to improve algorithm is to choose activation function for hidden units as well as the output layer</li>
+  <li>Previously we’ve structured DNN algorithms by adapting sigmoid function of logistic regression</li>
+  <li>
+    <p>Now, we’ll gonna see other various options as activation functions</p>
+  </li>
+  <li>Here are the nonlinear functions that is not sigmoid function (σ(z))
+    <ol>
+      <li><strong>Tangent function</strong> : tan(z)</li>
+      <li><strong>Hyperbolic tangent function</strong> : tanh(z)
+        <ul>
+          <li>σ(z) : 1/1+e-z</li>
+          <li>tanh(z) : ez - e-z / ez + e-z</li>
+          <li><img src="https://user-images.githubusercontent.com/92680829/163311098-b3e318ab-85b3-481a-b159-ba6659c1a163.png" width="400" /></li>
+        </ul>
+      </li>
+    </ol>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="tanhz-vs-σz-vs-relu"><strong>Tanh(z) vs σ(z) vs Relu</strong></h3>
+<ul>
+  <li>For almost all cases, <strong>tanh(z)</strong> always works better than <strong>σ(z)</strong> as an activation function, as it can center the data to have zero mean (<strong>zero centered activation function</strong>), not 0.5 mean, which makes next step of learning a lot more easier</li>
+  <li>One exception is with the output layer, which has the value either 0 or 1 (not -1 ~ 1)</li>
+  <li><strong>Vanishing Gradient Problem (VGP)</strong>
+    <ul>
+      <li>BUT, both activation functions have certain problem called VGP</li>
+      <li>The VGP occurs when the elements of the gradient (the partial derivatives with respect to the parameters of the NN) become exponentially small so that the update of the parameters with the gradient becomes almost insignificant</li>
+      <li>This will severly slow down the speed of learning of neural network</li>
+      <li>To address this issue, one other option that is very popular in machine learning is <strong>“Rectified Linear Unit”</strong> called <strong>“Relu”</strong></li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="relu--max0-z"><strong>Relu : max(0, z)</strong></h3>
+<ul>
+  <li>
+    <p><img src="https://user-images.githubusercontent.com/92680829/163315014-9d77f242-0c65-439c-aef9-047e789c5bf7.png" width="600" /></p>
+  </li>
+  <li>Advantages of relu
+    <ul>
+      <li>Here, all the negative values are converted into 0 so there are no negative values available.</li>
+      <li>Maximum Threshold values are Infinity, so there is no issue of Vanishing Gradient problem (vgp) so the output prediction accuracy and learning efficiency are improved.</li>
+      <li>Speed is faster compared to other activation functions</li>
+    </ul>
+  </li>
+  <li>Advanced version of Relu : <strong>Leaky Relu - max(0.01z, z)</strong>
+    <ul>
+      <li>Theere is one weakness of original Relu</li>
+      <li>for negative z, relu function only have zero value (no slope at all), so there is no learning power for the z with negative value</li>
+      <li>To resolve this, here is the Leaky Relu that has small slope (ai) for negtiave z</li>
+      <li>slope coefficient is determined before training, not learnt during training
+        <ul>
+          <li><img src="https://user-images.githubusercontent.com/92680829/163317464-b1795cb6-4b77-4556-b4c1-af8d9752aa12.png" width="600" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>BUT <strong>in practice</strong>, enough of the hidden untis will have z greater than 0, so <strong>original relu works just fine</strong></li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="rules-of-thumb-for-choosing-activation-functions">Rules of thumb for choosing activation functions</h3>
+<ul>
+  <li>Unless your output is either 0 or 1 for binary classification, tanh always works better than sigmoid function</li>
+  <li>But both of them has VGP that can disturb proper learning</li>
+  <li>For now, Relu is increasingly the default choice of activation function</li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="why-do-we-need-non-linear-activation-function"><strong>Why do we need Non-Linear Activation function?</strong></h3>
+
+<ul>
+  <li>the composition of multiple linear functions is no more than another linear function</li>
+  <li>You won’t be able to compute any interesting functions (always linear functions with different W and b) no matter how you go deeper into neural networks</li>
+  <li>So, it’s pointless to combine and stack multiple hidden units</li>
+  <li>
+    <p><img src="https://user-images.githubusercontent.com/92680829/163321384-9987a36b-1cee-45bf-80fb-f93e44ea8f78.png" width="300" /></p>
+  </li>
+  <li>There is only one case where you can actually implement linear activation function</li>
+  <li><strong>Output layer of linear regression problem</strong> where y has real value</li>
+  <li>Even with linear regression problem such as housing price prediction, you can use other activation functions as well except linear fucntion
+    <ul>
+      <li>for the <strong>hidden units</strong>, you should alternatively use Relu or tanh function instead of linear function (works much faster and better)</li>
+      <li>for the <strong>output layer</strong>, you can actually use linear functions to drive actual price value</li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="derivatives-of-activation-functions"><strong>Derivatives of Activation Functions</strong></h2>
+
+<p><br /></p>
+
+<h3 id="1-sigmoid-activation-function">1. Sigmoid Activation Function</h3>
+<ul>
+  <li>σ(z)(1-σ(z))</li>
+  <li>you can derive this with simple calculus</li>
+  <li>
+    <p><img src="https://user-images.githubusercontent.com/92680829/163323042-3ad50a63-83e8-4a30-b858-e621ffb9204b.png" width="500" /></p>
+  </li>
+  <li>as z value go far from the center(0) either in a minus direction or plus direction</li>
+  <li>derivative become closer to 0, which leads to vgp</li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="2-tanh-activation-function"><strong>2. Tanh Activation Function</strong></h3>
+<ul>
+  <li>1 - tanh(z)^2</li>
+  <li>As z value goes away far from 0, slope become flat, so derivative becomes 0, (you can see same result with the derivative formula of tanh above)</li>
+  <li>at z value 0, derivative of tanh equals to 1</li>
+  <li>
+    <p><img src="https://user-images.githubusercontent.com/92680829/163324835-433d4d75-7074-4362-8f56-8fa3cdfb70b8.png" width="450" /></p>
+  </li>
+  <li><strong>Derivation</strong>
+    <ul>
+      <li><img src="https://user-images.githubusercontent.com/92680829/163324633-481073fd-d4a7-4758-ac9c-359d85e63fc6.png" width="500" /></li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="3-relu-and-leacky-relu-activation-function"><strong>3. Relu and Leacky Relu Activation Function</strong></h3>
+<ul>
+  <li>derivative of relu and leacky relu is very simple</li>
+  <li>for Relu (when z=0, slope not defined)
+    <ul>
+      <li>if z &lt; 0 : 0</li>
+      <li>if z &gt; 0 : 1</li>
+    </ul>
+  </li>
+  <li>for Leacky Relu
+    <ul>
+      <li>if z &lt; 0 : k (k is slope coefficient, in the example below, k = 0,1)</li>
+      <li>if z &gt; 0 : 1</li>
+    </ul>
+  </li>
+  <li><img src="https://user-images.githubusercontent.com/92680829/163326746-dc3848e0-cac5-47a6-a385-047dfb40b2b7.png" width="600" /></li>
+</ul>
+
+<h3 id="derivative-of-multiple-activation-functions"><strong>Derivative of Multiple Activation Functions</strong></h3>
+<ul>
+  <li>here are the graphs and derivatives of various types of activation function</li>
+  <li><img src="https://user-images.githubusercontent.com/92680829/167841964-d9483851-6903-45a3-8d4f-c96b399ceb0e.png" width="600" /></li>
+</ul>
+
+<h2 id="gradient-for-neural-network--back-propagation-bp"><strong>Gradient for Neural Network : Back-Propagation (BP)</strong></h2>
+<ul>
+  <li>to compute gradient descent and improve the parameters in NN, we have to use back-propagation</li>
+  <li>It’s just a mathmatical process to compute partial derivative of Error by desried parameter by adapting <strong>Chain Rule</strong></li>
+  <li>
+    <p><img src="https://user-images.githubusercontent.com/92680829/163329926-707ee89a-d145-4418-87cf-e58adc573a26.png" width="700" /></p>
+  </li>
+  <li>Let’s define activation function as sigmoid
+    <ul>
+      <li><img src="https://user-images.githubusercontent.com/92680829/164571040-92a6becb-d45d-4b4d-857f-ae9a1f591d4f.png" width="400" /></li>
+    </ul>
+  </li>
+  <li>Then, if you want to compute <strong>partial derivative of L</strong> by <strong>w</strong>, then you firstly have to compute it by <strong>a</strong>, then by <strong>z</strong>, and then finally by <strong>w</strong>,</li>
+  <li>Same applies to parameter <strong>b</strong>
+    <ul>
+      <li><img src="https://user-images.githubusercontent.com/92680829/164571295-d51918ba-9d2f-4c60-add4-c6282b47bd85.png" width="350" /></li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="calculations-in-detail">–Calculations in detail–</h3>
+<ul>
+  <li><em>*dE/da = d(1/2</em>(Y-a)^2)/da = (Y-a)(-1) = a-Y</li>
+  <li><img src="https://user-images.githubusercontent.com/92680829/164571737-ce2cb9c1-4a41-4294-b8f9-f1ce06772c4f.png" width="600" /></li>
+</ul>
+
+<h3 id="vectorized-implementation-of-back-propagation"><strong>Vectorized Implementation of Back-Propagation</strong></h3>
+<p><img src="https://user-images.githubusercontent.com/92680829/164575293-686d6309-1e5c-4ea9-a75e-3e1256a79447.png" width="500" /></p>
+
+<h2 id="random-initialization"><strong>Random Initialization</strong></h2>
+<ul>
+  <li>For NN, it’s important to set initial weights randomly unlike logistic regression where we can set all the first weight values by 0</li>
+  <li>if weights are equivalent each other for the first layer, all subsequent layers will end up receiving same values from previous layer, then all of your hidden units are symmetric.</li>
+  <li>In this case, stacking up multiple hidden units for DNN becomes pointless as all of them will function exactly the same</li>
+  <li>Otherwise, b is okay to be all same as 0 as it doesn’t cause any symmetry issue</li>
+</ul>
+
+<h3 id="randomizing-parameters-with-python"><strong>Randomizing Parameters with Python</strong></h3>
+<ul>
+  <li>W[1] = np.random((n1, m)) * α  where n stands for the number of nodes at L1 and m is the number of training examples x</li>
+  <li>b[1] = np.zeros((n1, 1))</li>
+  <li>W[2] = np.random((n2, n1 (with k features)))</li>
+  <li>b[2] = np.zeros((n2, 1))</li>
+  <li>make sure <strong>α has small values</strong> such as 0.01
+    <ul>
+      <li>you can guess why by considering the feature of tanh or other sigmoid graph</li>
+      <li>for those activation functions, as the absolute value of x becomes large, the slope gets closer to 0, which can cause VGP</li>
+      <li>Thus if weights are too large, the output value of each node will become large as well
+        <ul>
+          <li>ai[j] =σ(w[j]a[j-1] + b[j])</li>
+          <li>as inputs to tanh are large, causing gradients to be close to zero.</li>
+          <li>The optimization process will thus become slow</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><strong>Exercise)</strong>
+    <ul>
+      <li>the number of x is 4, and there are 3 nodes in first hidden layer</li>
+      <li>what will be the vector shape of W[1], b[1], Z[1], A[1], respectively?
+        <ul>
+          <li>W[1] : (3,4)</li>
+          <li>b[1] : (3, 1)</li>
+          <li>Z[1], A[1] : (3,1)</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+:ET

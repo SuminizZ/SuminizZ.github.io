@@ -1,0 +1,42 @@
+I":<h2 id="favicon-등록하기">Favicon 등록하기</h2>
+
+<ul>
+  <li>원하는 사진 파일을 준비한다.</li>
+  <li><a href="https://realfavicongenerator.net/">realfavicongenerator</a> 에 들어가 <strong>select your favicon image</strong> 버튼을 누른 후 해당 사진을 업로드한다.</li>
+  <li>페이지 최하단의 <strong>Generate your Favicons and HTML code</strong> 버튼을 누른다.</li>
+  <li><strong>Favicon Package</strong> 를 다운로드 후 압축해제하고 전체 파일을 github blog 의 최상위 루트폴더에 저장한다. (다른 경로에 넣으면 안 됨)</li>
+  <li>
+    <p>HTML 코드를 복사해서 <code class="language-plaintext highlighter-rouge">_includes/head/custom.html</code> 에 복붙해준다. (단, 이때 href 위치는 favicon package folder 의 relative path 로 변경해줘야 한다.)
+<br /></p>
+
+    <div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      <span class="o">&lt;</span><span class="nt">link</span> <span class="nt">rel</span><span class="o">=</span><span class="s1">"apple-touch-icon"</span> <span class="nt">sizes</span><span class="o">=</span><span class="s1">"180x180"</span> <span class="nt">href</span><span class="o">=</span><span class="s1">"apple-touch-icon.png"</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nt">link</span> <span class="nt">rel</span><span class="o">=</span><span class="s1">"icon"</span> <span class="nt">type</span><span class="o">=</span><span class="s1">"image/png"</span> <span class="nt">sizes</span><span class="o">=</span><span class="s1">"32x32"</span> <span class="nt">href</span><span class="o">=</span><span class="s1">"favicon-32x32.png"</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nt">link</span> <span class="nt">rel</span><span class="o">=</span><span class="s1">"icon"</span> <span class="nt">type</span><span class="o">=</span><span class="s1">"image/png"</span> <span class="nt">sizes</span><span class="o">=</span><span class="s1">"16x16"</span> <span class="nt">href</span><span class="o">=</span><span class="s1">"favicon-16x16.png"</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nt">link</span> <span class="nt">rel</span><span class="o">=</span><span class="s1">"manifest"</span> <span class="nt">href</span><span class="o">=</span><span class="s1">"site.webmanifest"</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nt">link</span> <span class="nt">rel</span><span class="o">=</span><span class="s1">"mask-icon"</span> <span class="nt">href</span><span class="o">=</span><span class="s1">"safari-pinned-tab.svg"</span> <span class="nt">color</span><span class="o">=</span><span class="s1">"#5bbad5"</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nt">meta</span> <span class="nt">name</span><span class="o">=</span><span class="s1">"msapplication-TileColor"</span> <span class="nt">content</span><span class="o">=</span><span class="s1">"#da532c"</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="nt">meta</span> <span class="nt">name</span><span class="o">=</span><span class="s1">"theme-color"</span> <span class="nt">content</span><span class="o">=</span><span class="s1">"#ffffff"</span><span class="o">&gt;</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h2 id="scroll-bar-커스텀">Scroll Bar 커스텀</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">_layouts/default.html</code> 에 아래 코드를 복붙한다.
+<br />
+    <div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      <span class="o">&lt;</span><span class="nt">style</span><span class="o">&gt;</span> 
+          <span class="nd">::-webkit-scrollbar</span><span class="p">{</span><span class="nl">width</span><span class="p">:</span> <span class="m">13px</span><span class="p">;}</span>
+          <span class="nd">::-webkit-scrollbar-track</span> <span class="p">{</span><span class="nl">background-color</span><span class="p">:</span><span class="m">#4b4f52</span><span class="p">;</span> <span class="nl">border-radius</span><span class="p">:</span> <span class="m">16px</span><span class="p">;}</span>
+          <span class="nd">::-webkit-scrollbar-thumb</span> <span class="p">{</span><span class="nl">background-color</span><span class="p">:</span><span class="m">#5e6265</span><span class="p">;</span> <span class="nl">border-radius</span><span class="p">:</span> <span class="m">16px</span><span class="p">;}</span>
+          <span class="nd">::-webkit-scrollbar-thumb:hover</span> <span class="p">{</span><span class="nl">background</span><span class="p">:</span> <span class="m">#ffd24c</span><span class="p">;}</span>
+          <span class="nd">::-webkit-scrollbar-button:start:decrement</span><span class="o">,</span><span class="nd">::-webkit-scrollbar-button:end:increment</span> 
+          <span class="p">{</span>
+              <span class="nl">width</span><span class="p">:</span><span class="m">10px</span><span class="p">;</span><span class="nl">height</span><span class="p">:</span><span class="m">12px</span><span class="p">;</span><span class="nl">background</span><span class="p">:</span><span class="nb">transparent</span><span class="p">;}</span>
+          <span class="err">}</span> 
+      <span class="o">&lt;/</span><span class="nt">style</span><span class="o">&gt;</span>
+</code></pre></div>    </div>
+  </li>
+  <li>width, height, background (scroll bar 색), border-radius (bar 모서리 둥근 정도) 등을 조절하면 된다</li>
+</ul>
+:ET

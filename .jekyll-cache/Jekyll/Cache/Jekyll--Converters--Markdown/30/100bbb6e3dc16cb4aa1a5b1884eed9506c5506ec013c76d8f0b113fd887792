@@ -1,0 +1,207 @@
+I"�t<h2 id="sunspot-dataset">Sunspot Dataset</h2>
+<ul>
+  <li>Lambda used / Normalized ver.</li>
+  <li>optimizer : SGD(learning_rate=1e-5, momentum=0.9)</li>
+  <li>loss : Huber</li>
+  <li>window 함수 확인 (w[:-1], w[1:] )</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="n">tf</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">urllib</span>
+
+<span class="kn">from</span> <span class="nn">tensorflow.keras.layers</span> <span class="kn">import</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">LSTM</span><span class="p">,</span> <span class="n">Lambda</span><span class="p">,</span> <span class="n">Conv1D</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.callbacks</span> <span class="kn">import</span> <span class="n">ModelCheckpoint</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.optimizers</span> <span class="kn">import</span> <span class="n">SGD</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.losses</span> <span class="kn">import</span> <span class="n">Huber</span>
+
+<span class="k">def</span> <span class="nf">normalization</span><span class="p">(</span><span class="n">series</span><span class="p">):</span>
+    <span class="nb">min</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nb">min</span><span class="p">(</span><span class="n">series</span><span class="p">)</span>      <span class="c1"># 1. Normalization 
+</span>    <span class="nb">max</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nb">max</span><span class="p">(</span><span class="n">series</span><span class="p">)</span>
+    <span class="n">series</span> <span class="o">-=</span> <span class="nb">min</span>
+    <span class="n">series</span> <span class="o">/=</span> <span class="nb">max</span>
+    <span class="k">return</span> <span class="n">series</span>
+
+<span class="k">def</span> <span class="nf">windowed_dataset</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="n">window_size</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle_buffer</span><span class="p">):</span>
+    <span class="n">series</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">Dataset</span><span class="p">.</span><span class="n">from_tensor_slices</span><span class="p">(</span><span class="n">series</span><span class="p">)</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="p">.</span><span class="n">window</span><span class="p">(</span><span class="n">window_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">shift</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">drop_remainder</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="p">.</span><span class="n">flat_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">w</span> <span class="p">:</span> <span class="n">w</span><span class="p">.</span><span class="n">batch</span><span class="p">(</span><span class="n">window_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="p">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">shuffle_buffer</span><span class="p">)</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">w</span><span class="p">:</span> <span class="p">(</span><span class="n">w</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
+    <span class="k">return</span> <span class="n">ds</span><span class="p">.</span><span class="n">batch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">).</span><span class="n">prefetch</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">solution_model</span><span class="p">():</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s">'https://storage.googleapis.com/download.tensorflow.org/data/Sunspots.csv'</span>
+    <span class="n">urllib</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="s">'sunspots.csv'</span><span class="p">)</span>
+
+    <span class="n">time_step</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">sunspots</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'sunspots.csv'</span><span class="p">)</span> <span class="k">as</span> <span class="n">csvfile</span><span class="p">:</span>
+        <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="p">.</span><span class="n">reader</span><span class="p">(</span><span class="n">csvfile</span><span class="p">,</span> <span class="n">delimiter</span> <span class="o">=</span> <span class="s">','</span><span class="p">)</span>
+        <span class="nb">next</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+            <span class="n">sunspots</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+            <span class="n">time_step</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+    <span class="n">series</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">sunspots</span><span class="p">)</span>
+    <span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">time_step</span><span class="p">)</span>
+
+    <span class="n">series</span> <span class="o">=</span> <span class="n">normalization</span><span class="p">(</span><span class="n">series</span><span class="p">)</span>          <span class="c1"># normalized
+</span>
+    <span class="n">split_time</span> <span class="o">=</span> <span class="mi">3000</span>
+
+    <span class="n">time_train</span> <span class="o">=</span> <span class="n">time</span><span class="p">[:</span><span class="n">split_time</span><span class="p">]</span>
+    <span class="n">time_valid</span> <span class="o">=</span> <span class="n">time</span><span class="p">[</span><span class="n">split_time</span><span class="p">:]</span>
+
+    <span class="n">x_train</span> <span class="o">=</span> <span class="n">series</span><span class="p">[:</span><span class="n">split_time</span><span class="p">]</span>
+    <span class="n">x_valid</span> <span class="o">=</span> <span class="n">series</span><span class="p">[</span><span class="n">split_time</span><span class="p">:]</span>
+
+    <span class="n">window_size</span> <span class="o">=</span> <span class="mi">30</span>
+    <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">32</span>
+    <span class="n">shuffle_size</span> <span class="o">=</span> <span class="mi">1000</span>
+
+    <span class="n">train_set</span> <span class="o">=</span> <span class="n">windowed_dataset</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span>
+                                 <span class="n">window_size</span> <span class="o">=</span> <span class="n">window_size</span><span class="p">,</span>
+                                 <span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span><span class="p">,</span>
+                                 <span class="n">shuffle_buffer</span> <span class="o">=</span> <span class="n">shuffle_size</span><span class="p">)</span>
+    
+    <span class="n">validation_set</span> <span class="o">=</span> <span class="n">windowed_dataset</span><span class="p">(</span><span class="n">x_valid</span><span class="p">,</span>
+                                      <span class="n">window_size</span> <span class="o">=</span> <span class="n">window_size</span><span class="p">,</span>
+                                      <span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span><span class="p">,</span>
+                                      <span class="n">shuffle_buffer</span> <span class="o">=</span> <span class="n">shuffle_size</span><span class="p">)</span>
+    
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">([</span>
+                        <span class="n">Conv1D</span><span class="p">(</span><span class="mi">70</span><span class="p">,</span> <span class="n">kernel_size</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+                                <span class="n">padding</span> <span class="o">=</span> <span class="s">'causal'</span><span class="p">,</span>
+                                <span class="n">activation</span> <span class="o">=</span> <span class="s">'relu'</span><span class="p">,</span>
+                                <span class="n">input_shape</span> <span class="o">=</span> <span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span>
+                        <span class="n">LSTM</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">return_sequences</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                        <span class="n">LSTM</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">return_sequences</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+                        <span class="n">Dense</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">),</span>
+                        <span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">),</span>
+                        <span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+                        <span class="n">Lambda</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="mi">400</span><span class="p">)</span>         <span class="c1"># 2. Lambda used
+</span>    <span class="p">])</span> 
+
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">SGD</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">Huber</span><span class="p">()</span>
+
+    <span class="n">model</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">loss</span> <span class="o">=</span> <span class="n">loss</span><span class="p">,</span> <span class="n">metrics</span> <span class="o">=</span> <span class="p">[</span><span class="s">'mae'</span><span class="p">])</span>
+
+    <span class="n">checkpoint_path</span> <span class="o">=</span> <span class="s">'my_checkpoint.ckpt'</span>
+    <span class="n">checkpoint</span> <span class="o">=</span> <span class="n">ModelCheckpoint</span><span class="p">(</span><span class="n">checkpoint_path</span><span class="p">,</span>
+                                 <span class="n">save_weights_only</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+                                 <span class="n">save_best_only</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+                                 <span class="n">monitor</span> <span class="o">=</span> <span class="s">'val_mae'</span><span class="p">,</span>
+                                 <span class="n">verbose</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+    
+    <span class="n">model</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_set</span><span class="p">,</span>
+              <span class="n">validation_data</span> <span class="o">=</span> <span class="p">(</span><span class="n">validation_set</span><span class="p">),</span>
+              <span class="n">epochs</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+              <span class="n">callbacks</span> <span class="o">=</span> <span class="p">[</span><span class="n">checkpoint</span><span class="p">])</span>
+    
+    <span class="n">model</span><span class="p">.</span><span class="n">load_weights</span><span class="p">(</span><span class="n">checkpoint_path</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">model</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">solution_model</span><span class="p">()</span>
+    <span class="n">model</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="s">"model.h5"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="disel-dataset">Disel Dataset</h2>
+<ul>
+  <li>Layers : Conv1D, Bidirectional, LSTM</li>
+  <li>optimizer : Adam</li>
+  <li>loss : mae</li>
+  <li>window 함수 확인 (w[:n_past], w[n_past:])</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">urllib</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="n">tf</span>
+
+<span class="kn">from</span> <span class="nn">tensorflow.keras.layers</span> <span class="kn">import</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Conv1D</span><span class="p">,</span> <span class="n">LSTM</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.callbacks</span> <span class="kn">import</span> <span class="n">ModelCheckpoint</span>
+
+<span class="k">def</span> <span class="nf">normalize_series</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">min</span><span class="p">,</span> <span class="nb">max</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span> <span class="o">-</span> <span class="nb">min</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span> <span class="o">/</span> <span class="nb">max</span>
+    <span class="k">return</span> <span class="n">data</span>
+
+<span class="k">def</span> <span class="nf">windowed_dataset</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">n_past</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">n_future</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">shift</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">Dataset</span><span class="p">.</span><span class="n">from_tensor_slices</span><span class="p">(</span><span class="n">series</span><span class="p">)</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="p">.</span><span class="n">window</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">n_past</span> <span class="o">+</span> <span class="n">n_future</span><span class="p">,</span> <span class="n">shift</span><span class="o">=</span><span class="n">shift</span><span class="p">,</span> <span class="n">drop_remainder</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="p">.</span><span class="n">flat_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">w</span><span class="p">:</span> <span class="n">w</span><span class="p">.</span><span class="n">batch</span><span class="p">(</span><span class="n">n_past</span> <span class="o">+</span> <span class="n">n_future</span><span class="p">))</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">w</span><span class="p">:</span> <span class="p">(</span><span class="n">w</span><span class="p">[:</span><span class="n">n_past</span><span class="p">],</span> <span class="n">w</span><span class="p">[</span><span class="n">n_past</span><span class="p">:]))</span>
+    <span class="k">return</span> <span class="n">ds</span><span class="p">.</span><span class="n">batch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">).</span><span class="n">prefetch</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">solution_model</span><span class="p">():</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'Weekly_U.S.Diesel_Retail_Prices.csv'</span><span class="p">,</span>
+                     <span class="n">infer_datetime_format</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s">'Week of'</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">N_FEATURES</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">.</span><span class="n">columns</span><span class="p">)</span> 
+    <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">values</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">normalize_series</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">data</span><span class="p">.</span><span class="nb">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">data</span><span class="p">.</span><span class="nb">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+
+    <span class="n">SPLIT_TIME</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.8</span><span class="p">)</span> 
+    <span class="n">x_train</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:</span><span class="n">SPLIT_TIME</span><span class="p">]</span>
+    <span class="n">x_valid</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">SPLIT_TIME</span><span class="p">:]</span>
+
+    <span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">backend</span><span class="p">.</span><span class="n">clear_session</span><span class="p">()</span>
+    <span class="n">tf</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">set_seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+    <span class="n">BATCH_SIZE</span> <span class="o">=</span> <span class="mi">32</span>  
+    <span class="n">N_PAST</span> <span class="o">=</span> <span class="mi">10</span>  
+    <span class="n">N_FUTURE</span> <span class="o">=</span> <span class="mi">10</span>  
+    <span class="n">SHIFT</span> <span class="o">=</span> <span class="mi">1</span> 
+
+    <span class="n">train_set</span> <span class="o">=</span> <span class="n">windowed_dataset</span><span class="p">(</span><span class="n">series</span><span class="o">=</span><span class="n">x_train</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">BATCH_SIZE</span><span class="p">,</span>
+                                 <span class="n">n_past</span><span class="o">=</span><span class="n">N_PAST</span><span class="p">,</span> <span class="n">n_future</span><span class="o">=</span><span class="n">N_FUTURE</span><span class="p">,</span>
+                                 <span class="n">shift</span><span class="o">=</span><span class="n">SHIFT</span><span class="p">)</span>
+    <span class="n">valid_set</span> <span class="o">=</span> <span class="n">windowed_dataset</span><span class="p">(</span><span class="n">series</span><span class="o">=</span><span class="n">x_valid</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">BATCH_SIZE</span><span class="p">,</span>
+                                 <span class="n">n_past</span><span class="o">=</span><span class="n">N_PAST</span><span class="p">,</span> <span class="n">n_future</span><span class="o">=</span><span class="n">N_FUTURE</span><span class="p">,</span>
+                                 <span class="n">shift</span><span class="o">=</span><span class="n">SHIFT</span><span class="p">)</span>
+
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">([</span>
+                        <span class="n">Conv1D</span><span class="p">(</span><span class="n">filters</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="s">'causal'</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">[</span><span class="n">N_PAST</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span>
+                        <span class="n">Bidirectional</span><span class="p">(</span><span class="n">LSTM</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="n">return_sequences</span><span class="o">=</span><span class="bp">True</span><span class="p">)),</span>
+                        <span class="n">Bidirectional</span><span class="p">(</span><span class="n">LSTM</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="n">return_sequences</span><span class="o">=</span><span class="bp">True</span><span class="p">)),</span>
+                        <span class="n">Dense</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">),</span>
+                        <span class="n">Dense</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">),</span>
+                        <span class="n">Dense</span><span class="p">(</span><span class="n">N_FEATURES</span><span class="p">)</span>
+    <span class="p">])</span>
+
+    <span class="n">checkpoint_path</span> <span class="o">=</span> <span class="s">'model/my_checkpoint.ckpt'</span>
+    <span class="n">checkpoint</span> <span class="o">=</span> <span class="n">ModelCheckpoint</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">checkpoint_path</span><span class="p">,</span>
+                                 <span class="n">save_weights_only</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                                 <span class="n">save_best_only</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                                 <span class="n">monitor</span><span class="o">=</span><span class="s">'val_loss'</span><span class="p">,</span>
+                                 <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">optimizers</span><span class="p">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.0005</span><span class="p">)</span>
+    <span class="n">model</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s">'mae'</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s">'mae'</span><span class="p">])</span>
+
+    <span class="n">model</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_set</span><span class="p">,</span>
+              <span class="n">validation_data</span><span class="o">=</span><span class="p">(</span><span class="n">valid_set</span><span class="p">),</span>
+              <span class="n">epochs</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+              <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">checkpoint</span><span class="p">])</span>
+    <span class="n">model</span><span class="p">.</span><span class="n">load_weights</span><span class="p">(</span><span class="n">checkpoint_path</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">model</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">solution_model</span><span class="p">()</span>
+    <span class="n">model</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="s">"model.h5"</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+:ET

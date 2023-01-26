@@ -1,6 +1,6 @@
 ---
 layout: post
-title: [Neural Networks and Deep Learning] Basics of Neural Network Programming
+title: "[Neural Networks and Deep Learning] Basics of Neural Network Programming"
 date: 2022-04-20 00:00:00
 # img: autodrive/ose/kalman_filter.jpg
 categories: [deeplearning-dls] 
@@ -9,27 +9,38 @@ tags: [Python, deep learning, Coursera, Neural Networks and Deep Learning]
 # toc_sticky : true
 ---
 
+<br/>
+
 ## **Binary Classification**
+<br/>
 
 -  Example : Cat Classifier
     - with a given image, you can convert the image to three 64 x 64 matrices corresponding to Red, Green, Blue pixel intensity values for your image
     - Now unroll all these matrices to a single feature vector X, with the size of [64x64x3 x 1] vector 
     - <img src="https://user-images.githubusercontent.com/92680829/159686660-02d7def4-1739-4e30-bbd3-697f96abb98e.png"  width="550">
 
+<br/>
+
 - Notation
     - stacking different data(examples) into different column of X and Y
     - <img src="https://user-images.githubusercontent.com/92680829/159687336-06bad1e9-b864-4a29-9f38-4d24226e6975.png"  width="500">
+
+<br/>
 
 - X.shape = (nx, m)
 - nx : length of x(i), the size of all R, G, B matrices unrolled
 - Y : [y1, y2, y3..., ym] (1, m) 
 
+<br/>
+
 ## **Logistic Regression as a Neural Network**
+<br/>
 
 - Binary output : Outputs of Y is always either 1 or 0
     - you want
     - <img src="https://user-images.githubusercontent.com/92680829/159688518-5dc9fc6a-ab5e-4b2b-bd08-b99927d1be23.png"  width="350">
-    
+
+
 - **In Linear Regression**
     - you can get output by using the equation **y = WTx + b**
     - W : (nx, 1) vector of weights of each feature / b : real number (intersect)
@@ -39,7 +50,6 @@ tags: [Python, deep learning, Coursera, Neural Networks and Deep Learning]
     - Instead, you can use sigmoid function with which you can get the output ranging from 0 ~ 1 depending on the x values
     - <img src="https://user-images.githubusercontent.com/92680829/159690058-5a5af644-c928-499a-a494-911aeb44741b.png"  width="250">
 
-    
 
 - here, z equals to the previous value obtained from linear regression, WTX + b
 - <img src="https://user-images.githubusercontent.com/92680829/159690511-892b5dc6-e079-44df-b7c7-5139d49ed710.png"  width="400">
@@ -52,7 +62,11 @@ tags: [Python, deep learning, Coursera, Neural Networks and Deep Learning]
     - <img src="https://user-images.githubusercontent.com/92680829/159691164-fe46ef04-02a0-4bad-806b-8214f0bc1da5.png"  width="150">
 
 
+<br/>
+
 ### **Logistic Regression Cost Function**
+<br/>
+
 - Training set of m training examples, Each example has is n+1 length column vector
 - <img src="https://user-images.githubusercontent.com/92680829/156683168-6dfb6801-f65a-4a2c-815a-4d37f69839a8.png" width="500" >
 
@@ -88,8 +102,11 @@ Which, appropriately, is the sum of all the individual costs over the training d
         - So hθ(x) evaluates as -log(1-hθ(x))
         - <img src="https://user-images.githubusercontent.com/92680829/156686219-e35d4c6c-2001-480a-9acd-cd927f906fb3.png" width="220" >
     
+<br/>
 
 ### **Combined Cost Function of RL**
+<br/>
+
 - Instead of separating cost function into two parts differing by the value of y (0 or 1),
 - we can compress it into one cost function, which makes it more convenient to write out the cost.
 
@@ -101,7 +118,11 @@ Which, appropriately, is the sum of all the individual costs over the training d
 
 - now! you can finally get convex cost function that has global optima
 
+<br/>
+
 ### **Optimizing Cost Function w/ Gradient Descent**
+<br/>
+
 - Interestingly, derivative of J(θ) of logistic regression is exactly identical with that of linear regression (proof of this statement will be covered later)
 - Firstly, you would set all the features(w1~wm) as 0, including w0 (intersect, b) 
 - and then, Repeat
@@ -115,7 +136,10 @@ Which, appropriately, is the sum of all the individual costs over the training d
 - this explicit for-loop can severly slower the training rate with the large dataset
 - So, instaead of this, you need to learn **"Vectorization"** with which you can get rid of these explicit for-loop
 
+<br/>
+
 #### **-- Proof : Getting Derivative of LR Cost Function --**
+<br/>
 
 - Remember hθ(x) is
     - <img src="https://user-images.githubusercontent.com/92680829/160383571-e315c407-ec0f-4e69-95cb-b30d669d4435.png"  width="200">
@@ -128,13 +152,20 @@ Which, appropriately, is the sum of all the individual costs over the training d
     - <img src="https://user-images.githubusercontent.com/92680829/160385000-1694ccca-9f27-413d-a8fc-bd15794a7237.png"  width="400">       
     - <img src="https://user-images.githubusercontent.com/92680829/156696592-9857ffd5-6637-46ed-abef-2f47d21b64c0.png" width="500" >
 
+<br/>
+
 ### **Computation Graph**
+<br/>
 
 - Previously, I figured out the partial derivative of J (dJ/dθ), by using **Chain Rule**
     - Chain Rule : backward propagation of taking derivative partially with respect to from final output variable (here, v) to starting variable (here, a)
     - <img src="https://user-images.githubusercontent.com/92680829/160389908-ce557dd3-7a18-40ed-a52d-6816c0addfc2.png"  width="500">
     
+<br/>
+
 ## **Vectorization with Python**
+<br/>
+
 - vectoriztion can save you a great amount of time by removing explicit for loop from your algorithm!
     - <img src="https://user-images.githubusercontent.com/92680829/160834341-2ff411f3-9cc5-4b3a-98c3-c2d8a2849fa2.png"  width="500">
         
@@ -178,7 +209,11 @@ print("Scalar Version : {0}ms".format(1000*(tock-tick)))
 - There are some numpy functions that allow you to apply exponential or log operation on every element of a matrix/vector
 - np.log(V), np.exp(V)
 
+<br/>
+
 ### **Logistic Regression with Vectorization**
+<br/>
+
 - logistic regression with For-Loops
     - suppose we have 'n' features
     - there are 'm' samples 
@@ -195,7 +230,11 @@ print("Scalar Version : {0}ms".format(1000*(tock-tick)))
     - but even with vectorized LR, you still need to use for-loop for iterations to gd minimizing the cost 
     <img src="https://user-images.githubusercontent.com/92680829/161549261-0fba8b93-f524-4b90-8355-756ed790e51c.png"  width="220">
 
+<br/>
+
 ### **Broadcasting in Python**
+<br/>
+
 - It refers to how **numpy** treats arrays with different Dimension during arithmetic operations(+, -, *, /) which lead to certain constraints
 - the smaller array is broadcasted across the larger array so that they have compatible shapes
 - <img src="https://user-images.githubusercontent.com/92680829/161551568-dba2c92a-53bb-4ca6-9bf1-d04dc6cc50bd.png" width="410" >
