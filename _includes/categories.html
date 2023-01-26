@@ -1,0 +1,166 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto" id="navbar-row">
+            <li class="nav-item {% if page.url == '/' %} active {% endif %}">
+                <a class="nav-link" href="{{ site.baseurl }}/">ALL</a>
+            </li>
+
+            <li class="nav-item dropdown
+            {% if page.url == '/deeplearning/dls/' or page.url == '/deeplearning/ml/' or page.url == '/deeplearning/tf/' or page.url == '/deeplearning/topics/'%} active {% endif %}">
+                <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('autodrive-dropdown')"
+                   role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                   DEEP LEARNING
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="autodrive-dropdown">
+                    <a class="dropdown-item" href="{{ "/deeplearning/dls" | prepend: site.baseurl }}">Deep Learning Specialization</a>
+                    <a class="dropdown-item" href="{{ "/deeplearning/topics" | prepend: site.baseurl }}">Related Topics</a>
+                    <a class="dropdown-item" href="{{ "/deeplearning/ml" | prepend: site.baseurl }}">Machine Learning</a>
+                    <a class="dropdown-item" href="{{ "/deeplearning/tsf" | prepend: site.baseurl }}">TensorFlow</a>
+                    <div class="dropdown-divider"></div>
+                </div>
+            </li>
+
+            <!-- <li class="nav-item dropdown
+            {% if page.url == '/math/la/' or page.url == '/math/mfml/' or page.url == '/math/algorithm/' or page.url == '/math/ps/' or page.url == '/math/calculus/' or page.url == '/math/pb/' or page.url == '/math/game/' %} active {% endif %}">
+                <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('math-dropdown')"
+                   role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    Math
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="math-dropdown">
+                    <a class="dropdown-item" href="{{ "/math/algorithm" | prepend: site.baseurl }}">Algorithm</a>
+                    <a class="dropdown-item" href="{{ "/math/ps" | prepend: site.baseurl }}">Problem Solving</a>
+                    <a class="dropdown-item" href="{{ "/math/la" | prepend: site.baseurl }}">Linear Algebra</a>
+                    <a class="dropdown-item" href="{{ "/math/pb" | prepend: site.baseurl }}">Probability</a>
+                    <a class="dropdown-item" href="{{ "/math/calculus" | prepend: site.baseurl }}">Calculus</a>
+                    <a class="dropdown-item" href="{{ "/math/game" | prepend: site.baseurl }}">Game Theory</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ "/math/mfml" | prepend: site.baseurl }}">Mathematics for machine learning (Coursera)</a>
+
+                </div>
+            </li>
+
+            <li class="nav-item dropdown
+            {% if page.url == '/ml/la/' or page.url == '/ml/prml/' or page.url == '/ml/sklearn/' or page.url == '/ml/concept/' or page.url == '/ml/question/ or page.url == '/ml/ops/' or page.url == '/ml/etc/'%} active {% endif %}">
+                <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('ml-dropdown')"
+                   role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    ML
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="ml-dropdown">
+                    <a class="dropdown-item" href="{{ "/ml/concept" | prepend: site.baseurl }}">Concept</a>
+                    <a class="dropdown-item" href="{{ "/ml/sklearn" | prepend: site.baseurl }}">Sklearn</a>
+                    <a class="dropdown-item" href="{{ "/ml/prml" | prepend: site.baseurl }}">PRML(Pattern Recognition and Machine Learning)</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ "/ml/question" | prepend: site.baseurl }}">Question</a>
+                    <a class="dropdown-item" href="{{ "/ml/etc" | prepend: site.baseurl }}">ETC</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown
+            {% if page.url == '/dl/larochelle/' or page.url == '/dl/pytorch/' or page.url == '/dl/dlai/' or page.url == '/dl/dlai_nlp/' or page.url == '/dl/dlai_gan/ or page.url == '/dl/concept/' or page.url == '/dl/etc/'%} active {% endif %}">
+                <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('dl-dropdown')"
+                   role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    DL
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="dl-dropdown">
+                    <a class="dropdown-item" href="{{ "/dl/concept" | prepend: site.baseurl }}">Concept</a>
+                    <a class="dropdown-item" href="{{ "/dl/pytorch" | prepend: site.baseurl }}">PyTorch</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ "/dl/dlai" | prepend: site.baseurl }}">Deeplearning.ai</a>
+                    <a class="dropdown-item" href="{{ "/dl/dlai_gan" | prepend: site.baseurl }}">Deeplearning.ai GAN</a>
+                    <a class="dropdown-item" href="{{ "/dl/etc" | prepend: site.baseurl }}">ETC</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown
+            {% if page.url == '/vision/concept/' or page.url == '/vision/segmentation/' or page.url == '/vision/depth/' or  page.url == '/vision/mvg/' or page.url == '/vision/of/' or page.url == '/vision/cs231n/' or page.url == '/vision/opencv/' or page.url == '/vision/fusion/' or page.url == '/vision/signal/' or page.url == '/vision/dataset/ or page.url == '/vision/detection/ or page.url == '/vision/cp/ or page.url == '/vision/etc/'%} active {% endif %}">
+                <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('vision-dropdown')"
+                   role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    Vision
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="vision-dropdown">
+                    <a class="dropdown-item" href="{{ "/vision/concept" | prepend: site.baseurl }}">Concept</a>                    
+                    <a class="dropdown-item" href="{{ "/vision/mvg" | prepend: site.baseurl }}">Multiple View Geometry</a>
+                    <a class="dropdown-item" href="{{ "/vision/opencv" | prepend: site.baseurl }}">OpenCV</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ "/vision/segmentation" | prepend: site.baseurl }}">Segmentation based on DL</a>
+                    <a class="dropdown-item" href="{{ "/vision/depth" | prepend: site.baseurl }}">Depth Estimation based on DL</a>
+                    <a class="dropdown-item" href="{{ "/vision/detection" | prepend: site.baseurl }}">Detection based on DL</a>
+                    <a class="dropdown-item" href="{{ "/vision/of" | prepend: site.baseurl }}">Optical Flow based on DL</a>
+                    <a class="dropdown-item" href="{{ "/vision/fusion" | prepend: site.baseurl }}">Multi Camera/View Fusion based on DL</a>
+                    <a class="dropdown-item" href="{{ "/vision/dataset" | prepend: site.baseurl }}">Vision Dataset</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ "/vision/cs231n" | prepend: site.baseurl }}">CS231n</a>
+                    <a class="dropdown-item" href="{{ "/vision/cp" | prepend: site.baseurl }}">Computational Photography (Udacity)</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ "/vision/signal" | prepend: site.baseurl }}">Signal and System</a>
+                    <a class="dropdown-item" href="{{ "/vision/etc" | prepend: site.baseurl }}">ETC</a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown
+            {% if page.url == '/python/rest/' or page.url == '/python/crawling/' or page.url == '/python/gui/' or page.url == '/python/basic/' or page.url == '/python/django/' or page.url == '/python/embedded/' or page.url == '/python/etc/'%} active {% endif %}">
+                <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('python-dropdown')"
+                   role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    Python
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="python-dropdown">
+                    <a class="dropdown-item" href="{{ "/python/basic" | prepend: site.baseurl }}">Basic & Pandas & Numpy</a>
+                    <a class="dropdown-item" href="{{ "/python/django" | prepend: site.baseurl }}">Django</a>
+                    <a class="dropdown-item" href="{{ "/python/rest" | prepend: site.baseurl }}">Django-RestFramework</a>
+                    <a class="dropdown-item" href="{{ "/python/crawling" | prepend: site.baseurl }}">Crawling</a>
+                    <a class="dropdown-item" href="{{ "/python/embedded" | prepend: site.baseurl }}">Embedded</a>
+                    <a class="dropdown-item" href="{{ "/python/gui" | prepend: site.baseurl }}">GUI</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ "/python/etc" | prepend: site.baseurl }}">ETC</a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown
+            {% if page.url == '/c/concept' or page.url == '/c/cpp/' or page.url == '/c/linux/' or page.url == '/c/etc/' %} active {% endif %}">
+                <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('c-dropdown')"
+                   role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    C
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="c-dropdown">
+                    <a class="dropdown-item" href="{{ "/c/concept" | prepend: site.baseurl }}">C Concept</a>
+                    <a class="dropdown-item" href="{{ "/c/cpp" | prepend: site.baseurl }}">CPP Concept</a>
+                    <a class="dropdown-item" href="{{ "/c/linux" | prepend: site.baseurl }}">Linux</a>
+                    <a class="dropdown-item" href="{{ "/c/etc" | prepend: site.baseurl }}">ETC</a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown
+            {% if page.url == '/etc/business/' or page.url == '/etc/db/' or page.url == '/etc/network/' or '/etc/or/' or page.url == '/etc/humanity/' or page.url == '/etc/dev/' or page.url == '/etc/etc/' %} active {% endif %}">
+                <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('etc-dropdown')"
+                   role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    ETC
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="etc-dropdown">
+                    <a class="dropdown-item" href="{{ "/etc/business" | prepend: site.baseurl }}">Business</a>
+                    <a class="dropdown-item" href="{{ "/etc/db" | prepend: site.baseurl }}">Database</a>
+                    <a class="dropdown-item" href="{{ "/etc/network" | prepend: site.baseurl }}">Computer Network</a>
+                    <a class="dropdown-item" href="{{ "/etc/or" | prepend: site.baseurl }}">Operational Research</a>
+                    <a class="dropdown-item" href="{{ "/etc/humanity" | prepend: site.baseurl }}">Humanity</a>
+                    <a class="dropdown-item" href="{{ "/etc/dev" | prepend: site.baseurl }}">Dev</a>
+                    <a class="dropdown-item" href="{{ "/etc/etc" | prepend: site.baseurl }}">ETC</a>
+                </div>
+            </li> -->
+        </ul>
+    </div>
+</nav>
+<script>
+    function clickDropdown(dropdown_id) { // TODO : Refactoring, It have to be recycling to other elements.
+        var x = document.getElementById(dropdown_id);
+        if (x.style.display !== "block") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+</script>
