@@ -1,0 +1,175 @@
+I"=<p><br /></p>
+
+<h2 id="why-deep-learning"><strong>Why Deep Learning?</strong></h2>
+<ul>
+  <li>much better to learn complex hypotheses with large n (sample num)</li>
+</ul>
+
+<h2 id="model-representation-1"><strong>Model Representation 1</strong></h2>
+<ul>
+  <li><strong>Biological Neuron</strong></li>
+</ul>
+
+<p><img src="https://user-images.githubusercontent.com/92680829/156725256-e58dd176-d9d9-46ae-8a81-f914e6d7a6ca.png" width="400" /></p>
+
+<ul>
+  <li><strong>Artificial neural network - computational representation of a neuron</strong>
+    <ul>
+      <li>Example)
+        <ul>
+          <li>Logistic Unit
+            <ul>
+              <li>sigmoid activation function
+                <ul>
+                  <li>activation function defines the type of the output of a neuron/node given an input or set of input</li>
+                  <li>activation depends on
+                    <ul>
+                      <li>The input(s) to the node</li>
+                      <li>The parameter associated with that node (from the Ɵ vector associated with that layer)</li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li><img src="https://user-images.githubusercontent.com/92680829/156727186-545826c6-cb96-4ecf-bbb2-8f3c57bc99c8.png" width="400" /></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>Neural Network
+        <ul>
+          <li><img src="https://user-images.githubusercontent.com/92680829/156729290-b17642a6-adaa-4899-a730-a0390ffb25d8.png" width="400" /></li>
+          <li>Terms
+            <ul>
+              <li>ai(j) - activation of unit i in layer j</li>
+              <li>Ɵ(j) - matrix of parameters controlling the function mapping from layer j to layer j + 1</li>
+            </ul>
+          </li>
+          <li>If network has
+            <ul>
+              <li>sj units in layer j (the number of units in layer j, plus an additional unit) and sj+1 (the number of units in layer (j + 1)) units in layer j + 1</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>Example of neural networks and associated calculations
+  <img src="https://user-images.githubusercontent.com/92680829/156949191-97a8f139-b671-4c1c-a865-2f42d83c1336.png" width="500" /></p>
+  </li>
+  <li>The activation value on each hidden unit (e.g. a12 ) is equal to the sigmoid function applied to the linear combination of inputs
+    <ul>
+      <li>a1(2) = g(sum of Ɵ10(1)x0 + Ɵ11(1)x1 + Ɵ12(1)x2 + Ɵ13(1)x3</li>
+      <li>Ɵ(j) is a matrix of S(j+1) x (Sj + 1)</li>
+    </ul>
+  </li>
+  <li>Every input/activation goes to every node in following layer
+    <ul>
+      <li>Ɵjil
+        <ul>
+          <li>j (first of two subscript numbers)= ranges from 1 to the number of units in layer l+1</li>
+          <li>i (second of two subscript numbers) = ranges from 0 to the number of units in layer l</li>
+          <li>l is the layer you’re moving FROM</li>
+          <li><img src="https://user-images.githubusercontent.com/92680829/156950160-83e48940-e20a-4530-b562-f4214a8ad399.png" width="300" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="model-representation-ii"><strong>Model representation II</strong></h2>
+
+<ul>
+  <li>Zi(j+1) = Ɵi0(j)x0 + Ɵi1(j)x1 + Ɵi2(j)x2 + Ɵi3(j)x3
+    <ul>
+      <li>S(j) = 0~3</li>
+    </ul>
+  </li>
+  <li>ai(j+1) = g(Zi(j+1))</li>
+  <li>Z(j+1) = S(j+1) x 1 vector</li>
+  <li>a1 = x
+    <ul>
+      <li>a1 is the activations in the input layer</li>
+      <li>Obviously the “activation” for the input layer is just the input!</li>
+    </ul>
+  </li>
+  <li>a1 is the vector of inputs</li>
+  <li>a2 is the vector of values calculated by the g(z2) function</li>
+</ul>
+
+<h3 id="forward-propagation"><strong>Forward Propagation</strong></h3>
+
+<p><img src="https://user-images.githubusercontent.com/92680829/156951150-070b0cfc-f44e-46a5-83e6-47476418d745.png" width="700" />
+<img src="" width="1000" /></p>
+
+<ul>
+  <li>Layer 3 is a logistic regression node
+    <ul>
+      <li>The hypothesis output = g(Ɵ102 a02 + Ɵ112 a12 + Ɵ122 a22 + Ɵ132 a32)</li>
+      <li>g is just logistic regression</li>
+      <li><strong>The only difference is, instead of input features, the features are just values calculated by the previous hidden layer</strong></li>
+      <li>The features a12, a22, and a32 are calculated/learned - not original features</li>
+      <li>So the mapping from layer 1 to layer 2 is determined by another set of parameters - Ɵ1</li>
+      <li><strong>So instead of being constrained by the original input features, a neural network can learn its own features to feed into logistic regression</strong></li>
+      <li>Flexibility to learn whatever features it wants to feed into the final logistic regression calculation</li>
+      <li>Here, we’re letting the hidden layers do that, so we feed the hidden layers our input values, and let them learn whatever gives the best final result to feed into the final output layer</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="non-linear-classification-example-1---xor--xnor"><strong>Non-Linear Classification Example (1) - XOR / XNOR</strong></h2>
+
+<ul>
+  <li>x1 XOR x2 : only TRUE when one of them (x1 or x2) is 1 (10 or 01)</li>
+  <li>x1 XNOR x2 : only TRUE when 1. both of them are 1 or 2. both of them are 0</li>
+  <li>
+    <p>X mark 1 : XNOR / o mark 1 : XOR</p>
+  </li>
+  <li><img src="https://user-images.githubusercontent.com/92680829/156952865-aeec9b59-0f25-48e4-80f8-9dd7c1989ec4.png" width="500" /></li>
+</ul>
+
+<h4 id="x1-and-x2"><strong>x1 AND x2</strong></h4>
+<ul>
+  <li>simple example of how neural networks can operate AND function with sigmoidal activation function
+<img src="https://user-images.githubusercontent.com/92680829/156953394-798c316f-0ad9-4e30-8c83-b6e07d6dfa03.png" width="600" /></li>
+</ul>
+
+<h4 id="x1-xnor-x2-example"><strong>x1 XNOR x2 Example</strong></h4>
+<ul>
+  <li>combination of x1 AND x2 (a1(2)) + x1 NAND x2 (a2(2))</li>
+  <li>
+    <p>one input layer, one hidden layer, one output layer</p>
+  </li>
+  <li><img src="https://user-images.githubusercontent.com/92680829/156954991-dd0d5934-a909-4be1-828b-479c207d65cd.png" width="600" /></li>
+</ul>
+
+<h4 id="x1-xor-x2"><strong>x1 XOR x2</strong></h4>
+<ul>
+  <li>all same with the example above except below</li>
+  <li>Ɵ10(2) = 10 , Ɵ11(2) = -20 , Ɵ12(2) = -20</li>
+  <li>if and only if : x1 XOR x2</li>
+</ul>
+
+<hr />
+
+<h2 id="multi-class-classification"><strong>Multi-Class Classification</strong></h2>
+
+<ul>
+  <li>Suppose that we have 4 classes to distinguish
+    <ul>
+      <li>pedestrian, car, motorcycle, truck</li>
+      <li>how can neural network recognize these different classes?</li>
+      <li>instead of assigning each classes numerical value like 1, 2, 3, 4</li>
+      <li>we can assign each class 4 different 4 x 1 vector</li>
+      <li>where each element of vector represents each class
+<img src="https://user-images.githubusercontent.com/92680829/156956598-022e6279-58d0-43ea-996a-9d88ced4bddb.png" width="700" />
+<img src="" width="1000" /></li>
+      <li>run all three classifiers on the input, and then pick the class i that maximizes the probability that hθ(i)(x) = 1</li>
+    </ul>
+  </li>
+</ul>
+:ET

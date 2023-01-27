@@ -1,0 +1,450 @@
+I"�E<p><br /></p>
+
+<h2 id="svm-cost-functions-from-logistic-regression-cost-functions"><strong>SVM cost functions from logistic regression cost functions</strong></h2>
+<p><br /></p>
+
+<ul>
+  <li>note that logistic regression has distinct cost function like below
+    <ul>
+      <li><img src="https://user-images.githubusercontent.com/92680829/157171544-9b3bea85-5c75-4b5c-adec-52c3c8785bfd.png" width="450" />
+<br /></li>
+    </ul>
+  </li>
+  <li>To build a SVM we must redefine our cost functions
+    <ul>
+      <li>When y = 1 : <strong>Cost1(z)</strong>
+        <ul>
+          <li>Take the y = 1 function and create a new cost function</li>
+          <li><strong>Create two straight lines (magenta) which acts as an approximation</strong> to the logistic regression y = 1 function</li>
+        </ul>
+
+        <p><img src="https://user-images.githubusercontent.com/92680829/157171844-73a76594-5922-48d6-a424-a38c50727076.png" width="300" />
+  <br /></p>
+      </li>
+      <li>When y = 0 : <strong>Cost0(z)</strong>
+        <ul>
+          <li>Do the equivalent with the y=0 function plot</li>
+          <li><img src="https://user-images.githubusercontent.com/92680829/157171979-aaf355af-f7f7-457f-9a32-e4b92e6635fa.png" width="300" />
+<br /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>For the SVM we take our two logistic regression y=1 and y=0 terms described previously and replace with
+    <ul>
+      <li>y = 1 : cost1(θT x)</li>
+      <li>y = 0 : cost0(θT x)</li>
+    </ul>
+  </li>
+  <li>So we get
+    <ul>
+      <li><img src="https://user-images.githubusercontent.com/92680829/157172972-7e934335-3822-41b5-bd96-5b83ec6d52da.png" width="600" />
+<br /></li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="notational-difference-between-svm-and-lr"><strong>Notational Difference between SVM and LR</strong></h3>
+<p><br /></p>
+
+<ol>
+  <li>Get rid of the 1/m terms
+    <ul>
+      <li>doesn’t affect optimal value where cost become minimum</li>
+    </ul>
+  </li>
+  <li>A + λB  -&gt;  CA + B
+    <ul>
+      <li>Training data set term (i.e. that we sum over m) = A</li>
+      <li>Regularization term (i.e. that we sum over n) = B</li>
+      <li>So we could describe it as A + λB in logistic regression</li>
+      <li>For SVMs the convention is to use a different parameter called <strong>C</strong>
+        <ul>
+          <li><strong>C equal to 1/λ</strong> and the two functions (CA + B and A + λB) would give the same value</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<ul>
+  <li>So, the final form is
+    <ul>
+      <li><img src="https://user-images.githubusercontent.com/92680829/157174060-ca10c16e-fa58-4b4a-a051-19c7427c6c30.png" width="600" /></li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="large-margin-classification"><strong>Large Margin Classification</strong></h2>
+
+<ul>
+  <li>
+    <p>SVM = Large Margin Classifier</p>
+  </li>
+  <li>
+    <p><img src="https://user-images.githubusercontent.com/92680829/157175054-019750e6-5311-42c8-8333-c8075e4203f8.png" width="600" />
+<br /></p>
+  </li>
+  <li>
+    <p>SVM Decision Boundary become more strict</p>
+    <ul>
+      <li>To be y = 1 : z &gt;= 0 (LR) –&gt; z &gt;= 1 (SVM)</li>
+      <li>To be y = 0 : z &lt; 0 (LR) –&gt; z &lt;= -1 (SVM)</li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="svm-decision-boundary"><strong>SVM Decision Boundary</strong></h2>
+
+<p><img src="https://user-images.githubusercontent.com/92680829/157176174-f89fa03b-e1a3-4b63-a682-c4bb4ccffa4e.png" width="500" />
+<br /></p>
+
+<ul>
+  <li><strong>C</strong> : controls trade-off between smooth decision boundary (greater margin, training error ↑) and hard decision boundary (small margin, test error ↑)
+    <ul>
+      <li>can control the size of margin (the distance between the dcb and each data point)</li>
+      <li>Large C :
+        <ul>
+          <li>suppose that our C is huge, to minimize the cost function, margin needs to closer to zero, so it barely allows any error, which is called “Hard Decision Boundary”</li>
+          <li>to draw the dcb that has small error from all data point, the decision boundary become more complex and thus, overfitted</li>
+          <li>small training error, but too large C can cause overfitting, thus large test error</li>
+        </ul>
+      </li>
+      <li>Small C :
+        <ul>
+          <li>becasue of the small C, relatively big margin (error) is allowed, which is called “Smooth Decision Boundary”</li>
+          <li>more outliers are allowed</li>
+          <li>can possibly cause under-fitting, and increase training error</li>
+        </ul>
+      </li>
+      <li><img src="https://user-images.githubusercontent.com/92680829/157185717-de72db56-34e3-4984-a247-8f4169ffd978.png" width="450" />
+<br /></li>
+    </ul>
+  </li>
+  <li>SVM draws the decision boundary line that has the greatest margin
+    <ul>
+      <li><img src="https://user-images.githubusercontent.com/92680829/157176944-ab926fa4-0e3c-4ad0-af27-44925e4bf4cf.png" width="300" /></li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="large-margin-classifier-in-the-presence-of-outlier"><strong>Large Margin Classifier in the presence of outlier</strong></h3>
+<p><br /></p>
+
+<ul>
+  <li>how sensitive does the SVM respond to outliers
+    <ul>
+      <li>large C : sensitive –&gt; tend to include outliers to minimize the errors</li>
+      <li>small C : insensitive –&gt; tend to ignore outliers</li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="mathmatics-behind-large-margin-classification"><strong>Mathmatics Behind Large Margin Classification</strong></h2>
+<p><br /></p>
+
+<h3 id="svm-decision-boundary-1"><strong>SVM Decision Boundary</strong></h3>
+<p><br /></p>
+
+<ul>
+  <li>
+    <p>if C is really small, we can ignore the error part of cost function, so we only have to focus on the weights to minimize the cost</p>
+  </li>
+  <li>
+    <p><img src="https://user-images.githubusercontent.com/92680829/157561845-e825fad2-d4cc-4586-98d5-63ac7f2b704a.png" width="350" />
+<br /></p>
+  </li>
+  <li>Two Simplifications
+    <ol>
+      <li>θ0 = 0</li>
+      <li>θ1, θ2 only 2 features exist</li>
+    </ol>
+  </li>
+  <li>min(1/2 * sigma(θ^2)) = 1/2(θ1^2 + θ2^2) = 1/2<em>(root(θ1^2 + θ2^2))^2 = 1/2</em>[θ]^2
+    <ul>
+      <li>So, finally, this means our optimization function can be re-defined as
+        <ul>
+          <li>
+            <p><img src="https://user-images.githubusercontent.com/92680829/157562505-17d7635c-c4ea-413f-9c26-40b9bce36e1f.png" width="150" /></p>
+          </li>
+          <li>
+            <p>So the optimization objective of SVM is minimizing the squared norm</p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+    <p><img src="https://user-images.githubusercontent.com/92680829/157563382-e7090e72-4ded-4b55-8d0d-614308c9ce69.png" width="700" />
+<br /></p>
+  </li>
+  <li>x(i) is one set of training example that consists of x1(1) and x2(1)
+    <ul>
+      <li>Given our previous discussion about inner vector (uT.v = p[u])</li>
+      <li><strong>θT.x(i) = z = p*[θ]</strong></li>
+      <li>note ** p is the length of the projection from x(i) vector onto θ vector</li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h4 id="svm-optimization-algorithm-aims-to-maximize-margin-to-minimize-the-cost"><strong>SVM optimization algorithm aims to maximize margin to minimize the cost</strong></h4>
+<ul>
+  <li>
+    <p><img src="https://user-images.githubusercontent.com/92680829/157597209-75991950-c072-4629-ace0-4edc12ebbba2.png" width="350" />
+<br /></p>
+  </li>
+  <li>if margin is small, then the value of p(i) also gets smaller, which makes [θ] larger to meet the condition for being classified
+    <ul>
+      <li>pi * [θ] &gt;= 1 if y = 1</li>
+      <li>pi * [θ] &lt;= -1 if y = 0</li>
+    </ul>
+  </li>
+  <li>otherwise, if margin is large, p(i) gets large and [θ] become smaller
+    <ul>
+      <li><img src="https://user-images.githubusercontent.com/92680829/157597882-81ae2e79-e9c2-4e2e-ad2a-5b511059d690.png" width="650" />
+<br /></li>
+    </ul>
+  </li>
+  <li>if [θ] is large, cost function (1/2[θ]^2) can’t be minimized.</li>
+  <li>Therefore, <strong>by maximizing the value of p (maximizing the margin between dcb and the nearest data point), we can minimize the [θ], and eventually, Cost Function</strong></li>
+  <li>SVM finds the best hyperplane(which in 2D, simply a line) that best separates the data points into proper classification, by maximizing the margin from dcb to tags.</li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="-vector-inner-product-"><strong>– Vector Inner Product –</strong></h3>
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><img src="https://user-images.githubusercontent.com/92680829/157201236-e91c6126-cd02-4d3d-96b0-7b4892e10f7f.png" width="650" /></p>
+  </li>
+  <li>
+    <p>px[u]=uT x v</p>
+    <ul>
+      <li>p=[v]cosx (cosx = uv/[u][v])</li>
+      <li>p=uv/[u] -&gt; px[u] = uv (inner component of vector u and v)</li>
+      <li>u.v (u vector v vector) = uT x v</li>
+      <li>if the angle between v and u vector is greater than 90, p will have negative value
+<br /></li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="-why-is-θ-is-perpendicular-to-the-decision-boundary-"><strong>– Why is θ is Perpendicular to the Decision Boundary? –</strong></h3>
+
+<ul>
+  <li>in SVM, decision boundary looks like 1. θT<em>(x)+b &gt;= 1 or 2. θT</em>(x)+b &lt;= -1  (b = x0, can be included as an element of vector)</li>
+  <li>if you set b-1 = c and b+1 = d, Then, you can change it to
+    <ul>
+      <li>θT<em>(x)+c = 0 and 2. θT</em>(x)+d = 0</li>
+      <li><strong>doesn’t really matter what the constant value is.</strong></li>
+    </ul>
+  </li>
+  <li>Pick a point x1 on the decision boundary (let’s say constant value as k). We know:
+    <ul>
+      <li>θT(x−x1)+k=0</li>
+    </ul>
+  </li>
+  <li>Pick a point x2. We have:
+    <ul>
+      <li>θT(x−x2)+k=0</li>
+    </ul>
+  </li>
+  <li>Subtracting eqn1 from eqn2:
+    <ul>
+      <li>θT(x1−x2) =0 (when inner product of two vector is 0, the angle between them is 90, cos(90) = 0)</li>
+      <li>Then, θT vector is perpendicular to (x1-x2) vector !</li>
+      <li>and (x1-x2) vector is on the decision boundary (as both of them lies on dcb)</li>
+      <li>Finally, θT is perpendicular to decision boundary!!!</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h1 id="kernels"><strong>Kernels</strong></h1>
+
+<h2 id="1-adapting-svm-to-complex-non-linear-cclassifiers"><strong>1. Adapting SVM to Complex Non-Linear Cclassifiers</strong></h2>
+
+<ul>
+  <li>
+    <p>Issue</p>
+
+    <p><img src="https://user-images.githubusercontent.com/92680829/157603239-c67876e2-f978-4b4c-b3b8-9090f679d3c4.png" width="600" /></p>
+  </li>
+  <li>
+    <p>Instead of these high polynomial features, is there any better choice of features?</p>
+  </li>
+</ul>
+
+<h3 id="given-x-compute-new-feature-depending-on-proximity-to-landmarks"><strong>Given x, compute new feature depending on proximity to landmarks</strong></h3>
+<ul>
+  <li>These points l1, l2, and l3, were chosen manually and are called landmarks</li>
+  <li><img src="https://user-images.githubusercontent.com/92680829/157604990-0b91c8ab-db36-40ec-8525-03f7c3406b0e.png" width="600" /></li>
+  <li>the function to get the similarity between x and l(i) is called <strong>“Kernel”</strong></li>
+  <li>and here, the type of the kernel is <strong>“Gaussian kernels”</strong> :
+    <ul>
+      <li>exp(- ([x - l1]2 ) / 2σ2)</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="so-what-these-kernels-actually-do"><strong>So, What these Kernels actually Do?</strong></h3>
+<p><img src="https://user-images.githubusercontent.com/92680829/157607210-6c121f59-be40-4b23-80a4-a819cbc22dba.png" width="650" /></p>
+
+<ul>
+  <li>defines the similarity between each x data point and selected landmark with the value within 0 ~ 1</li>
+  <li>k(x, l) =: 0  –&gt;  very far</li>
+  <li>k(x, 1) =: 1  –&gt;  very close</li>
+  <li>
+    <p>you can get new features f(i) that represents the similarity between every x and landmark (i)</p>
+  </li>
+  <li>If we plot f1 vs the kernel function of x1 and x2, we get a plot like this
+    <ul>
+      <li>l(1) = [3, 5]
+  <img src="https://user-images.githubusercontent.com/92680829/157608069-e66eaa2d-5215-4993-be6b-e4cff8c4bfbb.png" width="300" /></li>
+    </ul>
+  </li>
+  <li>σ= 1 here</li>
+  <li>Notice that when x = [3,5] then f1 = 1</li>
+  <li>As each x moves away from [3,5] then the feature takes on values close to zero</li>
+  <li>So this measures how close x is to this landmark !!</li>
+</ul>
+
+<h3 id="what-does-σ-do"><strong>What does σ do?</strong></h3>
+<ul>
+  <li>σ2 is a parameter of the Gaussian kernel</li>
+  <li>it defines the steepness of the rise around the contour
+    <ul>
+      <li>greater σ, less steeper contour</li>
+    </ul>
+  </li>
+  <li>
+    <p>Above example σ2 = 0.5</p>
+
+    <ul>
+      <li><img src="https://user-images.githubusercontent.com/92680829/157608742-ebc10ad6-9d17-4714-9fd1-20a5cda50f2e.png" width="300" /></li>
+    </ul>
+  </li>
+  <li>can see the steepness of the rise is quite sharp</li>
+  <li>
+    <p>You can see here that as you move away from [3,5] (same as l(1)) the feature f1 falls to zero much rapidly</p>
+  </li>
+  <li>The inverse can be seen if σ2 = 3
+    <ul>
+      <li><img src="https://user-images.githubusercontent.com/92680829/157608947-d5cdddc3-d1d6-4fbd-bbf8-b6e6e7ddd5d8.png" width="300" /></li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="application-of-kernel-to-classify-data"><strong>Application of Kernel to Classify Data</strong></h3>
+
+<p><img src="https://user-images.githubusercontent.com/92680829/157611047-31ba9a1f-e9c4-4a14-8c78-563d55322b17.png" width="800" /></p>
+
+<ul>
+  <li>Let’s say that θ0 = -0.5, θ1 = 1, θ2 = 1, θ3 = 0
+    <ul>
+      <li>it’s multivariate logistic regression, where y = 1 when z &gt;= 0 and y=0 when z &lt; 0</li>
+      <li>tags that are close to l(1) and l(2) are classified to y = 1
+        <ul>
+          <li>f1 or f2 =: 1 / f3 = 0</li>
+          <li>positive z value (-0.5 + 0 + 1 + 0 = 0.5) –&gt; classified to ‘1’</li>
+        </ul>
+      </li>
+      <li>but, tags that are close to l(3) are classified to y = 0
+        <ul>
+          <li>f1 and f2 =: 0 / f3 = 1</li>
+          <li>negative z value (-0.5 + 0 + 0 + 0) –&gt; classified to ‘0’</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>Therefore, we now have decision boundary based on the proximity with the selected landmarks</p>
+  </li>
+  <li>This is the example of how kernels helps classification by providing new features called f(i)</li>
+</ul>
+
+<hr />
+
+<h2 id="2-svm-with-kernels-in-practice"><strong>2. SVM with Kernels In Practice</strong></h2>
+
+<h3 id="how-to-choose-landmarks"><strong>How to choose landmarks?</strong></h3>
+<p><img src="https://user-images.githubusercontent.com/92680829/157614388-0850f51d-e7d9-4b8c-9a10-3dbe9fa005bc.png" width="600" /></p>
+
+<ul>
+  <li>1) if you set landmark for every training examples (x(1) ~ x(m))
+    <ul>
+      <li>the location of every training examples itself and their proximity with others became the features</li>
+      <li>you can have all new features, measure of proximity between xi and all other xs
+        <ul>
+          <li>f1i, = k(xi, l1)</li>
+          <li>f2i, = k(xi, l2)</li>
+          <li>…</li>
+          <li>fmi, = k(xi, lm)</li>
+        </ul>
+      </li>
+      <li>In training, one of them necessarily have value 1 (when l(i) == x(i), fii = 1)</li>
+      <li>now we have <strong>new feature vector [f1, f2, … , fm] instead of [x1, x2, …, xm]</strong> (you can add x0 for bias, [m+1. 1] vector in that case)</li>
+      <li>when you get the test data, model will calculate the proximity between that input and all other training examples (f1 ~ fm)</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="svm-hypothesis-prediction-with-kernels"><strong>SVM hypothesis prediction with kernels</strong></h3>
+<ul>
+  <li>Predict y = 1 if (θT f) &gt;= 0
+    <ul>
+      <li>Because θ = [m+1 x 1]</li>
+      <li>And f = [m +1 x 1]</li>
+    </ul>
+  </li>
+  <li>So, this is how you make a prediction assuming you already have θ</li>
+</ul>
+
+<h3 id="how-can-you-get-θ-"><strong>How can you get θ ?</strong></h3>
+<ul>
+  <li>same as the previous SVM learning algorithm from logistic regression
+    <ul>
+      <li><img src="https://user-images.githubusercontent.com/92680829/157617175-7f652b4a-7f25-43c0-94ee-076b92aaf831.png" width="700" /></li>
+    </ul>
+  </li>
+  <li>Now, we minimize using f as the feature vector instead of x</li>
+  <li>By solving this minimization problem you get the parameters for your SVM</li>
+  <li>
+    <p>in case of this, n equals to m (as n is determined by the size of f (m) &lt;– x)</p>
+  </li>
+  <li>when C is small, the cost function almost acts like below
+    <ul>
+      <li><img src="https://user-images.githubusercontent.com/92680829/157619365-60366ecd-3967-414d-b429-06b9992a9006.png" width="150" /></li>
+    </ul>
+  </li>
+  <li>
+    <p>What many implementations do is (final mathmatical detail)</p>
+
+    <p><img src="https://user-images.githubusercontent.com/92680829/157619907-08bcd9de-ed12-456a-9167-071abd91a57e.png" width="100" /></p>
+
+    <ul>
+      <li>the matrix M depends on the kernel you use</li>
+      <li>Gives a slightly different minimization - means we determine a rescaled version of θ</li>
+      <li>Allows more efficient computation, and scale to much bigger training sets</li>
+      <li>If you have a training set with 10 000 values, means you get 10 000 features and Solving for all these parameters can become expensive</li>
+      <li>So by adding this in we avoid a for loop and use a matrix multiplication algorithm instead</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="the-role-of-parameters-in-svm-with-kernels"><strong>The Role of Parameters in SVM with Kernels</strong></h3>
+<p><img src="https://user-images.githubusercontent.com/92680829/157620536-be9859eb-212f-4ac8-bdfd-9ff6fe5a4e25.png" width="500" /></p>
+
+:ET

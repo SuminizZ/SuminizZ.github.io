@@ -1,0 +1,62 @@
+I"F<p><br /></p>
+
+<h2 id="백준-2225-합분해--골드-5">백준 2225 합분해 : 골드 5</h2>
+
+<p><br /></p>
+
+<p><img src="https://user-images.githubusercontent.com/92680829/139958017-71c963da-72a9-4f6f-9304-ddafc9f5c85c.png" /></p>
+
+<p><br /></p>
+
+<h2 id="solution"><strong>Solution</strong></h2>
+
+<p><br /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sys</span>
+<span class="nb">input</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">stdin</span><span class="p">.</span><span class="n">readline</span>
+<span class="n">n</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">input</span><span class="p">().</span><span class="n">split</span><span class="p">())</span>
+
+<span class="n">DP</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>    
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">DP</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">DP</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">DP</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">DP</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">])</span><span class="o">%</span><span class="mi">1000000000</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">DP</span><span class="p">[</span><span class="n">n</span><span class="p">][</span><span class="n">k</span><span class="p">])</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h2 id="풀이과정-및-느낀점"><strong>풀이과정 및 느낀점</strong></h2>
+
+<p><br /></p>
+
+<p>점화식을 만들어내는 게 굉장히 까다로웠다. 
+<br />
+이걸 좀 작은 n, k 값을 가진 케이스로 일일이 표를 만들어보면 규칙성이 얼추 보이긴 하는데 솔직히 왜 그렇게 되는 건진 알 수가 없었다.
+<br />
+내가 문제를 보자마자 처음에 만든 점화식은
+<br />
+DP[i][j] = DP[i][j-1] + (DP[i-1][j-1] + DP[i-2][j-1] + …. + DP[0][j-1])
+<br />
+위와 같은데, 이걸 코드로 구현하려면 for 문을 3번을 돌려야 해서 (i 에 대한 것, j에 대한 것, i보다 작은 범위에 대해서 1번 더) 코드도 길어지고 시간초과가 날 거 같았다.
+<br />
+근데 생각해보니, 점화식의 괄호쳐진 부분은 사실 DP[i-1][j] 와 같았다. 이렇게 점화식을 만들면 for 문을 두 번만 돌려도 되고, 코드도 훨씬 간결해진다.
+<br />
+케이스별로 테이블을 만들어서 점화식을 도출해내진 못했지만 초기 버전의 점화식의 하부 구조를 간단하게 만들어서 개서된 버전의 점화식을 만들어낼 수 있었다.
+<br />
+시간이 꽤 오래 걸렸고, 어쨌든 완성된 점화식의 유도 과정은 아래와 같다.
+<br />
+<br />
+<strong>합분해 점화식 유도</strong>
+<br />
+DP[i][j] = DP[i][j-1] + (DP[i-1][j-1] + DP[i-2][j-1] + …. + DP[0][j-1])
+<br />
+DP[i-1][j-1] + DP[i-2][j-1] + …. + DP[0][j-1] = DP[i-1][j]
+<br />
+DP[i][j] = DP[i][j-1] + DP[i-1][j]</p>
+
+:ET

@@ -1,13 +1,21 @@
 ---
+layout : post
 title : "[Coursera : ML Specialization] - Logistic Regression"
-categories : 
-    - Machine Learning
+date: 2022-04-03 00:00:00
+# img: autodrive/ose/kalman_filter.jpg
+categories: [deeplearning-ml] 
 tag : [Coursera, ML, Machine Learning]
 toc : true
 toc_sticky : true
 ---
 
+<br/>
+
+
 ## **Logistic Regression**
+<br/>
+
+
 - Classification Algorithmn
 - Where y is a discrete value : Develop the logistic regression algorithm to determine what class a new input should fall into
 - How do we develop a classification algorithm?
@@ -17,8 +25,13 @@ toc_sticky : true
     - In our example below linear regression with thresholding seems to work
     - <img src="https://user-images.githubusercontent.com/92680829/156676623-16341baa-323a-4736-9d40-921fa77560c7.png" width="500" >
    
+<br/>
+
 
 ### **Function that determines discrete classification**
+<br/>
+
+
 - We want our classifier to output values between 0 and 1
 - When using linear regression we did hθ(x) = (θT x) = z
 - For classification hypothesis representation we do hθ(x) = g((θT x)), where g(z) with z as a real number and g(z) is the final classified outcome, which is either 1 or 0.
@@ -35,7 +48,10 @@ toc_sticky : true
     - P(y=1\|x ; θ) + P(y=0\|x ; θ) = 1 
     - P(y=0\|x ; θ) = 1 - P(y=1\| ; θ)
 
+<br/>
+
 ### **Decision Boundary**
+<br/>
   - x criteria that determines whether y is either 0 or 1
   - suppose that y =  1 when  hθ(x) >= 0.5, which means that z, θT x >= 0 and y = 0 when hθ(x) < 0.5, θT x < 0
   - for example, hθ(x) = g(θ0 + θ1x1 + θ2x2), where θ0 = -3, θ1 = 1, θ2 = 1
@@ -45,6 +61,7 @@ toc_sticky : true
   - If (x1 + x2 >= 3) then we predict y = 1
   - Let's plot how z differs by each combination of x1, x2
   - the line x1 + x2 = 3, that separates g(z), y is the decision boundary
+  
   - <img src="https://user-images.githubusercontent.com/92680829/156680691-a5498da1-0e86-4281-9135-5735a5f25b10.png" width="300">
 
 - Non-Linear Decision Boundary
@@ -59,18 +76,27 @@ toc_sticky : true
 
 
 ---
+<br/>
+
 
 ## **Cost Function of Logistic Regression**
+<br/>
+
+
 Training set of m training examples, Each example has is n+1 length column vector
 x0 = 1
 y ∈ {0,1}
 Hypothesis is based on parameters (θ)
 
 <img src="https://user-images.githubusercontent.com/92680829/156683168-6dfb6801-f65a-4a2c-815a-4d37f69839a8.png" width="500">
+<br/>
+
 
 - Given the training set how to we chose/fit θ?
     - Cost function of linear regression was like below, 
     - <img src="https://user-images.githubusercontent.com/92680829/156683283-033fa772-f636-4bdf-87f3-643d477483a1.png" width="300">
+<br/>
+
 
 - Instead of writing the squared error term, we can write 
 - **cost(hθ(xi), y) = 1/2(hθ(xi) - yi)2**
@@ -87,6 +113,8 @@ Which, appropriately, is the sum of all the individual costs over the training d
  - **A convex logistic regression cost function**
      - To get around this we need a different, convex Cost() function which means we can apply gradient descent
      - <img src="https://user-images.githubusercontent.com/92680829/156684011-edda5943-64ce-43b9-924b-7a7fd1ce0ddc.png" width="500">
+<br/>
+
 
 - This is our logistic regression cost function
     - This is the penalty the algorithm pays
@@ -95,6 +123,8 @@ Which, appropriately, is the sum of all the individual costs over the training d
     - So hθ(x) evaluates as -log(hθ(x))
     - <img src="https://user-images.githubusercontent.com/92680829/156685913-f0e750ef-56db-4deb-9a0d-f2cbcab3e3f5.png" width="270">
     
+<br/>
+
 
 2. plot y=0
     - So hθ(x) evaluates as -log(1-hθ(x))
@@ -102,9 +132,13 @@ Which, appropriately, is the sum of all the individual costs over the training d
     - <img src="https://user-images.githubusercontent.com/92680829/156686219-e35d4c6c-2001-480a-9acd-cd927f906fb3.png" width="250">
     
 
----
+
+<br/>
+
 
 ### **Simplified Cost Function and Gradient Descent**
+<br/>
+
 
 - Instead of separating cost function into two parts differing by the value of y (0 or 1),
 - we can compress it into one cost function, which makes it more convenient to write out the cost.
@@ -116,20 +150,24 @@ Which, appropriately, is the sum of all the individual costs over the training d
     -
     - <img src="https://user-images.githubusercontent.com/92680829/156687790-4532412e-706c-435c-b5aa-7d4a5f9145c3.png" width="600" >
 
+<br/>
+
 
 - Repeat Below to improve cost 
     - Interestingly, derivative of J(θ) of logistic regression is exactly identical with that of linear regression
     - 
     - <img src="https://user-images.githubusercontent.com/92680829/156696635-ab555f91-5544-40e9-9855-fe92787b3901.png" width="400">
+<br/>
+
 
 
 ### **Derivative of Cost Function of Logistic Regression**
+<br/>
+
+
 - Step1 : get derivative of h(θ) = 1/(1 + e-z) 
     - <img src="https://user-images.githubusercontent.com/92680829/156696402-799da3b1-8d66-4ab4-b7e6-8e92c27d46f3.png" width="400">
-
-
-
-
+<br/>
 
 - Step2 : apply derivative to J(θ)
 
@@ -142,9 +180,13 @@ Which, appropriately, is the sum of all the individual costs over the training d
 - 
     - <img src="https://user-images.githubusercontent.com/92680829/156696592-9857ffd5-6637-46ed-abef-2f47d21b64c0.png" width="500">
 
----
+<br/>
+
 
 ## **Advanced Optimization**
+<br/>
+
+
 Alternatively, instead of **gradient descent** to minimize the cost function we could use
 - Conjugate gradient
 - BFGS (Broyden-Fletcher-Goldfarb-Shanno)
@@ -161,9 +203,12 @@ Alternatively, instead of **gradient descent** to minimize the cost function we 
     - Different libraries may use different implementations - may hit performance
 
 
----
+<br/>
+
 
 ##  **Multiclass Classification**
+<br/>
+
 
 - **One vs. all classification**
     - Split the training set into three separate binary classification problems

@@ -1,11 +1,15 @@
 ---
+layout: post
 title : "[Coursera : ML Specialization] - Multivariate Linear Regression"
-categories : 
-    - Machine Learning
+date: 2021-12-06 00:00:00
+# img: autodrive/ose/kalman_filter.jpg
+categories: [deeplearning-ml] 
 tag : [Coursera, ML, Machine Learning]
 toc : true
 toc_sticky : true
 ---
+
+<br/>
 
 ## **Multiple Features**
 
@@ -13,13 +17,19 @@ toc_sticky : true
 
 - suppose X0 = 1, you can simply cost function by using matrix
 <img src="https://user-images.githubusercontent.com/92680829/144761081-afeaa0ee-6f0e-4b5b-846d-37333fd58808.png" >
+<br/>
 
 
 ## **Gradient Descent for Multiple Variables**
+<br/>
+
 <img src="https://user-images.githubusercontent.com/92680829/144761158-69d7d496-dc31-45bb-966b-e2c6b52a1d18.png" >
 
+<br/>
 
 ### **Feature Scaling** to Speed Up Gradient Descent
+<br/>
+
 - can speed up gradient descent by having each of our input values in roughly the same range. 
 - θ will descend quickly on small ranges 
 - On the otherhand, **θ will go down slowly on large ranges**
@@ -33,11 +43,15 @@ toc_sticky : true
 
   - **μi** is the average of all the values for feature (i)
   - **Si** is either (max - min) or standard deviation (sd) of feature (i)
+<br/>
 
 ### **Debugging by adjusting Learning Rate (alpha)**
+<br/>
+
 - Make a plot with number of iterations on the x-axis. Now plot the cost function, **J(θ) over the number of iterations of gradient descent**
 
 <img src="https://user-images.githubusercontent.com/92680829/144761501-702c339b-02e3-4491-b9dd-1ab5066b8bbe.png" width="500px">
+<br/>
 
 - Wrong case 
 
@@ -46,8 +60,11 @@ toc_sticky : true
   - adjust learning rate smaller.
   - with sufficiently small learning rate, gradient descent can always converge.
   - too small learning rate will lead to slow convergence
+<br/>
 
 ## **Features and Polynomial Regression**
+<br/>
+
 - Our hypothesis function need not be linear (a straight line) if that does not fit the data well.
 - change the behavior or curve of our hypothesis function by making it a **quadratic**, **cubic** or **square root** function and just make new features.
 
@@ -59,13 +76,17 @@ toc_sticky : true
   - polynomial regression can be converted to multivariate linear regression
 
 - make sure you Do **Feature Scaling**
+<br/>
 
 ## **Normal Equation**
+<br/>
+
 - gradient descent require multiple iterations untill it reahes to optimum, but **normal equations can compute equivalently optimal theta without those iterations**
 - also no need to do feature scaling
 - (X'X)-1X'y
 
 <img src="https://user-images.githubusercontent.com/92680829/144763082-3c46cb9d-13ee-489f-82e3-e6b7ce8735d0.png" >
+<br/>
 
 - Comparison between **Gradient Descen**t vs **Normal Equation**
 

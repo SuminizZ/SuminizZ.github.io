@@ -1,11 +1,13 @@
 ---
+layout : post
 title : "[Loss Funcitons] MAE, MSE, MLE"
 categories : 
-    - Related Topics
+    - [deeplearning-topics]
 tag : [Entropy, deep learning, Loss Function, MAE, MSE, MLE]
 toc : true
 toc_sticky : true
 ---
+
 <br/>
 
 # Loss Funciton

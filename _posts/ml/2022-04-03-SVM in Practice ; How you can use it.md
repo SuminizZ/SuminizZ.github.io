@@ -1,25 +1,36 @@
 ---
+layout : post
 title : "[Coursera : ML Specialization] - SVM in Practice"
-categories : 
-    - Machine Learning
+date: 2022-04-05 00:00:00
+# img: autodrive/ose/kalman_filter.jpg
+categories: [deeplearning-ml]
 tag : [Coursera, ML, Machine Learning]
 toc : true
 toc_sticky : true
 ---
 
+<br/>
+
+
 ## **How to Use SVM with Kernels**
+<br/>
 
 <img src="https://user-images.githubusercontent.com/92680829/157623910-d62e41b6-0b4c-4c89-92e3-12b405c27ccb.png" width="600">
+<br/>
 
 - When to use linear kernel (No kernel)
     - when feature number (n) is large, while training set size (m) is small
 - When to use Gaussian kernel (similarity)
     - when n is small, while m is large (ideally)
     - note **Do perform feature scailing before using Gaussian kernel function**
-        - <img src="https://user-images.githubusercontent.com/92680829/157625901-88bc1081-819d-46c1-8b65-4f63fe5e9b48.png" width="500">
     
+    <img src="https://user-images.githubusercontent.com/92680829/157625901-88bc1081-819d-46c1-8b65-4f63fe5e9b48.png" width="500">
+    
+<br/>
 
 ### **Restrictions for using Kernels : Mercer's Theorem**
+<br/>
+
 - Linear and Gaussian are most common, but not all similarity functions you develop are valid kernels
 - Must satisfy Merecer's Theorem
 - Other Types of Kernels (not that common..)
@@ -36,13 +47,21 @@ toc_sticky : true
         - Used if input is text strings, Use for text classification
     - Chi-squared kernel
     - Histogram intersection kernel
+    
+<br/>
 
 ### **Multi-class classification for SVM**
+<br/>
+
 - Many packages have built in multi-class classification packages
 - Otherwise use one-vs all method
 - Not a big issue
 
+<br/>
+
 ### **Logistic regression vs. SVM**
+<br/>
+
 - Logistic regression and SVM with a linear kernel are pretty similar
 
 - if n (~10,000) is large (compared to m (10 ~1000)) --> use LR or SVM w/o kernel

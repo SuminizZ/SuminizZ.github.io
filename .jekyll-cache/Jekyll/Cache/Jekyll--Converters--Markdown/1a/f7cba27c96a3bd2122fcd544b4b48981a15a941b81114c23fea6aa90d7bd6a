@@ -1,0 +1,102 @@
+I"I1<p><br /></p>
+
+<h2 id="sarcasm-text-data">Sarcasm Text Data</h2>
+<ul>
+  <li>Layers : Embedding, LSTM, Bidirectional, Dense</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="n">tf</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">urllib</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.preprocessing.text</span> <span class="kn">import</span> <span class="n">Tokenizer</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.preprocessing.sequence</span> <span class="kn">import</span> <span class="n">pad_sequences</span>
+
+<span class="kn">from</span> <span class="nn">tensorflow.keras.layers</span> <span class="kn">import</span> <span class="n">Embedding</span><span class="p">,</span> <span class="n">LSTM</span><span class="p">,</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Bidirectional</span><span class="p">,</span> <span class="n">Flatten</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.callbacks</span> <span class="kn">import</span> <span class="n">ModelCheckpoint</span>
+
+<span class="k">def</span> <span class="nf">solution_model</span><span class="p">():</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s">'https://storage.googleapis.com/download.tensorflow.org/data/sarcasm.json'</span>
+    <span class="n">urllib</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="s">'sarcasm.json'</span><span class="p">)</span>
+
+    <span class="n">vocab_size</span> <span class="o">=</span> <span class="mi">1000</span>
+    <span class="n">embedding_dim</span> <span class="o">=</span> <span class="mi">16</span>
+    <span class="n">max_length</span> <span class="o">=</span> <span class="mi">120</span>
+    <span class="n">trunc_type</span><span class="o">=</span><span class="s">'post'</span>
+    <span class="n">padding_type</span><span class="o">=</span><span class="s">'post'</span>
+    <span class="n">oov_tok</span> <span class="o">=</span> <span class="s">"&lt;OOV&gt;"</span>
+    <span class="n">training_size</span> <span class="o">=</span> <span class="mi">20000</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'sarcasm.json'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">datas</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+    <span class="n">sentences</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">datas</span><span class="p">:</span>
+        <span class="n">sentences</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">'headline'</span><span class="p">])</span>
+        <span class="n">labels</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">'is_sarcastic'</span><span class="p">])</span>
+    
+    <span class="c1"># sentence, label -&gt; train, validation split
+</span>
+    <span class="n">train_sentences</span> <span class="o">=</span> <span class="n">sentences</span><span class="p">[:</span><span class="n">training_size</span><span class="p">]</span>
+    <span class="n">train_labels</span> <span class="o">=</span> <span class="n">labels</span><span class="p">[:</span><span class="n">training_size</span><span class="p">]</span>
+
+    <span class="n">validation_sentences</span> <span class="o">=</span> <span class="n">sentences</span><span class="p">[</span><span class="n">training_size</span><span class="p">:]</span>
+    <span class="n">validation_labels</span> <span class="o">=</span> <span class="n">labels</span><span class="p">[</span><span class="n">training_size</span><span class="p">:]</span>
+
+    <span class="c1"># sentence -&gt; tokenizer
+</span>    <span class="n">tokenizer</span> <span class="o">=</span> <span class="n">Tokenizer</span><span class="p">(</span><span class="n">num_words</span> <span class="o">=</span> <span class="n">vocab_size</span><span class="p">,</span> <span class="n">oov_token</span><span class="o">=</span><span class="n">oov_tok</span><span class="p">)</span>
+    <span class="n">tokenizer</span><span class="p">.</span><span class="n">fit_on_texts</span><span class="p">(</span><span class="n">train_sentences</span><span class="p">)</span>
+
+    <span class="c1"># tokenizer -&gt; sequence
+</span>    <span class="n">train_sequences</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">.</span><span class="n">texts_to_sequences</span><span class="p">(</span><span class="n">train_sentences</span><span class="p">)</span>
+    <span class="n">validation_sequences</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">.</span><span class="n">texts_to_sequences</span><span class="p">(</span><span class="n">validation_sentences</span><span class="p">)</span>
+
+    <span class="c1"># sequence -&gt; padded
+</span>    <span class="n">train_padded</span> <span class="o">=</span> <span class="n">pad_sequences</span><span class="p">(</span><span class="n">train_sequences</span><span class="p">,</span> <span class="n">maxlen</span> <span class="o">=</span> <span class="n">max_length</span><span class="p">,</span> <span class="n">truncating</span> <span class="o">=</span> <span class="n">trunc_type</span><span class="p">,</span> <span class="n">padding</span> <span class="o">=</span> <span class="n">padding_type</span><span class="p">)</span>
+    <span class="n">validation_padded</span> <span class="o">=</span> <span class="n">pad_sequences</span><span class="p">(</span><span class="n">validation_sequences</span><span class="p">,</span> <span class="n">maxlen</span> <span class="o">=</span> <span class="n">max_length</span><span class="p">,</span> <span class="n">truncating</span> <span class="o">=</span> <span class="n">trunc_type</span><span class="p">,</span> <span class="n">padding</span> <span class="o">=</span> <span class="n">padding_type</span><span class="p">)</span>
+
+    <span class="c1"># label -&gt; numpy array
+</span>    <span class="n">train_labels</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">train_labels</span><span class="p">)</span>
+    <span class="n">validation_labels</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">validation_labels</span><span class="p">)</span>
+
+    <span class="c1"># Model
+</span>    <span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">([</span>
+                        <span class="n">Embedding</span><span class="p">(</span><span class="n">vocab_size</span><span class="p">,</span> <span class="n">embedding_dim</span><span class="p">,</span> <span class="n">input_length</span><span class="o">=</span><span class="n">max_length</span><span class="p">),</span>
+                        <span class="n">Bidirectional</span><span class="p">(</span><span class="n">LSTM</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">return_sequences</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)),</span>
+                        <span class="n">Bidirectional</span><span class="p">(</span><span class="n">LSTM</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">return_sequences</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)),</span>
+                        <span class="n">Bidirectional</span><span class="p">(</span><span class="n">LSTM</span><span class="p">(</span><span class="mi">64</span><span class="p">)),</span>
+                        <span class="n">Dense</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">),</span>
+                        <span class="c1"># Dense(32, activation='relu'),
+</span>                        <span class="n">Dense</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">),</span>
+                        <span class="c1"># Dense(4, activation='relu'),
+</span>                        <span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'sigmoid'</span><span class="p">)</span>
+    <span class="p">])</span>
+
+    <span class="n">model</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s">'adam'</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s">'binary_crossentropy'</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s">'acc'</span><span class="p">])</span>
+
+    <span class="n">checkpoint_path</span> <span class="o">=</span> <span class="s">'my_checkpoint_ckpt'</span>
+    <span class="n">checkpoint</span> <span class="o">=</span> <span class="n">ModelCheckpoint</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">checkpoint_path</span><span class="p">,</span>
+                                 <span class="n">save_weights_only</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+                                 <span class="n">save_best_only</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+                                 <span class="n">monitor</span> <span class="o">=</span> <span class="s">'val_loss'</span><span class="p">,</span>
+                                 <span class="n">verbose</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+    
+    <span class="n">model</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_padded</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">,</span>
+              <span class="n">validation_data</span> <span class="o">=</span> <span class="p">(</span><span class="n">validation_padded</span><span class="p">,</span> <span class="n">validation_labels</span><span class="p">),</span>
+              <span class="n">callbacks</span> <span class="o">=</span> <span class="p">[</span><span class="n">checkpoint</span><span class="p">],</span>
+              <span class="n">epochs</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
+    
+    <span class="n">model</span><span class="p">.</span><span class="n">load_weights</span><span class="p">(</span><span class="n">checkpoint_path</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">model</span>
+    
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">solution_model</span><span class="p">()</span>
+    <span class="n">model</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="s">"TF4-sarcasm.h5"</span><span class="p">)</span>
+
+</code></pre></div></div>
+:ET

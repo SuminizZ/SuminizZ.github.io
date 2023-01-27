@@ -1,0 +1,101 @@
+I"4<hr />
+<p>layout: post
+title : “[Coursera : ML Specialization] - Linear Regression with One Variable”
+date: 2021-12-05 00:00:00</p>
+<h1 id="img-autodriveosekalman_filterjpg">img: autodrive/ose/kalman_filter.jpg</h1>
+<p>categories: [deeplearning-ml] 
+tag : [Coursera, ML, Machine Learning]
+toc : true
+toc_sticky : true
+—</p>
+
+<h2 id="multiple-features"><strong>Multiple Features</strong></h2>
+
+<p><img src="https://user-images.githubusercontent.com/92680829/144761037-8ec93e76-35d2-4b0d-96b2-43e4021b1bd1.png" /></p>
+
+<ul>
+  <li>suppose X0 = 1, you can simply cost function by using matrix
+<img src="https://user-images.githubusercontent.com/92680829/144761081-afeaa0ee-6f0e-4b5b-846d-37333fd58808.png" /></li>
+</ul>
+
+<h2 id="gradient-descent-for-multiple-variables"><strong>Gradient Descent for Multiple Variables</strong></h2>
+<p><img src="https://user-images.githubusercontent.com/92680829/144761158-69d7d496-dc31-45bb-966b-e2c6b52a1d18.png" /></p>
+
+<h3 id="feature-scaling-to-speed-up-gradient-descent"><strong>Feature Scaling</strong> to Speed Up Gradient Descent</h3>
+<ul>
+  <li>can speed up gradient descent by having each of our input values in roughly the same range.</li>
+  <li>θ will descend quickly on small ranges</li>
+  <li>On the otherhand, <strong>θ will go down slowly on large ranges</strong></li>
+  <li>and also will <strong>oscillate inefficiently</strong> down to the optimum when the variables are very uneven.</li>
+</ul>
+
+<p><img src="https://user-images.githubusercontent.com/92680829/144761265-7005db75-1afb-4004-af63-18f2ee9d4a85.png" /></p>
+
+<ul>
+  <li>make sure all features are raning in approximately -1 ~ +1</li>
+  <li>
+    <p><strong>Mean Normalization</strong>
+<img src="https://user-images.githubusercontent.com/92680829/144761403-11193870-cf01-4609-af02-d9afd71a0722.png" /></p>
+
+    <ul>
+      <li><strong>μi</strong> is the average of all the values for feature (i)</li>
+      <li><strong>Si</strong> is either (max - min) or standard deviation (sd) of feature (i)</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="debugging-by-adjusting-learning-rate-alpha"><strong>Debugging by adjusting Learning Rate (alpha)</strong></h3>
+<ul>
+  <li>Make a plot with number of iterations on the x-axis. Now plot the cost function, <strong>J(θ) over the number of iterations of gradient descent</strong></li>
+</ul>
+
+<p><img src="https://user-images.githubusercontent.com/92680829/144761501-702c339b-02e3-4491-b9dd-1ab5066b8bbe.png" width="500px" /></p>
+
+<ul>
+  <li>
+    <p>Wrong case</p>
+
+    <p><img src="https://user-images.githubusercontent.com/92680829/144761530-6c6a61c2-f332-4622-8a68-588cea9b05cf.png" width="600px" /></p>
+
+    <ul>
+      <li>adjust learning rate smaller.</li>
+      <li>with sufficiently small learning rate, gradient descent can always converge.</li>
+      <li>too small learning rate will lead to slow convergence</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="features-and-polynomial-regression"><strong>Features and Polynomial Regression</strong></h2>
+<ul>
+  <li>Our hypothesis function need not be linear (a straight line) if that does not fit the data well.</li>
+  <li>
+    <p>change the behavior or curve of our hypothesis function by making it a <strong>quadratic</strong>, <strong>cubic</strong> or <strong>square root</strong> function and just make new features.</p>
+
+    <ul>
+      <li>
+        <p>E.g)</p>
+
+        <p><img src="https://user-images.githubusercontent.com/92680829/144761725-9d710476-cce8-4c43-bd0f-f590b84c0ed8.png" /></p>
+      </li>
+      <li>x^2 = x(2), x^3 = x(3)</li>
+      <li>polynomial regression can be converted to multivariate linear regression</li>
+    </ul>
+  </li>
+  <li>make sure you Do <strong>Feature Scaling</strong></li>
+</ul>
+
+<h2 id="normal-equation"><strong>Normal Equation</strong></h2>
+<ul>
+  <li>gradient descent require multiple iterations untill it reahes to optimum, but <strong>normal equations can compute equivalently optimal theta without those iterations</strong></li>
+  <li>also no need to do feature scaling</li>
+  <li>(X’X)-1X’y</li>
+</ul>
+
+<p><img src="https://user-images.githubusercontent.com/92680829/144763082-3c46cb9d-13ee-489f-82e3-e6b7ce8735d0.png" /></p>
+
+<ul>
+  <li>Comparison between <strong>Gradient Descen</strong>t vs <strong>Normal Equation</strong></li>
+</ul>
+
+<p><img src="https://user-images.githubusercontent.com/92680829/144763131-7470e0ff-7f5d-4cdf-b473-43e54e6a3595.png" /></p>
+:ET

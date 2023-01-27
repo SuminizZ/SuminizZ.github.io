@@ -1,13 +1,19 @@
 ---
+layout : post
 title : "[Coursera : ML Specialization] - Regularization : Preventing Overfitting"
-categories : 
-    - Machine Learning
+date: 2022-04-05 00:00:00
+# img: autodrive/ose/kalman_filter.jpg
+categories: [deeplearning-ml]
 tag : [Coursera, ML, Machine Learning]
 toc : true
 toc_sticky : true
 ---
 
+<br/>
+
+
 ## **Poor or Appropriate Fitting**
+<br/>
 
 - Data Fitting in Linear Regression
  - UnderFitting (Fit a linear function)
@@ -21,17 +27,22 @@ toc_sticky : true
      - good at predicting training set, but not good at new untrained data
      - too many features with small data lead to overfitting
  
+<br/>
+
  - <img src="https://user-images.githubusercontent.com/92680829/156711914-22c2922c-7146-453b-bc0c-e72ddd79a271.png" width="600" >
  
+<br/>
 
 - Data Fitting in Logistic Classification
 
    - <img src="https://user-images.githubusercontent.com/92680829/156712079-6671a1c0-bbe8-4407-8e9b-a0c63d4bad83.png" width="600" >
 
 
----
+<br/>
+
 
 ## **Adress Overfitting**
+<br/>
 
 1. Reduce the number of features 
     - Manually select which features to keep and which to not
@@ -48,10 +59,9 @@ toc_sticky : true
             - **λ is the regularization parameter** 
                 - (1) Want to fit the training set well
                 - (2) Want to keep parameters small
-            -  <img src="https://user-images.githubusercontent.com/92680829/156714814-49b0a6f6-0aef-4b23-8849-1b7cb579d604.png" width="500" align="left">
-            
-            <img src="" width="1000" align="center">
-            - 
+            -  <img src="https://user-images.githubusercontent.com/92680829/156714814-49b0a6f6-0aef-4b23-8849-1b7cb579d604.png" width="500" >
+            <br/>
+
             - What if λ too big up to like 1e100 ? ... algorithm results in underfitting 
                 - y alomost equals to θ0
                 - all other parameters almost equal to 0 compared to λ
@@ -59,15 +69,14 @@ toc_sticky : true
             - <img src="https://user-images.githubusercontent.com/92680829/156717727-8a91b545-5f37-475d-a377-ddf745806908.png" width="400" >
            
                 
-        
+<br/>
 
----
 
 ## **Regularized Linear Regression**
+<br/>
 
 - Previous Gradient Descent
     - <img src="https://user-images.githubusercontent.com/92680829/156717937-38fa5fe1-2a99-4b82-8345-29757925bb84.png" width="400">
-        <img src="" width="1000">
         
 - Regularized Gradient Descent 
     - <img src="https://user-images.githubusercontent.com/92680829/156718155-014e2729-3a6a-4c24-9f30-5880cd113574.png" width="500" >
@@ -77,13 +86,16 @@ toc_sticky : true
     - necessarily smaller than 1 --> penalize each feature θj by the magnitude of λ
     - being multipled for every repeat, being penalized repeatedly
     
+<br/>
 
 ## **Regularization by Normal Equation**
  - <img src="https://user-images.githubusercontent.com/92680829/156720941-c0b195ca-e3bf-41b7-8d1f-f10f5802fdff.png" width="500">
 
----
+<br/>
+
 
 ## **Regularized Logistic Regression**
+<br/>
 
 - quite similar with regularized linear regression
 - but, obviously the hypothesis is very different

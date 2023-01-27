@@ -1,109 +1,120 @@
+{% assign sum = site.posts | size %}
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto" id="navbar-row">
             <li class="nav-item {% if page.url == '/' %} active {% endif %}">
-                <a class="nav-link" href="{{ site.baseurl }}/">ALL</a>
+                <a class="nav-link" href="{{ site.baseurl }}/">ALL ({{sum}})  </a>
             </li>
 
             <li class="nav-item dropdown
             {% if page.url == '/deeplearning/dls/' or page.url == '/deeplearning/ml/' or page.url == '/deeplearning/tf/' or page.url == '/deeplearning/topics/'%} active {% endif %}">
-                <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('autodrive-dropdown')"
+                <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('deeplearning-dropdown')"
                    role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
-                   DEEP LEARNING
+                    DEEP LEARNING
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="autodrive-dropdown">
-                    <a class="dropdown-item" href="{{ "/deeplearning/dls" | prepend: site.baseurl }}">Deep Learning Specialization</a>
-                    <a class="dropdown-item" href="{{ "/deeplearning/topics" | prepend: site.baseurl }}">Related Topics</a>
-                    <a class="dropdown-item" href="{{ "/deeplearning/ml" | prepend: site.baseurl }}">Machine Learning</a>
-                    <a class="dropdown-item" href="{{ "/deeplearning/tsf" | prepend: site.baseurl }}">TensorFlow</a>
-                    <div class="dropdown-divider"></div>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="deeplearning-dropdown">
+                    {% for category in site.categories %}
+                    {% if category[0] == "deeplearning-dls" %}
+                        {% assign dls_sum = category[1].size %}
+                    {% endif %}
+                     {% if category[0] == "deeplearning-ml" %}
+                        {% assign ml_sum = category[1].size %}
+                    {% endif %}
+                    {% if category[0] == "deeplearning-tsf" %}
+                        {% assign tsf_sum = category[1].size %}
+                    {% endif %}
+                     {% if category[0] == "deeplearning-topics" %}
+                        {% assign topics_sum = category[1].size %}
+                    {% endif %}                                   
+                    {% endfor %}
+                    <a class="dropdown-item" href="{{ "/deeplearning/dls" | prepend: site.baseurl }}">Deep Learning Specialization ({{dls_sum}}) </a>
+                    <a class="dropdown-item" href="{{ "/deeplearning/ml" | prepend: site.baseurl }}">Machine Learning ({{ml_sum}})</a>
+                    <a class="dropdown-item" href="{{ "/deeplearning/tsf" | prepend: site.baseurl }}">TensorFlow ({{tsf_sum}})</a>
+                    <a class="dropdown-item" href="{{ "/deeplearning/topics" | prepend: site.baseurl }}">Related Topics ({{topics_sum}})</a>
                 </div>
             </li>
 
             <li class="nav-item dropdown
             {% if page.url == '/github/blogdev/' or page.url == '/github/git/' %} active {% endif %}">
-                <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('math-dropdown')"
+                <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('github-dropdown')"
                    role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
-                   GITHUB
+                   GITHUB 
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="math-dropdown">
-                    <a class="dropdown-item" href="{{ "/github/blogdev" | prepend: site.baseurl }}">Blog Dev</a>
-                    <a class="dropdown-item" href="{{ "/github/git" | prepend: site.baseurl }}">Git</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="github-dropdown">
+                    {% for category in site.categories %}
+                    {% if category[0] == "github-blogdev" %}
+                        {% assign blog_sum = category[1].size %}
+                    {% endif %}
+                     {% if category[0] == "github-git" %}
+                        {% assign git_sum = category[1].size %}
+                    {% endif %}                                  
+                    {% endfor %}
+                    <a class="dropdown-item" href="{{ "/github/blogdev" | prepend: site.baseurl }}">Blog Dev ({{blog_sum}})</a>
+                    <a class="dropdown-item" href="{{ "/github/git" | prepend: site.baseurl }}">Git ({{git_sum}})</a>
                 </div>
             </li>
 
-            <li class="nav-item dropdown
-            {% if page.url == '/ml/la/' or page.url == '/ml/prml/' or page.url == '/ml/sklearn/' or page.url == '/ml/concept/' or page.url == '/ml/question/ or page.url == '/ml/ops/' or page.url == '/ml/etc/'%} active {% endif %}">
-                <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('ml-dropdown')"
-                   role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">
-                    ML
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="ml-dropdown">
-                    <a class="dropdown-item" href="{{ "/ml/concept" | prepend: site.baseurl }}">Concept</a>
-                    <a class="dropdown-item" href="{{ "/ml/sklearn" | prepend: site.baseurl }}">Sklearn</a>
-                    <a class="dropdown-item" href="{{ "/ml/prml" | prepend: site.baseurl }}">PRML(Pattern Recognition and Machine Learning)</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{ "/ml/question" | prepend: site.baseurl }}">Question</a>
-                    <a class="dropdown-item" href="{{ "/ml/etc" | prepend: site.baseurl }}">ETC</a>
-                </div>
-            </li>
-            <li class="nav-item dropdown
-            {% if page.url == '/dl/larochelle/' or page.url == '/dl/pytorch/' or page.url == '/dl/dlai/' or page.url == '/dl/dlai_nlp/' or page.url == '/dl/dlai_gan/ or page.url == '/dl/concept/' or page.url == '/dl/etc/'%} active {% endif %}">
-                <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('dl-dropdown')"
-                   role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">
-                    DL
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="dl-dropdown">
-                    <a class="dropdown-item" href="{{ "/dl/concept" | prepend: site.baseurl }}">Concept</a>
-                    <a class="dropdown-item" href="{{ "/dl/pytorch" | prepend: site.baseurl }}">PyTorch</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{ "/dl/dlai" | prepend: site.baseurl }}">Deeplearning.ai</a>
-                    <a class="dropdown-item" href="{{ "/dl/dlai_gan" | prepend: site.baseurl }}">Deeplearning.ai GAN</a>
-                    <a class="dropdown-item" href="{{ "/dl/etc" | prepend: site.baseurl }}">ETC</a>
-                </div>
-            </li>
 
             <li class="nav-item dropdown
             {% if page.url == '/physics/cm/' or page.url == '/physics/srt/' or page.url == '/physics/em/' or  page.url == '/physics/qm/' %} active {% endif %}">
-                <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('vision-dropdown')"
+                <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('physics-dropdown')"
                    role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
                     PHYSICS
 
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="vision-dropdown">
-                    <a class="dropdown-item" href="{{ "/physics/cm/" | prepend: site.baseurl }}">Classical Mechanics</a>                    
-                    <a class="dropdown-item" href="{{ "/physics/srt/" | prepend: site.baseurl }}">Special Relativity</a>
-                    <a class="dropdown-item" href="{{ "/vphysics/em/" | prepend: site.baseurl }}">Electromagnetism</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{ "/physics/qm/" | prepend: site.baseurl }}">Quantum Mechanics</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="physics-dropdown">
+                    {% for category in site.categories %}
+                    {% if category[0] == "physics-cm" %}
+                        {% assign cm_sum = category[1].size %}
+                    {% endif %}
+                     {% if category[0] == "physics-srt" %}
+                        {% assign srt_sum = category[1].size %}
+                    {% endif %}     
+                    {% if category[0] == "physics-em" %}
+                        {% assign em_sum = category[1].size %}
+                    {% endif %}
+                     {% if category[0] == "physics-qm" %}
+                        {% assign qm_sum = category[1].size %}
+                    {% endif %}                               
+                    {% endfor %}
+                    <a class="dropdown-item" href="{{ "/physics/cm/" | prepend: site.baseurl }}">Classical Mechanics ({{cm_sum}})</a>                    
+                    <a class="dropdown-item" href="{{ "/physics/srt/" | prepend: site.baseurl }}">Special Relativity ({{srt_sum}})</a>
+                    <a class="dropdown-item" href="{{ "/physics/em/" | prepend: site.baseurl }}">Electromagnetism ({{em_sum}})</a>
+                    <!-- <div class="dropdown-divider"></div> -->
+                    <a class="dropdown-item" href="{{ "/physics/qm/" | prepend: site.baseurl }}">Quantum Mechanics ({{qm_sum}})</a>
                 </div>
             </li>
 
             <li class="nav-item dropdown
-            {% if page.url == '/python/rest/' or page.url == '/python/crawling/' or page.url == '/python/gui/' or page.url == '/python/basic/' or page.url == '/python/django/' or page.url == '/python/embedded/' or page.url == '/python/etc/'%} active {% endif %}">
+            {% if page.url == '/python/algo/' or page.url == '/python/crawling/' or page.url == '/python/etc/'%} active {% endif %}">
                 <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('python-dropdown')"
                    role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
                     Python
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="python-dropdown">
-                    <a class="dropdown-item" href="{{ "/python/basic" | prepend: site.baseurl }}">Basic & Pandas & Numpy</a>
-                    <a class="dropdown-item" href="{{ "/python/django" | prepend: site.baseurl }}">Django</a>
-                    <a class="dropdown-item" href="{{ "/python/rest" | prepend: site.baseurl }}">Django-RestFramework</a>
-                    <a class="dropdown-item" href="{{ "/python/crawling" | prepend: site.baseurl }}">Crawling</a>
-                    <a class="dropdown-item" href="{{ "/python/embedded" | prepend: site.baseurl }}">Embedded</a>
-                    <a class="dropdown-item" href="{{ "/python/gui" | prepend: site.baseurl }}">GUI</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{ "/python/etc" | prepend: site.baseurl }}">ETC</a>
+                    {% for category in site.categories %}
+                    {% if category[0] == "python-algo" %}
+                        {% assign algo_sum = category[1].size %}
+                    {% endif %}
+                     {% if category[0] == "python-crwl" %}
+                        {% assign crwl_sum = category[1].size %}
+                    {% endif %}     
+                    {% if category[0] == "python-etc" %}
+                        {% assign etc_sum = category[1].size %}
+                    {% endif %}
+                    {% endfor %}
+                    <a class="dropdown-item" href="{{ "/python/algo" | prepend: site.baseurl }}">Algorithms ({{algo_sum}})</a>
+                    <a class="dropdown-item" href="{{ "/python/crwl" | prepend: site.baseurl }}">Crawling ({{crwl_sum}})</a>
+                    <a class="dropdown-item" href="{{ "/python/etc" | prepend: site.baseurl }}">ETC ({{etc_sum}})</a>
                 </div>
             </li>
 
-            <li class="nav-item dropdown
+            <!-- <li class="nav-item dropdown
             {% if page.url == '/c/concept' or page.url == '/c/cpp/' or page.url == '/c/linux/' or page.url == '/c/etc/' %} active {% endif %}">
                 <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('c-dropdown')"
                    role="button" data-toggle="dropdown"
@@ -134,7 +145,7 @@
                     <a class="dropdown-item" href="{{ "/etc/dev" | prepend: site.baseurl }}">Dev</a>
                     <a class="dropdown-item" href="{{ "/etc/etc" | prepend: site.baseurl }}">ETC</a>
                 </div>
-            </li>
+            </li> -->
         </ul>
     </div>
 </nav>

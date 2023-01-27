@@ -2,8 +2,8 @@
 layout: post
 title : "[Special Relativity] Notes & Problem sets solved "
 date: 2023-01-24 00:00:00
-img : physics/yale.png
-categories : [physics-cm]
+img : physics/yale1.png
+categories : [physics-srt]
 tag : [Physics, Special Relativity, Fundamentals of Physics]
 toc : true
 toc_sticky : true

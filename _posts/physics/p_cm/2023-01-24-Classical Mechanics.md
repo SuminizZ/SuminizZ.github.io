@@ -2,7 +2,7 @@
 layout: post
 title : "[Classical Mechanics] Notes & Problem sets solved"
 date: 2023-01-24 00:00:00
-img : physics/yale.png
+img : physics/yale1.png
 categories : [physics-cm]
 tags : [Physics, Classical Mechanics, Fundamentals of Physics]
 toc : true

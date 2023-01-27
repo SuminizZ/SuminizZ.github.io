@@ -1,11 +1,15 @@
 ---
+layout : post
 title : "[Coursera : ML Specialization] - Recommender System"
-categories : 
-    - Machine Learning
+date: 2022-04-14 00:00:00
+# img: autodrive/ose/kalman_filter.jpg
+categories: [deeplearning-ml]
 tag : [Coursera, ML, Machine Learning]
 toc : true
 toc_sticky : true
 ---
+
+<br/>
 
 ## **Problem Formulation**
 - <img src="https://user-images.githubusercontent.com/92680829/158548925-9de07576-9a00-4759-8cf3-bb82f43efd99.png" width="500" >
@@ -19,7 +23,12 @@ toc_sticky : true
 
 ---
 
+<br/>
+
 ## **Content-Based Recommenation**
+
+<br/>
+
 - <img src="https://user-images.githubusercontent.com/92680829/158550480-9412e2ac-62eb-434a-852c-4544b5a35e78.png" width="620" >
 
 - x(i) denotes ith the 3x1 feature vector of ith movie
@@ -39,8 +48,12 @@ toc_sticky : true
         - now, we can calculate the predicted ratings as **θ1T.x(3) = 4.95**
         
 
+<br/>
 
 ### **How to learn (θj)**
+
+<br/>
+
 - To learn θj for j in all user (1~j)
     - <img src="https://user-images.githubusercontent.com/92680829/158713848-5f22125e-d342-4bca-8c2b-e808de0875a7.png" width="650" >
 
@@ -59,24 +72,32 @@ toc_sticky : true
 - However, in practice. these information about movies are not really available all the time. 
 - Therefore, next we'll gonna discuss about **"Non-Contents Based Approach"**
 
+<br/>
+
 ### **User-Based Learning**
+
+<br/>
+
 - previously, we calculated θj based on x(i)
 - but now, we will caculate x(i) based on the given θj, which is the preferences of user j for all features(genre)
 - We must minimize an optimization function which tries to identify the best parameter vector associated with a **film**, not user
 - So, the cost function can be 
-    - <img src="https://user-images.githubusercontent.com/92680829/158716844-d54039fb-2380-435b-a2dd-b506fbd0fa9a.png" width="650" >
+    - <img src="https://user-images.githubusercontent.com/92680829/158716844-d54039fb-2380-435b-a2dd-b506fbd0fa9a.png" width="580" >
 
 ---
+
+<br/>
 
 ## **Collaborative Filtering**
 
 - Here we combine the ideas from before to build a **Collaborative Filtering Algorithm**
 - Our starting point is as follows
+
     1. If we're given the **film's features** we can use that to work out the **users' preference**
-        - <img src="https://user-images.githubusercontent.com/92680829/158717060-923f0d2a-5613-4d28-acbc-3754b479ae46.png" width="600" >
+        - <img src="https://user-images.githubusercontent.com/92680829/158717060-923f0d2a-5613-4d28-acbc-3754b479ae46.png" width="550" >
     
     2. If we're given the **users' preferences** we can use them to work out the **film's features**
-        - <img src="https://user-images.githubusercontent.com/92680829/158716844-d54039fb-2380-435b-a2dd-b506fbd0fa9a.png" width="600" >
+        - <img src="https://user-images.githubusercontent.com/92680829/158716844-d54039fb-2380-435b-a2dd-b506fbd0fa9a.png" width="550" >
 
 - As each user gives ratings to multiple movies and each movie is rated by multiple users 
 - So we go back and forth to collaboratively gain the information about both users and movies
@@ -84,9 +105,14 @@ toc_sticky : true
 - Collaborative filtering is a technique that can filter out items that a user might like on the basis of reactions by similar users.
 - It works by searching a large group of people and finding a smaller set of users with tastes similar to a particular user
 
+<br/>
+
 ### **Algorithm**
+
+<br/>
+
 - So basically, what we're gonna do is just to mix both of the algorithms (1. and 2.)
-    - <img src="https://user-images.githubusercontent.com/92680829/158718603-9b8086ff-07f7-4ca9-839f-398592964048.png" width="800" >
+    - <img src="https://user-images.githubusercontent.com/92680829/158718603-9b8086ff-07f7-4ca9-839f-398592964048.png" width="700" >
 
 - The squared error term is the same as the squared error term in the two individual objectives above
 - So it's summing over every movie rated by every users
@@ -100,6 +126,7 @@ toc_sticky : true
     - Only difference between this in the **back-and-forward** approach is that we **minimize with respect to both x and θ simultaneously**
 
 **Algorithm Structure**
+
 1. Initialize (θ1, ..., θnu) and (x1, ..., xnm) to small random values
     - A bit like neural networks - initialize all parameters to small random numbers
     - for symmetry breaking
@@ -112,10 +139,14 @@ toc_sticky : true
 
 ---
 
+<br/>
+
 ## **Vectorization : Low Rank Matrix Factorization**
 
+<br/>
+
 - predicted ratings 
-    - <img src="https://user-images.githubusercontent.com/92680829/158731658-b8627a28-42cf-4749-834e-b8e95b028d41.png" width="550" >
+    - <img src="https://user-images.githubusercontent.com/92680829/158731658-b8627a28-42cf-4749-834e-b8e95b028d41.png" width="450" >
 
 - θjTx(i) : ratings of x(i) movie from user j
 - Define Feature [nm x 1] matrix X : information about all movies 1 ~ nm
@@ -131,7 +162,9 @@ toc_sticky : true
     - This is a **vectorized way of computing the prediction range matrix by doing X * θT**
     - the name of this algorithm is **"Low Rank Matrix Factorization"**
         - low-rank approximation is a minimization problem, in which the cost function measures the fit between a given matrix (the data, x) and an approximating matrix (the optimization variable, θ), subject to a constraint that the approximating matrix has reduced rank.
-        - <img src="https://user-images.githubusercontent.com/92680829/158735251-f7e79210-77b6-4718-a01a-0b7fb3df47bc.png"  width="500">
+    
+    <img src="https://user-images.githubusercontent.com/92680829/158735251-f7e79210-77b6-4718-a01a-0b7fb3df47bc.png"  width="500">
+
 
 ### **Finding Related Movies**
 - For each movie (i), we learn x(i) [nx1 vector]
@@ -142,7 +175,11 @@ toc_sticky : true
 
 ---
 
+<br/>
+
 ## **Mean Normalization : implementational detail**
+
+<br/>
 
 - Suppose there is a user 5 that has rated no moives at all
     - <img src="https://user-images.githubusercontent.com/92680829/158736957-1f303b3b-88a5-43a4-b4f6-6fb5f7be41df.png" width="650" >
@@ -153,7 +190,12 @@ toc_sticky : true
     - this doesn't make sense!!
     - THEN, how can we solve this problem?
 
+<br/>
+
 ### **Mean Normalization**
+
+<br/>
+
 - Group all our ratings into matrix Y [5x4] (5 movie ratings from 4 users)
 - Compute the average rating of each movie and store them to a new matrix [nm x 1]
 - Subtract off the mean rating from Y 

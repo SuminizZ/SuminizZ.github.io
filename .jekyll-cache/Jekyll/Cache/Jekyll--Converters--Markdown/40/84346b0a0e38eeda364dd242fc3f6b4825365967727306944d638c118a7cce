@@ -1,0 +1,353 @@
+I"�5<p><br /></p>
+
+<h2 id="motivations"><strong>Motivations</strong></h2>
+<p><br /></p>
+
+<ul>
+  <li>Anomaly detection (aka outlier analysis) is a step in data mining that identifies data points, events, and/or <strong>observations that deviate from a dataset’s normal behavior</strong>.</li>
+  <li>Anomalous data can indicate <strong>critical incidents</strong>, such as a technical glitch, or potential opportunities, for instance <strong>a change in consumer behavior</strong></li>
+  <li>
+    <p>Machine learning is progressively being used to automate anomaly detection.</p>
+
+    <p><img src="https://user-images.githubusercontent.com/92680829/158517578-d9d2cfcf-dadc-42ad-93d0-671ee3d2b75a.png" width="550" /></p>
+  </li>
+  <li>ε is the probability that certain data point follows the usual distribution of data</li>
+  <li>act as a threshold that distinguish whether certain data is anomalous or not.</li>
+  <li>increasing ε can increase the number of anomalies and decreasing it can also decrease the data detected as an anomaly</li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="use-of-anomaly-detection"><strong>Use of Anomaly Detection</strong></h3>
+<ul>
+  <li>Fraud Detection</li>
+  <li>Manufacturing</li>
+  <li>Nonitoring computers in a data center</li>
+</ul>
+
+<hr />
+
+<p><br /></p>
+
+<h2 id="method--gaussian-normal-distribution"><strong>Method : Gaussian (Normal) Distribution</strong></h2>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><img src="https://user-images.githubusercontent.com/92680829/158519573-9296ddc0-75d0-4211-bfb0-a6e91722e5d8.png" width="550" /></p>
+  </li>
+  <li>probability density</li>
+  <li>p(x; μ, σ2) : probability that x follows gaussian distribution parameterized by two elements μ(mean) and σ2 (variance)</li>
+  <li>How distribution changes by those two parameters μ, σ2
+    <ul>
+      <li><img src="https://user-images.githubusercontent.com/92680829/158519948-e7b86bcc-caf7-4231-b0e3-0284fbd7cf4b.png" width="500" /></li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="parameters-estimation"><strong>Parameters Estimation</strong></h3>
+<ul>
+  <li>how to calculate the parameters μ, σ2 with a given data</li>
+  <li>not sure if it’s real, it’s just an approximation by given data</li>
+  <li>but those estimated values become closer to real values as the data size gets bigger</li>
+  <li><img src="https://user-images.githubusercontent.com/92680829/158520435-5f91a354-6a29-460c-ae67-dfab8f504970.png" width="550" /></li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="application--anomaly-detection-algorithm"><strong>Application : Anomaly Detection Algorithm</strong></h3>
+<ul>
+  <li>Model P(x) from the data set</li>
+  <li>x is a vector (n-dimensional)</li>
+  <li>n : # of features / m : # of examples</li>
+  <li>every each feature possesses each one’s distinct parameter values, also, We model each of the features by assuming each feature is distributed according to a Gaussian distribution</li>
+  <li>So model p(x) as
+    <ul>
+      <li><strong>p(x1; μ1 , σ12) * p(x2; μ2 , σ22) * … p(xn ; μn , σn2)</strong></li>
+      <li>in a strict way, it needs <strong>independence assumption</strong> for this equation to be true for describing P(x), but</li>
+      <li>practically, it just works fine even if each features are not independent from each other</li>
+    </ul>
+  </li>
+  <li>p(xi; μi , σi2)
+    <ul>
+      <li>The probability of feature xi given μi and σi2, using a Gaussian distribution</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Density Estimation</strong></p>
+  </li>
+  <li>
+    <p><img src="https://user-images.githubusercontent.com/92680829/158522436-9a401797-0385-4ef6-8947-0711f1154eeb.png" width="550" /></p>
+  </li>
+  <li>for j in 1 ~ n and for i in 1 ~ m</li>
+  <li>we can estimate each features’s parameters
+    <ul>
+      <li><img src="https://user-images.githubusercontent.com/92680829/158523055-510b41bf-5d74-4ed4-b0cb-052556ab9ffb.png" width="400" /></li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h4 id="algorithm-summary"><strong>Algorithm Summary</strong></h4>
+
+<p><br /></p>
+
+<ul>
+  <li><img src="https://user-images.githubusercontent.com/92680829/158523215-baced271-ac36-4822-a4e8-53f892eeb81d.png" width="400" /></li>
+</ul>
+
+<h4 id="example--how-to-apply-gaussian-anomaly-detection"><strong>Example : how to apply Gaussian Anomaly Detection</strong></h4>
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><img src="https://user-images.githubusercontent.com/92680829/158523969-765fbc6f-92ee-43b6-bfe7-4c0a51413fb6.png" width="600" /></p>
+  </li>
+  <li>P(x) = p(x(1), μ1 , σ12) * p(x(1), μ2 , σ22)</li>
+  <li>any new example with p(x) smaller than ε are classified as ‘anomaly’</li>
+</ul>
+
+<hr />
+
+<p><br /></p>
+
+<h2 id="developing-and-evaluating-and-anomaly-detection-system"><strong>Developing and evaluating and anomaly detection system</strong></h2>
+
+<p><br /></p>
+
+<h3 id="real-number-evaluation-system"><strong>Real-Number Evaluation System</strong></h3>
+
+<p><br /></p>
+
+<ul>
+  <li><strong>Split Dataset</strong>
+    <ul>
+      <li>we have some labeled data, of anomalous (y=1) and non-anomalous examples (y=0)</li>
+      <li>set training examples as a collection of normal examples (non-anomalous data)</li>
+      <li>prepare cv and test dataset mixed with anomalous and non-anomalous data</li>
+    </ul>
+  </li>
+  <li><strong>Algorithm evaluation</strong>
+    <ul>
+      <li>Fit model <strong>p(x)</strong> by the prepared training set (all normal, y=0)
+        <ul>
+          <li>there’s no label!!</li>
+        </ul>
+      </li>
+      <li>On cross validation and test set, test the example x (should use different data in CV and test set)
+        <ul>
+          <li>y = 1 if p(x) &lt; epsilon (anomalous)</li>
+          <li>y = 0 if p(x) &gt;= epsilon (normal)</li>
+        </ul>
+      </li>
+      <li>check the performance of model by using given labels
+        <ul>
+          <li>As we have Skewed data (almost normal), simple predict accuracy is not a good estimate of algorithm performance</li>
+          <li>Instead,</li>
+          <li><strong>Possible evaluation metrics</strong>
+            <ul>
+              <li>Confusion matrix, Precision/Recall, F1-score</li>
+              <li>use <strong>cv dataset</strong> to decide most effective <strong>ε</strong></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="anomaly-detection-vs-supervised-learning"><strong>Anomaly detection vs. supervised learning</strong></h3>
+
+<p><br /></p>
+
+<ul>
+  <li>If we have labeled data, why not use a supervised learning algorithm?</li>
+  <li>
+    <p>When you should use supervised learning and when anomaly detection would be better</p>
+  </li>
+  <li><strong>Anomaly Detection</strong> : Fraud Detection, Manufacturing
+    <ul>
+      <li>Very small number of positive (y=1) examples</li>
+      <li>Large number of negative(y=0) examples … can assume Gaussian distribution</li>
+      <li>There’re many different types of anomalies
+        <ul>
+          <li>with very small number of positive examples, it’s impossible for the model to learn every type of anomalies</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><strong>Supervised Learning</strong> : Spam emails, Cancer classification
+    <ul>
+      <li>When there are reasonably large positive and negative examples, large enough for the model to learn both</li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="choosing--modifying-features-to-use"><strong>Choosing &amp; Modifying features to use</strong></h3>
+
+<p><br /></p>
+
+<ul>
+  <li><strong>Check if each feature follows Gaussian Distribution</strong>
+    <ul>
+      <li>Non-Gaussian features
+        <ul>
+          <li>Use some valid <strong>Transformation</strong> to change the distribution more like Gaussian
+            <ul>
+              <li>log(x + c), sqaure root, x1/n..
+  -</li>
+              <li><img src="https://user-images.githubusercontent.com/92680829/158531096-b9eb07ab-2078-40cc-b82f-ed2378ad5502.png" width="500" /></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="debugging-for-anomaly-detection"><strong>Debugging for Anomaly Detection</strong></h3>
+<ul>
+  <li>Common problem
+    <ul>
+      <li>expectation : small p(x) for anomalous examples and large p(x) for normal examples</li>
+      <li>but, we often find p(x) for normal and anomalous examples is quite comparable</li>
+      <li>Like supervised learning error analysis procedure
+        <ul>
+          <li>Run algorithm on CV set</li>
+          <li>See which one it got wrong</li>
+          <li>Try come up with other new features to distinguish both based on trying to understand why the algorithm got those examples wrong</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<p><br /></p>
+
+<h2 id="multivariate-gaussian-distribution"><strong>Multivariate Gaussian Distribution</strong></h2>
+
+<p><br /></p>
+
+<ul>
+  <li>Lets say in the test set we have an example which looks like an anomaly (e.g. x1 = 0.4, x2 = 1.5)</li>
+  <li>Problem is, if we look at each feature individually they may fall within acceptable limits
+    <ul>
+      <li><img src="https://user-images.githubusercontent.com/92680829/158533972-6963d40a-a8a0-423c-8ff7-91c9ca42b10c.png" width="550" /></li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<ul>
+  <li>However, even if we use both feature to distinguish the anomaly,</li>
+  <li>With the previous Gaussian anomaly detection algorithm, that gree point will still be evaluated as normal data
+    <ul>
+      <li><img src="https://user-images.githubusercontent.com/92680829/158534810-89ece414-5945-4d9a-be06-578e89363eac.png" width="550" /></li>
+    </ul>
+  </li>
+  <li>This is because our function makes probability prediction in concentric circles around the the means of both</li>
+  <li>See two green and red x data points marked with red circle, it seems very clear to us that green point is an outlier while the red one is not,</li>
+  <li>
+    <p>however, for our detection algorithm, both lied in a same radius of circle, so basically the same</p>
+  </li>
+  <li>To get around this, we can use the <strong>Multivariate Gaussian distribution</strong>
+    <ul>
+      <li>don’t model p(x1), p(x2), p(x3) … p(xn) each and estimate the parameters μi and σi for each feature</li>
+      <li>
+        <p>instead, get P(x) from all features 1~n with parameters (μ, Σ), (Σ is covariance matrix)</p>
+      </li>
+      <li><img src="https://user-images.githubusercontent.com/92680829/158536190-1f3d2453-0911-41e6-905a-dd1782646ea9.png" width="480" /></li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="how-the-distribution-of-x1-x2-changes-by-σ"><strong>How the distribution of x1, x2 changes by Σ</strong></h3>
+
+<p><br /></p>
+
+<ul>
+  <li><img src="https://user-images.githubusercontent.com/92680829/158537463-0c71cbbc-288a-4506-9b43-c250dd8d6357.png" width="550" /></li>
+</ul>
+
+<h4 id="what-if-we-modify-the-off-diagnal-value-of-σ--capture-correlation-between-features"><strong>What if we modify the off-diagnal value of Σ : Capture Correlation between features</strong></h4>
+<ul>
+  <li>[i, j] element of matrix : correlation between xi and xj feature
+    <ul>
+      <li>not only the variance of the feature itself</li>
+      <li>it can reflect the covariance between different features (correlation)</li>
+    </ul>
+  </li>
+  <li>positivie and negative value each represents positive and negative correlation between those two values, respectively</li>
+  <li><img src="https://user-images.githubusercontent.com/92680829/158538453-c9f8d0bb-5162-4046-9ce4-c09061022956.png" width="400" /></li>
+</ul>
+
+<h3 id="applying-multivariate-gaussian-distribution-to-anomaly-detection"><strong>Applying multivariate Gaussian distribution to anomaly detection</strong></h3>
+<ul>
+  <li>As mentioned, multivariate Gaussian modeling uses the following equation;
+    <ul>
+      <li><img src="https://user-images.githubusercontent.com/92680829/158539253-8139c765-d825-4534-833d-a64f53543b3e.png" width="500" /></li>
+    </ul>
+  </li>
+  <li>Where
+    <ul>
+      <li>μ - the mean of all n features (n-dimenisonal vector)</li>
+      <li>Σ - covariance matrix ([nxn] matrix)
+        <ul>
+          <li>automatically captures correlation between features</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>If you have a set of examples {x1, x2, …, xm }
+    <ul>
+      <li>The formula for estimating the parameters is suggested below,</li>
+      <li><img src="https://user-images.githubusercontent.com/92680829/158539685-a659c5e9-830e-42b8-8f40-4c6c9c0d2f49.png" width="380" /></li>
+    </ul>
+  </li>
+  <li><strong>Detection Algorithm</strong>
+    <ol>
+      <li>fit model P(x) by setting μand Σ with given dataset</li>
+      <li>Given a new example (test), compute P(x) by using equation below
+        <ul>
+          <li><img src="https://user-images.githubusercontent.com/92680829/158539253-8139c765-d825-4534-833d-a64f53543b3e.png" width="460" /></li>
+        </ul>
+      </li>
+      <li>determine whether x is anomalous or not by comparing P(x) with epsilon value you set</li>
+    </ol>
+  </li>
+  <li>Actually the original Gaussian algorithm and the Multivariate Gaussian algorithm is quite similar</li>
+  <li>except, original Gaussian model only has 0 values for all off-diagnal elements in Σ
+    <ul>
+      <li>actually, original model is just a special case of multivariate model</li>
+      <li>where there is an assumption that no correlation between any features at all</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="comparison"><strong>Comparison</strong></h4>
+<ul>
+  <li><img src="https://user-images.githubusercontent.com/92680829/158542890-c7be143d-ee85-4d2d-a0ba-8dc6d7f20a50.png" width="500" /></li>
+</ul>
+
+<hr />
+
+<h3 id="things-to-learn"><strong>Things to Learn</strong></h3>
+<ul>
+  <li>LOF</li>
+</ul>
+:ET

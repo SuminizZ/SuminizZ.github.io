@@ -1,0 +1,63 @@
+I"8<p><br /></p>
+
+<h2 id="이어드림-12주차-알고리즘-스터디-문제--거스름돈-주기상">이어드림 12주차 알고리즘 스터디 문제 : 거스름돈 주기(상)</h2>
+
+<p><br /></p>
+
+<p><img src="https://user-images.githubusercontent.com/92680829/139757582-81b2994f-895b-48a9-a2a7-f084ce329451.png" width="720px" /></p>
+
+<p><br /></p>
+
+<h2 id="solution"><strong>Solution</strong></h2>
+
+<p><br /></p>
+
+<h3 id="정답-코드">정답 코드</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sys</span>
+<span class="c1"># from collections import defaultdict
+</span><span class="nb">input</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">stdin</span><span class="p">.</span><span class="n">readline</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
+<span class="n">coins</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">input</span><span class="p">().</span><span class="n">split</span><span class="p">()))</span>
+<span class="c1"># coins.sort(reverse=True)
+</span><span class="n">change</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
+ 
+<span class="n">DP</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">change</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+
+<span class="n">DP</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">coins</span><span class="p">:</span>                 
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">change</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>        <span class="c1"># 특정 동전만 사용해서 지불하는 경우
+</span>        <span class="k">if</span> <span class="n">i</span> <span class="o">-</span> <span class="n">c</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">DP</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">DP</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">c</span><span class="p">]</span>
+            
+<span class="k">print</span><span class="p">(</span><span class="n">DP</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h3 id="오답-코드">오답 코드</h3>
+
+<p><br /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">change</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">coins</span><span class="p">:</span>           <span class="c1"># 동일한 케이스가 누적해서 더해짐
+</span>        <span class="k">if</span> <span class="n">i</span> <span class="o">-</span> <span class="n">c</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">DP</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">DP</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="n">c</span><span class="p">]</span>
+
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h2 id="풀이과정-및-느낀점"><strong>풀이과정 및 느낀점</strong></h2>
+
+<p><br /></p>
+
+<p>이 문제의 관건은 DP에 거스름돈 주는 경우의 수가 누적해서 더해지는 걸 방지하는 것이다.
+<br />
+처음에는 오답 코드처럼 문제를 풀었는데 이렇게 하면 특정 금액 자체가 기준이 돼고(첫 번째 for 문) 거스름돈 경우의 수 계산은 이후에 이뤄져서(두 번째 for 문) 거스름돈을 10 -&gt; 50 한 경우와 50 -&gt; 10 준 경우가 중복돼서 계산된다.
+<br />
+따라서, 위의 정답코드처럼 for 문의 순서를 뒤바꿔 각 단위의 거스름돈을 사용해 지불 가능한 금액들을 먼저 DP 에 다 저장하는 식으로 수정하게 되면 중복계산없이 DP를 완성할 수 있다.</p>
+:ET

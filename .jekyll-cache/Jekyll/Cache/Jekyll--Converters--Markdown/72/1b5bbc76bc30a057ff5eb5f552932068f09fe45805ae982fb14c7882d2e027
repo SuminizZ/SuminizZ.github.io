@@ -1,0 +1,93 @@
+I"�<p><br /></p>
+
+<h1 id="linear-regression-with-one-variable"><strong>Linear Regression with One Variable</strong></h1>
+<ul>
+  <li>inear regression with one variable is also known as “univariate linear regression.”</li>
+  <li>predict a single output value y from a single input value x</li>
+  <li>
+    <p><strong>Hypothesis Function</strong> (Linear Equation)</p>
+
+    <p><img src="https://user-images.githubusercontent.com/92680829/144719014-22384389-d016-4d46-a407-1ae01da4b75a.png" /></p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="cost-function-"><strong>Cost Function</strong> :</h2>
+<ul>
+  <li>
+    <p><strong>Mean Squarred Error (MSE)</strong> : h(x) 함수값과 실제값(y) 의 차이의 제곱의 평균 
+  <img src="https://user-images.githubusercontent.com/92680829/144719111-a1381f03-1631-49da-9c48-46daaa3c2dd6.png" width="450px" /></p>
+  </li>
+  <li><strong>Goal</strong> : minimize J(θ0, θ1) with <strong>Gradient Descent</strong></li>
+  <li>
+    <p>Draw 3D contour figure to see how J changes with variations in θ0 and θ1
+  <img src="https://user-images.githubusercontent.com/92680829/144719253-71d8c7cf-7d65-45e1-a20d-a1a0644a9a4a.png" width="550px" />
+  <br />
+  <img src="https://user-images.githubusercontent.com/92680829/144719312-59afd740-3df8-4e60-85d9-d91123572873.png" width="550px" />
+  <br /></p>
+  </li>
+  <li>the point where J minimizes is called <strong>optima</strong>, which represents the best hypothesis to predict the function between x and y and this can be gained from <strong>Gradient Descent</strong> method.</li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="gradient-descent"><strong>Gradient Descent</strong></h2>
+<p><img src="https://user-images.githubusercontent.com/92680829/144719968-7396019b-7648-4dc4-b912-16602c910b7c.png" /></p>
+
+<ul>
+  <li>point where red arrow is heading to is called local optimum where cost function become locally minimized.</li>
+  <li>
+    <p>the way to find this point is to take partial derivative of theta 1 and theta 0 and update them using that derivative.</p>
+
+    <p><img src="https://user-images.githubusercontent.com/92680829/144720046-9c1cdba1-9380-4129-8a94-8004dddce617.png" /></p>
+
+    <p><img src="https://user-images.githubusercontent.com/92680829/144721012-66efd7cb-1725-4541-8db5-4a393f889f0f.png" width="600px" />
+<br /></p>
+
+    <ul>
+      <li>:= this sign means to overwrite the left one with the right one. just ‘=’ is no more than a truth assertion.</li>
+      <li>we need to <strong>simultaneously</strong> update theta 1 and theta 0, not one by one.</li>
+      <li>Updating a specific parameter prior to calculating another one on the j(th) iteration would yield to a wrong implementation.</li>
+    </ul>
+
+    <p><img src="https://user-images.githubusercontent.com/92680829/144720115-ce31787c-a13a-4939-85b8-fcb8e2af75a1.png" /></p>
+
+    <ul>
+      <li><strong>learning rate (lr)</strong> : controls the rate of update.
+        <ul>
+          <li>too small : take so much time to reach the global opitmum</li>
+          <li>
+            <p>too large : can’t converge, even more diverge
+<img src="https://user-images.githubusercontent.com/92680829/144721040-7f402614-1b75-420f-8184-0a0bd5e32442.png" width="600px" /></p>
+          </li>
+          <li>gradient descent can converge to minimumn even with the <strong>fixed learning rate</strong>, as the derivative of theta (the magnitude of updating step) can automatically get smaller as it reaches to the optimum point</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+<ul>
+  <li><strong>Gradient Descent Algorithm applied in Linear Regression</strong>
+    <ul>
+      <li>
+        <p>single example of derivation</p>
+
+        <p><img src="https://user-images.githubusercontent.com/92680829/144721465-536cc6ad-b77b-4ca5-bb23-82588d316acf.png" width="300px" /></p>
+      </li>
+      <li>
+        <p>repeatedly apply derivation down below for theta 1 and theta 0 simultaneously untill there’s no advance in J (convergence).
+<img src="https://user-images.githubusercontent.com/92680829/144721508-acd72abf-90ff-4f86-9ec6-e59b3460a6e2.png" width="500px" /></p>
+      </li>
+      <li><strong>Batch Gradient Descent</strong> : use entire training sample for every each updating iterations.</li>
+      <li><strong>Convex Function</strong> : for univariate linear regression, J is a convex function where gradient descent doesn’t have any local optimum other than global optimum.
+<br /></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="linear-algebra-review"><strong>Linear Algebra Review</strong></h2>
+
+:ET

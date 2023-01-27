@@ -1,21 +1,27 @@
 ---
+layout: post
 title : "[Coursera : ML Specialization] - Linear Regression with One Variable"
-categories : 
-    - Machine Learning
+date: 2021-12-05 00:00:00
+# img: autodrive/ose/kalman_filter.jpg
+categories: [deeplearning-ml] 
 tag : [Coursera, ML, Machine Learning]
 toc : true
 toc_sticky : true
 ---
+<br/>
 
 # **Linear Regression with One Variable**
 - inear regression with one variable is also known as "univariate linear regression."
 - predict a single output value y from a single input value x
-- **Hypothesis Function** (일차방정식)
+- **Hypothesis Function** (Linear Equation)
 
   <img src="https://user-images.githubusercontent.com/92680829/144719014-22384389-d016-4d46-a407-1ae01da4b75a.png">
 
+<br/>
 
-## **Cost Function** : Hypothesis 의 예측성능 검증
+## **Cost Function** : 
+<br/>
+
   - **Mean Squarred Error (MSE)** : h(x) 함수값과 실제값(y) 의 차이의 제곱의 평균 
   <img src="https://user-images.githubusercontent.com/92680829/144719111-a1381f03-1631-49da-9c48-46daaa3c2dd6.png" width = "450px">
   
@@ -24,7 +30,11 @@ toc_sticky : true
   <img src="https://user-images.githubusercontent.com/92680829/144719253-71d8c7cf-7d65-45e1-a20d-a1a0644a9a4a.png" width="550px"  >
   <br/>
   <img src="https://user-images.githubusercontent.com/92680829/144719312-59afd740-3df8-4e60-85d9-d91123572873.png" width="550px" >
+  <br/>
+
   - the point where J minimizes is called **optima**, which represents the best hypothesis to predict the function between x and y and this can be gained from **Gradient Descent** method.
+
+<br/>
 
 ## **Gradient Descent**
 <img src="https://user-images.githubusercontent.com/92680829/144719968-7396019b-7648-4dc4-b912-16602c910b7c.png" >
@@ -35,6 +45,7 @@ toc_sticky : true
   <img src="https://user-images.githubusercontent.com/92680829/144720046-9c1cdba1-9380-4129-8a94-8004dddce617.png">
   
   <img src="https://user-images.githubusercontent.com/92680829/144721012-66efd7cb-1725-4541-8db5-4a393f889f0f.png" width="600px">
+<br/>
 
   - := this sign means to overwrite the left one with the right one. just '=' is no more than a truth assertion.
   - we need to **simultaneously** update theta 1 and theta 0, not one by one.
@@ -60,6 +71,4 @@ toc_sticky : true
 
   - **Batch Gradient Descent** : use entire training sample for every each updating iterations.
   - **Convex Function** : for univariate linear regression, J is a convex function where gradient descent doesn't have any local optimum other than global optimum.
-
-## **Linear Algebra Review**
-
+<br/>
