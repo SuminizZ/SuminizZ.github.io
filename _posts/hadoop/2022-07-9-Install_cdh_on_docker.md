@@ -1,13 +1,19 @@
 ---
 title : "[Cloudera] Installing CDH thorugh Docker # 2 - Run Cloudera Server and Agents with Docker" 
-categories : 
-    - Hadoop Ecosystem
+layout : post
+categories : [de-hadoop]
+img : de/cloudera.png
 tags : [Cloudera, CDH, Hadoop, Hadoop Ecosystem, docker, Docker]
 toc : true
 toc_sticky : true
 ---
 
+<br/>
+
 ## **Cluster Configuration with Cloudera Manager**
+
+<br/>
+
 - The image below shows the configuration of cluster that we will set up today
 
     <img src="https://user-images.githubusercontent.com/92680829/177786207-9bc9f332-a134-4286-b010-7dbfed4c51d2.png" width="730">
@@ -15,9 +21,11 @@ toc_sticky : true
     - Hadoop02 - 04 : datanodes linked with Hadoop01 namenode will be our **Cloudera Manager Agents**
   
 
+<br/>
+
 ### **- Server/Agent Architecture of Cloudera**
 
-<img width="500" alt="image" src="https://user-images.githubusercontent.com/92680829/177797869-1d18a839-8537-4939-b822-2ff80bb4aa6d.png">
+<img width="400" alt="image" src="https://user-images.githubusercontent.com/92680829/177797869-1d18a839-8537-4939-b822-2ff80bb4aa6d.png">
 
 - **Cloudera Manager Server**
     - Cloudera Manager runs a central server “the Cloudera Manager Server”, which has also been called the “SCM Server”
@@ -38,8 +46,12 @@ toc_sticky : true
     - During the heartbeat exchange, the Agent notifies the Cloudera Manager Server of its state and activities. In response, Cloudera Manager Server allocates the actions the Agent should perform.
     - If agent stops heartbeating, the host is marked as having bad condition 
 
+<br/>
+
 
 ### 1. Install Cloudera Manager and Create CentOS:CM Imagea
+
+<br/>
 
 - (local terminal) create a container named hadoop01 with centos:base image with the right options
     ```bash
@@ -47,6 +59,9 @@ toc_sticky : true
 
     $ docker exec -it hadoop01 /bin/bash
     ```
+
+    <br/>
+
     - **Docker run options** ([<span style="color:blue">Documentations</span>](https://docs.docker.com/engine/reference/commandline/run/#options))
         - -p : port forwarding localhost 7180 to docker container 7180
         - -h : Container host name
@@ -56,11 +71,16 @@ toc_sticky : true
             - can be optionally suffixed with ```:ro``` or ```:rw``` to mount the volumes in read-only or read-write mode, respectively
         - --privileged : Give extended privileges to this container (without this, mounting will be denied)
 
+<br/>
+
 - (container : hadoop01) if you are successfully connected the running container, then let's execute the cloudera manager installer 
     ```bash
     $ cd
     $ ./cloudera-manager-installer.bin
     ```
+
+    <br/>
+
     - keep enter "yes" 
 
 

@@ -1,0 +1,244 @@
+I"�+<p><br /></p>
+
+<h2 id="1-create-hadoop-cluster--namenode-and-3-datanodes">1. Create Hadoop Cluster : NameNode and 3 DataNodes</h2>
+
+<p><br /></p>
+
+<h3 id="--create-nodes-and-connect-them">- Create Nodes and Connect them</h3>
+<ul>
+  <li>Previously, we made hadoop-base container where we install and set Hadoop configurations on CentOS image</li>
+  <li>
+    <p>For this time, we will gonna make 4 nodes (single namenode and 3 datanodes) using previously set centos:hadoop image 
+<br /></p>
+  </li>
+  <li>Firstly, let’s make NameNode</li>
+  <li>(mac term)
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker run <span class="nt">--it</span> <span class="nt">-h</span> <span class="nt">--name</span> namenode <span class="nt">-p</span> 50070:50070 centos:7
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<ul>
+  <li><strong>Port Forwarding</strong>
+    <ul>
+      <li>connect localhost port 50070 on local PC to 50070 port of Docker containers</li>
+      <li><img src="https://user-images.githubusercontent.com/92680829/169309361-b0d715ea-ee62-4e65-aa7e-1a0a7c30cf26.png" width="430" /></li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<ul>
+  <li>Now let’s make 3 Datanodes linked to Namenode container
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker run <span class="nt">--it</span> <span class="nt">-h</span> <span class="nt">--name</span> dn1 <span class="nt">--link</span> namenode:nn centos:7
+<span class="nv">$ </span>docker run <span class="nt">--it</span> <span class="nt">-h</span> <span class="nt">--name</span> dn2 <span class="nt">--link</span> namenode:nn centos:7
+<span class="nv">$ </span>docker run <span class="nt">--it</span> <span class="nt">-h</span> <span class="nt">--name</span> dn3 <span class="nt">--link</span> namenode:nn centos:7
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<ul>
+  <li>Link three datanodes to namenode with option <code class="language-plaintext highlighter-rouge">--link</code>
+    <ul>
+      <li>–link [container_name]:[alias]</li>
+    </ul>
+  </li>
+  <li>This allows /etc/hosts file of slave containers to contain IP address of master container</li>
+  <li>Any change on IP address of linked container is updated automatically</li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="--store-information-of-datanodes-into-namenode">- Store Information of DataNodes into NameNode</h3>
+
+<p><br /></p>
+
+<ul>
+  <li>get IP addresses of all three datanodes with the command</li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">docker inspect [target_container] | grep IPAddress</code></p>
+
+    <p><img src="https://user-images.githubusercontent.com/92680829/169314217-672a3cb3-28f1-4e1e-a99a-1aff0f90dc2c.png" width="520" /></p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<ul>
+  <li>Now, add IP addresses of datanodes to /etc/hots file of NameNode</li>
+  <li>exec NameNode and edit /etc/hosts with <strong>vim</strong> like below
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="o">(</span>mac term<span class="o">)</span> docker <span class="nb">exec</span> <span class="nt">-it</span> namenode /bin/bash
+<span class="nv">$ </span><span class="o">(</span>nn container<span class="o">)</span> vim /etc/hosts 
+</code></pre></div>    </div>
+    <p><br />
+  <img src="https://user-images.githubusercontent.com/92680829/169540036-2c161b5a-32aa-4fc2-88a1-d29e72f1975b.png" width="380" /></p>
+
+    <ul>
+      <li>Note that all changes to hosts file are reset when you stop and restart the container, so make sure to re-edit the file every restart (preparing shell script file would be convenient)</li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p>Now let’s add hostname of each datanode to <strong>slaves</strong> file</p>
+
+    <p><img src="https://user-images.githubusercontent.com/92680829/169322013-d2563125-dd42-44e1-8f72-0f0964e0db15.png" width="200" /></p>
+
+    <ul>
+      <li>The $HADOOP_INSTALL/hadoop/conf directory contains some configuration files for Hadoop</li>
+      <li><strong>slaves</strong> file is one of those
+        <ul>
+          <li>This file lists the hosts, one per line, where the Hadoop slave daemons (datanodes and tasktrackers) will run. By default this contains the single entry localhost</li>
+        </ul>
+      </li>
+      <li>Ohter documentations are <a href="https://cwiki.apache.org/confluence/display/HADOOP2/GettingStartedWithHadoop" target="_blank"><span style="color:blue"><strong>here</strong></span></a></li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="2-launch-hadoop-deamons-on-docker-containers">2. Launch Hadoop Deamons on Docker Containers</h2>
+
+<p><br /></p>
+
+<ul>
+  <li>You’ve just successfully created all the nodes required and connect them each other</li>
+  <li>Now let’s actually run Hadoop deamons by activating <code class="language-plaintext highlighter-rouge">start-all.sh</code> script
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="o">(</span>nn container<span class="o">)</span> start-all.sh
+</code></pre></div>    </div>
+    <p><br /></p>
+  </li>
+  <li>If you type the command above, you’ll see multiple warnings and questions like “Are you sure you want to continue connecting (yes/no)?”</li>
+  <li>Ignore all of them and answer yes</li>
+  <li>When you finish all steps, you can finally see these lines below 
+<img src="https://user-images.githubusercontent.com/92680829/169324484-7356cc90-8d37-4116-9267-2879e8a2ee05.png" width="700" /></li>
+</ul>
+
+<p><br /></p>
+
+<ul>
+  <li><strong>Startup Scripts</strong>
+    <ul>
+      <li>$HADOOP_INSTALL/hadoop/bin directory contains some scripts used to launch Hadoop DFS and Hadoop Map/Reduce daemons</li>
+      <li>start-all.sh is one of those
+        <ul>
+          <li>It starts all Hadoop daemons, the namenode, datanodes, the jobtracker and tasktrackers.</li>
+          <li>Now Deprecated; use start-dfs.sh then start-mapred.sh instead</li>
+        </ul>
+      </li>
+      <li>Ohter documentations are <a href="https://cwiki.apache.org/confluence/display/HADOOP2/GettingStartedWithHadoop" target="_blank"><span style="color:blue"><strong>here</strong></span></a></li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="--check-current-process-status">- Check Current Process Status</h3>
+
+<p><br /></p>
+
+<ul>
+  <li>(nn container) after executing the script, type <code class="language-plaintext highlighter-rouge">ps -ef</code> to check the current process status
+<img src="https://user-images.githubusercontent.com/92680829/169325738-08e8cbfb-f591-4c7e-80c7-2596b86e98d9.png" width="700" /></li>
+</ul>
+
+<p><br /></p>
+
+<ul>
+  <li>you’ll see java process is running, but no detail is shown there</li>
+  <li>So, you can alternatively use command <code class="language-plaintext highlighter-rouge">jps</code> : lists processes currently running on jvm
+    <ul>
+      <li>namenode : <img src="https://user-images.githubusercontent.com/92680829/169326533-83551620-69c4-41dd-8e2a-7eb850c69711.png" width="250" /></li>
+      <li>datanode (dn2) : <img src="https://user-images.githubusercontent.com/92680829/169536745-98f91469-bb2c-4ef1-8067-2ccc9fb92b5b.png" width="180" /></li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<ul>
+  <li>You can see all Hadoop deamons are set normally on each container for <strong>HDFS and YARN Hadoop system</strong>
+    <ul>
+      <li>Secondary NameNode, Resource Manager are running on namenode container</li>
+      <li>while DataNode and NodeManager are activatded on datanode containers</li>
+      <li><img src="https://user-images.githubusercontent.com/92680829/169539052-13390366-25ec-471a-9e9c-8cbbeeaa1884.png" width="450" /></li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="--start-hadoop-on-your-nodes">- Start Hadoop on your Nodes</h3>
+
+<p><br /></p>
+
+<ul>
+  <li>Now you can use <strong>Hadoop commands</strong> on your container terminal
+    <ul>
+      <li>
+        <p>1) <code class="language-plaintext highlighter-rouge"># hdfs dfsadmin -report</code> : to check current status of Hadoop cluster</p>
+
+        <ul>
+          <li>You’ll find ‘Live datanodes (3)’ output, which shows that three datanodes (dn1, 2, 3) are currently running</li>
+          <li>Also, you can drill down into the detail status of each datanode
+            <ul>
+              <li><img src="https://user-images.githubusercontent.com/92680829/169541435-7dcc795a-51f1-418b-8123-f1449d24d657.png" width="320" /></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>2) <code class="language-plaintext highlighter-rouge"># hdfs dfs -ls /</code> or <code class="language-plaintext highlighter-rouge"># hadoop fs -ls /</code> : shows current file system
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">hadoop fs [args]</code>
+            <ul>
+              <li>FS relates to a generic file system which can point to any file systems like local, HDFS etc. So this can be used when you are dealing with different file systems such as Local FS, (S)FTP, S3, and others</li>
+            </ul>
+          </li>
+          <li><code class="language-plaintext highlighter-rouge">hdfs dfs [args]</code> ( <code class="language-plaintext highlighter-rouge">hadoop dfs [arg]</code> has been deprecated)
+            <ul>
+              <li>specific to HDFS. would work for operation relates to only HDFS.</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>3) <code class="language-plaintext highlighter-rouge">hdfs dfs -mkdir /[filename]</code> : literally makes dir
+        <ul>
+          <li>check if file was made by using previous command <code class="language-plaintext highlighter-rouge"># hdfs dfs -ls /</code></li>
+          <li><img src="https://user-images.githubusercontent.com/92680829/169547448-9e145587-9d93-42f4-aedf-81f7f850cc59.png" width="550" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="--access-to-admin-web-page">- Access to Admin Web Page</h3>
+
+<p><br /></p>
+
+<ul>
+  <li>you can access to admin webpage deamon and see current status of Hadoop cluster on your local PC</li>
+  <li>open the web browser and access to url ‘localhost:[port number]’
+    <ul>
+      <li>use the port number that you set for port mapping when creating master node (namenode)</li>
+      <li>example : localhost:50070</li>
+    </ul>
+
+    <p><img width="546" alt="image" src="https://user-images.githubusercontent.com/92680829/169549317-014099a0-5436-4f74-9404-4a68e56162ac.png" />
+  <img width="643" alt="image" src="https://user-images.githubusercontent.com/92680829/169550206-517a13bc-2f3d-41af-ae93-a8f3e099c3bc.png" /></p>
+  </li>
+  <li>main page shows the summary of HDFS memory usages</li>
+  <li>you can also browse the directories of HDFS system through ‘Utilities’ tap
+  <img width="794" alt="image" src="https://user-images.githubusercontent.com/92680829/169551172-f2b3d425-ac61-49b9-9819-ca9276faa6ed.png" /></li>
+</ul>
+:ET

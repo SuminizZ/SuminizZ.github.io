@@ -1,18 +1,26 @@
 ---
 title : "[Cloudera] Installing CDH thorugh Docker # 1 - Prepare Base Docker Image" 
-categories : 
-    - Hadoop Ecosystem
+layout : post
+categories : [de-hadoop]
+img : de/cloudera.png
 tags : [Cloudera, CDH, Hadoop, Hadoop Ecosystem, docker, Docker]
 toc : true
 toc_sticky : true
 ---
 
-## CDH (Cloudera Distribution for Hadoop Platform)
+<br/>
+
+## **CDH (Cloudera Distribution for Hadoop Platform)**
+
+<br/>
+
 - Hadoop Ecosystem requires multiple components and each component has complex version dependency to another, which makes it really hard for customers to manage entire hadoop cluster by themselves. 
 - CDH is the most widely deployed distribution of Apache Hadoop as an end-to-end management tool for Hadoop system that allows integrated control over all necessary hadoop components . 
 - It provides automated installation process, reduced deployment cost, real-time view of nodes, central console to process across clusters, and other range of tools needed to operate Hadoop cluster<br/>
 
     <img src="https://user-images.githubusercontent.com/92680829/177539404-d2d17371-fccb-4b16-a705-e26c58b8273e.png" width="500">
+
+<br/>
 
 
 - Today, we will use 7.1.4 version of cloudera (open source)
@@ -20,7 +28,11 @@ toc_sticky : true
 
 - Alternatively, you can just download cloudera docker image with a brief command ```docker pull cloudera/quickstart:latest```
 
-## Creates Docker Image with Cloudera Manager Installed
+<br/>
+
+## **Creates Docker Image with Cloudera Manager Installed**
+
+<br/>
 
 - **!) Before start**, if you're using Mac (Apple M1 Silicon), then you need to build base Docker image on AMd64 architecture environment instead of ARM64 architecture
     - Refer to [<span style="color:blue">HERE</span>](http://127.0.0.1:4000/trouble%20shooting/tblshooting_build_amd64_docker_image_on_mac/){:target="_blank"} instead of this post
@@ -32,11 +44,18 @@ toc_sticky : true
     <img src="https://user-images.githubusercontent.com/92680829/177546575-78dd1642-4f9f-4a3c-8e9f-4123461af330.png" width="650">
     
 
+<br/>
+
 ### **1. Create CentOS Base Image**
+
+<br/>
+
 - (local terminal) first, create a new container named as centos_base with CentOS image (version 7 here)
 ```bash
 $ docker run -it --name centos_base -dt centos:7
 ```
+<br/>
+
 - execute centos_base container and install all the necessary basic components
     ```bash
     ## terminal
@@ -54,6 +73,9 @@ $ docker run -it --name centos_base -dt centos:7
     $ ssh-keygen -f /etc/ssh/ssh_host_ecdsa_key -t ecdsa -N ""       ## ecdsa key with passphrases "" (empty)
     $ ssh-keygen -f /etc/ssh/ssh_host_ed25519_key -t ed25519 -N ""   ## ed25519 key with passphrases "" (empty)
     ```
+
+    <br/>
+
     - **wget** : software package for interacting with REST APIs to retrieve files using HTTP, HTTPS, FTP and FTPS
     - **vim** : can edit files on terminal 
     - **openssh-server openssh-clients openssh-askpass** : connectivity tool for remote login between computers with the SSH protocol 
@@ -68,6 +90,8 @@ $ docker run -it --name centos_base -dt centos:7
                         - -P : old passphrase 
                         - -N : new passphrase
                     - -f : Specifies the filename of the key file.
+
+<br/>
 
 - (container) edit the "bashrc" file using vim 
     ```bash
@@ -84,7 +108,12 @@ $ docker run -it --name centos_base -dt centos:7
         - It handles user authentication, encryption, terminal connections, file transfers, and tunneling.
 
 
+<br/>
+
 ### **2. Download Cloudera Manager Installer on centos:base image and Give Access Permission**
+
+<br/>
+
 - (container) now, let's download cloudera managaer installer file on container
     ```bash
     $ wget https://archive.cloudera.com/cm7/7.1.4/cloudera-manager-installer.bin
@@ -95,6 +124,9 @@ $ docker run -it --name centos_base -dt centos:7
     
     $ exit
     ```
+
+    <br/>
+
     - **chmod** (change mode)
         - command used to change the access permissions (file mode)
         - With a set of options, you can specify the classes of users to whom the permissions are applied and the types of access allowed (which permissions are to be granted or removed)
@@ -103,6 +135,8 @@ $ docker run -it --name centos_base -dt centos:7
             - -x : execute permission (recursive, includes all sub-directory)
             - [<span style="color:blue">For more informations, here</span>](https://en.wikipedia.org/wiki/Chmod#Special_modes){:target="_blank"}
 
+<br/>
+
 - (local terminal) now, commit the container (centos_base) with all the files and packages set into a docker image **centos:base**
     ```bash
     $ docker commit centos_base centos:base 
@@ -110,6 +144,8 @@ $ docker run -it --name centos_base -dt centos:7
     <img src="https://user-images.githubusercontent.com/92680829/177571380-453b8fa9-4884-43dc-b11f-07db743c8d59.png" width="700">
     - you can see new docker image named centos:base has just been created
     
+
+<br/>
 
 
 ## References

@@ -1,0 +1,171 @@
+I"N*<p><br /></p>
+
+<h2 id="cdh-cloudera-distribution-for-hadoop-platform">CDH (Cloudera Distribution for Hadoop Platform)</h2>
+
+<p><br /></p>
+
+<ul>
+  <li>Hadoop Ecosystem requires multiple components and each component has complex version dependency to another, which makes it really hard for customers to manage entire hadoop cluster by themselves.</li>
+  <li>CDH is the most widely deployed distribution of Apache Hadoop as an end-to-end management tool for Hadoop system that allows integrated control over all necessary hadoop components .</li>
+  <li>
+    <p>It provides automated installation process, reduced deployment cost, real-time view of nodes, central console to process across clusters, and other range of tools needed to operate Hadoop cluster<br /></p>
+
+    <p><img src="https://user-images.githubusercontent.com/92680829/177539404-d2d17371-fccb-4b16-a705-e26c58b8273e.png" width="500" /></p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<ul>
+  <li>Today, we will use 7.1.4 version of cloudera (open source)
+    <ul>
+      <li><a href="https://archive.cloudera.com/cm7/7.1.4/" target="_blank"><span style="color:blue">URL for cloudera manager 7.1.4 installer</span></a></li>
+    </ul>
+  </li>
+  <li>Alternatively, you can just download cloudera docker image with a brief command <code class="language-plaintext highlighter-rouge">docker pull cloudera/quickstart:latest</code></li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="creates-docker-image-with-cloudera-manager-installed">Creates Docker Image with Cloudera Manager Installed</h2>
+
+<p><br /></p>
+
+<ul>
+  <li><strong>!) Before start</strong>, if you’re using Mac (Apple M1 Silicon), then you need to build base Docker image on AMd64 architecture environment instead of ARM64 architecture
+    <ul>
+      <li>Refer to <a href="http://127.0.0.1:4000/trouble%20shooting/tblshooting_build_amd64_docker_image_on_mac/" target="_blank"><span style="color:blue">HERE</span></a> instead of this post</li>
+    </ul>
+  </li>
+  <li><strong>Steps</strong>
+    <ol>
+      <li>Create CentOS base Image - <strong>centos:base</strong></li>
+      <li>Install Cloudera Manager 7.1.4 on centos:base image - <strong>centos:CM</strong></li>
+      <li>Set Haddop Cluster with one namenode (Hadoop 01, cloudera manager server) and three datanodes (Hadoop 02~04, cloudera mangaer agent)  —&gt; this part will be addressed next time
+  <img src="https://user-images.githubusercontent.com/92680829/177546575-78dd1642-4f9f-4a3c-8e9f-4123461af330.png" width="650" /></li>
+    </ol>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="1-create-centos-base-image"><strong>1. Create CentOS Base Image</strong></h3>
+
+<p><br /></p>
+
+<ul>
+  <li>(local terminal) first, create a new container named as centos_base with CentOS image (version 7 here)
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker run <span class="nt">-it</span> <span class="nt">--name</span> centos_base <span class="nt">-dt</span> centos:7
+</code></pre></div>    </div>
+  </li>
+  <li>execute centos_base container and install all the necessary basic components
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c">## terminal</span>
+  <span class="nv">$ </span>docker <span class="nb">exec</span> <span class="nt">-it</span> centos_base /bin/bash
+
+  <span class="c">## container </span>
+  <span class="nv">$ </span>yum update
+  <span class="nv">$ </span>yum <span class="nb">install </span>wget <span class="nt">-y</span>
+  <span class="nv">$ </span>yum <span class="nb">install </span>vim <span class="nt">-y</span>
+  <span class="nv">$ </span>yum <span class="nb">install </span>openssh-server openssh-clients openssh-askpass <span class="nt">-y</span>
+  <span class="nv">$ </span>yum <span class="nb">install </span>initscripts <span class="nt">-y</span>
+  <span class="nv">$ </span>ssh-keygen <span class="nt">-t</span> dsa <span class="nt">-P</span> <span class="s2">""</span> <span class="nt">-f</span> ~/.ssh/id_dsa                       <span class="c">## create dsa key file with passphrases "" (empty)</span>
+  <span class="nv">$ </span><span class="nb">cat</span> ~/.ssh/id_dsa.pub <span class="o">&gt;&gt;</span> ~/.ssh/authorized_keys                <span class="c">## append public key file on authorized_keys file</span>
+  <span class="nv">$ </span>ssh-keygen <span class="nt">-f</span> /etc/ssh/ssh_host_rsa_key <span class="nt">-t</span> rsa <span class="nt">-N</span> <span class="s2">""</span>           <span class="c">## rsa key with passphrases "" (empty)</span>
+  <span class="nv">$ </span>ssh-keygen <span class="nt">-f</span> /etc/ssh/ssh_host_ecdsa_key <span class="nt">-t</span> ecdsa <span class="nt">-N</span> <span class="s2">""</span>       <span class="c">## ecdsa key with passphrases "" (empty)</span>
+  <span class="nv">$ </span>ssh-keygen <span class="nt">-f</span> /etc/ssh/ssh_host_ed25519_key <span class="nt">-t</span> ed25519 <span class="nt">-N</span> <span class="s2">""</span>   <span class="c">## ed25519 key with passphrases "" (empty)</span>
+</code></pre></div>    </div>
+    <ul>
+      <li><strong>wget</strong> : software package for interacting with REST APIs to retrieve files using HTTP, HTTPS, FTP and FTPS</li>
+      <li><strong>vim</strong> : can edit files on terminal</li>
+      <li><strong>openssh-server openssh-clients openssh-askpass</strong> : connectivity tool for remote login between computers with the SSH protocol
+        <ul>
+          <li><strong>SSH protocl (Secure Shell Protocol)</strong>
+            <ul>
+              <li>network communication protocol that enables two remote computers to share data or perform operations on each other</li>
+              <li>Communication between remote computers is encrypted by a pair of keys (private and public) for authentication instead of using passwords, which allows safer interation between computers even on insecrue, public networks</li>
+              <li>ssh-keygen : generate private - public key pairs
+                <ul>
+                  <li>Command Options (<a href="http://man.openbsd.org/OpenBSD-current/man1/ssh-keygen.1#NAME" target="_blank"><span style="color:blue">For more informations, here</span></a>)
+                    <ul>
+                      <li>-t :  Specifies the type (algorithm) of key to create, default by rsa but alternatively you can use other algorithms such as DSA, ECDSA and ED25519</li>
+                      <li>-b : Specifies the number of bits in the key to create. The default length is 3072 bits (RSA) or 256 bits (ECDSA)</li>
+                      <li>-p : Requests changing the passphrase (phrases to protect private key files) of a private key file
+                        <ul>
+                          <li>-P : old passphrase</li>
+                          <li>-N : new passphrase</li>
+                        </ul>
+                      </li>
+                      <li>-f : Specifies the filename of the key file.</li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>(container) edit the “bashrc” file using vim
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>vim ~/.bashrc
+
+  <span class="c">## bashrc file</span>
+  <span class="nv">$ </span>/usr/sbin/sshd
+
+  <span class="nv">$ </span><span class="nb">source</span> ~/.bashrc   <span class="c">## by sourcing it, you can relaod the file and execute the commands placed in there</span>
+</code></pre></div>    </div>
+    <ul>
+      <li>add the command to activate sshd and exit (writing mode start - :i / overwrite - :w / exit - :q)</li>
+      <li><strong>sshd</strong> (OpenSSH server process)
+        <ul>
+          <li>receives incoming connections using the SSH protocol and acts as the server for the protocol.</li>
+          <li>It handles user authentication, encryption, terminal connections, file transfers, and tunneling.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="2-download-cloudera-manager-installer-on-centosbase-image-and-give-access-permission"><strong>2. Download Cloudera Manager Installer on centos:base image and Give Access Permission</strong></h3>
+<ul>
+  <li>(container) now, let’s download cloudera managaer installer file on container
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>wget https://archive.cloudera.com/cm7/7.1.4/cloudera-manager-installer.bin
+</code></pre></div>    </div>
+  </li>
+  <li>(container) allow execute permission to installer file and exit
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span><span class="nb">chmod </span>u+x cloudera-manager-installer.bin
+    
+  <span class="nv">$ </span><span class="nb">exit</span>
+</code></pre></div>    </div>
+    <ul>
+      <li><strong>chmod</strong> (change mode)
+        <ul>
+          <li>command used to change the access permissions (file mode)</li>
+          <li>With a set of options, you can specify the classes of users to whom the permissions are applied and the types of access allowed (which permissions are to be granted or removed)
+            <ul>
+              <li>-u : user, only for file owner</li>
+              <li>+ : operator that indicates you want to add the permission following behind</li>
+              <li>-x : execute permission (recursive, includes all sub-directory)</li>
+              <li><a href="https://en.wikipedia.org/wiki/Chmod#Special_modes" target="_blank"><span style="color:blue">For more informations, here</span></a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>(local terminal) now, commit the container (centos_base) with all the files and packages set into a docker image <strong>centos:base</strong>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">$ </span>docker commit centos_base centos:base 
+</code></pre></div>    </div>
+    <p><img src="https://user-images.githubusercontent.com/92680829/177571380-453b8fa9-4884-43dc-b11f-07db743c8d59.png" width="700" /></p>
+    <ul>
+      <li>you can see new docker image named centos:base has just been created</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="references">References</h2>
+<ul>
+  <li><a href="https://docs.cloudera.com/cloudera-manager/7.5.4/concepts/cm-concepts.pdf" target="_blank">https://docs.cloudera.com/cloudera-manager/7.5.4/concepts/cm-concepts.pdf</a></li>
+  <li><a href="https://taaewoo.tistory.com/23?category=917407" target="_blank">https://taaewoo.tistory.com/23?category=917407</a></li>
+</ul>
+:ET

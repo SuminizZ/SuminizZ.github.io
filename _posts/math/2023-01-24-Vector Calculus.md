@@ -1,13 +1,16 @@
 ---
+layout : post
 title : "[Vector Calculus] All Notes"
 categories : 
-    - Vector Calculus
+    - [math-vcalc]
 tag : [Math, Vector Calculus]
 toc : true
 toc_sticky : true
 ---
+<br/>
 
 ## Vector Calculus 
+<br/>
 
 ### - Notes
 
