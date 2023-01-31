@@ -20,7 +20,7 @@ toc_sticky : true
 
 <br/>
 
-```Matlab
+```python
 function [L, U] = factorize(A)
 % square LU factorization with no row exchanges
 [n, n] = size(A); 
@@ -50,7 +50,7 @@ end
 
 <br/>
 
-```Matlab
+```python
 function x = slv(A, b)
 % Solve Ax = b using Lc=b and Ux=c
 [L, U] = factorize(A)
