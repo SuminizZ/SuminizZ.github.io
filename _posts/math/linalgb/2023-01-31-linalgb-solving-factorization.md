@@ -9,6 +9,7 @@ toc_sticky : true
 ---
 
 <br/>
+
 ## MATLAB code for solving Ax = b
 - No Row Exchange
 - A is invertible
