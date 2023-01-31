@@ -21,7 +21,7 @@ toc_sticky : true
 
 <br/>
 
-```python
+```matlab
 function [L, U] = factorize(A)
 % square LU factorization with no row exchanges
 [n, n] = size(A); 
@@ -80,6 +80,6 @@ x = x';
 
 
 - Reference 
-- Strang, Gilbert. Introduction to Linear Algebra. 4th ed (Chapter 2. Solving Linear Equation, p100)
+    - Strang, Gilbert. Introduction to Linear Algebra. 4th ed (Chapter 2. Solving Linear Equation, p100)
 
 
