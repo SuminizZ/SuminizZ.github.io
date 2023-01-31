@@ -21,7 +21,7 @@ toc_sticky : true
 
 <br/>
 
-```Matlab
+```js
 function [L, U] = factorize(A)
 % square LU factorization with no row exchanges
 [n, n] = size(A); 
@@ -51,7 +51,7 @@ end
 
 <br/>
 
-```Matlab
+```js
 function x = slv(A, b)
 % Solve Ax = b using Lc=b and Ux=c
 [L, U] = factorize(A)
