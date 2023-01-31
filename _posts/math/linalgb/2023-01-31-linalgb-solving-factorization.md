@@ -51,7 +51,7 @@ end
 
 <br/>
 
-```python
+```matlab
 function x = slv(A, b)
 % Solve Ax = b using Lc=b and Ux=c
 [L, U] = factorize(A)
