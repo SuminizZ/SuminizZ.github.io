@@ -36,27 +36,6 @@
                 </div>
             </li>
 
-            <li class="nav-item dropdown
-            {% if page.url == '/github/blogdev/' or page.url == '/github/git/' %} active {% endif %}">
-                <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('github-dropdown')"
-                   role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">
-                   GITHUB 
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="github-dropdown">
-                    {% for category in site.categories %}
-                    {% if category[0] == "github-blogdev" %}
-                        {% assign blog_sum = category[1].size %}
-                    {% endif %}
-                     {% if category[0] == "github-git" %}
-                        {% assign git_sum = category[1].size %}
-                    {% endif %}                                  
-                    {% endfor %}
-                    <a class="dropdown-item" href="{{ "/github/blogdev" | prepend: site.baseurl }}">Blog Dev ({{blog_sum}})</a>
-                    <a class="dropdown-item" href="{{ "/github/git" | prepend: site.baseurl }}">Git ({{git_sum}})</a>
-                </div>
-            </li>
-
 
             <li class="nav-item dropdown
             {% if page.url == '/physics/cm/' or page.url == '/physics/srt/' or page.url == '/physics/em/' or  page.url == '/physics/qm/' %} active {% endif %}">
@@ -137,12 +116,12 @@
 
             <li class="nav-item dropdown
             {% if page.url == '/de/docker/' or page.url == '/de/hadoop/' %} active {% endif %}">
-                <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('etc-dropdown')"
+                <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('de-dropdown')"
                    role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
                     DATA-ENGINEERING
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="etc-dropdown">
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="de-dropdown">
                     {% for category in site.categories %}
                     {% if category[0] == "de-docker" %}
                         {% assign docker_sum = category[1].size %}
@@ -156,18 +135,47 @@
                 </div>
             </li>
 
-            <!-- <li class="nav-item dropdown
-            {% if page.url == '/etc/ns/' or page.url == '/etc/cv/' %} active {% endif %}">
+            <li class="nav-item dropdown
+            {% if page.url == '/github/blogdev/' or page.url == '/github/git/' %} active {% endif %}">
+                <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('github-dropdown')"
+                   role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                   GITHUB 
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="github-dropdown">
+                    {% for category in site.categories %}
+                    {% if category[0] == "github-blogdev" %}
+                        {% assign blog_sum = category[1].size %}
+                    {% endif %}
+                     {% if category[0] == "github-git" %}
+                        {% assign git_sum = category[1].size %}
+                    {% endif %}                                  
+                    {% endfor %}
+                    <a class="dropdown-item" href="{{ "/github/blogdev" | prepend: site.baseurl }}">Blog Dev ({{blog_sum}})</a>
+                    <a class="dropdown-item" href="{{ "/github/git" | prepend: site.baseurl }}">Git ({{git_sum}})</a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown
+            {% if page.url == '/etc/ns/' %} active {% endif %}">
                 <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('etc-dropdown')"
                    role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
                     ETC
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="etc-dropdown">
-                    <a class="dropdown-item" href="{{ "/de/docker" | prepend: site.baseurl }}">Business</a>
-                    <a class="dropdown-item" href="{{ "/de/hadoop" | prepend: site.baseurl }}">Database</a>
+                    {% for category in site.categories %}
+                    {% if category[0] == "etc-ns" %}
+                        {% assign ns_sum = category[1].size %}
+                    {% endif %}
+                     <!-- {% if category[0] == "github-git" %}
+                        {% assign git_sum = category[1].size %}
+                    {% endif %}                                   -->
+                    {% endfor %}
+                    <a class="dropdown-item" href="{{ "/etc/ns" | prepend: site.baseurl }}">Neuroscience ({{ns_sum}})</a>
+                    <!-- <a class="dropdown-item" href="{{ "/de/hadoop" | prepend: site.baseurl }}">Database</a> -->
                 </div>
-            </li> -->
+            </li>
         </ul>
     </div>
 </nav>

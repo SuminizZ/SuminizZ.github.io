@@ -1,9 +1,9 @@
 /* Medium Devices, Desktops */
-@media only screen and (max-width : 992px) {
+@media only screen and (max-width : 1000px) {
   .post {
-    width: 48%;
+    width: 60%;
     max-width: 100%;
-    margin: 0 0.9% 1.5%;
+    margin: 0 0.8% 1.2%;
     flex-direction: column;
 
     .post-thumbnail {
@@ -13,9 +13,9 @@
     .post-content {
       width: 100%;
       .post-title {
-        margin: 0 0 5px;
+        margin: 0 0 3px;
         a {
-          font-size: 21px;
+          font-size: 18px;
         }
       }
     }
