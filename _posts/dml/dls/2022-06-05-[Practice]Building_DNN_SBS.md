@@ -13,7 +13,7 @@ tags: [Python, deep learning, Coursera, Neural Networks and Deep Learning]
 <br/>
 
 # **Building Deep Neural Network : Step by Step**
-- I've previoulsy made shallow planar classifier (with 1 hidden layer). For this week, I will build a real "Deep" neural network with as many layers as we want!
+- We've previoulsy made shallow planar classifier (with 1 hidden layer). For this week, We will build a real "Deep" neural network with as many layers as we want!
 - This practice covers all below,
     - Use ReLu for all layers except the output layer with sigmoid activation function
     - Build multiple hidden layers (at least more than 1)

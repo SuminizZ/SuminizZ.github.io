@@ -1,0 +1,777 @@
+I"L\<p><br /></p>
+
+<h1 id="building-deep-neural-network--step-by-step"><strong>Building Deep Neural Network : Step by Step</strong></h1>
+<ul>
+  <li>We’ve previoulsy made shallow planar classifier (with 1 hidden layer). For this week, I will build a real “Deep” neural network with as many layers as we want!</li>
+  <li>This practice covers all below,
+    <ul>
+      <li>Use ReLu for all layers except the output layer with sigmoid activation function</li>
+      <li>Build multiple hidden layers (at least more than 1)</li>
+      <li>Implement easy-to-use neural network class</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="0-outline-of-practice"><strong>0. Outline of Practice</strong></h2>
+<ul>
+  <li>To build our neural network, we will define several “helper functions”, which will be used later for building <strong>2-layer neural network</strong> and <strong>L-layer neural network</strong></li>
+  <li>Types of <strong>helper functions</strong> that will be defined
+    <ul>
+      <li>Intialize Parameters</li>
+      <li>Forward Propagation (linear, Relu)</li>
+      <li>Compute Cost</li>
+      <li>Backward Propagation (linear, Relu)</li>
+      <li>Update Parameter (Gradient Descent)</li>
+    </ul>
+  </li>
+  <li>Summary of model
+    <ul>
+      <li>As an activation function, <strong>Relu</strong> for hidden layers (L-1 layers) and <strong>Sigmoid</strong> for output layer
+  <img src="https://user-images.githubusercontent.com/92680829/172620970-7aaf7dbf-5e30-4d27-985d-5f64fb05bec0.png" width="620" /></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="1-load-packages"><strong>1. Load Packages</strong></h2>
+<ul>
+  <li>TestCases : test cases to assess the correctness of your functions, got this from <a href="https://github.com/knazeri/coursera/blob/master/deep-learning/1-neural-networks-and-deep-learning/4-building-your-deep-neural-network-step-by-step/testCases_v2.py" target="_blank"><span style="color:blue"><strong>here</strong></span></a></li>
+  <li>Activation Function (ReLu, Sigmoid) and its Derivative by Z (for Back-Propagation)</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">h5py</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s">'figure.figsize'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">)</span>      <span class="c1"># set default size of plots
+</span><span class="n">plt</span><span class="p">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s">'image.interpolation'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'nearest'</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s">'image.cmap'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'gray'</span>
+ 
+<span class="o">%</span><span class="n">load_ext</span> <span class="n">autoreload</span>
+<span class="o">%</span><span class="n">autoreload</span> <span class="mi">2</span>
+ 
+<span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li>TestCases</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">linear_forward_test_case</span><span class="p">():</span>
+    <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="s">"""
+    X = np.array([[-1.02387576, 1.12397796],
+                  [-1.62328545, 0.64667545],
+                  [-1.74314104, -0.59664964]])
+    W = np.array([[ 0.74505627, 1.97611078, -1.24412333]])
+    b = np.array([[1]])
+    """</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">A</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">b</span>
+
+<span class="k">def</span> <span class="nf">linear_activation_forward_test_case</span><span class="p">():</span>
+    <span class="s">"""
+    X = np.array([[-1.02387576, 1.12397796],
+                  [-1.62328545, 0.64667545],
+                  [-1.74314104, -0.59664964]])
+    W = np.array([[ 0.74505627, 1.97611078, -1.24412333]])
+    b = 5
+    """</span>
+    <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">A_prev</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">A_prev</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">b</span>
+
+<span class="k">def</span> <span class="nf">L_model_forward_test_case</span><span class="p">():</span>
+    <span class="s">"""
+    X = np.array([[-1.02387576, 1.12397796],
+                  [-1.62328545, 0.64667545],
+                  [-1.74314104, -0.59664964]])
+    parameters = {'W1': np.array([[ 1.62434536, -0.61175641, -0.52817175],
+                                  [-1.07296862,  0.86540763, -2.3015387 ]]),
+                  'W2': np.array([[ 1.74481176, -0.7612069 ]]),
+                  'b1': np.array([[ 0.],
+                                  [ 0.]]),
+                  'b2': np.array([[ 0.]])}
+    """</span>
+    <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">W1</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">b1</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">W2</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">b2</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s">"W1"</span><span class="p">:</span> <span class="n">W1</span><span class="p">,</span>
+                  <span class="s">"b1"</span><span class="p">:</span> <span class="n">b1</span><span class="p">,</span>
+                  <span class="s">"W2"</span><span class="p">:</span> <span class="n">W2</span><span class="p">,</span>
+                  <span class="s">"b2"</span><span class="p">:</span> <span class="n">b2</span><span class="p">}</span>
+    
+    <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">parameters</span>
+
+<span class="k">def</span> <span class="nf">compute_cost_test_case</span><span class="p">():</span>
+    <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">asarray</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+    <span class="n">aL</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([[.</span><span class="mi">8</span><span class="p">,.</span><span class="mi">9</span><span class="p">,</span><span class="mf">0.4</span><span class="p">]])</span>
+    
+    <span class="k">return</span> <span class="n">Y</span><span class="p">,</span> <span class="n">aL</span>
+
+<span class="k">def</span> <span class="nf">linear_backward_test_case</span><span class="p">():</span>
+    <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">dZ</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">linear_cache</span> <span class="o">=</span> <span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dZ</span><span class="p">,</span> <span class="n">linear_cache</span>
+
+<span class="k">def</span> <span class="nf">linear_activation_backward_test_case</span><span class="p">():</span>
+    <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">dA</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">linear_cache</span> <span class="o">=</span> <span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+    <span class="n">activation_cache</span> <span class="o">=</span> <span class="n">Z</span>
+    <span class="n">linear_activation_cache</span> <span class="o">=</span> <span class="p">(</span><span class="n">linear_cache</span><span class="p">,</span> <span class="n">activation_cache</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">dA</span><span class="p">,</span> <span class="n">linear_activation_cache</span>
+
+<span class="k">def</span> <span class="nf">L_model_backward_test_case</span><span class="p">():</span>
+    <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">AL</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+
+    <span class="n">A1</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">W1</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">b1</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">Z1</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">linear_cache_activation_1</span> <span class="o">=</span> <span class="p">((</span><span class="n">A1</span><span class="p">,</span> <span class="n">W1</span><span class="p">,</span> <span class="n">b1</span><span class="p">),</span> <span class="n">Z1</span><span class="p">)</span>
+
+    <span class="n">A2</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">W2</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">b2</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">Z2</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">linear_cache_activation_2</span> <span class="o">=</span> <span class="p">(</span> <span class="p">(</span><span class="n">A2</span><span class="p">,</span> <span class="n">W2</span><span class="p">,</span> <span class="n">b2</span><span class="p">),</span> <span class="n">Z2</span><span class="p">)</span>
+
+    <span class="n">caches</span> <span class="o">=</span> <span class="p">(</span><span class="n">linear_cache_activation_1</span><span class="p">,</span> <span class="n">linear_cache_activation_2</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">AL</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">caches</span>
+
+<span class="k">def</span> <span class="nf">update_parameters_test_case</span><span class="p">():</span>
+    <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">W1</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">b1</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">W2</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">b2</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s">"W1"</span><span class="p">:</span> <span class="n">W1</span><span class="p">,</span>
+                  <span class="s">"b1"</span><span class="p">:</span> <span class="n">b1</span><span class="p">,</span>
+                  <span class="s">"W2"</span><span class="p">:</span> <span class="n">W2</span><span class="p">,</span>
+                  <span class="s">"b2"</span><span class="p">:</span> <span class="n">b2</span><span class="p">}</span>
+    <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">dW1</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">db1</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">dW2</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">db2</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">grads</span> <span class="o">=</span> <span class="p">{</span><span class="s">"dW1"</span><span class="p">:</span> <span class="n">dW1</span><span class="p">,</span>
+             <span class="s">"db1"</span><span class="p">:</span> <span class="n">db1</span><span class="p">,</span>
+             <span class="s">"dW2"</span><span class="p">:</span> <span class="n">dW2</span><span class="p">,</span>
+             <span class="s">"db2"</span><span class="p">:</span> <span class="n">db2</span><span class="p">}</span>
+    
+    <span class="k">return</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">grads</span>
+</code></pre></div></div>
+<ul>
+  <li>Activation Function</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">sigmoid</span><span class="p">(</span><span class="n">Z</span><span class="p">):</span>
+    <span class="s">"""
+    Implement sigmoid activation function for output layer
+    """</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">np</span><span class="p">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">Z</span><span class="p">))</span>
+    
+    <span class="k">return</span> <span class="n">A</span><span class="p">,</span> <span class="n">Z</span>
+
+<span class="k">def</span> <span class="nf">relu</span><span class="p">(</span><span class="n">Z</span><span class="p">):</span>
+    <span class="s">"""
+    Returns Z if Z &gt;= 0 else, 0
+    """</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">maximum</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">Z</span><span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">A</span><span class="p">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">Z</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">A</span><span class="p">,</span> <span class="n">Z</span>
+
+<span class="k">def</span> <span class="nf">relu_bp</span><span class="p">(</span><span class="n">dA</span><span class="p">,</span> <span class="n">Z</span><span class="p">):</span>
+    <span class="s">"""
+    Implement backprop for dA (dA/dZ = 1 if Z &gt;= 0, 0 otherwise) at a single ReLu unit
+    Return dZ 
+    """</span>
+    <span class="n">dZ</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">dA</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>  
+    <span class="k">assert</span><span class="p">(</span><span class="n">dZ</span><span class="p">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">Z</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+    
+    <span class="n">dZ</span><span class="p">[</span><span class="n">Z</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>     <span class="c1"># derivative of ReLu returns 0 if x &lt; 0 and 1 if x &gt;= 0 
+</span>    <span class="k">assert</span><span class="p">(</span><span class="n">dZ</span><span class="p">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">Z</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">dZ</span>
+
+<span class="k">def</span> <span class="nf">sigmoid_bp</span><span class="p">(</span><span class="n">dA</span><span class="p">,</span> <span class="n">Z</span><span class="p">):</span>
+    <span class="s">"""
+    backprop for single sigmoid activation unit
+    """</span>
+    
+    <span class="n">A</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="p">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="p">))</span>
+    <span class="n">dZ</span> <span class="o">=</span> <span class="n">dA</span><span class="o">*</span><span class="n">A</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">A</span><span class="p">)</span>
+    
+    <span class="k">assert</span> <span class="p">(</span><span class="n">dZ</span><span class="p">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">Z</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">dZ</span>
+</code></pre></div></div>
+
+<h2 id="2-random-initialization"><strong>2. Random Initialization</strong></h2>
+<ul>
+  <li>this section, we will define 2 helper functions, first one is for intializing parameters for 2-layer model and second one extends this intializing process to L layers</li>
+</ul>
+
+<h3 id="21-two-layer-neural-network"><strong>2.1 Two-Layer Neural Network</strong></h3>
+
+<ul>
+  <li>The model’s structure is: LINEAR (Wx + b) -&gt; RELU (Activation function) -&gt; LINEAR (Wx + b) -&gt; SIGMOID (Activation function).</li>
+  <li>Use np.random.randn(shape)*0.01 with the correct shape for random initialization of weight matrices (W).</li>
+  <li>Use zero initialization for the biases (b). Use np.zeros(shape=())</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">init_params</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span> <span class="n">nh</span><span class="p">,</span> <span class="n">ny</span><span class="p">):</span>
+    <span class="s">"""
+    Argument:
+    nx : size of the input layer
+    nh : size of the hidden layer
+    ny : size of the output layer
+    
+    Returns:
+    W1 : (nh, nx)
+    b1 : (nh, 1)
+    W2 : (ny, nh)
+    b2 : (ny, 1)
+    """</span>
+    
+    <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="n">W1</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">rand</span><span class="p">(</span><span class="n">nh</span><span class="p">,</span> <span class="n">nx</span><span class="p">)</span><span class="o">*</span><span class="mf">0.01</span>
+    <span class="n">b1</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">nh</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">W2</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">rand</span><span class="p">(</span><span class="n">ny</span><span class="p">,</span> <span class="n">nh</span><span class="p">)</span><span class="o">*</span><span class="mf">0.01</span>
+    <span class="n">b2</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">ny</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    
+    <span class="k">assert</span><span class="p">(</span><span class="n">W1</span><span class="p">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">nh</span><span class="p">,</span> <span class="n">nx</span><span class="p">))</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">b1</span><span class="p">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">nh</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">W2</span><span class="p">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">ny</span><span class="p">,</span> <span class="n">nh</span><span class="p">))</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">b2</span><span class="p">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">ny</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">"W1"</span> <span class="p">:</span> <span class="n">W1</span><span class="p">,</span>
+              <span class="s">"b1"</span> <span class="p">:</span> <span class="n">b1</span><span class="p">,</span>
+              <span class="s">"W2"</span> <span class="p">:</span> <span class="n">W2</span><span class="p">,</span>
+              <span class="s">"b2"</span> <span class="p">:</span> <span class="n">b2</span><span class="p">}</span>
+    
+    <span class="k">return</span> <span class="n">params</span>
+</code></pre></div></div>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">params</span> <span class="o">=</span> <span class="n">init_params</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">params</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"{0} : {1}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">))</span>
+</code></pre></div></div>
+<p><img width="600" alt="image" src="https://user-images.githubusercontent.com/92680829/172635253-191f5053-5da2-432d-962f-f1c3afe8faba.png" /></p>
+
+<h3 id="22-l-layer-neural-network"><strong>2.2 L-layer Neural Network</strong></h3>
+<ul>
+  <li>
+    <p>initialization process for deep L-layer network is much more complex than shallow model as it has to keep track of the dimensions of all weights and bias matrices for all L-1 layers 
+<img src="https://user-images.githubusercontent.com/92680829/172634409-6d0fb5f7-6b23-463f-969c-28a41e9ac499.png" width="900" /></p>
+  </li>
+  <li>
+    <p>so we will adapt for-loop to randomize parameters of each layer with the right dimension</p>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">init_params_L</span><span class="p">(</span><span class="n">dims</span><span class="p">):</span>
+    <span class="s">"""
+    Arguments
+    dims : list taht contains the dimensions (n[i], n[i-1]) of every layer in network
+    
+    Returns
+    params : python dict containing randomized initial parameters (W1, b1, W2, b2, ... , W[L-1], b[L-1])
+    """</span>
+    
+    <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dims</span><span class="p">)</span>    <span class="c1"># includes input layer (technically, L+1)
+</span>    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">L</span><span class="p">):</span>
+        <span class="n">params</span><span class="p">[</span><span class="s">"W{0}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">rand</span><span class="p">(</span><span class="n">dims</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">dims</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">*</span><span class="mf">0.01</span>
+        <span class="n">params</span><span class="p">[</span><span class="s">"b{0}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">dims</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span>
+        
+        <span class="k">assert</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="s">"W{0}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">i</span><span class="p">)].</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">dims</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">dims</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="k">assert</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="s">"b{0}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">i</span><span class="p">)].</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">dims</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span>
+        
+    <span class="k">return</span> <span class="n">params</span>
+</code></pre></div></div>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dims</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>    <span class="c1"># nx : 3, nh1 : 4, nh2 : 5, nh3(output layer) : 2 
+</span><span class="n">params</span> <span class="o">=</span> <span class="n">init_params_L</span><span class="p">(</span><span class="n">dims</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">params</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"{0} :</span><span class="se">\n</span><span class="s"> {1}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">))</span>
+</code></pre></div></div>
+<p><img width="450" alt="image" src="https://user-images.githubusercontent.com/92680829/172852363-35d0ef02-4dbd-45cf-a9e4-6239f2e7c276.png" /></p>
+
+<h2 id="3-forward-propagation"><strong>3. Forward Propagation</strong></h2>
+<ul>
+  <li>Now, we’ve just initialized all of the parameters in L-model.</li>
+  <li>Next step, we will implement forward propagation modules that include 2 processes.
+    <ul>
+      <li>linear propagation : calculates Z[i] = W[i]*A[i-1] + b[i]
+        <ul>
+          <li>np.dot(W, A) + b</li>
+        </ul>
+      </li>
+      <li>linear-activation propagation : A[i] = Act_Func(Z[i])
+        <ul>
+          <li>RELU(Z) : Z if Z &gt;= 0, else 0</li>
+          <li>Sigmoid(Z) : 1/(1 + np.exp(-Z))</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Finally, we will define a new helper functon that implements linear-activation propagation for every layer of our deep L-layer model at once</li>
+</ul>
+
+<h3 id="31-linear-propagation"><strong>3.1 Linear Propagation</strong></h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">linear_fp</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="s">"""
+    Arguments
+    A : output of previous layer (n[i-1], m)
+    W : weight matrix of current layer (n[i], n[i-1])
+    b : bias matrix of current layer (n[i], 1)
+    
+    Returns
+    Z : result of linear propagation = W*A + b
+    cache : python dict containing A, W, b - stored for back-propagation
+    
+    """</span>
+    
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">Z</span><span class="p">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">W</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">A</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+    
+    <span class="n">cache</span> <span class="o">=</span> <span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">Z</span><span class="p">,</span> <span class="n">cache</span>
+</code></pre></div></div>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">linear_forward_test_case</span><span class="p">()</span>   <span class="c1"># see 1. Packages 
+# A : (3, 2) 
+# W : (1, 3)
+# b : (1, 1)
+</span>
+<span class="n">Z</span><span class="p">,</span> <span class="n">cache</span> <span class="o">=</span> <span class="n">linear_fp</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="c1"># expected Z shpae : (1, 2)
+</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Z : {0}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">Z</span><span class="p">))</span>
+</code></pre></div></div>
+<p><img width="270" alt="image" src="https://user-images.githubusercontent.com/92680829/172858019-47206ddb-6c3a-4918-9076-75ae547c7a4e.png" /></p>
+
+<h3 id="32-linear-activation-propagation"><strong>3.2 Linear-Activation Propagation</strong></h3>
+<ul>
+  <li>this helper function calculates both linear and activation propagation</li>
+  <li>here, we will use previously-defined activation function, sigmoid and Relu</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">linear_activation_fp</span><span class="p">(</span><span class="n">activation</span><span class="p">,</span> <span class="n">A_prev</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="s">"""
+    Caculates both linear and activation propagation
+    
+    Arguments
+    A_prev : output of previous layer (n[i-1], m)
+    W : weight matrix of current layer (n[i], n[i-1])
+    b : bias matrix of current layer (n[i], 1)
+    
+    Returns
+    A : output of current layer (n[i], m)
+    """</span>
+    
+    <span class="n">Z</span><span class="p">,</span> <span class="n">linear_cache</span> <span class="o">=</span> <span class="n">linear_fp</span><span class="p">(</span><span class="n">A_prev</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>   <span class="c1"># linear_cache : A_prev, W, b
+</span>    <span class="n">activation_cache</span> <span class="o">=</span> <span class="n">Z</span>
+    
+    <span class="k">if</span> <span class="n">activation</span> <span class="o">==</span> <span class="s">"relu"</span><span class="p">:</span>
+        <span class="n">A</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">relu</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">activation</span> <span class="o">==</span> <span class="s">"sigmoid"</span><span class="p">:</span>
+        <span class="n">A</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
+        
+    <span class="k">assert</span><span class="p">(</span><span class="n">Z</span><span class="p">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">W</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">A_prev</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">A</span><span class="p">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">W</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">A_prev</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+    
+    <span class="k">return</span> <span class="n">A</span><span class="p">,</span> <span class="n">linear_cache</span><span class="p">,</span> <span class="n">activation_cache</span>
+</code></pre></div></div>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A_prev</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">linear_activation_forward_test_case</span><span class="p">()</span>
+
+<span class="n">A</span><span class="p">,</span> <span class="n">lin_cache</span><span class="p">,</span> <span class="n">act_cache</span> <span class="o">=</span> <span class="n">linear_activation_fp</span><span class="p">(</span><span class="s">"relu"</span><span class="p">,</span> <span class="n">A_prev</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"--- ReLu Activation ---</span><span class="se">\n</span><span class="s">A : {0}</span><span class="se">\n</span><span class="s">Z (activation_cache) :</span><span class="se">\n</span><span class="s"> {1}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">act_cache</span><span class="p">))</span>
+
+<span class="k">print</span><span class="p">()</span>
+
+<span class="n">A</span><span class="p">,</span> <span class="n">lin_cache</span><span class="p">,</span> <span class="n">act_cache</span> <span class="o">=</span> <span class="n">linear_activation_fp</span><span class="p">(</span><span class="s">"sigmoid"</span><span class="p">,</span> <span class="n">A_prev</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"--- Sigmoid Activation ---</span><span class="se">\n</span><span class="s">A : {0}</span><span class="se">\n</span><span class="s">Z (activation_cache) :</span><span class="se">\n</span><span class="s"> {1}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">act_cache</span><span class="p">))</span>
+</code></pre></div></div>
+<p><img width="374" alt="image" src="https://user-images.githubusercontent.com/92680829/172862820-d8cda382-1c8d-4630-8c81-f9d6c457a3f9.png" /></p>
+
+<h3 id="33-forward-propagation-for-l-layer-model"><strong>3.3 Forward Propagation for L-Layer model</strong></h3>
+<ul>
+  <li>Finally, we can implement previously defined linear_activatoin_fp function to every layer of our deep model at once using for-loop</li>
+  <li>As an activaiton function, we will use relu for 1~L-1 layer and sigmoid for L layer, which is our final output layer</li>
+  <li>Also, through this process, we will store all caches (A_prev, W, b and Z) from every layer into one list named as “caches” (results of fp for every L layer)</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">L_model_fp</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+    <span class="s">"""
+    Implement linear-activation forward propagation for L-layer model 
+    Layer 1~L-1 : relu
+    Layer L : sigmoid
+    
+    Arguments
+    X : training examples (nx, m) 
+    params : initialized params containing W1, b1 ~ W[L], b[L] 
+    
+    
+    Returns 
+    AL : final output from L layer
+    caches : list of caches from every layer
+             each cache has a form of (linear_cahce(A_prev, W, b), activation_cache(Z))
+             index 0 ~ L-2 : activation as relu
+             index L-1 : activation as sigmoid
+    """</span>
+    
+    <span class="n">caches</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">params</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span> 
+    <span class="n">A_prev</span> <span class="o">=</span> <span class="n">X</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">L</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">L</span><span class="p">:</span>
+            <span class="n">AL</span><span class="p">,</span> <span class="n">lin_cache</span><span class="p">,</span> <span class="n">act_cache</span> <span class="o">=</span> <span class="n">linear_activation_fp</span><span class="p">(</span><span class="s">"sigmoid"</span><span class="p">,</span>
+                                                            <span class="n">A_prev</span><span class="p">,</span> 
+                                                            <span class="n">params</span><span class="p">[</span><span class="s">"W{0}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">L</span><span class="p">)],</span> 
+                                                            <span class="n">params</span><span class="p">[</span><span class="s">"b{0}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">L</span><span class="p">)])</span>
+            <span class="n">caches</span><span class="p">.</span><span class="n">append</span><span class="p">((</span><span class="n">lin_cache</span><span class="p">,</span> <span class="n">act_cache</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">A</span><span class="p">,</span> <span class="n">lin_cache</span><span class="p">,</span> <span class="n">act_cache</span> <span class="o">=</span> <span class="n">linear_activation_fp</span><span class="p">(</span><span class="s">"relu"</span><span class="p">,</span> 
+                                                           <span class="n">A_prev</span><span class="p">,</span> 
+                                                           <span class="n">params</span><span class="p">[</span><span class="s">"W{0}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">i</span><span class="p">)],</span> 
+                                                           <span class="n">params</span><span class="p">[</span><span class="s">"b{0}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">i</span><span class="p">)])</span>
+            <span class="n">caches</span><span class="p">.</span><span class="n">append</span><span class="p">((</span><span class="n">lin_cache</span><span class="p">,</span> <span class="n">act_cache</span><span class="p">))</span>
+            <span class="n">A_prev</span> <span class="o">=</span> <span class="n">A</span>
+        
+    <span class="k">assert</span><span class="p">(</span><span class="n">AL</span><span class="p">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">X</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+    
+    <span class="k">return</span> <span class="n">AL</span><span class="p">,</span> <span class="n">caches</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X</span><span class="p">,</span> <span class="n">params</span> <span class="o">=</span> <span class="n">L_model_forward_test_case</span><span class="p">()</span>  <span class="c1"># X : (4, 2) / 2 layers
+</span><span class="n">AL</span><span class="p">,</span> <span class="n">caches</span> <span class="o">=</span> <span class="n">L_model_fp</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"Final Ouptut AL : {0}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">AL</span><span class="p">))</span>
+
+<span class="k">print</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">lin</span><span class="p">,</span> <span class="n">act</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">caches</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"-- Cache from Layer {0} --"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"A[{0}] :</span><span class="se">\n</span><span class="s">{2}</span><span class="se">\n</span><span class="s">W[{1}] :</span><span class="se">\n</span><span class="s">{3}</span><span class="se">\n</span><span class="s">b[{1}] :</span><span class="se">\n</span><span class="s">{4}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">lin</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lin</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">lin</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Z[{0}] :</span><span class="se">\n</span><span class="s">{1}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">act</span><span class="p">))</span>
+    
+<span class="k">print</span><span class="p">()</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"Length of Caches : {}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">caches</span><span class="p">)))</span>
+</code></pre></div></div>
+<p><img width="500" alt="image" src="https://user-images.githubusercontent.com/92680829/173234205-6a151319-59b0-4be6-a73d-c4904d50bc33.png" /></p>
+
+<h2 id="4-cost-funciton"><strong>4. Cost Funciton</strong></h2>
+<ul>
+  <li>
+    <p>Cost function is <strong>Cross-Entropy Cost</strong> that looks like below (same as we use all the time)<br />
+<img src="https://user-images.githubusercontent.com/92680829/173234463-3dad114c-2605-4bc2-907b-ed5cba8c68fb.png" width="400" /></p>
+  </li>
+  <li>
+    <p>let’s make the helper function that computes cost with python</p>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">compute_cost</span><span class="p">(</span><span class="n">AL</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
+    <span class="s">"""
+    Returns 
+    cost : cross-entropy cost
+    """</span>
+    
+    <span class="n">m</span> <span class="o">=</span> <span class="n">Y</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    
+    <span class="n">cost</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="n">m</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">AL</span><span class="p">))</span> <span class="o">+</span> <span class="n">np</span><span class="p">.</span><span class="n">multiply</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">Y</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">AL</span><span class="p">)))</span>   <span class="c1"># element-wise multiplication
+</span>    <span class="n">cost</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">cost</span><span class="p">)</span>    <span class="c1"># make sure that cost has numeric value not matrix : eliminats axis whose size is 1
+</span>    <span class="k">assert</span><span class="p">(</span><span class="n">cost</span><span class="p">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">())</span>
+    
+    <span class="k">return</span> <span class="n">cost</span>
+</code></pre></div></div>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Y</span><span class="p">,</span> <span class="n">AL</span> <span class="o">=</span> <span class="n">compute_cost_test_case</span><span class="p">()</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"Cost for test case : {}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">compute_cost</span><span class="p">(</span><span class="n">AL</span><span class="p">,</span> <span class="n">Y</span><span class="p">)))</span>
+</code></pre></div></div>
+<p><img width="406" alt="image" src="https://user-images.githubusercontent.com/92680829/173234752-1caec6f9-20ac-40f6-98e0-50f64dd1b613.png" /></p>
+
+<h2 id="5-backward-propagation"><strong>5. Backward Propagation</strong></h2>
+<ul>
+  <li>Finally, we’ve built pretty much all helper functions including initializing parmaters, forward propagation and computing cost fucnton</li>
+  <li>One last left is Backwrad Propagation that is used to update paramters (W[l], b[l]) untill the model reaches to global optimum (at least close to it)</li>
+  <li>
+    <p>here’s the simplified diagram of backward propagation for L-layer model (2 layer in example)
+<img src="https://user-images.githubusercontent.com/92680829/173235228-7891eccc-f641-4687-8e49-c985eec03bd1.png" width="700" /></p>
+  </li>
+  <li>There are largely three steps to propagate backwardly
+    <ul>
+      <li>LINEAR : dW[l], db[l], dA[l-1]</li>
+      <li>LINEAR -&gt; ACTIVATION : dZ[l]
+        <ul>
+          <li>derivative of <strong>Relu</strong> funciton for 1~L-1 layer</li>
+          <li>derivative of <strong>Sigmoid</strong> function for L layer (output)</li>
+        </ul>
+      </li>
+    </ul>
+
+    <p><img src="https://user-images.githubusercontent.com/92680829/173235517-c3e9560f-5207-4913-a4df-232ac966e61c.png" width="280" />
+  <img src="https://user-images.githubusercontent.com/92680829/173235889-17bb7823-3ab2-4347-a1d1-3c03cf6fd7f5.png" width="280" /></p>
+
+    <ul>
+      <li>note that dZ[l] is needed to calculate dW[l], db[l], dA[l-1] -&gt; <strong>calculation of dZ[l] should precedes before dW[l], db[l], dA[l-1]</strong></li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="51-linear-backward-propagation"><strong>5.1 Linear Backward Propagation</strong></h3>
+<ul>
+  <li>linear bp function computes derivative of Z[l] (W[l]*A[l-1] + b[l]) with respect to W[l], A[l-1], b[l]</li>
+  <li>make sure that derivative should keep same dimension with its original matrix</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">linear_bp</span><span class="p">(</span><span class="n">dZ</span><span class="p">,</span> <span class="n">cache</span><span class="p">):</span>
+    <span class="s">"""
+    Implement linear back-propagation for a single layer
+    
+    Arguments
+    dZ (n_cur, m) : gradient of cost with respect to Z (lienar output)
+                        gained from linear-activation backward
+    cache : products from forward propagation containing (A_prev, W, b) and Z
+    
+    Returns
+    dA_prev (n_prev, m), dW (n_cur, n_prev), db (n_cur, 1) : gradient of cost with respect to A_prev, W, b respectively
+    """</span>
+    
+    <span class="n">A_prev</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">cache</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">A_prev</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    
+    <span class="n">dW</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">dZ</span><span class="p">,</span> <span class="n">A_prev</span><span class="p">.</span><span class="n">T</span><span class="p">)</span> <span class="o">/</span> <span class="n">m</span>    <span class="c1"># (n_cur, m) x (m, n_prev) = (n_cur, n_prev)
+</span>    <span class="n">db</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">dZ</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="o">/</span> <span class="n">m</span><span class="p">)</span>    <span class="c1"># array that has length n_cur / axis = 0 along the row, 1 along the column
+</span>    <span class="n">dA_prev</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">W</span><span class="p">.</span><span class="n">T</span><span class="p">,</span> <span class="n">dZ</span><span class="p">)</span>   <span class="c1"># (n_prev, n_cur) x (n_cur, m) = (n_prev, m)
+</span>    
+    <span class="k">assert</span><span class="p">(</span><span class="n">dA_prev</span><span class="p">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">A_prev</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">dW</span><span class="p">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">W</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">db</span><span class="p">)</span> <span class="o">==</span> <span class="n">dZ</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    
+    <span class="k">return</span> <span class="n">dA_prev</span><span class="p">,</span> <span class="n">dW</span><span class="p">,</span> <span class="n">db</span>
+</code></pre></div></div>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dZ</span><span class="p">,</span> <span class="n">linear_cache</span> <span class="o">=</span> <span class="n">linear_backward_test_case</span><span class="p">()</span>   
+
+<span class="c1"># dZ : (2, 2) / linear_cache - A_prev : (3, 2), W : (2, 3), b : (2, 1)
+</span>
+<span class="n">dA_prev</span><span class="p">,</span> <span class="n">dW</span><span class="p">,</span> <span class="n">db</span> <span class="o">=</span> <span class="n">linear_bp</span><span class="p">(</span><span class="n">dZ</span><span class="p">,</span> <span class="n">linear_cache</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"dA_prev :</span><span class="se">\n</span><span class="s">{0}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">dA_prev</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"dW :</span><span class="se">\n</span><span class="s">{0}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">dW</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"db :</span><span class="se">\n</span><span class="s">{0}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">db</span><span class="p">))</span>
+</code></pre></div></div>
+<p><img width="400" alt="image" src="https://user-images.githubusercontent.com/92680829/173363672-7648b7d4-8381-4dd9-9b34-febbf4d7922f.png" /></p>
+
+<h3 id="52-linear-activation-backward-propagation"><strong>5.2 Linear-Activation Backward Propagation</strong></h3>
+<ul>
+  <li>We’ve built linear-backward propagation helper function for dW, dA_prev, db</li>
+  <li>Now using this linear bp function and previously defined sigmoid and relu bp fucntions, we will write linear-activation backward propagation function, which computes two types of activation function
+    <ul>
+      <li>Relu for 1~L-1 layer : dZ = 1 if Z &gt; 0, else dZ = 0
+        <ul>
+          <li>dZ = relu_bp(dA, Z)</li>
+        </ul>
+      </li>
+      <li>Sigmoid for L layer : dZ = A(1-A)
+        <ul>
+          <li>dZ = sigmoid_bp(dA, Z)</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>order of back-propagation is <strong>LINEAR-ACTIVATION</strong> (dZ) -&gt; <strong>LINEAR</strong> (dA_prev, dW, db)</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">linear_activation_bp</span><span class="p">(</span><span class="n">activation</span><span class="p">,</span> <span class="n">dA</span><span class="p">,</span> <span class="n">cache</span><span class="p">):</span>
+    <span class="s">"""
+    Implement relu-backward for 1~L-1 layer and sigmoid-backward for L layer (output) 
+    
+    Arguments
+    dA : post-activation gradient of cost with respect to A (A for current layer)
+    cache : tuple of caches (linear_cache, activation_cache) stored from linear-activation forward propagtion
+    activation : type of activation function at current layer - define the form of dZ
+    
+    Returns
+    dW : (n_cur, n_prev)
+    dA_prev : (n_prev, m)
+    db : list that has length of n_cur (squeezed to eliminate the axis of size 1)
+    """</span>
+    
+    <span class="n">linear_cache</span><span class="p">,</span> <span class="n">Z</span> <span class="o">=</span> <span class="n">cache</span>   <span class="c1"># linear_cache, activation_cache
+</span>    
+    <span class="k">if</span> <span class="n">activation</span> <span class="o">==</span> <span class="s">"relu"</span><span class="p">:</span>
+        <span class="n">dZ</span> <span class="o">=</span> <span class="n">relu_bp</span><span class="p">(</span><span class="n">dA</span><span class="p">,</span> <span class="n">Z</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">activation</span> <span class="o">==</span> <span class="s">"sigmoid"</span><span class="p">:</span>
+        <span class="n">dZ</span> <span class="o">=</span> <span class="n">sigmoid_bp</span><span class="p">(</span><span class="n">dA</span><span class="p">,</span> <span class="n">Z</span><span class="p">)</span>
+        
+    <span class="n">dA_prev</span><span class="p">,</span> <span class="n">dW</span><span class="p">,</span> <span class="n">db</span> <span class="o">=</span> <span class="n">linear_bp</span><span class="p">(</span><span class="n">dZ</span><span class="p">,</span> <span class="n">linear_cache</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">dA_prev</span><span class="p">,</span> <span class="n">dW</span><span class="p">,</span> <span class="n">db</span>
+</code></pre></div></div>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dA</span><span class="p">,</span> <span class="n">cache</span> <span class="o">=</span> <span class="n">linear_activation_backward_test_case</span><span class="p">()</span>   
+<span class="c1"># dA : (1, 2) / cache : (linear_cache(A, W, b), act_cache(Z))
+</span>
+<span class="n">dA_prev</span><span class="p">,</span> <span class="n">dW</span><span class="p">,</span> <span class="n">db</span> <span class="o">=</span> <span class="n">linear_activation_bp</span><span class="p">(</span><span class="s">"relu"</span><span class="p">,</span> <span class="n">dA</span><span class="p">,</span> <span class="n">cache</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"-- Relu Activaiton --"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"dA_prev :</span><span class="se">\n</span><span class="s">{0}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">dA_prev</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"dW :</span><span class="se">\n</span><span class="s">{0}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">dW</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"db :</span><span class="se">\n</span><span class="s">{0}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">db</span><span class="p">))</span>
+
+<span class="k">print</span><span class="p">()</span>
+
+<span class="n">dA_prev</span><span class="p">,</span> <span class="n">dW</span><span class="p">,</span> <span class="n">db</span> <span class="o">=</span> <span class="n">linear_activation_bp</span><span class="p">(</span><span class="s">"sigmoid"</span><span class="p">,</span> <span class="n">dA</span><span class="p">,</span> <span class="n">cache</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"-- Sigmoid Activaiton --"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"dA_prev :</span><span class="se">\n</span><span class="s">{0}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">dA_prev</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"dW :</span><span class="se">\n</span><span class="s">{0}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">dW</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"db :</span><span class="se">\n</span><span class="s">{0}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">db</span><span class="p">))</span>
+</code></pre></div></div>
+<p><img width="437" alt="image" src="https://user-images.githubusercontent.com/92680829/173371968-a97dcaf1-3f83-4ca2-b516-15b8b265fac2.png" /></p>
+
+<h3 id="53-backward-propagation-for-l-layer-model"><strong>5.3 Backward Propagation for L-layer Model</strong></h3>
+<ul>
+  <li>Finally, we will implement the backward propagation for the whole network.</li>
+  <li>we will use “caches” which is the list of caches from all layers that we’ve gained through the process of forward propagation</li>
+  <li>
+    <p>Image below shows the simplified diagram of backward pass<br />
+<img src="https://user-images.githubusercontent.com/92680829/173373510-59b83205-7411-4232-abb6-9d48fd0d8699.png" width="450" /></p>
+  </li>
+  <li>before starting L-layer back-propagation, we need to calculate dA[L], which is the initial input of back-propagation</li>
+  <li>dA[L] is the <strong>drivative of Cost with respect to final forward-propagation output A[L]</strong>
+    <ul>
+      <li>dA[L] = - (np.divide(Y, AL) - np.divide(1-Y, 1-AL))<br /></li>
+      <li>you can easily prove this equation by taking partial derivative to our cross-entropy cost function with respect to AL
+  <img src="https://user-images.githubusercontent.com/92680829/173375095-55679bc0-cb06-488d-ae98-757187b61b77.png" width="200" /></li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">L_model_bp</span><span class="p">(</span><span class="n">AL</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">caches</span><span class="p">):</span>
+    <span class="s">"""
+    Implement backward propagation : 
+    [LINEAR-ACTIVATION (sigmoid)] -&gt; [LINEAR] -&gt; ([LINEAR-ACTIVATION (relu)] -&gt; [LINEAR]) * L-1
+    
+    Arguments 
+    AL : initial input of bp (1, m), final post-activation output of forward propagation
+    Y : true label (1, m), required here to derive dAL (-Y/AL + 1-Y/1-AL)
+    caches : A_prev, W, b (linear_cache), Z (activation_cahce) from every layer, stored during forward propagation
+    
+    Returns
+    grads : python dictionary with gradients of all parameters (dW[1], db[1] ... dW[L], db[1])
+    """</span>
+    
+    <span class="n">m</span> <span class="o">=</span> <span class="n">Y</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">caches</span><span class="p">)</span>
+    
+    <span class="n">dAL</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">divide</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">AL</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="p">.</span><span class="n">divide</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">Y</span><span class="p">,</span> <span class="mi">1</span><span class="o">-</span><span class="n">AL</span><span class="p">))</span>   <span class="c1"># (1, m)
+</span>    <span class="n">grads</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">dA</span> <span class="o">=</span> <span class="n">dAL</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">L</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">dA_prev</span><span class="p">,</span> <span class="n">dW</span><span class="p">,</span> <span class="n">db</span> <span class="o">=</span> <span class="n">linear_activation_bp</span><span class="p">(</span><span class="s">'sigmoid'</span><span class="p">,</span> <span class="n">dA</span><span class="p">,</span> <span class="n">caches</span><span class="p">[</span><span class="n">L</span><span class="o">-</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dA_prev</span><span class="p">,</span> <span class="n">dW</span><span class="p">,</span> <span class="n">db</span> <span class="o">=</span> <span class="n">linear_activation_bp</span><span class="p">(</span><span class="s">'relu'</span><span class="p">,</span> <span class="n">dA</span><span class="p">,</span> <span class="n">caches</span><span class="p">[</span><span class="n">L</span><span class="o">-</span><span class="n">i</span><span class="p">])</span>
+    
+        <span class="n">grads</span><span class="p">[</span><span class="s">"dA{0}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">L</span><span class="o">-</span><span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="n">dA_prev</span>
+        <span class="n">grads</span><span class="p">[</span><span class="s">"dW{0}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">L</span><span class="o">-</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">))]</span> <span class="o">=</span> <span class="n">dW</span>
+        <span class="n">grads</span><span class="p">[</span><span class="s">"db{0}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">L</span><span class="o">-</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">))]</span> <span class="o">=</span> <span class="n">db</span>
+        
+        <span class="n">dA</span> <span class="o">=</span> <span class="n">dA_prev</span>
+        
+    <span class="k">return</span> <span class="n">grads</span>
+</code></pre></div></div>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">AL</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">caches</span> <span class="o">=</span> <span class="n">L_model_backward_test_case</span><span class="p">()</span>   
+<span class="c1"># 2 Layer
+# m : 2
+# unit size of layer 1 : 3
+# unit size of layer 2 : 1
+</span>
+<span class="n">grads</span> <span class="o">=</span> <span class="n">L_model_bp</span><span class="p">(</span><span class="n">AL</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">caches</span><span class="p">)</span>
+<span class="n">L</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">caches</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">L</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"-- Layer {0} --"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"dX :</span><span class="se">\n</span><span class="s">{0}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">grads</span><span class="p">[</span><span class="s">"dA{0}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)]))</span>
+    <span class="k">else</span> <span class="p">:</span> 
+        <span class="k">print</span><span class="p">(</span><span class="s">"dA{0} :</span><span class="se">\n</span><span class="s">{1}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">grads</span><span class="p">[</span><span class="s">"dA{0}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)]))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"dW{0} :</span><span class="se">\n</span><span class="s">{1}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">grads</span><span class="p">[</span><span class="s">"dW{0}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">i</span><span class="p">)]))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"db{0} :</span><span class="se">\n</span><span class="s">{1}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">grads</span><span class="p">[</span><span class="s">"db{0}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">i</span><span class="p">)]))</span>    
+    <span class="k">print</span><span class="p">()</span>
+</code></pre></div></div>
+<p><img width="480" alt="image" src="https://user-images.githubusercontent.com/92680829/173830938-cf0e91f3-875d-4403-9598-46eff7cd41f1.png" /></p>
+
+<h2 id="6-update-parameters"><strong>6. Update Parameters</strong></h2>
+<ul>
+  <li>Now it’s almost done. Only one left is a function to update parameters with the gradient values from grads, which is a list of gradients of each parameter that we got from L_model_bp function</li>
+  <li>This step is called <strong>“Gradient Descent”</strong>, which means we repeatedly update paramters with its gradient against cost untill the model reaches to global optimum (gradient goes close to zero)</li>
+  <li>We also need to set proper <strong>α</strong>, <strong>learning rate</strong> to adjust the speed of learning so that our algorithm doesn’t diverge, but converge<br />
+ <img src="https://user-images.githubusercontent.com/92680829/173846929-3b40263b-62a9-4e02-9d38-8333636f520f.png" width="200" /><br />
+<img src="https://user-images.githubusercontent.com/92680829/173847481-790d3a5f-8e84-44a6-8144-6caace55237c.png" width="550" /></li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">update_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">grads</span><span class="p">,</span> <span class="n">lr</span><span class="p">):</span>
+    <span class="s">"""
+    Update parameters using gradient descent
+    
+    Arguments
+    params : python dict containing your parameters
+    grads : python dict containing gradients of all parameters
+    lr : learning rate α
+    
+    Returns
+    """</span>
+    
+    <span class="n">L</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">params</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">L</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">params</span><span class="p">[</span><span class="s">"W{0}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span> <span class="o">-=</span> <span class="n">lr</span><span class="o">*</span><span class="n">grads</span><span class="p">[</span><span class="s">"dW{0}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span>
+        <span class="n">params</span><span class="p">[</span><span class="s">"b{0}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span> <span class="o">-=</span> <span class="n">lr</span><span class="o">*</span><span class="n">grads</span><span class="p">[</span><span class="s">"db{0}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span>
+        
+    <span class="k">return</span> <span class="n">params</span> 
+</code></pre></div></div>
+
+<hr />
+
+<ul>
+  <li>Congrats that we’ve finished all the functions required for building deep L-layer model (no matter how big it is!) step by step</li>
+  <li>In the next practice, we will put all these fucntions together to build two types of models:
+    <ul>
+      <li>2-layer neural network</li>
+      <li>L-layer neural network</li>
+    </ul>
+  </li>
+  <li>We will use these two models to classifiy cat vs non-cat images (as we did with logistic regression classifier) and compare the performance of two models</li>
+</ul>
+:ET
