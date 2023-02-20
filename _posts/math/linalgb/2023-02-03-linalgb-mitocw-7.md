@@ -1,6 +1,7 @@
 ---
 layout : post
 title : "[MIT 18.06 07] Null Space, Solving Ax=0"
+img : linalgb/mitocw_linalg.png
 categories : 
     - [math-linalgb]
 tag : [Math, Linear Algebra, MIT]
@@ -14,7 +15,6 @@ toc_sticky : true
 
 - Lecture from MIT OpenCourseWare 18.06 2010 Spring
 
-<br/>
 
 ### - Notes
 

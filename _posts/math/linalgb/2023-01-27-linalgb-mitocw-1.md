@@ -1,6 +1,7 @@
 ---
 layout : post
 title : "[MIT 18.06 01] The geometry of linear equations"
+img : linalgb/mitocw_linalg.png
 categories : 
     - [math-linalgb]
 tag : [Math, Linear Algebra, MIT]

@@ -1,6 +1,7 @@
 ---
 layout : post
 title : "[MIT 18.06 09] Independence, Basis and Dimension"
+img : linalgb/mitocw_linalg.png
 categories : 
     - [math-linalgb]
 tag : [Math, Linear Algebra, MIT]

@@ -1,6 +1,7 @@
 ---
 layout : post
 title : "[MIT 18.06 08] Solvability of Ax = b, Rank of Row Reduced Form"
+img : linalgb/mitocw_linalg.png
 categories : 
     - [math-linalgb]
 tag : [Math, Linear Algebra, MIT]

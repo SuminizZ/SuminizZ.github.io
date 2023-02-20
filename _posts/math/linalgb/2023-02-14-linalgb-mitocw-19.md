@@ -1,6 +1,7 @@
 ---
 layout : post
 title : "[MIT 18.06 19] Eigenvalue and Eigenvectors"
+img : linalgb/mitocw_linalg.png
 categories : 
     - [math-linalgb]
 tag : [Math, Linear Algebra, MIT]

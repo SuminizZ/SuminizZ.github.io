@@ -1,6 +1,7 @@
 ---
 layout : post
 title : "[MIT 18.06 20] Diagonalization and Powers of A"
+img : linalgb/mitocw_linalg.png
 categories : 
     - [math-linalgb]
 tag : [Math, Linear Algebra, MIT]

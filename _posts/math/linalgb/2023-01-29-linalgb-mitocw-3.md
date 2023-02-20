@@ -1,6 +1,7 @@
 ---
 layout : post
 title : "[MIT 18.06 03] Matrix Operations and Inverses"
+img : linalgb/mitocw_linalg.png
 categories : 
     - [math-linalgb]
 tag : [Math, Linear Algebra, MIT]

@@ -1,6 +1,7 @@
 ---
 layout : post
 title : "[MATLAB] Solving Ax = b with Factorization A = LU"
+img : linalgb/mitocw_linalg.png
 categories : 
     - [math-linalgb]
 tag : [Math, Linear Algebra, MATLAB, Factorization]

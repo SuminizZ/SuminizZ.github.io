@@ -1,6 +1,7 @@
 ---
 layout : post
 title : "[MIT 18.06 15] Gram-Schmidt and A = QR Factorization"
+img : linalgb/mitocw_linalg.png
 categories : 
     - [math-linalgb]
 tag : [Math, Linear Algebra, MIT]
