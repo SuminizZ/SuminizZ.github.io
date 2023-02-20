@@ -184,7 +184,7 @@
    sup {
      font-size: 75%;
      line-height: 0;
-     position: relative;
+/*      position: relative; */
      vertical-align: baseline;
    }
    
@@ -981,7 +981,7 @@
    .about .author-name {
      font-family: 'PT Serif', serif;
      margin: 0 0 10px;
-     position: relative;
+/*      position: relative; */
      padding-bottom: 15px;
      font-size: 18px;
      text-transform: uppercase;
@@ -991,7 +991,7 @@
    
    .about .author-name::after {
      content: "";
-     position: absolute;
+/*      position: absolute; */
      left: 50%;
      -webkit-transform: translateX(-50%);
          -ms-transform: translateX(-50%);
@@ -1040,7 +1040,7 @@
    }
    
    .contact .contact-title {
-     position: relative;
+/*      position: relative; */
      color: #333030;
      font-weight: 400;
      font-size: 12px;
@@ -1119,8 +1119,8 @@
    }
    
    .post {
-     width: 90%;
-     max-width: 100%;
+     width: 75%;
+     max-width: 90%;
      margin-bottom: 1.5rem;
      display: -webkit-box;
      display: -webkit-flex;
@@ -1237,7 +1237,7 @@
    }
    
    .page-cover-image {
-     position: relative;
+/*      position: relative; */
      padding: 20px 20px 20px 20px;
      margin: 0;
      background-color: #fafafa;
@@ -1245,7 +1245,7 @@
    }
    
    .page-cover-image figure {
-     position: relative;
+/*      position: relative; */
      margin: 0;
    }
    
@@ -1382,7 +1382,7 @@
    
    /* - - - - - - - - - - Media Styles - - - - - - - - - - */
    /* Medium Devices, Desktops */
-   @media only screen and (max-width: 992px) {
+   @media only screen and (max-width: 1500px) {
      .post {
        width: 48%;
        max-width: 100%;
@@ -1410,7 +1410,7 @@
    /* Small Devices, Tablets */
    @media only screen and (max-width: 768px) {
      .sidebar {
-       position: relative;
+/*        position: relative; */
        display: -webkit-box;
        display: -webkit-flex;
        display: -ms-flexbox;
