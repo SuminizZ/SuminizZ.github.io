@@ -940,7 +940,7 @@
      top: 0;
      left: 0;
      bottom: 0;
-     width: 240px;
+     width: 200px;
      height: 100%;
      padding: 20px 10px;
      background-color: #ffffff;
@@ -952,11 +952,11 @@
    }
 
    .about .cover-author-image {
-     width: 100px;
-     height: 100px;
+     width: 80px;
+     height: 80px;
      margin: 0 auto 10px;
-     -webkit-border-radius: 100%;
-             border-radius: 100%;
+     -webkit-border-radius: 75%;
+             border-radius: 75%;
      overflow: hidden;
      background-color: #333030;
    }
@@ -983,7 +983,7 @@
      margin: 0 0 10px;
      position: relative;
      padding-bottom: 15px;
-     font-size: 15px;
+     font-size: 14px;
      text-transform: uppercase;
      color: #333030;
      font-weight: 700;
