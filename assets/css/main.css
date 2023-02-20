@@ -991,7 +991,7 @@
    
    .about .author-name::after {
      content: "";
-/*      position: absolute; */
+     position: absolute;
      left: 50%;
      -webkit-transform: translateX(-50%);
          -ms-transform: translateX(-50%);
@@ -1012,7 +1012,7 @@
    
    .category-box {
      padding: 0px 0px 0px 245px;
-     font-size: 15px;
+     font-size: 14px;
      /* color: #b21d1d;
      background-color: #a41212; */
    }
