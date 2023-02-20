@@ -13,6 +13,7 @@ toc_sticky : true
 ## Linear Algebra
 
 - Lecture from MIT OpenCourseWare 18.06 2010 Spring
+- Lecture 15: Projections onto subspaces
 
 <br/>
 
