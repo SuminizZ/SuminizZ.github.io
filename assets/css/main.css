@@ -983,7 +983,7 @@
      margin: 0 0 10px;
      position: relative;
      padding-bottom: 15px;
-     font-size: 18px;
+     font-size: 15px;
      text-transform: uppercase;
      color: #333030;
      font-weight: 700;
@@ -1006,7 +1006,7 @@
    }
    
    .about p {
-     font-size: 15px;
+     font-size: 13px;
      margin: 0 0 10px;
    }
    
