@@ -1386,9 +1386,9 @@
 
 /* - - - - - - - - - - Media Styles - - - - - - - - - - */
 /* Medium Devices, Desktops */
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 1000px) {
   .post {
-    width: 48%;
+    width: 52%;
     max-width: 100%;
     margin: 0 0.9% 1.5%;
     -webkit-box-orient: vertical;
