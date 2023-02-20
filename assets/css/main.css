@@ -948,7 +948,7 @@
    }
 
    .about {
-     margin: 0 auto;
+     margin: 10px 0 auto;
      text-align: center;
    }
 
@@ -981,7 +981,7 @@
 
    .about .author-name {
      font-family: 'PT Serif', serif;
-     margin: 0 auto;
+     margin: 10px 0 auto;
      position: relative;
      padding-bottom: 15px;
      font-size: 14px;
@@ -1008,18 +1008,20 @@
 
    .about p {
      font-size: 13px;
-     margin: 0 auto;
+     margin: 10px 0 auto;
    }
 
    .category-box {
      padding: 0px 0px 0px 210px;
-     font-size: 14px;
+     height: 20px;
+     font-size: 13px;
      /* color: #b21d1d;
      background-color: #a41212; */
    }
 
    .content-box {
      /* font-size: 200px; */
+     weight : 60%
      font-weight: 550;
      padding: 18px 18px 18px 210px;
      display: -webkit-box;
