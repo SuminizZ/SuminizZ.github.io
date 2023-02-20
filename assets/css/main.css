@@ -1012,14 +1012,14 @@
    
    .category-box {
      padding: 0px 0px 0px 245px;
-     font-size: 14px;
+     font-size: 15px;
      /* color: #b21d1d;
      background-color: #a41212; */
    }
    
    .content-box {
      /* font-size: 200px; */
-     font-weight: 500;
+     font-weight: 550;
      padding: 18px 18px 18px 255px;
      display: -webkit-box;
      display: -webkit-flex;
