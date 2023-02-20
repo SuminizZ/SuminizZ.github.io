@@ -1382,9 +1382,9 @@
    
    /* - - - - - - - - - - Media Styles - - - - - - - - - - */
    /* Medium Devices, Desktops */
-   @media only screen and (max-width: 1500px) {
+   @media only screen and (max-width: 992px) {
      .post {
-       width: 60%;
+       width: 48%;
        max-width: 100%;
        margin: 0 0.9% 1.5%;
        -webkit-box-orient: vertical;
@@ -1485,16 +1485,16 @@
                flex-direction: column;
      }
      .post .post-thumbnail {
-       width: 100%;
+       width: 98%;
      }
      .post .post-content {
-       width: 100%;
+       width: 98%;
      }
      .post .post-content .post-title {
        margin: 0 0 5px;
      }
      .post .post-content .post-title a {
-       font-size: 21px;
+       font-size: 20px;
      }
    }
    
