@@ -1020,10 +1020,9 @@
    }
 
    .content-box {
-     /* font-size: 200px; */
      weight : 80%;
      font-weight: 550;
-     padding: 15px 15px 15px 215px;
+     padding: 10px 15px 15px 215px;
      display: -webkit-box;
      display: -webkit-flex;
      display: -ms-flexbox;
