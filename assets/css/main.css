@@ -1166,17 +1166,18 @@
    }
 
    .post .post-content {
-     padding: 0.5rem;
+     padding: 1rem;
      width: 80%;
    }
 
    .post .post-content .post-date,
    .post .post-content .post-words {
+     margin : 10px 0;
      font-size: 11px;
    }
 
    .post .post-content .post-title {
-     margin: 0 auto;
+     margin: 10px 0 auto;
      font-size: 22px;
      font-weight: 550;
    }
