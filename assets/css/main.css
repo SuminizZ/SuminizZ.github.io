@@ -1123,7 +1123,7 @@
    .post {
      width: 75%;
      max-width: 75%;
-     margin-bottom: 1.1rem;
+     margin-bottom: 1.15rem;
      display: -webkit-box;
      display: -webkit-flex;
      display: -ms-flexbox;
@@ -1137,7 +1137,7 @@
      -webkit-align-items: stretch;
          -ms-flex-align: stretch;
              align-items: stretch;
-     min-height: 9rem;
+     min-height: 10rem;
      -webkit-border-radius: 10px;
              border-radius: 10px;
      overflow: hidden;
@@ -1159,7 +1159,7 @@
    .post .post-thumbnail {
      width: 30%;
      max-width: 100%;
-     min-height: 9rem;
+     min-height: 10rem;
      -webkit-background-size: cover;
              background-size: cover;
      background-position: 50% 50%;
@@ -1177,7 +1177,7 @@
 
    .post .post-content .post-title {
      margin: 0 auto;
-     font-size: 23px;
+     font-size: 22px;
      font-weight: 550;
    }
 
@@ -1192,7 +1192,7 @@
    }
 
    a.older-posts, a.newer-posts {
-     font-size: 17px;
+     font-size: 15px;
      display: inline-block;
      color: #515151;
      -webkit-transition: -webkit-transform .2s;
