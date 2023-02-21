@@ -1046,7 +1046,7 @@
      color: #333030;
      font-weight: 400;
      font-size: 10px;
-     margin: 0 auto;
+     margin: 10px 0;
      text-transform: uppercase;
      text-align: center;
    }
@@ -1117,7 +1117,7 @@
    footer .copyright {
      font-size: 11px;
      text-align: center;
-     margin: 0;
+     margin: 10px 0;
    }
 
    .post {
