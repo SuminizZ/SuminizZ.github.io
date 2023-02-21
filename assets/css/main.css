@@ -1387,9 +1387,9 @@
 
 /* - - - - - - - - - - Media Styles - - - - - - - - - - */
 /* Medium Devices, Desktops */
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 992px) {
   .post {
-    width: 52%;
+    width: 48%;
     max-width: 100%;
     margin: 0 0.9% 1.5%;
     -webkit-box-orient: vertical;
@@ -1405,10 +1405,10 @@
     width: 100%;
   }
   .post .post-content .post-title {
-    margin: 0 auto;
+    margin: 0 0 5px;
   }
   .post .post-content .post-title a {
-    font-size: 20px;
+    font-size: 21px;
   }
 }
 
@@ -1446,9 +1446,8 @@
   .about img {
     width: 100px;
     height: 100px;
-    border-radius: 20px;
-    /* -webkit-border-radius: 20%;
-            border-radius: 20%; */
+    -webkit-border-radius: 100%;
+            border-radius: 100%;
     margin-bottom: 10px;
   }
   .content-box {
