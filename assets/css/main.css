@@ -1571,19 +1571,22 @@
     width: 100%;
   }
   .category-box {
-    padding: 0px 0px 0px 180px;
+    padding: 0px 0px 0px 190px;
     font-size: 11.5px;
     font-weight: 500;
     /* color: #b21d1d; */
     /* background-color: #a41212; */
   }
+  .post .post-content {
+    width: 100%;
+  }
   .content-box {
-    padding: 10px 15px 15px 180px;
+    padding: 10px 15px 15px 190px;
   }
   #tipue_search_input
   {
       color: rgb(107, 136, 158);
-      max-width: 90px;
+      max-width: 85px;
       max-height: 12px;
       padding: 12px;
       border: 1px solid #aeaeb8;
@@ -1603,7 +1606,7 @@
 
 
 /* Extra Small Devices, Phones */
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 700px) {
   .content-box {
     padding: 10px;
   }

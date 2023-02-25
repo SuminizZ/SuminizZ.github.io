@@ -194,58 +194,6 @@ http://www.tipue.com/search
 
 
 
-@media only screen and (max-width: 1000px) {
-     #tipue_search_input
-     {
-          color: rgb(107, 136, 158);
-          max-width: 100px;
-          max-height: 12px;
-          padding: 12px;
-          border: 1px solid #aeaeb8;
-          border-radius: 20px;
-          box-shadow: none;
-          outline: 0;
-          margin: 2px 0 auto;
-     }
-     .tipue_search_left
-     {
-          float: left;
-          padding: 15px 10px 0 0;
-     }
-     .tipue_search_right
-     {
-          float: left;
-     }
-}
-
-@media only screen and (max-width: 500px) {
-     #tipue_search_input
-     {
-          color: rgb(107, 136, 158);
-          max-width: 90px;
-          max-height: 12px;
-          padding: 12px;
-          border: 1px solid #aeaeb8;
-          border-radius: 20px;
-          -moz-appearance: none;
-          -webkit-appearance: none;
-          box-shadow: none;
-          outline: 0;
-          margin: 2px 0 auto;
-     }
-     .tipue_search_left
-     {
-          float: left;
-          padding: 15px 10px 0 0;
-     }
-     .tipue_search_right
-     {
-          float: left;
-     }
-}
-
-
-
 /* spinner */
 
 
