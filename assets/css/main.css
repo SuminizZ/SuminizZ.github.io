@@ -1512,10 +1512,10 @@
 /* - - - - - - - - - - Media Styles - - - - - - - - - - */
 
 /* Medium Devices, Desktops */
-@media only screen and (max-width: 1300px) {
+@media only screen and (max-width: 1250px) {
   .post {
     width: 85%;
-    max-width: 95%;
+    max-width: 100%;
     margin-bottom: 1.15rem;
   }
   .post .post-thumbnail {
@@ -1537,7 +1537,7 @@
   #tipue_search_input
   {
       color: rgb(107, 136, 158);
-      max-width: 90px;
+      max-width: 100px;
       max-height: 12px;
       padding: 12px;
       border: 1px solid #aeaeb8;
