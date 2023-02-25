@@ -1440,7 +1440,7 @@
   .sidebar footer {
     margin-bottom: 10px;
   }
-  .about {
+  /* .about {
     text-align: center;
     max-width: 480px;
     margin: 10px auto auto;
@@ -1451,7 +1451,7 @@
     -webkit-border-radius: 100%;
             border-radius: 100%;
     margin-bottom: 10px;
-  }
+  } */
   .content-box {
     padding: 20px 10px;
     display: -webkit-box;
