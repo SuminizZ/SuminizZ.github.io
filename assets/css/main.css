@@ -1512,7 +1512,7 @@
 /* - - - - - - - - - - Media Styles - - - - - - - - - - */
 
 /* Medium Devices, Desktops */
-@media only screen and (max-width: 1250px) {
+@media only screen and (max-width: 1300px) {
   .post {
     width: 85%;
     max-width: 100%;
@@ -1568,7 +1568,7 @@
             flex-direction: column;
   }
   .post .post-thumbnail {
-    width: 100%;
+    width: 100%s;
   }
   .category-box {
     padding: 0px 0px 0px 180px;
