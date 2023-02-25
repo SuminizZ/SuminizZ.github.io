@@ -1580,6 +1580,10 @@
   .post .post-content {
     width: 100%;
   }
+  .wrap-content {
+    width: 90%;
+    padding: 11px;
+  }
   .content-box {
     padding: 10px 15px 15px 190px;
   }
