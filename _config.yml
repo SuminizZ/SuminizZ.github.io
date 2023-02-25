@@ -31,4 +31,14 @@ plugins:
 paginate: 10
 paginate_path: "/page/:num"
 
-exclude: ["node_modules", "gulpfile.js", "package.json", "yarn.lock"]
+exclude: ["gulpfile.js", "package.json", "yarn.lock"]
+# "node_modules", 
+
+tipue_search:
+     include:
+         pages: false
+         collections: []
+     exclude:
+         files: [search.html, index.html, tags.html]
+         categories: []
+         tags: []

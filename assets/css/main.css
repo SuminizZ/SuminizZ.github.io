@@ -13,7 +13,7 @@
     *    IE on Windows Phone and in iOS.
     */
    html {
-     line-height: 1.15;
+     line-height: 1;
      /* 1 */
      -ms-text-size-adjust: 100%;
      /* 2 */
@@ -29,7 +29,7 @@
    body {
      font-family: "NanumGothicCoding";
      margin: 0;
-     font-size: 1.1rem;
+     font-size: 1rem;
    }
 
    /**
@@ -49,9 +49,9 @@
     * `article` contexts in Chrome, Firefox, and Safari.
     */
    h1 {
-     font-size: 2em;
+     font-size: 1.5em;
      /* font-weight: 200; */
-     margin: 0.67em 0;
+     margin: 0.6em 0;
    }
 
    /* Grouping content
@@ -183,7 +183,7 @@
     */
    sub,
    sup {
-     font-size: 75%;
+     font-size: 70%;
      line-height: 0;
      position: relative;
      vertical-align: baseline;
@@ -244,7 +244,7 @@
      /* 1 */
      font-size: 100%;
      /* 1 */
-     line-height: 1.15;
+     line-height: 1;
      /* 1 */
      margin: 0;
      /* 2 */
@@ -1509,56 +1509,36 @@
 
 /* Search */
 
-@import url(https://fonts.googleapis.com/css?family=Open+Sans);
-
-body{
-  background: #fff;
-  font-family: "NanumGothicCoding", 'Open Sans', sans-serif;
-  font-size: 12px;
+#tipue_search_input
+{
+    color: rgb(107, 136, 158);
+    max-width: 120px;
+    max-height: 15px;
+    padding: 14px;
+    border: 1px solid #aeaeb8;
+    border-radius: 20px;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+     box-shadow: none;
+    outline: 0;
+    margin: 2.5px 0 auto;
 }
+/* .tipue_search_icon
+{
+     width: 25px;
+     height: 25px;
+} */
 
-.search {
-  width: 100%;
-  display: flex;
+.tipue_search_left
+{
+     float: left;
+     padding: 15px 10px 0 0;
 }
-
-.searchTerm {
-  width: 100%;
-  border: 3px solid #a097c7;
-  border-right: none;
-  padding: 10px;
-  width: 400px;
-  height: 30px;
-  border-radius: 5px 0 0 5px;
-  outline: none;
-  color: #99a0a3;
-}
-
-.searchTerm:focus{
-  width: 400px;
-  height: 30px;
-  color: #00B4CC;
-}
-s
-.searchButton {
-  width: 40px;
-  height: 30px;
-  border: 1px solid #269eae;
-  background: #2eabbb;
-  text-align: center;
-  color: rgb(255, 255, 255);
-  border-radius: 0 5px 5px 0;
-  cursor: pointer;
-  font-size: 18px;
+.tipue_search_right
+{
+     float: left;
 }
 
-.wrap{
-  width: 30%;
-  position: absolute;
-  top: 48%;
-  left: 76.5%;
-  transform: translate(-50%, -50%);
-}
 
 
 
@@ -1610,10 +1590,10 @@ s
 }
 [pagination] a:focus,
 [pagination] a:hover {
-  color: rgb(30, 176, 206);
+  color: rgb(110, 116, 185);
 }
 [pagination] li.current {
-  background: rgba(0,0,0,.1)
+  background: rgba(84, 71, 186, 0.676)
 }
 /* Disabled & Hidden Styles */
 [pagination] .disabled,
@@ -1621,7 +1601,7 @@ s
 [pagination] [disabled] {
   /* opacity: .5; */
   font-weight: bold;
-  color: rgb(30, 176, 206);
+  color: rgb(18, 19, 54);
   pointer-events: none;
 }
 @media (min-width: 350px) {

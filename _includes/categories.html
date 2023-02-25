@@ -176,15 +176,60 @@
                     <!-- <a class="dropdown-item" href="{{ "/de/hadoop" | prepend: site.baseurl }}">Database</a> -->
                 </div>
             </li>
+  
 
-            <li>
-                <div class="wrap">
-                <div class="search">
-                    {% include search.html %}
-                </div>
-                </div>
+            <li class="nav-item {% if page.url == '/' %} active {% endif %}">
+                <a class="nav-link"></a>
             </li>
-            
+            <li class="nav-item {% if page.url == '/' %} active {% endif %}">
+                <a class="nav-link"></a>
+            </li>
+            <li class="nav-item {% if page.url == '/' %} active {% endif %}">
+                <a class="nav-link"></a>
+            </li>
+            <li class="nav-item {% if page.url == '/' %} active {% endif %}">
+                <a class="nav-link"></a>
+            </li>
+            <li class="nav-item {% if page.url == '/' %} active {% endif %}">
+                <a class="nav-link"></a>
+            </li>
+            <li class="nav-item {% if page.url == '/' %} active {% endif %}">
+                <a class="nav-link"></a>
+            </li>
+            <li class="nav-item {% if page.url == '/' %} active {% endif %}">
+                <a class="nav-link"></a>
+            </li>
+            <li class="nav-item {% if page.url == '/' %} active {% endif %}">
+                <a class="nav-link"></a>
+            </li>           
+            <li class="nav-item {% if page.url == '/' %} active {% endif %}">
+                <a class="nav-link"></a>
+            </li>
+            <li class="nav-item {% if page.url == '/' %} active {% endif %}">
+                <a class="nav-link"></a>
+            </li>
+            <li class="nav-item {% if page.url == '/' %} active {% endif %}">
+                <a class="nav-link"></a>
+            </li>
+            <li class="nav-item {% if page.url == '/' %} active {% endif %}">
+                <a class="nav-link"></a>
+            </li>
+            <li class="nav-item {% if page.url == '/' %} active {% endif %}">
+                <a class="nav-link"></a>
+            </li>
+            <li class="nav-item {% if page.url == '/' %} active {% endif %}">
+                <a class="nav-link">Search  </a>
+            </li>
+
+            <form action="/search">
+                <div class="tipue_search_left">
+                  <img class="tipue_search_icon">
+                </div>
+                <div class="tipue_search_right">
+                  <input type="text" name="q" id="tipue_search_input" pattern=".{1,}" title="At least 1 characters" required></div>
+                <div style="clear: both;"></div>
+            </form>
+
         </ul>
     </div>
 </nav>

@@ -10,7 +10,7 @@ tags: [Python, deep learning, Coursera, Neural Networks and Deep Learning]
 ---
 
 
-<br/>
+
 
 # **Building Deep Neural Network : Step by Step**
 - We've previoulsy made shallow planar classifier (with 1 hidden layer). For this week, We will build a real "Deep" neural network with as many layers as we want!
@@ -20,7 +20,11 @@ tags: [Python, deep learning, Coursera, Neural Networks and Deep Learning]
     - Implement easy-to-use neural network class
 
 
+
 ## **0. Outline of Practice**
+
+
+
 - To build our neural network, we will define several "helper functions", which will be used later for building **2-layer neural network** and **L-layer neural network**
 - Types of **helper functions** that will be defined
     - Intialize Parameters 
@@ -35,9 +39,11 @@ tags: [Python, deep learning, Coursera, Neural Networks and Deep Learning]
 
 
 ## **1. Load Packages** 
+
+
+
 - TestCases : test cases to assess the correctness of your functions, got this from [<span style="color:blue">**here**</span>](https://github.com/knazeri/coursera/blob/master/deep-learning/1-neural-networks-and-deep-learning/4-building-your-deep-neural-network-step-by-step/testCases_v2.py){:target="_blank"}
 - Activation Function (ReLu, Sigmoid) and its Derivative by Z (for Back-Propagation)
-
 
 ```python
 import numpy as np
@@ -54,6 +60,9 @@ plt.rcParams['image.cmap'] = 'gray'
  
 np.random.seed(1)
 ```
+<br/>
+
+
 
 - TestCases
 
@@ -185,7 +194,11 @@ def update_parameters_test_case():
     
     return parameters, grads
 ```
+<br/>
+
+
 - Activation Function
+
 
 ```python
 def sigmoid(Z):
@@ -231,9 +244,11 @@ def sigmoid_bp(dA, Z):
     return dZ
 ```
 
-
+<br/>
 
 ## **2. Random Initialization**
+
+
 - this section, we will define 2 helper functions, first one is for intializing parameters for 2-layer model and second one extends this intializing process to L layers
 
 ### **2.1 Two-Layer Neural Network**
@@ -241,6 +256,7 @@ def sigmoid_bp(dA, Z):
 - The model's structure is: LINEAR (Wx + b) -> RELU (Activation function) -> LINEAR (Wx + b) -> SIGMOID (Activation function).
 - Use np.random.randn(shape)*0.01 with the correct shape for random initialization of weight matrices (W).
 - Use zero initialization for the biases (b). Use np.zeros(shape=())
+
 
 ```python
 def init_params(nx, nh, ny):
@@ -276,20 +292,30 @@ def init_params(nx, nh, ny):
     
     return params
 ```
+
+<br/>
+
 ```python
 params = init_params(4, 5, 2)
 for key, val in params.items():
     print("{0} : {1}".format(key, val))
 ```
+
+<br/>
+
+
 <img width="600" alt="image" src="https://user-images.githubusercontent.com/92680829/172635253-191f5053-5da2-432d-962f-f1c3afe8faba.png">
 
 
 
 ### **2.2 L-layer Neural Network**
+
+
 - initialization process for deep L-layer network is much more complex than shallow model as it has to keep track of the dimensions of all weights and bias matrices for all L-1 layers 
 <img src="https://user-images.githubusercontent.com/92680829/172634409-6d0fb5f7-6b23-463f-969c-28a41e9ac499.png" width="900">
 
 - so we will adapt for-loop to randomize parameters of each layer with the right dimension
+
 
 ```python
 def init_params_L(dims):
@@ -314,6 +340,9 @@ def init_params_L(dims):
         
     return params
 ```
+
+<br/>
+
 ```python
 dims = [3, 4, 5, 2]    # nx : 3, nh1 : 4, nh2 : 5, nh3(output layer) : 2 
 params = init_params_L(dims)
@@ -321,10 +350,14 @@ params = init_params_L(dims)
 for key, val in params.items():
     print("{0} :\n {1}".format(key, val))
 ```
+
+
+<br/>
+
 <img width="450" alt="image" src="https://user-images.githubusercontent.com/92680829/172852363-35d0ef02-4dbd-45cf-a9e4-6239f2e7c276.png">
 
 
-
+<br/>
 
 ## **3. Forward Propagation**
 - Now, we've just initialized all of the parameters in L-model. 
@@ -359,6 +392,9 @@ def linear_fp(A, W, b):
     
     return Z, cache
 ```
+
+<br/>
+
 ```python
 A, W, b = linear_forward_test_case()   # see 1. Packages 
 # A : (3, 2) 
@@ -370,7 +406,12 @@ Z, cache = linear_fp(A, W, b)
 
 print("Z : {0}".format(Z))
 ```
+
+<br/>
+
 <img width="270" alt="image" src="https://user-images.githubusercontent.com/92680829/172858019-47206ddb-6c3a-4918-9076-75ae547c7a4e.png">
+
+<br/>
 
 
 ### **3.2 Linear-Activation Propagation**
@@ -404,6 +445,9 @@ def linear_activation_fp(activation, A_prev, W, b):
     
     return A, linear_cache, activation_cache
 ```
+
+<br/>
+
 ```python
 A_prev, W, b = linear_activation_forward_test_case()
 
@@ -415,7 +459,12 @@ print()
 A, lin_cache, act_cache = linear_activation_fp("sigmoid", A_prev, W, b)
 print("--- Sigmoid Activation ---\nA : {0}\nZ (activation_cache) :\n {1}".format(A, act_cache))
 ```
+
+<br/>
+
 <img width="374" alt="image" src="https://user-images.githubusercontent.com/92680829/172862820-d8cda382-1c8d-4630-8c81-f9d6c457a3f9.png">
+
+<br/>
 
 
 ### **3.3 Forward Propagation for L-Layer model**
@@ -467,6 +516,8 @@ def L_model_fp(X, params):
     return AL, caches
 ```
 
+<br/>
+
 ```python
 X, params = L_model_forward_test_case()  # X : (4, 2) / 2 layers
 AL, caches = L_model_fp(X, params)
@@ -484,12 +535,17 @@ print()
 
 print("Length of Caches : {}".format(len(caches)))
 ```
+
+<br/>
+
 <img width="500" alt="image" src="https://user-images.githubusercontent.com/92680829/173234205-6a151319-59b0-4be6-a73d-c4904d50bc33.png">
 
 
+<br/>
+
 
 ## **4. Cost Funciton** 
-- Cost function is **Cross-Entropy Cost** that looks like below (same as we use all the time)<br/>
+- Cost function is **Cross-Entropy Cost** that looks like below (same as we use all the time)
 <img src="https://user-images.githubusercontent.com/92680829/173234463-3dad114c-2605-4bc2-907b-ed5cba8c68fb.png" width="400">
 
 - let's make the helper function that computes cost with python
@@ -509,13 +565,21 @@ def compute_cost(AL, Y):
     
     return cost
 ```
+
+<br/>
+
 ```python
 Y, AL = compute_cost_test_case()
 
 print("Cost for test case : {}".format(compute_cost(AL, Y)))
 ```
+
+<br/>
+
 <img width="406" alt="image" src="https://user-images.githubusercontent.com/92680829/173234752-1caec6f9-20ac-40f6-98e0-50f64dd1b613.png">
 
+
+<br/>
 
 
 ## **5. Backward Propagation**
@@ -566,6 +630,9 @@ def linear_bp(dZ, cache):
     
     return dA_prev, dW, db
 ```
+
+<br/>
+
 ```python
 dZ, linear_cache = linear_backward_test_case()   
 
@@ -577,8 +644,13 @@ print("dA_prev :\n{0}".format(dA_prev))
 print("dW :\n{0}".format(dW))
 print("db :\n{0}".format(db))
 ```
+
+<br/>
+
 <img width="400" alt="image" src="https://user-images.githubusercontent.com/92680829/173363672-7648b7d4-8381-4dd9-9b34-febbf4d7922f.png">
 
+
+<br/>
 
 ### **5.2 Linear-Activation Backward Propagation**
 - We've built linear-backward propagation helper function for dW, dA_prev, db
@@ -617,6 +689,9 @@ def linear_activation_bp(activation, dA, cache):
 
     return dA_prev, dW, db
 ```
+
+<br/>
+
 ```python
 dA, cache = linear_activation_backward_test_case()   
 # dA : (1, 2) / cache : (linear_cache(A, W, b), act_cache(Z))
@@ -635,19 +710,25 @@ print("dA_prev :\n{0}".format(dA_prev))
 print("dW :\n{0}".format(dW))
 print("db :\n{0}".format(db))
 ```
+
+<br/>
+
 <img width="437" alt="image" src="https://user-images.githubusercontent.com/92680829/173371968-a97dcaf1-3f83-4ca2-b516-15b8b265fac2.png">
 
+
+<br/>
 
 
 ### **5.3 Backward Propagation for L-layer Model**
 - Finally, we will implement the backward propagation for the whole network.
 - we will use "caches" which is the list of caches from all layers that we've gained through the process of forward propagation
-- Image below shows the simplified diagram of backward pass<br/>
-<img src="https://user-images.githubusercontent.com/92680829/173373510-59b83205-7411-4232-abb6-9d48fd0d8699.png" width="450">
+- Image below shows the simplified diagram of backward pass
+
+    <img src="https://user-images.githubusercontent.com/92680829/173373510-59b83205-7411-4232-abb6-9d48fd0d8699.png" width="450">
 
 - before starting L-layer back-propagation, we need to calculate dA[L], which is the initial input of back-propagation
 - dA[L] is the **drivative of Cost with respect to final forward-propagation output A[L]**
-    - dA[L] = - (np.divide(Y, AL) - np.divide(1-Y, 1-AL))<br/>
+    - dA[L] = - (np.divide(Y, AL) - np.divide(1-Y, 1-AL))
     - you can easily prove this equation by taking partial derivative to our cross-entropy cost function with respect to AL
     <img src="https://user-images.githubusercontent.com/92680829/173375095-55679bc0-cb06-488d-ae98-757187b61b77.png" width="200">
 
@@ -687,6 +768,9 @@ def L_model_bp(AL, Y, caches):
         
     return grads
 ```
+
+<br/>
+
 ```python
 AL, Y, caches = L_model_backward_test_case()   
 # 2 Layer
@@ -707,17 +791,21 @@ for i in range(1, L+1):
     print("db{0} :\n{1}".format(i, grads["db{0}".format(i)]))    
     print()
 ```
+
+<br/>
+
 <img width="480" alt="image" src="https://user-images.githubusercontent.com/92680829/173830938-cf0e91f3-875d-4403-9598-46eff7cd41f1.png">
 
 
-
+<br/>
 
 ## **6. Update Parameters**
 - Now it's almost done. Only one left is a function to update parameters with the gradient values from grads, which is a list of gradients of each parameter that we got from L_model_bp function 
 - This step is called **"Gradient Descent"**, which means we repeatedly update paramters with its gradient against cost untill the model reaches to global optimum (gradient goes close to zero)
-- We also need to set proper **α**, **learning rate** to adjust the speed of learning so that our algorithm doesn't diverge, but converge<br/>
- <img src="https://user-images.githubusercontent.com/92680829/173846929-3b40263b-62a9-4e02-9d38-8333636f520f.png" width="200"><br/>
-<img src="https://user-images.githubusercontent.com/92680829/173847481-790d3a5f-8e84-44a6-8144-6caace55237c.png" width="550">
+- We also need to set proper **α**, **learning rate** to adjust the speed of learning so that our algorithm doesn't diverge, but converge
+
+     <img src="https://user-images.githubusercontent.com/92680829/173846929-3b40263b-62a9-4e02-9d38-8333636f520f.png" width="200">
+    <img src="https://user-images.githubusercontent.com/92680829/173847481-790d3a5f-8e84-44a6-8144-6caace55237c.png" width="550">
 
 
 ```python
@@ -742,9 +830,10 @@ def update_params(params, grads, lr):
     return params 
 ```
 
----
+<br/>
 
-- Congrats that we've finished all the functions required for building deep L-layer model (no matter how big it is!) step by step
+
+- Now we've made all the functions required for building deep L-layer model (no matter how big it is!) step by step
 - In the next practice, we will put all these fucntions together to build two types of models:
     - 2-layer neural network
     - L-layer neural network
