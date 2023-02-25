@@ -1513,7 +1513,7 @@
 /* Medium Devices, Desktops */
 @media only screen and (max-width: 1000px) {
   .post {
-    width: 80%;
+    width: 48%;
     max-width: 100%;
     margin: 0 0.9% 1.5%;
     -webkit-box-orient: vertical;
@@ -1523,7 +1523,7 @@
             flex-direction: column;
   }
   .post .post-thumbnail {
-    width: 30%;
+    width: 100%;
   }
   .category-box {
     padding: 0px 0px 0px 200px;
@@ -1534,22 +1534,6 @@
   }
   .content-box {
     padding: 10px 15px 15px 200px;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: row;
-        -ms-flex-direction: row;
-            flex-direction: row;
-    -webkit-flex-wrap: wrap;
-        -ms-flex-wrap: wrap;
-            flex-wrap: wrap;
-    -webkit-box-align: stretch;
-    -webkit-align-items: stretch;
-        -ms-flex-align: stretch;
-            align-items: stretch;
   }
   .post .post-content {
     width: 100%;
@@ -1570,8 +1554,6 @@
       border-radius: 20px;
       -moz-appearance: none;
       -webkit-appearance: none;
-      box-shadow: none;
-      outline: 0;
       /* margin: 2px 0 auto; */
   }
   .tipue_search_left
