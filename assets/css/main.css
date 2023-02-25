@@ -1444,7 +1444,7 @@
   .sidebar footer {
     margin-bottom: 10px;
   }
-  /* .about {
+  .about {
     text-align: center;
     max-width: 480px;
     margin: 10px auto auto;
@@ -1452,10 +1452,9 @@
   .about img {
     width: 100px;
     height: 100px;
-    -webkit-border-radius: 100%;
-            border-radius: 100%;
+    border-radius: 20px;
     margin-bottom: 10px;
-  } */
+  }
   .content-box {
     padding: 20px 10px;
     display: -webkit-box;
@@ -1478,7 +1477,23 @@
   .contact-title, .copyright {
     display: none;
   }
+  #tipue_search_input
+  {
+      color: rgb(107, 136, 158);
+      max-width: 110px;
+      max-height: 12px;
+      padding: 12px;
+      border: 1px solid #aeaeb8;
+      border-radius: 20px;
+      -moz-appearance: none;
+      -webkit-appearance: none;
+      box-shadow: none;
+      outline: 0;
+      margin: 2px 0 auto;
+  }
 }
+
+
 
 /* Extra Small Devices, Phones */
 @media only screen and (max-width: 480px) {
