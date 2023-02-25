@@ -1513,7 +1513,7 @@
 /* Medium Devices, Desktops */
 @media only screen and (max-width: 1000px) {
   .post {
-    width: 48%;s
+    width: 80%;
     max-width: 100%;
     margin: 0 0.9% 1.5%;
     -webkit-box-orient: vertical;
@@ -1527,7 +1527,7 @@
   }
   .category-box {
     padding: 0px 0px 0px 200px;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
     /* color: #b21d1d; */
     /* background-color: #a41212; */
@@ -1564,20 +1564,20 @@
   {
       color: rgb(107, 136, 158);
       max-width: 100px;
-      max-height: 12px;
-      padding: 12px;
+      max-height: 10px;
+      padding: 10px;
       border: 1px solid #aeaeb8;
       border-radius: 20px;
       -moz-appearance: none;
       -webkit-appearance: none;
       box-shadow: none;
       outline: 0;
-      margin: 2px 0 auto;
+      /* margin: 2px 0 auto; */
   }
   .tipue_search_left
   {
       float: left;
-      padding: 15px 150px 0 0;
+      padding: 5px 100px 0 0;
   }
   .tipue_search_right
   {
