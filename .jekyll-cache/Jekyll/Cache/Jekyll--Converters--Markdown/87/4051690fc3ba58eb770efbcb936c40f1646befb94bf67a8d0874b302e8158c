@@ -1,0 +1,56 @@
+I"o<p><br /></p>
+
+<h2 id="matlab-code-for-a--qr-factorization">MATLAB code for A = QR Factorization</h2>
+<ul>
+  <li>Gram-Schmidt</li>
+  <li>Creates orthogonal columns from independent set of columns of A.</li>
+  <li>R is an upper triangular matrix with the length of each orthogonalized column of A on its main diagonal.</li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="1-function-for-a--qr-factorization">1. Function for A = QR Factorization</h3>
+
+<p><br /></p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">function</span> <span class="p">[</span><span class="n">Q</span> <span class="n">R</span><span class="p">]</span> <span class="o">=</span> <span class="n">qr_factorize</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="c1">% A = QR factorization (Gram-Schmidt)</span>
+
+<span class="p">[</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="nb">size</span><span class="p">(</span><span class="n">A</span><span class="p">);</span> 
+
+<span class="k">for</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">;</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">A</span><span class="p">(:,</span> <span class="n">j</span><span class="p">);</span>     <span class="c1">% pick a column to orthogonalize</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        <span class="n">R</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">=</span> <span class="n">Q</span><span class="p">(:,</span> <span class="n">i</span><span class="p">)</span><span class="o">'*</span><span class="n">v</span><span class="p">;</span>      
+        <span class="n">v</span> <span class="o">=</span> <span class="n">v</span> <span class="o">-</span> <span class="n">Q</span><span class="p">(:,</span> <span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="n">R</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span>    <span class="c1">% orthogonalize (subtracts earlier projections)</span>
+    <span class="k">end</span>
+    <span class="n">R</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="o">=</span> <span class="nb">norm</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>      <span class="c1">% set diagonal of A with the length of orthogonalized column of A</span>
+    <span class="n">Q</span><span class="p">(:,</span> <span class="n">j</span><span class="p">)</span> <span class="o">=</span> <span class="n">v</span><span class="p">/</span><span class="n">R</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span>
+<span class="k">end</span> <span class="n">s</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h3 id="2-example-solved">2. Example solved</h3>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span> <span class="mi">0</span> <span class="mi">1</span><span class="p">;</span> <span class="mi">2</span> <span class="o">-</span><span class="mi">3</span> <span class="mi">0</span><span class="p">;</span> <span class="o">-</span><span class="mi">1</span> <span class="mi">3</span> <span class="mi">0</span><span class="p">];</span>
+
+<span class="n">qr_factorize</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> 
+<span class="nb">ans</span> <span class="o">=</span>
+ 
+    <span class="mf">0.6667</span>    <span class="mf">0.6667</span>    <span class="mf">0.3333</span>
+    <span class="mf">0.6667</span>   <span class="o">-</span><span class="mf">0.3333</span>   <span class="o">-</span><span class="mf">0.6667</span>
+   <span class="o">-</span><span class="mf">0.3333</span>    <span class="mf">0.6667</span>   <span class="o">-</span><span class="mf">0.6667</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<ul>
+  <li>Reference
+    <ul>
+      <li>Strang, Gilbert. Introduction to Linear Algebra. 4th ed (Chapter 4. Orthogonality, p237)</li>
+    </ul>
+  </li>
+</ul>
+
+:ET

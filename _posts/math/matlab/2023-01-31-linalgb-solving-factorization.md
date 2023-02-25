@@ -1,9 +1,9 @@
 ---
 layout : post
 title : "[MATLAB] Solving Ax = b with Factorization A = LU"
-img : linalgb/mitocw_linalg.png
+img : matlab/matlab.jpg
 categories : 
-    - [math-linalgb]
+    - [math-matlab]
 tag : [Math, Linear Algebra, MATLAB, Factorization]
 toc : true
 toc_sticky : true
@@ -20,7 +20,6 @@ toc_sticky : true
 
 ### 1. Factorizes A to LU (No Row Exchange)
 
-<br/>
 
 ```matlab
 function [L, U] = factorize(A)
@@ -49,8 +48,6 @@ end
 ### 2. Solve Lc = b & Ux = c to get solution x vector 
 - Forward Elimination 
 - Backward Substitution 
-
-<br/>
 
 ```matlab
 function x = slv(A, b)

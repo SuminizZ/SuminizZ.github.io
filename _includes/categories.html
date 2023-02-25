@@ -94,7 +94,7 @@
             </li>
 
             <li class="nav-item dropdown
-            {% if page.url == '/math/vcalc/' or page.url == '/math/linalgb/' %} active {% endif %}">
+            {% if page.url == '/math/vcalc/' or page.url == '/math/linalgb/' or page.url == '/math/matlab/' %} active {% endif %}">
                 <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('c-dropdown')"
                    role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
@@ -108,9 +108,13 @@
                     {% if category[0] == "math-linalgb" %}
                         {% assign linalgb_sum = category[1].size %}
                     {% endif %}
+                    {% if category[0] == "math-matlab" %}
+                        {% assign matlab_sum = category[1].size %}
+                    {% endif %}
                     {% endfor %}
                     <a class="dropdown-item" href="{{ "/math/vcalc" | prepend: site.baseurl }}">Vector Calculus ({{vcalc_sum}})</a>
                     <a class="dropdown-item" href="{{ "/math/linalgb" | prepend: site.baseurl }}">Linear Algebra ({{linalgb_sum}})</a>
+                    <a class="dropdown-item" href="{{ "/math/matlab" | prepend: site.baseurl }}">Matlab ({{matlab_sum}})</a>
                 </div>
             </li>
 

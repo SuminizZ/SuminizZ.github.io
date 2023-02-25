@@ -1167,7 +1167,7 @@
 
    .post .post-content {
      padding: 1rem;
-     width: 80%;
+     width: 82%;
    }
 
    .post .post-content .post-date,
@@ -1178,7 +1178,7 @@
 
    .post .post-content .post-title {
      margin: 8px 0 auto;
-     font-size: 22px;
+     font-size: 21px;
      font-weight: 700;
    }
 
@@ -1219,7 +1219,8 @@
 
    /* - - - - - - - - - - Post Page Styles - - - - - - - - - - */
    .wrap-content {
-     padding: 12px;
+     width: 800px;
+     padding: 11px;
    }
 
    .header-page {
@@ -1228,10 +1229,10 @@
    }
 
    .header-page .page-title {
-     font-size: 25px;
-     font-weight: 400;
-     margin: 0 0 10px;
-     line-height: 1.3;
+     font-size: 30px;
+     font-weight: 500;
+     margin: 20px 0;
+     line-height: 1;
    }
 
    .header-page .page-date {
@@ -1242,23 +1243,26 @@
    }
 
    .page-cover-image {
-     position: relative;
-     padding: 30px 30px 30px 30px;
-     margin: 0;
+     position: center;
+     width: 700px;
+     padding: 0;
+     margin: 0 47px;
      background-color: #fafafa;
      overflow: hidden;
+     border-radius: 5px;
    }
 
    .page-cover-image figure {
      position: relative;
      margin: 0;
+     background-color: #fafafa;
    }
 
    .page-cover-image figcaption {
      position: absolute;
      top: 25px;
      right: 25px;
-     padding-left: 1000000px;
+     padding-left: 1000px;
      color: rgba(255, 255, 255, 0.7);
      text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
      font-weight: 700;
