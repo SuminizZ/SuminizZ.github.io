@@ -1511,9 +1511,9 @@
 
 /* - - - - - - - - - - Media Styles - - - - - - - - - - */
 /* Medium Devices, Desktops */
-@media only screen and (min-width: 1000px) {
+@media only screen and (max-width: 1000px) {
   .post {
-    width: 48%;
+    width: 48%;s
     max-width: 100%;
     margin: 0 0.9% 1.5%;
     -webkit-box-orient: vertical;
@@ -1587,7 +1587,7 @@
 
 
 /* Small Devices, Tablets */
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
   .sidebar {
     position: relative;
     display: -webkit-box;
@@ -1679,7 +1679,7 @@
 
 
 /* Extra Small Devices, Phones */
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 500px) {
   .content-box {
     padding: 10px;
   }
