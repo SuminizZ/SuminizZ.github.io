@@ -1650,6 +1650,10 @@
     border-radius: 20px;
     margin-bottom: 10px;
   }
+  .post {
+    width: 100%;
+    max-width: 100%;
+  }
   .content-box {
     padding: 20px 10px;
     display: -webkit-box;
