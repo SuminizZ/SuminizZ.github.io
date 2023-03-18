@@ -18,6 +18,6 @@ toc_sticky : true
 
 <br/>
 
-### - Notes
+### - Notes & Assignments
 
 - [<span style="color:purple">**11_Orthogonality**</span>](https://drive.google.com/file/d/1-2OfS2BQZRmO4Gt6RWArOBSfV-Q9380B/view?usp=share_link){:target="_blank"}

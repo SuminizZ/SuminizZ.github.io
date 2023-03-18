@@ -16,6 +16,6 @@ toc_sticky : true
 - Lecture from MIT OpenCourseWare 18.06 2010 Spring
 
 
-### - Notes
+### - Notes & Assignments
 
 - [<span style="color:purple">**07_Null Space, Solving Ax=0**</span>](https://drive.google.com/file/d/1JkoBiBjI3AJxljwLvulOIqitcgGhLyc-/view?usp=share_link){:target="_blank"}

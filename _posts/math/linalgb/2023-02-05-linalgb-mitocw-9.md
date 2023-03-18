@@ -17,6 +17,6 @@ toc_sticky : true
 
 <br/>
 
-### - Notes
+### - Notes & Assignments
 
 - [<span style="color:purple">**09_Independence, Basis and Dimension**</span>](https://drive.google.com/file/d/1QZmztDLb992G5ipyjModk10EoszY1MmP/view?usp=share_link){:target="_blank"}

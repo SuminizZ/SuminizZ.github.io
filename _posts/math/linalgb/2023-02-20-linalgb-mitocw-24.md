@@ -18,6 +18,6 @@ toc_sticky : true
 
 <br/>
 
-### - Notes
+### - Notes & Assignments
 
 - [<span style="color:purple">**24_Fast Fourier Transform (FFT)**</span>](https://drive.google.com/file/d/1OURWPqHxkS7VcDjui4-o7RVcH4kVgRXo/view?usp=share_link){:target="_blank"}

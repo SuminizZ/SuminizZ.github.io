@@ -18,6 +18,6 @@ toc_sticky : true
 
 <br/>
 
-### - Notes
+### - Notes & Assignments
 
 - [<span style="color:purple">**14_Graphs and Networksn**</span>](https://drive.google.com/file/d/1_dW2v22rLmNTMxGUlv02JshxRSAPtgUH/view?usp=share_link){:target="_blank"}

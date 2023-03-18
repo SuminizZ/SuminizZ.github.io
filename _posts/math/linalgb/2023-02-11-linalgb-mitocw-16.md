@@ -17,6 +17,6 @@ toc_sticky : true
 - Lecture 18: Properties of Determinants
 
 
-### - Notes
+### - Notes & Assignments
 
 - [<span style="color:purple">**16_Properties of Determinants**</span>](https://drive.google.com/file/d/1To8Na3QQsyP3JDH5P0RA82fl_pykok_V/view?usp=share_link){:target="_blank"}

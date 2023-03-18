@@ -17,6 +17,6 @@ toc_sticky : true
 
 <br/>
 
-### - Notes
+### - Notes & Assignments
 
 - [<span style="color:purple">**01_The geometry of linear equations**</span>](https://drive.google.com/file/d/1bpMo5VyF1uWR13kRK4_gGYPlfwSptJN-/view?usp=share_link){:target="_blank"}

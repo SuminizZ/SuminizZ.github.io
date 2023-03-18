@@ -17,6 +17,6 @@ toc_sticky : true
 
 <br/>
 
-### - Notes
+### - Notes & Assignments
 
 - [<span style="color:purple">**02_Elimination with matrices**</span>](https://drive.google.com/file/d/11VzUAjrampfm_tmv-0U5ugZsd1cQZ53F/view?usp=share_link){:target="_blank"}

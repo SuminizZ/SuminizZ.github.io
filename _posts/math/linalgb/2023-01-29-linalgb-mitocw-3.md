@@ -17,6 +17,6 @@ toc_sticky : true
 
 <br/>
 
-### - Notes
+### - Notes & Assignments
 
 - [<span style="color:purple">**03_Matrix Operations and Inverses**</span>](https://drive.google.com/file/d/1_9KLMC9gPCQ1fBlPLAkBwoZDG-IcLoox/view?usp=share_link){:target="_blank"}

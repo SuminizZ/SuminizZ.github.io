@@ -18,6 +18,6 @@ toc_sticky : true
 
 <br/>
 
-### - Notes
+### - Notes & Assignments
 
 - [<span style="color:purple">**13_Least Squares Approximation**</span>](https://drive.google.com/file/d/1dMSnVln9x5F3WsaJIGEs80WH3Ak9qsFY/view?usp=share_link){:target="_blank"}

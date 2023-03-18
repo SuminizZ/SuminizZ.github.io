@@ -16,6 +16,6 @@ toc_sticky : true
 - Lecture from MIT OpenCourseWare 18.06 2010 Spring
 - Lecture 22: Diagonalization and Powers of A
 
-### - Notes
+### - Notes & Assignments
 
 - [<span style="color:purple">**22_Diagonalization and Powers of A**</span>](https://drive.google.com/file/d/13TYL2Gi3hB6BLNgrcqBdr4tKKkbunE7p/view?usp=share_link){:target="_blank"}

@@ -18,6 +18,6 @@ toc_sticky : true
 
 <br/>
 
-### - Notes
+### - Notes & Assignments
 
 - [<span style="color:purple">**21_Differential equations and exp(At)**</span>](https://drive.google.com/file/d/1tEFvr-84ufJwQCNKffpkG3waCyba31GI/view?usp=share_link){:target="_blank"}

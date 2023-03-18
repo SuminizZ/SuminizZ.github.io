@@ -18,6 +18,6 @@ toc_sticky : true
 
 <br/>
 
-### - Notes
+### - Notes & Assignments
 
 - [<span style="color:purple">**23_Spectral Theorem and Schur's Theorem**</span>](https://drive.google.com/file/d/1OCM4C0rOnGjXjMjgvUpO2xVJbDLK6f_7/view?usp=share_link){:target="_blank"}

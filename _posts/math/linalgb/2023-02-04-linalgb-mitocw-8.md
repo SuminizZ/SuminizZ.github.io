@@ -17,6 +17,6 @@ toc_sticky : true
 
 <br/>
 
-### - Notes
+### - Notes & Assignments
 
 - [<span style="color:purple">**08_Solvability of Ax = b, Rank of Row Reduced Form**</span>](https://drive.google.com/file/d/1_9s-t5wbBN1hYYXYoCyn8sx_h3WKSdbk/view?usp=share_link){:target="_blank"}

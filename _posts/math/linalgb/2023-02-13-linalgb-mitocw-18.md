@@ -17,6 +17,6 @@ toc_sticky : true
 - Lecture 20: Cramer's Rule, Inverse matrix, and Volume
 
 
-### - Notes
+### - Notes & Assignments
 
 - [<span style="color:purple">**18_Cramer's Rule, Inverses, and Volume**</span>](https://drive.google.com/file/d/1CfdxLA8ozX0DiEfZmUXsghB2Tr4BYyVM/view?usp=share_link){:target="_blank"}

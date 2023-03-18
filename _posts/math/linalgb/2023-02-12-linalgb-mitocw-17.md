@@ -17,6 +17,6 @@ toc_sticky : true
 - Lecture 19: Determinant Formulas and Cofactors
 
 
-### - Notes
+### - Notes & Assignments
 
 - [<span style="color:purple">**17_Determinant Formulas and Cofactors**</span>](https://drive.google.com/file/d/1SGAXdgPJSad_ItajWq-BAUtAtnviiGYD/view?usp=share_link){:target="_blank"}

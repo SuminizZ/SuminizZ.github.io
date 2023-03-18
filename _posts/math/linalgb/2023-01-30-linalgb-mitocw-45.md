@@ -17,6 +17,7 @@ toc_sticky : true
 
 <br/>
 
-### - Notes
+### - Notes & Assignments
+
 
 - [<span style="color:purple">**04-05_PA = LDU Factorization**</span>](https://drive.google.com/file/d/1QEJs1GXpJhXlUJrOXte6tIgswxVlgRNE/view?usp=share_link){:target="_blank"}

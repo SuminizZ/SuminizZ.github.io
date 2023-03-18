@@ -17,6 +17,6 @@ toc_sticky : true
 - Lecture 17: Orthogonal matrices and Gram-Schmidt
 
 
-### - Notes
+### - Notes & Assignments
 
 - [<span style="color:purple">**15_Gram-Schmidt and A = QR Factorization**</span>](https://drive.google.com/file/d/134TWtav-p8Z0wwHwWJh8LBDccQlQurw8/view?usp=share_link){:target="_blank"}
