@@ -1,0 +1,215 @@
+I"e!<p><br /></p>
+
+<h2 id="outlines">OUTLINES</h2>
+
+<ol>
+  <li>Exponential Family</li>
+  <li>Generalized Linear Models</li>
+  <li>Softmax Regression (Multiclass Classification)</li>
+</ol>
+
+<p><br /></p>
+
+<h1 id="1-exponential-family">1. Exponential Family</h1>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p>Distribution is said to belong to the exponential family if its probability density function (pdf) or probability mass function (pmf) can be expressed in the following form <br /></p>
+
+    <p>     $\normalsize f(y\, |\ x\,;\theta) = b(y)\,e^{(\eta^{T}T(y)\, - \,a(\eta))} $ <br />
+  <br /></p>
+
+    <ul>
+      <li>y : response variable</li>
+      <li>$\eta$ : natural parameter (link function, $f(\theta)$)</li>
+      <li>$T(y)$ : sufficient statistics (function of y, mostly just T(y) = y)</li>
+      <li>$b(y)$ : Base measure</li>
+      <li>$a(\eta)$ : log partition number (normalizing parameter to make integral over entire domain be 1)</li>
+    </ul>
+
+    <p><br /></p>
+  </li>
+  <li>
+    <p>Sufficient Statistics $T(y)$</p>
+    <ul>
+      <li>a function that holds the sufficient information of the data needed to estimate the parameters of interest in statistical model</li>
+      <li>if a sufficient statistic is available, then one can estimate the parameter of interest without using the full data</li>
+      <li>can be found in the exponential family</li>
+      <li>GLM uses only this sufficient statistics for an optimization process of parameters.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="11-probability-distribution-within-exponential-family">1.1. Probability Distribution within Exponential Family</h2>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p>The exponential family includes a wide range of commonly used probability distributions, such as the <code class="language-plaintext highlighter-rouge">normal distribution</code>, <code class="language-plaintext highlighter-rouge">Poisson distribution</code>, <code class="language-plaintext highlighter-rouge">gamma distribution</code>, and <code class="language-plaintext highlighter-rouge">binomial distribution</code></p>
+  </li>
+  <li>
+    <p>There are distinct data types matched for each probability distribution</p>
+    <ul>
+      <li>Gaussian : real numbers</li>
+      <li>Bernoulli : binary discrete numbers</li>
+      <li>Poisson : discrete, natural integer</li>
+      <li>Gamma or Exponential : postivie real numbers</li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="111-gaussian-distribution">1.1.1. Gaussian Distribution</h3>
+
+<p><br /></p>
+
+<p><img width="445" alt="Screen Shot 2023-03-23 at 9 48 57 PM" src="https://user-images.githubusercontent.com/92680829/227210157-40653363-5016-4c18-a789-15f2959b8710.png" /></p>
+
+<p><br /></p>
+
+<h3 id="112-bernoulli-distribution">1.1.2. Bernoulli Distribution</h3>
+
+<p><br /></p>
+
+<p><img width="485" alt="Screen Shot 2023-03-23 at 9 49 02 PM" src="https://user-images.githubusercontent.com/92680829/227210029-35fd18b7-0459-4b68-96f5-afae5a198de1.png" /></p>
+
+<p><br /></p>
+
+<h3 id="113-poisson-distribution">1.1.3. Poisson Distribution</h3>
+
+<p><br /></p>
+
+<p><img width="400" alt="Screen Shot 2023-03-23 at 9 49 05 PM" src="https://user-images.githubusercontent.com/92680829/227209938-278da525-56aa-4066-91b7-d8ef63d014e2.png" /></p>
+
+<p><br /></p>
+
+<hr />
+
+<p><br /></p>
+
+<h1 id="2-generalized-linear-models-glms">2. Generalized Linear Models (GLMs)</h1>
+
+<p><br /></p>
+
+<ul>
+  <li>Extends the linear regression model to handle data type not in normal distribution, such as binary or discrete count data</li>
+  <li>To use GLMs, response variable (y) is assumed to be distributed in the form of exponential family</li>
+  <li>exponential family form have link function (or response function) that links the non-normal response variable y to linear predictors (x parameterized by $\theta$)</li>
+  <li>The GLM can be trained using maximum likelihood estimation or Bayesian methods, and the parameters of the model can be estimated using numerical optimization algorithms.</li>
+</ul>
+
+<h2 id="21-maximum-likelihood-function-of-glms">2.1. Maximum-Likelihood Function of GLMs</h2>
+
+<p><br /></p>
+
+<h3 id="211-properties-of-glm">2.1.1. Properties of GLM</h3>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">Convexity</code> : MLE with respect to $\eta$ is concave function (or Negative log likelihood is convex) 
+  -&gt; guarantees convergence</p>
+  </li>
+  <li>$E(T(y)) = \normalsize \frac{\partial a(\eta)}{\partial \eta}$</li>
+  <li>$V(T(y)) = \normalsize \frac{\partial^{2} a(\eta)}{\partial \eta^{2}}$ -&gt; positive definite</li>
+</ul>
+
+<h3 id="212-mean-and-variance-of-sufficient-statistics-with-derivatives-of-aeta">2.1.2. Mean and Variance of Sufficient Statistics with Derivatives of $a(\eta)$</h3>
+
+<p><br /></p>
+
+<h4 id="ety">$E(T(y))$</h4>
+
+<p><br /></p>
+
+<ol>
+  <li>GLM is normalized with log partition number $a(\eta)$ so that its integral equals to 1.</li>
+  <li>take derivative to the integral with respect to $\eta$</li>
+  <li>
+    <p>can get the relation that $\,\,\, \normalsize -\frac{\nabla g(\eta)}{g(\eta)}\, =\, \int T(y)g(\eta)b(y)e^{\eta^{T}T(y)}dy \,\, = E(T(y)) \,$ (here, $\normalsize g(\eta)\, =\, e^{-a(\eta)} $) <br /></p>
+
+    <p>&lt;img ~~&gt;</p>
+  </li>
+</ol>
+
+<h4 id="vty">$V(T(y))$</h4>
+<ul>
+  <li>
+    <p>take derivative to $E(T(y))$ with respect to $\eta$ to get $\normalsize \frac{\partial^{2} a(\eta)}{\partial \eta^{2}}$ <br /></p>
+
+    <p>&lt;img …&gt;</p>
+  </li>
+</ul>
+
+<h3 id="maximizing-log-likelihood-of-glm">Maximizing Log Likelihood of GLM</h3>
+<ul>
+  <li>
+    <p>take derivative to log likelihood with respect to $\eta$ and set it to be 0. (maximum point of concave function)</p>
+
+    <p>&lt;img ~~~&gt;</p>
+
+    <ul>
+      <li>solve the equation $\normalsize \,\nabla a(\eta) = \frac{1}{N} \sum \limits_{i}^{N} T(y)$ gives you the natural parameter $\eta$ that maximizes the likelihood of GLM</li>
+      <li>Hence, you only need to keep the sufficient statistics term for learning process, instead of storing the full data.</li>
+      <li>as N (size of sample) goes to infinity, $\normalsize \nabla a(\eta)$ reaches to $\normalsize E(T(y))$</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="design-choices-for-glm-in-machine-learning">Design Choices for GLM in Machine Learning</h2>
+
+<ol>
+  <li>response variable (y) is from exponential family</li>
+  <li>$\normalsize \eta = \theta^{T}x$</li>
+  <li>output $\,\,\normalsize E(y\, |\ \,x;\theta) = h_{\theta}(x)$</li>
+</ol>
+
+<hr />
+
+<h1 id="softmax-regression-multiclass-classification">Softmax Regression (Multiclass Classification)</h1>
+
+<ul>
+  <li>Known as <code class="language-plaintext highlighter-rouge">Multinomial Logistic Regression</code>, is a supervised learning algorithm used for classification problems where the output variable is categorical with more than two possible outcomes</li>
+  <li>Estimate the conditional probability distribution of the output variable (class) given the input variables</li>
+  <li>Output variables $Y = {y_{1}, y_{2}, …, y_{k}, … y_{N}} $, each $y_{k}$ represents the probability that the given input $x$ belongs to the correspondig category k
+    <ul>
+      <li>$\normalsize \sum\limits_{k=1}^{N}\, y_{k}\, = \,1\,\,$  (N : number of categories)</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="softmax-function-h_thetax">Softmax Function ($h_{\theta}(x)$)</h2>
+
+<ul>
+  <li>
+    <p>Transforms a vector of real numbers (input variables) into a probability distribution (output) by <code class="language-plaintext highlighter-rouge">exponentiating</code> and <code class="language-plaintext highlighter-rouge">normalizing</code> the values <br /></p>
+
+    <p>    $\normalsize p(y^{i}<em>{k}\, |\  \, x^{i};\theta) = \large \frac{e^{z^{i}}}{\sum\limits</em>{j=1}{N}\,e^{z^{i}}}\quad \normalsize (here,\; z = \theta^{T}x^{i}) $</p>
+  </li>
+</ul>
+
+<h2 id="cost-for-softmax-regression--cross---entropy">Cost for softmax regression : Cross - Entropy</h2>
+
+<ul>
+  <li>
+    <p>pretty much the same with the cost function (logistic cost) for binary classification <br /></p>
+
+    <p>    $\normalsize CE(\hat{y}, y) = -\sum\limits_{k=1}^{N}y_{k}log(\hat{y}_{k}) $</p>
+
+    <ul>
+      <li>$\hat{y}^{i}_{k}\, $ : predicted probaility for category k</li>
+      <li>$y^{i}$ : real label (1 for correct category and 0 for others)</li>
+    </ul>
+  </li>
+  <li>penalizes when the probaility is low for the correct category</li>
+  <li>encourages the model to assign high probabilities to the correct classes and low probabilities to the incorrect classes.</li>
+</ul>
+
+:ET

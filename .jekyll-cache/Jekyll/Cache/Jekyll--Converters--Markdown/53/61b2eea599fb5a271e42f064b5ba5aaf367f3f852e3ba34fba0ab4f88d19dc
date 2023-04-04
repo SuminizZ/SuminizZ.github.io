@@ -1,0 +1,15 @@
+I"è<p><br /></p>
+
+<h3 id="quasi-newton-method">Quasi-Newton method</h3>
+<ul>
+  <li>Iterative optimization algorithm used to solve unconstrained nonlinear optimization problems.</li>
+  <li>Basic idea behind the Quasi-Newton method is to approximate the Hessian matrix of the objective function using an iterative formula that includes information from the gradient of the objective function and the difference between the current and previous iterates.</li>
+</ul>
+
+<h3 id="notes">Notes</h3>
+
+<ul>
+  <li><a href="https://drive.google.com/file/d/1bg4O_4jck2AGwa9tO4XqU89ovHq4Kij5/view?usp=share_link" target="_blank"><span style="color:purple"><strong>Convex Optimization 1 - Quasi-Newton Method : Broydenâ€™s Method</strong></span></a>s</li>
+</ul>
+
+:ET

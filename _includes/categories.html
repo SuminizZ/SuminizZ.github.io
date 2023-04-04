@@ -8,31 +8,49 @@
             </li>
 
             <li class="nav-item dropdown
-            {% if page.url == '/dml/dls/' or page.url == '/dml/ml/' or page.url == '/dml/tf/' or page.url == '/dml/topics/'%} active {% endif %}">
-                <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('dml-dropdown')"
+            {% if page.url == '/dl/dls/' or page.url == '/dl/tf/' or page.url == '/dl/topics/'%} active {% endif %}">
+                <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('dl-dropdown')"
                    role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-vexpanded="false">
-                    DL/ML
+                    DL
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="dml-dropdown">
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="dl-dropdown">
                     {% for category in site.categories %}
-                    {% if category[0] == "dml-dls" %}
+                    {% if category[0] == "dl-dls" %}
                         {% assign dls_sum = category[1].size %}
                     {% endif %}
-                     {% if category[0] == "dml-ml" %}
-                        {% assign ml_sum = category[1].size %}
-                    {% endif %}
-                    {% if category[0] == "dml-tsf" %}
+                    {% if category[0] == "dl-tsf" %}
                         {% assign tsf_sum = category[1].size %}
                     {% endif %}
-                     {% if category[0] == "dml-topics" %}
+                     {% if category[0] == "dl-topics" %}
                         {% assign topics_sum = category[1].size %}
                     {% endif %}                                   
                     {% endfor %}
-                    <a class="dropdown-item" href="{{ "/dml/dls" | prepend: site.baseurl }}">Deep Learning Specialization ({{dls_sum}}) </a>
-                    <a class="dropdown-item" href="{{ "/dml/ml" | prepend: site.baseurl }}">Machine Learning ({{ml_sum}})</a>
-                    <a class="dropdown-item" href="{{ "/dml/tsf" | prepend: site.baseurl }}">TensorFlow ({{tsf_sum}})</a>
-                    <a class="dropdown-item" href="{{ "/dml/topics" | prepend: site.baseurl }}">Related Topics ({{topics_sum}})</a>
+                    <a class="dropdown-item" href="{{ "/dl/dls" | prepend: site.baseurl }}">Deep Learning Specialization ({{dls_sum}}) </a>
+                    <a class="dropdown-item" href="{{ "/dl/tsf" | prepend: site.baseurl }}">TensorFlow ({{tsf_sum}})</a>
+                    <a class="dropdown-item" href="{{ "/dl/topics" | prepend: site.baseurl }}">Related Topics ({{topics_sum}})</a>
+                </div>
+            </li>
+
+
+            <li class="nav-item dropdown
+            {% if page.url == '/ml/cs229/' or page.url == '/ml/opt/' %} active {% endif %}">
+                <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('ml-dropdown')"
+                   role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-vexpanded="false">
+                    ML
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="ml-dropdown">
+                    {% for category in site.categories %}
+                    {% if category[0] == "ml-cs229" %}
+                        {% assign cs229_sum = category[1].size %}
+                    {% endif %}
+                     {% if category[0] == "ml-opt" %}
+                        {% assign opt_sum = category[1].size %}
+                    {% endif %}                                   
+                    {% endfor %}
+                    <a class="dropdown-item" href="{{ "/ml/cs229" | prepend: site.baseurl }}">CS229 ({{cs229_sum}})</a>
+                    <a class="dropdown-item" href="{{ "/ml/opt" | prepend: site.baseurl }}">Optimization ({{opt_sum}})</a>
                 </div>
             </li>
 
