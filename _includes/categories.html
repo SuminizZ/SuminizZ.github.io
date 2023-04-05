@@ -113,12 +113,12 @@
 
             <li class="nav-item dropdown
             {% if page.url == '/math/vcalc/' or page.url == '/math/mvarcalc/' or page.url == '/math/linalgb/' or page.url == '/math/matlab/' %} active {% endif %}">
-                <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('c-dropdown')"
+                <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('math-dropdown')"
                    role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
                     MATH
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="c-dropdown">
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="math-dropdown">
                     {% for category in site.categories %}
                     {% if category[0] == "math-vcalc" %}
                         {% assign vcalc_sum = category[1].size %}
@@ -137,6 +137,27 @@
                     <a class="dropdown-item" href="{{ "/math/mvarcalc" | prepend: site.baseurl }}">Multivariate Calculus ({{mvarcalc_sum}})</a>
                     <a class="dropdown-item" href="{{ "/math/linalgb" | prepend: site.baseurl }}">Linear Algebra ({{linalgb_sum}})</a>
                     <a class="dropdown-item" href="{{ "/math/matlab" | prepend: site.baseurl }}">Matlab ({{matlab_sum}})</a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown
+            {% if page.url == '/stats/topics/' or page.url == '/stats/18.650/' %} active {% endif %}">
+                <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('stats-dropdown')"
+                   role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    STATISTICS
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="stats-dropdown">
+                    {% for category in site.categories %}
+                    {% if category[0] == "stats-topics" %}
+                        {% assign topics_sum = category[1].size %}
+                    {% endif %}
+                    {% if category[0] == "stats-18650" %}
+                        {% assign 18650_sum = category[1].size %}
+                    {% endif %}
+                    {% endfor %}
+                    <a class="dropdown-item" href="{{ "/stats/topics" | prepend: site.baseurl }}">Various Topics ({{topics_sum}})</a>
+                    <a class="dropdown-item" href="{{ "/stats/18.650" | prepend: site.baseurl }}">Statistics for Application (MIT 18.650) ({{18650_sum}})</a>
                 </div>
             </li>
 
@@ -215,17 +236,6 @@
             <li class="nav-item {% if page.url == '/' %} active {% endif %}">
                 <a class="nav-link"></a>
             </li>
-            <li class="nav-item {% if page.url == '/' %} active {% endif %}">
-                <a class="nav-link"></a>
-            </li>
-            <li class="nav-item {% if page.url == '/' %} active {% endif %}">
-                <a class="nav-link"></a>
-            </li>
-            <li class="nav-item {% if page.url == '/' %} active {% endif %}">
-                <a class="nav-link"></a>
-            </li>
-            <li class="nav-item {% if page.url == '/' %} active {% endif %}">
-                <a class="nav-link"></a>
             </li>
             <li class="nav-item {% if page.url == '/' %} active {% endif %}">
                 <a class="nav-link"> Search  </a>
