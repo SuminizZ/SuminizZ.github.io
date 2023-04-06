@@ -34,7 +34,7 @@
 
 
             <li class="nav-item dropdown
-            {% if page.url == '/ml/cs229/' or page.url == '/ml/opt/' %} active {% endif %}">
+            {% if page.url == '/ml/cs229/' or page.url == '/ml/opt/' or page.url == 'ml/inform' %} active {% endif %}">
                 <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('ml-dropdown')"
                    role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-vexpanded="false">
@@ -47,10 +47,14 @@
                     {% endif %}
                      {% if category[0] == "ml-opt" %}
                         {% assign opt_sum = category[1].size %}
+                    {% endif %} 
+                    {% if category[0] == "ml-inform" %}
+                        {% assign inform_sum = category[1].size %}
                     {% endif %}                                   
                     {% endfor %}
                     <a class="dropdown-item" href="{{ "/ml/cs229" | prepend: site.baseurl }}">CS229 ({{cs229_sum}})</a>
                     <a class="dropdown-item" href="{{ "/ml/opt" | prepend: site.baseurl }}">Optimization ({{opt_sum}})</a>
+                    <a class="dropdown-item" href="{{ "/ml/opt" | prepend: site.baseurl }}">Information Theory ({{inform_sum}})</a>
                 </div>
             </li>
 
@@ -182,7 +186,7 @@
                 </div>
             </li>
 
-            <li class="nav-item dropdown
+            <!-- <li class="nav-item dropdown
             {% if page.url == '/github/blogdev/' or page.url == '/github/git/' %} active {% endif %}">
                 <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('github-dropdown')"
                    role="button" data-toggle="dropdown"
@@ -201,7 +205,7 @@
                     <a class="dropdown-item" href="{{ "/github/blogdev" | prepend: site.baseurl }}">Blog Dev ({{blog_sum}})</a>
                     <a class="dropdown-item" href="{{ "/github/git" | prepend: site.baseurl }}">Git ({{git_sum}})</a>
                 </div>
-            </li>
+            </li> -->
 
             <li class="nav-item dropdown
             {% if page.url == '/etc/ns/' %} active {% endif %}">
@@ -233,9 +237,6 @@
             <li class="nav-item {% if page.url == '/' %} active {% endif %}">
                 <a class="nav-link"></a>
             </li>           
-            <li class="nav-item {% if page.url == '/' %} active {% endif %}">
-                <a class="nav-link"></a>
-            </li>
             </li>
             <li class="nav-item {% if page.url == '/' %} active {% endif %}">
                 <a class="nav-link"> Search  </a>
