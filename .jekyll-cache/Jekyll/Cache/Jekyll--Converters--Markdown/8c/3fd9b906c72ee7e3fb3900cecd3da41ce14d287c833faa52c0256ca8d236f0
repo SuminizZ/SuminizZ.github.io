@@ -1,0 +1,17 @@
+I"<p><br /></p>
+
+<ul>
+  <li>also uses perturbed KKT as IPM-B, but doen’t explicitly uses barrier method</li>
+  <li>
+    <p>instead, solving primal-dual problem by computing residual matrix and take 1 Newton step per each iteration</p>
+  </li>
+  <li></li>
+</ul>
+
+<h3 id="summary-notes">Summary Notes</h3>
+
+<ul>
+  <li><a href="https://drive.google.com/file/d/17ba9-kTX6MrGtiqev28PU8YCRVXumk01/view?usp=share_link" target="_blank"><span style="color:purple"><strong>Interior-Point Method with Barrier</strong></span></a>s</li>
+</ul>
+
+:ET

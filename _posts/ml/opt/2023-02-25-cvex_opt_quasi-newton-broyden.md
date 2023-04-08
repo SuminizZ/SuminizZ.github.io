@@ -1,7 +1,7 @@
 ---
 layout: post
 title : "[Convex Optimization] Quasi-Newton Method 1 : Broyden's Method"
-img: ml/convex.jpg
+img: ml/opt/convex.jpg
 categories: [ml-opt] 
 tag : [Coursera, ML, Machine Learning]
 toc : true

@@ -1,0 +1,275 @@
+I"߱<h2 id="summary-notes">Summary Notes</h2>
+
+<ul>
+  <li>
+    <p>provides a summary of the entire process for optimizing a soft-margin SVM.</p>
+  </li>
+  <li>
+    <p><a href="https://drive.google.com/file/d/1rYSjFeorTQMxrGrjcdXj86x4aNdTeXIQ/view?usp=share_link" target="_blank"><span style="color:purple"><strong>Solving Soft Margin SVM with Various Kernel Tricks</strong></span></a></p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="python-code-for-solving-soft-margin-svm-by-pd-ipm-with-kernel-tricks">Python Code for Solving Soft Margin SVM by PD-IPM with Kernel Tricks</h2>
+
+<p><br /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">LightSource</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">warnings</span> 
+
+<span class="n">warnings</span><span class="p">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s">'ignore'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h3 id="functions">Functions</h3>
+
+<p><br /></p>
+
+<ul>
+  <li>Kernel : define various kernel functions (linear, polynomial, rbf (gaussian), sigmoid)</li>
+  <li>calc_decision_val : calculate decsion value  <br />
+  $w^Tx + b\,=\sum\limits_{i, j = 1}^{N}\alpha_{j}y_{j}&lt;x_{i}, x_{j}&gt;$
+    <ul>
+      <li>color shade will be added according to the value</li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">kernel</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">which_kernel</span><span class="p">,</span><span class="n">sig</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">which_kernel</span><span class="o">==</span><span class="s">'Linear'</span><span class="p">:</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">@</span><span class="n">y</span>
+    <span class="k">elif</span> <span class="n">which_kernel</span><span class="o">==</span><span class="s">'poly'</span><span class="p">:</span>
+        <span class="n">a</span><span class="o">=</span><span class="p">.</span><span class="mi">1</span><span class="p">;</span> <span class="n">c</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">d</span><span class="o">=</span><span class="mi">5</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="n">np</span><span class="p">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">@</span><span class="n">y</span><span class="o">+</span><span class="n">c</span><span class="p">)</span><span class="o">**</span><span class="n">d</span>
+    <span class="k">elif</span> <span class="n">which_kernel</span><span class="o">==</span><span class="s">'RBF'</span><span class="p">:</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">sig</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">((</span><span class="n">x</span><span class="o">-</span><span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">which_kernel</span><span class="o">==</span><span class="s">'sigmoid'</span><span class="p">:</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">tanh</span><span class="p">(</span><span class="mf">0.1</span><span class="o">*</span><span class="n">np</span><span class="p">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">@</span><span class="n">y</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out</span>
+
+<span class="k">def</span> <span class="nf">calc_decision_val</span><span class="p">(</span><span class="n">x_plot</span><span class="p">,</span><span class="n">y_plot</span><span class="p">,</span><span class="n">alph</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">sig</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">which_kernel</span><span class="p">):</span>
+    <span class="n">decision_val</span><span class="o">=</span><span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">decision_val</span><span class="o">=</span><span class="n">decision_val</span><span class="o">+</span> <span class="n">alph</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span> \
+            <span class="n">kernel</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]]),</span><span class="n">np</span><span class="p">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">x_plot</span><span class="p">,</span><span class="n">y_plot</span><span class="p">]),</span><span class="n">which_kernel</span><span class="p">,</span><span class="n">sig</span><span class="p">)</span>
+        
+    <span class="n">decision_val</span><span class="o">=</span><span class="n">decision_val</span><span class="o">-</span><span class="n">c</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">decision_val</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h3 id="training-data--case-1-3">Training Data : Case 1-3</h3>
+
+<p><br /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># case 1
+# Nh=20; Ns=2; N=Nh+Ns
+# r1=np.random.randn(int(Nh/2),1); r2=np.random.randn(int(Nh/2),1)+5
+# s1=np.ones((int(Nh/2),1)); s2=-1*np.ones((int(Nh/2),1))
+# x=np.vstack((r1,r2, 3, 2))
+# y=np.vstack((r2,r1, 2, 2))
+# s=np.vstack((s1,s2, 1, -1))
+# xmin= -3; xmax= 8; ymin= -3; ymax = 8
+</span>
+<span class="c1"># case 2
+</span><span class="n">Nh1</span><span class="o">=</span><span class="mi">20</span><span class="p">;</span> <span class="n">Nh2</span><span class="o">=</span><span class="mi">5</span><span class="p">;</span> <span class="n">N</span><span class="o">=</span><span class="n">Nh1</span><span class="o">+</span><span class="n">Nh2</span>
+<span class="n">radius1</span><span class="o">=</span><span class="mi">2</span><span class="o">+</span><span class="mf">0.2</span><span class="o">*</span><span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="n">Nh1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">radius2</span><span class="o">=</span><span class="mf">0.3</span><span class="o">+</span><span class="mf">0.1</span><span class="o">*</span><span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="n">Nh2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">theta1</span><span class="o">=</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="p">.</span><span class="n">pi</span><span class="o">*</span><span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">rand</span><span class="p">(</span><span class="n">Nh1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">np</span><span class="p">.</span><span class="n">pi</span>
+<span class="n">theta2</span><span class="o">=</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="p">.</span><span class="n">pi</span><span class="o">*</span><span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">rand</span><span class="p">(</span><span class="n">Nh2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">np</span><span class="p">.</span><span class="n">pi</span>
+<span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">radius1</span><span class="o">*</span><span class="n">np</span><span class="p">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span> <span class="p">,</span> <span class="n">radius2</span><span class="o">*</span><span class="n">np</span><span class="p">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta2</span><span class="p">)</span> <span class="p">])</span>
+<span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">radius1</span><span class="o">*</span><span class="n">np</span><span class="p">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta1</span><span class="p">)</span> <span class="p">,</span> <span class="n">radius2</span><span class="o">*</span><span class="n">np</span><span class="p">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta2</span><span class="p">)</span> <span class="p">])</span>
+<span class="n">s</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">vstack</span><span class="p">([</span><span class="mi">1</span><span class="o">*</span><span class="n">np</span><span class="p">.</span><span class="n">ones</span><span class="p">((</span><span class="n">Nh1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span> <span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="n">np</span><span class="p">.</span><span class="n">ones</span><span class="p">((</span><span class="n">Nh2</span><span class="p">,</span><span class="mi">1</span><span class="p">))])</span>
+<span class="n">xmin</span><span class="o">=</span> <span class="o">-</span><span class="mf">2.5</span><span class="p">;</span> <span class="n">xmax</span><span class="o">=</span> <span class="mf">2.5</span><span class="p">;</span> <span class="n">ymin</span><span class="o">=</span> <span class="o">-</span><span class="mf">2.5</span><span class="p">;</span> <span class="n">ymax</span> <span class="o">=</span> <span class="mf">2.5</span>
+
+<span class="c1"># case 3
+# Nh=10; N=Nh;
+# x1=np.linspace(-2,2,int(Nh/2)).reshape(int(Nh/2),1); x2=x1
+# x=np.vstack([x1 ,x2])
+# y1=4+x1**2; y2=x2**2
+# y=np.vstack([y1 , y2])
+# s=np.vstack([-1*np.ones((int(Nh/2),1)) , 1*np.ones((int(Nh/2),1))])
+# xmin= -3; xmax= 3; ymin= -0.5; ymax = 8.5
+</span></code></pre></div></div>
+
+<p><br /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">figure</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mf">8.5</span><span class="p">,</span> <span class="mf">7.5</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">s</span><span class="o">==</span><span class="mi">1</span><span class="p">],</span><span class="n">y</span><span class="p">[</span><span class="n">s</span><span class="o">==</span><span class="mi">1</span><span class="p">],</span><span class="s">'bo'</span><span class="p">,</span><span class="n">fillstyle</span><span class="o">=</span><span class="s">"none"</span><span class="p">,</span><span class="n">markersize</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span><span class="n">markeredgewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">s</span><span class="o">==-</span><span class="mi">1</span><span class="p">],</span><span class="n">y</span><span class="p">[</span><span class="n">s</span><span class="o">==-</span><span class="mi">1</span><span class="p">],</span><span class="s">'ro'</span><span class="p">,</span><span class="n">fillstyle</span><span class="o">=</span><span class="s">"none"</span><span class="p">,</span><span class="n">markersize</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span><span class="n">markeredgewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">axis</span><span class="p">([</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="p">])</span>
+
+<span class="n">x_plot</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span><span class="n">xmax</span><span class="p">,</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">y_plot</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">ymin</span><span class="p">,</span><span class="n">ymax</span><span class="p">,</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">X_plot</span><span class="p">,</span> <span class="n">Y_plot</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x_plot</span><span class="p">,</span><span class="n">y_plot</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="n">figure</span><span class="p">.</span><span class="n">canvas</span><span class="p">.</span><span class="n">draw</span><span class="p">();</span> <span class="n">figure</span><span class="p">.</span><span class="n">canvas</span><span class="p">.</span><span class="n">flush_events</span><span class="p">();</span> <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1"># plt.close()
+</span>
+<span class="n">figure</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mf">8.5</span><span class="p">,</span> <span class="mf">7.5</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p><img src="https://user-images.githubusercontent.com/92680829/230714604-69ff11cc-4ebe-4c1e-b822-6116c8ab94b6.png" /></p>
+
+<p><br /></p>
+
+<h3 id="initialize-parameters-lagrangian-multipliers">Initialize Parameters (Lagrangian Multipliers)</h3>
+
+<p><br /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">alpha_ini</span><span class="o">=</span><span class="mi">1</span><span class="o">*</span><span class="n">np</span><span class="p">.</span><span class="n">ones</span><span class="p">((</span><span class="n">N</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">beta_ini</span><span class="o">=</span><span class="mi">1</span><span class="o">*</span><span class="n">np</span><span class="p">.</span><span class="n">ones</span><span class="p">((</span><span class="n">N</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">mu_ini</span><span class="o">=</span><span class="mi">1</span><span class="o">*</span><span class="n">np</span><span class="p">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">N</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">lam_ini</span><span class="o">=</span><span class="mi">0</span><span class="o">*</span><span class="n">np</span><span class="p">.</span><span class="n">ones</span><span class="p">((</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="n">wk</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">alpha_ini</span> <span class="p">,</span> <span class="n">beta_ini</span> <span class="p">,</span> <span class="n">mu_ini</span> <span class="p">,</span> <span class="n">lam_ini</span><span class="p">])</span>
+
+<span class="n">gamma</span><span class="o">=</span> <span class="mi">2</span> <span class="c1"># 10 #  0.1 #  1 # 
+</span><span class="n">sig</span><span class="o">=</span> <span class="mi">1</span>  <span class="c1"># 2 # 0.5 #  -&gt; large sigmoid will ease the decision boundary, preventing over-fitting
+</span><span class="n">tl</span><span class="o">=</span><span class="mi">1</span>   <span class="c1"># perturbation parameter 
+</span><span class="n">which_kernel</span><span class="o">=</span> <span class="s">'RBF'</span> <span class="c1"># 'Linear' #  'poly' # 'sigmoid' #
+</span></code></pre></div></div>
+
+<p><br /></p>
+
+<h3 id="primal-dual-ipm-to-optimize-the-decision-boundary-of-soft-margin-svm">Primal-Dual IPM to Optimize the Decision Boundary of Soft Margin SVM</h3>
+
+<p><br /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">):</span>
+    <span class="c1"># decrease perturbation parameter per each iterate with fixed rate 
+</span>    <span class="n">tl1</span><span class="o">=</span><span class="mf">0.8</span><span class="o">*</span><span class="n">tl</span><span class="p">;</span>
+    <span class="n">t</span><span class="o">=</span><span class="n">tl1</span><span class="p">;</span>
+    
+    <span class="n">alph</span><span class="o">=</span><span class="n">wk</span><span class="p">[:</span><span class="n">N</span><span class="p">]</span>
+    <span class="n">beta</span><span class="o">=</span><span class="n">wk</span><span class="p">[</span><span class="n">N</span><span class="p">:</span><span class="mi">2</span><span class="o">*</span><span class="n">N</span><span class="p">]</span>
+    <span class="n">mu</span><span class="o">=</span><span class="n">wk</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">N</span><span class="p">:</span><span class="mi">4</span><span class="o">*</span><span class="n">N</span><span class="p">]</span>
+    <span class="n">lam</span><span class="o">=</span><span class="n">wk</span><span class="p">[</span><span class="mi">4</span><span class="o">*</span><span class="n">N</span><span class="p">:]</span>
+    
+    <span class="c1"># constraints and its derivative with respect to x (alpha and beta)
+</span>    <span class="n">g</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">vstack</span><span class="p">([</span><span class="o">-</span><span class="n">alph</span> <span class="p">,</span> <span class="o">-</span><span class="n">beta</span><span class="p">])</span>
+    <span class="n">h</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">vstack</span><span class="p">([</span><span class="nb">sum</span><span class="p">(</span><span class="n">alph</span><span class="o">*</span><span class="n">s</span><span class="p">)</span> <span class="p">,</span> <span class="n">alph</span><span class="o">+</span><span class="n">beta</span><span class="o">-</span><span class="n">gamma</span><span class="p">])</span>
+    <span class="n">dgdx</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="p">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">dhdx</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">block</span><span class="p">([[</span><span class="n">np</span><span class="p">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">))]</span> <span class="p">,</span> <span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="n">eye</span><span class="p">(</span><span class="n">N</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">eye</span><span class="p">(</span><span class="n">N</span><span class="p">)]])</span>
+            
+    <span class="c1"># solve dual problem by Primal-Dual IPM 
+</span>      <span class="c1"># find the root where residual becomes 0 using Newton Method
+</span>      <span class="c1"># residual has three components
+</span>        <span class="c1"># R1 : derivative of Lagrangian
+</span>        <span class="c1"># R2 : inequality constraint for perturbed complementary slackness
+</span>        <span class="c1"># R3 : equality constraint 
+</span>        
+    <span class="n">df</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+            <span class="n">df</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">+</span><span class="n">alph</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">s</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">*</span> \
+                <span class="n">kernel</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]]),</span><span class="n">np</span><span class="p">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">],</span><span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">]]),</span><span class="n">which_kernel</span><span class="p">,</span><span class="n">sig</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span>
+        
+    <span class="n">d2f</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span><span class="n">N</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+            <span class="n">d2f</span><span class="p">[</span><span class="n">row</span><span class="p">,</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">row</span><span class="p">]</span><span class="o">*</span><span class="n">s</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">*</span> \
+                <span class="n">kernel</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="n">row</span><span class="p">],</span><span class="n">y</span><span class="p">[</span><span class="n">row</span><span class="p">]]),</span><span class="n">np</span><span class="p">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="n">col</span><span class="p">],</span><span class="n">y</span><span class="p">[</span><span class="n">col</span><span class="p">]]),</span><span class="n">which_kernel</span><span class="p">,</span><span class="n">sig</span><span class="p">);</span>
+
+    <span class="n">R1</span><span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">df</span><span class="p">,</span><span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span><span class="mi">1</span><span class="p">))])</span> <span class="o">+</span> <span class="n">np</span><span class="p">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">dhdx</span><span class="p">)</span><span class="o">@</span><span class="n">lam</span> <span class="o">+</span> <span class="n">np</span><span class="p">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">dgdx</span><span class="p">)</span><span class="o">@</span><span class="n">mu</span>
+    <span class="n">R2</span><span class="o">=</span> <span class="n">mu</span><span class="o">*</span><span class="n">g</span> <span class="o">+</span> <span class="n">t</span><span class="o">*</span><span class="n">np</span><span class="p">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">N</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">R3</span><span class="o">=</span> <span class="n">h</span>
+    <span class="n">R</span><span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">R1</span><span class="p">,</span><span class="n">R2</span><span class="p">,</span><span class="n">R3</span><span class="p">])</span>
+    
+    <span class="c1"># derivative of residual with respect to wk
+</span>    <span class="n">B11</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">N</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">N</span><span class="p">))</span>
+    <span class="n">B11</span><span class="p">[:</span><span class="n">N</span><span class="p">,:</span><span class="n">N</span><span class="p">]</span> <span class="o">=</span> <span class="n">d2f</span>
+    <span class="n">B12</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">dgdx</span><span class="p">)</span>
+    <span class="n">B13</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">dhdx</span><span class="p">)</span>
+    <span class="n">B21</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">diag</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">mu</span><span class="p">))</span><span class="o">@</span><span class="n">dgdx</span>
+    <span class="n">B22</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">diag</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
+    <span class="n">B23</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">N</span><span class="p">,</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">B31</span> <span class="o">=</span> <span class="n">dhdx</span><span class="p">;</span>
+    <span class="n">B32</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">N</span><span class="p">))</span>
+    <span class="n">B33</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">dRdw</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">block</span><span class="p">([</span> <span class="p">[</span><span class="n">B11</span><span class="p">,</span> <span class="n">B12</span><span class="p">,</span> <span class="n">B13</span><span class="p">],</span> <span class="p">[</span><span class="n">B21</span><span class="p">,</span> <span class="n">B22</span><span class="p">,</span> <span class="n">B23</span><span class="p">],</span> <span class="p">[</span><span class="n">B31</span><span class="p">,</span> <span class="n">B32</span><span class="p">,</span> <span class="n">B33</span><span class="p">]</span> <span class="p">])</span>
+    
+    <span class="c1"># calculate next iterate of wk : 1 Newton Step 
+</span>    <span class="n">wk1</span><span class="o">=</span><span class="n">wk</span><span class="o">-</span><span class="n">np</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="n">inv</span><span class="p">(</span><span class="n">dRdw</span><span class="p">)</span><span class="o">@</span><span class="n">R</span>
+    
+    <span class="n">wk</span><span class="o">=</span><span class="n">wk1</span>
+    <span class="n">tl</span><span class="o">=</span><span class="n">tl1</span>
+    
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h3 id="visualize-decsion-boundary-of-svm-with-kernal-tricks">Visualize Decsion Boundary of SVM with Kernal Tricks</h3>
+
+<p><br /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">support_j</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">argmin</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">alph</span><span class="o">-</span><span class="n">gamma</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">c</span><span class="o">=</span><span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+    <span class="n">c</span><span class="o">=</span><span class="n">c</span><span class="o">+</span> <span class="n">alph</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span> \
+        <span class="n">kernel</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]]),</span><span class="n">np</span><span class="p">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="n">support_j</span><span class="p">],</span><span class="n">y</span><span class="p">[</span><span class="n">support_j</span><span class="p">]]),</span><span class="n">which_kernel</span><span class="p">,</span><span class="n">sig</span><span class="p">)</span>
+<span class="n">c</span><span class="o">=</span><span class="n">c</span><span class="o">-</span><span class="n">s</span><span class="p">[</span><span class="n">support_j</span><span class="p">]</span>
+
+<span class="n">decision_val</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">y_plot</span><span class="p">.</span><span class="n">size</span><span class="p">,</span><span class="n">x_plot</span><span class="p">.</span><span class="n">size</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">xi</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">x_plot</span><span class="p">.</span><span class="n">size</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">yi</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">y_plot</span><span class="p">.</span><span class="n">size</span><span class="p">):</span>
+        <span class="n">decision_val</span><span class="p">[</span><span class="n">yi</span><span class="p">,</span><span class="n">xi</span><span class="p">]</span> <span class="o">=</span> <span class="n">calc_decision_val</span><span class="p">(</span><span class="n">x_plot</span><span class="p">[</span><span class="n">xi</span><span class="p">],</span><span class="n">y_plot</span><span class="p">[</span><span class="n">yi</span><span class="p">],</span><span class="n">alph</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">sig</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">which_kernel</span><span class="p">)</span>
+
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s">'3d'</span><span class="p">)</span>
+<span class="n">ls</span> <span class="o">=</span> <span class="n">LightSource</span><span class="p">(</span><span class="n">azdeg</span><span class="o">=-</span><span class="mi">130</span><span class="p">,</span> <span class="n">altdeg</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">.</span><span class="n">view_init</span><span class="p">(</span><span class="n">elev</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span><span class="n">azim</span><span class="o">=-</span><span class="mi">130</span><span class="p">)</span>
+<span class="n">rgb</span> <span class="o">=</span> <span class="n">ls</span><span class="p">.</span><span class="n">shade</span><span class="p">(</span><span class="n">decision_val</span><span class="p">,</span> <span class="n">plt</span><span class="p">.</span><span class="n">cm</span><span class="p">.</span><span class="n">RdYlBu</span><span class="p">)</span>
+<span class="c1"># ax.plot_surface(X_plot,Y_plot,decision_val, facecolors=rgb, zorder=0)
+</span><span class="n">ax</span><span class="p">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">X_plot</span><span class="p">,</span> <span class="n">Y_plot</span><span class="p">,</span> <span class="n">decision_val</span><span class="p">,</span><span class="n">rstride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cstride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                        <span class="n">antialiased</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">facecolors</span><span class="o">=</span><span class="n">rgb</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">s</span><span class="o">==</span><span class="mi">1</span><span class="p">],</span><span class="n">y</span><span class="p">[</span><span class="n">s</span><span class="o">==</span><span class="mi">1</span><span class="p">],</span><span class="s">'bo'</span><span class="p">,</span><span class="n">fillstyle</span><span class="o">=</span><span class="s">"none"</span><span class="p">,</span><span class="n">markersize</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span><span class="n">markeredgewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">zorder</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">s</span><span class="o">==-</span><span class="mi">1</span><span class="p">],</span><span class="n">y</span><span class="p">[</span><span class="n">s</span><span class="o">==-</span><span class="mi">1</span><span class="p">],</span><span class="s">'ro'</span><span class="p">,</span><span class="n">fillstyle</span><span class="o">=</span><span class="s">"none"</span><span class="p">,</span><span class="n">markersize</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span><span class="n">markeredgewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">zorder</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">axis</span><span class="p">([</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="p">])</span>
+<span class="n">ax</span><span class="p">.</span><span class="n">set_zlim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">alph</span><span class="p">)</span><span class="o">&gt;</span><span class="mf">0.001</span><span class="p">],</span><span class="n">y</span><span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">alph</span><span class="p">)</span><span class="o">&gt;</span><span class="mf">0.001</span><span class="p">],</span><span class="s">'*g'</span><span class="p">,</span><span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">markerfacecolor</span><span class="o">=</span><span class="s">'g'</span><span class="p">,</span><span class="n">zorder</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">X_plot</span><span class="p">,</span><span class="n">Y_plot</span><span class="p">,</span><span class="n">decision_val</span><span class="p">,</span><span class="n">zdir</span><span class="o">=</span><span class="s">'z'</span><span class="p">,</span><span class="n">offset</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">figure</span><span class="p">.</span><span class="n">canvas</span><span class="p">.</span><span class="n">draw</span><span class="p">();</span> <span class="n">figure</span><span class="p">.</span><span class="n">canvas</span><span class="p">.</span><span class="n">flush_events</span><span class="p">()</span>
+    
+<span class="c1"># print(alph)
+# print(beta)
+# print(alph+beta)
+# print(g)
+# print(h)
+# print(mu)
+# print(lam)
+</span></code></pre></div></div>
+
+<p><br /></p>
+
+<p><img src="https://user-images.githubusercontent.com/92680829/230714637-8bc11b3f-c9db-4ef5-a070-9c674113706c.png" /></p>
+
+<p><br /></p>
+
+<ul>
+  <li>original data is non-separable (empty circles distributed across the 2-dimensional plane).</li>
+  <li>data transformed with kernel trick seems successfully separated in higher dimension (color shades)</li>
+</ul>
+
+<h4 id="reference">Reference</h4>
+<ul>
+  <li><a href="https://github.com/Hyukppen/Optimization/tree/main/7.%20SVM" target="_blank"><span style="color:purple"><strong>https://github.com/Hyukppen/Optimization/tree/main/7.%20SVM</strong></span></a></li>
+</ul>
+:ET

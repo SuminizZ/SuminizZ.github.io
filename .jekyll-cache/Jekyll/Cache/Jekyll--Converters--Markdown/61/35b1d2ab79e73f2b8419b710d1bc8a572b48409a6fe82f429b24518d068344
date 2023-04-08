@@ -1,0 +1,22 @@
+I"<p><br /></p>
+
+<ul>
+  <li>Optimization algorithm commonly used to solve convex optimization problems using Newton method</li>
+  <li>starts with perturbed KKT by introducing a slack variable to complementary slackness condition</li>
+  <li>involves introducing a barrier function into the objective function to create a modified problem that is easier to solve.
+    <ul>
+      <li>barrier function acts as a barrier that prevents the algorithm from reaching points outside of the feasible region. (inequality boundary)</li>
+      <li>typically a logarithmic function that approaches infinity as the solution approaches the equality boundary</li>
+      <li>usually takes</li>
+    </ul>
+  </li>
+  <li>solves equality constrained optimization problem with</li>
+</ul>
+
+<h3 id="summary-notes">Summary Notes</h3>
+
+<ul>
+  <li><a href="https://drive.google.com/file/d/17ba9-kTX6MrGtiqev28PU8YCRVXumk01/view?usp=share_link" target="_blank"><span style="color:purple"><strong>Interior-Point Method with Barrier</strong></span></a>s</li>
+</ul>
+
+:ET
