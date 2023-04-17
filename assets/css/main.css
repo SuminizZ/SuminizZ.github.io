@@ -1026,7 +1026,7 @@
 
    .category-box {
      padding: 0px 0px 0px 220px;
-     font-size: 12px;
+     font-size: 13px;
      font-weight: 550;
      /* color: #b21d1d; */
      /* background-color: #a41212; */
@@ -1134,8 +1134,8 @@
    }
 
    .post {
-     width: 80%;
-     max-width: 78%;
+     width: 90%;
+     max-width: 1300px;
      margin-bottom: 1.15rem;
      display: -webkit-box;
      display: -webkit-flex;
@@ -1180,7 +1180,7 @@
 
    .post .post-content {
      padding: 1rem;
-     width: 82%;
+     width: 80%;
    }
 
    .post .post-content .post-date,
@@ -1233,7 +1233,7 @@
 
    /* - - - - - - - - - - Post Page Styles - - - - - - - - - - */
    .wrap-content {
-     width: 800px;
+     width: 1000px;
      padding: 11px;
    }
 
