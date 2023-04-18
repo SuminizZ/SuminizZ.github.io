@@ -951,7 +951,7 @@
      top: 0;
      left: 0;
      bottom: 0;
-     width: 220px;
+     width: 230px;
      height: 100%;
      padding: 10px 20px;
      background-color: #d9dada48;
@@ -996,7 +996,7 @@
      margin: 20px 0 auto;
      position: relative;
      padding-bottom: 15px;
-     font-size: 17px;
+     font-size: 18px;
      text-transform: uppercase;
      color: #333030;
      font-weight: 650;
@@ -1020,14 +1020,14 @@
    }
 
    .about p {
-     font-size: 13.5px;
+     font-size: 15px;
      margin: 15px 3px auto;
    }
 
    .category-box {
-     padding: 0px 0px 0px 220px;
+     padding: 0px 0px 0px 230px;
      font-size: 13px;
-     font-weight: 550;
+     font-weight: 600;
      /* color: #b21d1d; */
      /* background-color: #a41212; */
    }
