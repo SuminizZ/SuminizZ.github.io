@@ -1,4 +1,4 @@
-I"� <p><br /></p>
+I"� <p><br /></p>
 
 <h2 id="백준-7662-이중-우선순위-큐--골드-5">백준 7662 이중 우선순위 큐 : 골드 5</h2>
 
@@ -12,25 +12,25 @@
 
 <p><br /></p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">from</span> <span class="nn">heapq</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">sys</span>
+<span class="kn">from</span> <span class="n">heapq</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="n">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
 <span class="nb">input</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">stdin</span><span class="p">.</span><span class="n">readline</span>
 
 <span class="k">def</span> <span class="nf">dualheapq</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
     <span class="n">maxh</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">minh</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">out</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="nf">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 
     <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-        <span class="n">order</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="nb">input</span><span class="p">().</span><span class="n">split</span><span class="p">()</span>
-        <span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">order</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="nf">input</span><span class="p">().</span><span class="nf">split</span><span class="p">()</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">order</span> <span class="o">==</span> <span class="s">'I'</span><span class="p">:</span>
-            <span class="n">heappush</span><span class="p">(</span><span class="n">maxh</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="n">value</span><span class="p">,</span> <span class="n">i</span><span class="p">])</span>
-            <span class="n">heappush</span><span class="p">(</span><span class="n">minh</span><span class="p">,</span> <span class="p">[</span><span class="n">value</span><span class="p">,</span> <span class="n">i</span><span class="p">])</span>
+            <span class="nf">heappush</span><span class="p">(</span><span class="n">maxh</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="n">value</span><span class="p">,</span> <span class="n">i</span><span class="p">])</span>
+            <span class="nf">heappush</span><span class="p">(</span><span class="n">minh</span><span class="p">,</span> <span class="p">[</span><span class="n">value</span><span class="p">,</span> <span class="n">i</span><span class="p">])</span>
             <span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
@@ -38,32 +38,32 @@
         <span class="k">elif</span> <span class="n">order</span> <span class="o">==</span> <span class="s">'D'</span> <span class="ow">and</span> <span class="n">cnt</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="k">while</span> <span class="n">out</span><span class="p">[</span><span class="n">maxh</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]]:</span>
-                    <span class="n">heappop</span><span class="p">(</span><span class="n">maxh</span><span class="p">)</span>
-                <span class="n">_</span><span class="p">,</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">heappop</span><span class="p">(</span><span class="n">maxh</span><span class="p">)</span>
+                    <span class="nf">heappop</span><span class="p">(</span><span class="n">maxh</span><span class="p">)</span>
+                <span class="n">_</span><span class="p">,</span> <span class="n">idx</span> <span class="o">=</span> <span class="nf">heappop</span><span class="p">(</span><span class="n">maxh</span><span class="p">)</span>
                 <span class="n">out</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
 
             <span class="k">elif</span> <span class="n">value</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
                 <span class="k">while</span> <span class="n">out</span><span class="p">[</span><span class="n">minh</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]]:</span>
-                    <span class="n">heappop</span><span class="p">(</span><span class="n">minh</span><span class="p">)</span>
-                <span class="n">_</span><span class="p">,</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">heappop</span><span class="p">(</span><span class="n">minh</span><span class="p">)</span>
+                    <span class="nf">heappop</span><span class="p">(</span><span class="n">minh</span><span class="p">)</span>
+                <span class="n">_</span><span class="p">,</span> <span class="n">idx</span> <span class="o">=</span> <span class="nf">heappop</span><span class="p">(</span><span class="n">minh</span><span class="p">)</span>
                 <span class="n">out</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
             <span class="n">cnt</span> <span class="o">-=</span> <span class="mi">1</span>
     
     <span class="k">if</span> <span class="n">cnt</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">while</span> <span class="n">out</span><span class="p">[</span><span class="n">maxh</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]]:</span>
-            <span class="n">heappop</span><span class="p">(</span><span class="n">maxh</span><span class="p">)</span>
+            <span class="nf">heappop</span><span class="p">(</span><span class="n">maxh</span><span class="p">)</span>
         <span class="k">while</span> <span class="n">out</span><span class="p">[</span><span class="n">minh</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]]:</span>
-            <span class="n">heappop</span><span class="p">(</span><span class="n">minh</span><span class="p">)</span>
+            <span class="nf">heappop</span><span class="p">(</span><span class="n">minh</span><span class="p">)</span>
         <span class="n">mx</span><span class="p">,</span> <span class="n">mn</span> <span class="o">=</span> <span class="o">-</span><span class="n">maxh</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">minh</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">mx</span><span class="si">}</span><span class="s"> </span><span class="si">{</span><span class="n">mn</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">mx</span><span class="si">}</span><span class="s"> </span><span class="si">{</span><span class="n">mn</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">"EMPTY"</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"EMPTY"</span><span class="p">)</span>
 
 
-<span class="n">tc</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
+<span class="n">tc</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="nf">input</span><span class="p">())</span>
 <span class="k">while</span> <span class="n">tc</span><span class="p">:</span>
-    <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
-    <span class="n">dualheapq</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="nf">input</span><span class="p">())</span>
+    <span class="nf">dualheapq</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
     <span class="n">tc</span> <span class="o">-=</span> <span class="mi">1</span>
 </code></pre></div></div>
 
