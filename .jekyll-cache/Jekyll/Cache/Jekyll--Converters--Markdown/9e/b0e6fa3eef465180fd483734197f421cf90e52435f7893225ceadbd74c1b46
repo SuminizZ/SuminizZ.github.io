@@ -1,0 +1,1535 @@
+I"��<h2 id="필요한-module-import"><strong>필요한 Module Import</strong></h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">konlpy</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Collecting konlpy
+  Downloading konlpy-0.5.2-py2.py3-none-any.whl (19.4 MB)
+[K     |████████████████████████████████| 19.4 MB 1.4 MB/s 
+[?25hRequirement already satisfied: tweepy&gt;=3.7.0 in /usr/local/lib/python3.7/dist-packages (from konlpy) (3.10.0)
+Collecting JPype1&gt;=0.7.0
+  Downloading JPype1-1.3.0-cp37-cp37m-manylinux_2_5_x86_64.manylinux1_x86_64.whl (448 kB)
+[K     |████████████████████████████████| 448 kB 42.7 MB/s 
+[?25hRequirement already satisfied: lxml&gt;=4.1.0 in /usr/local/lib/python3.7/dist-packages (from konlpy) (4.2.6)
+Collecting beautifulsoup4==4.6.0
+  Downloading beautifulsoup4-4.6.0-py3-none-any.whl (86 kB)
+[K     |████████████████████████████████| 86 kB 5.4 MB/s 
+[?25hRequirement already satisfied: numpy&gt;=1.6 in /usr/local/lib/python3.7/dist-packages (from konlpy) (1.19.5)
+Collecting colorama
+  Downloading colorama-0.4.4-py2.py3-none-any.whl (16 kB)
+Requirement already satisfied: typing-extensions in /usr/local/lib/python3.7/dist-packages (from JPype1&gt;=0.7.0-&gt;konlpy) (3.10.0.2)
+Requirement already satisfied: six&gt;=1.10.0 in /usr/local/lib/python3.7/dist-packages (from tweepy&gt;=3.7.0-&gt;konlpy) (1.15.0)
+Requirement already satisfied: requests-oauthlib&gt;=0.7.0 in /usr/local/lib/python3.7/dist-packages (from tweepy&gt;=3.7.0-&gt;konlpy) (1.3.0)
+Requirement already satisfied: requests[socks]&gt;=2.11.1 in /usr/local/lib/python3.7/dist-packages (from tweepy&gt;=3.7.0-&gt;konlpy) (2.23.0)
+Requirement already satisfied: oauthlib&gt;=3.0.0 in /usr/local/lib/python3.7/dist-packages (from requests-oauthlib&gt;=0.7.0-&gt;tweepy&gt;=3.7.0-&gt;konlpy) (3.1.1)
+Requirement already satisfied: idna&lt;3,&gt;=2.5 in /usr/local/lib/python3.7/dist-packages (from requests[socks]&gt;=2.11.1-&gt;tweepy&gt;=3.7.0-&gt;konlpy) (2.10)
+Requirement already satisfied: certifi&gt;=2017.4.17 in /usr/local/lib/python3.7/dist-packages (from requests[socks]&gt;=2.11.1-&gt;tweepy&gt;=3.7.0-&gt;konlpy) (2021.10.8)
+Requirement already satisfied: chardet&lt;4,&gt;=3.0.2 in /usr/local/lib/python3.7/dist-packages (from requests[socks]&gt;=2.11.1-&gt;tweepy&gt;=3.7.0-&gt;konlpy) (3.0.4)
+Requirement already satisfied: urllib3!=1.25.0,!=1.25.1,&lt;1.26,&gt;=1.21.1 in /usr/local/lib/python3.7/dist-packages (from requests[socks]&gt;=2.11.1-&gt;tweepy&gt;=3.7.0-&gt;konlpy) (1.24.3)
+Requirement already satisfied: PySocks!=1.5.7,&gt;=1.5.6 in /usr/local/lib/python3.7/dist-packages (from requests[socks]&gt;=2.11.1-&gt;tweepy&gt;=3.7.0-&gt;konlpy) (1.7.1)
+Installing collected packages: JPype1, colorama, beautifulsoup4, konlpy
+  Attempting uninstall: beautifulsoup4
+    Found existing installation: beautifulsoup4 4.6.3
+    Uninstalling beautifulsoup4-4.6.3:
+      Successfully uninstalled beautifulsoup4-4.6.3
+Successfully installed JPype1-1.3.0 beautifulsoup4-4.6.0 colorama-0.4.4 konlpy-0.5.2
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">urllib.request</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="p">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s">'ignore'</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="nb">RuntimeWarning</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">style</span><span class="p">.</span><span class="n">use</span><span class="p">(</span><span class="s">"seaborn-dark"</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">konlpy.tag</span> <span class="kn">import</span> <span class="n">Mecab</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.preprocessing.text</span> <span class="kn">import</span> <span class="n">Tokenizer</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.preprocessing.sequence</span> <span class="kn">import</span> <span class="n">pad_sequences</span>
+</code></pre></div></div>
+
+<h2 id="dataset-정리"><strong>DATASET 정리</strong></h2>
+<ul>
+  <li>감정분석 모델을 학습시키기 위한 감정 라벨링 데이터셋</li>
+  <li>네이버 영화 리뷰 데이터셋, 네이버 쇼핑몰 리뷰 데이터셋, 스팀 게임 리뷰 총 3개의 데이터셋을 활용했다.</li>
+</ul>
+
+<h3 id="1-naver-movie-review-datset"><strong>1. Naver Movie Review Datset</strong></h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">urllib</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="s">"https://raw.githubusercontent.com/e9t/nsmc/master/ratings_train.txt"</span><span class="p">,</span>\
+                           <span class="n">filename</span><span class="o">=</span><span class="s">"ratings_train.txt"</span><span class="p">)</span>
+<span class="n">urllib</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="s">"https://raw.githubusercontent.com/e9t/nsmc/master/ratings_test.txt"</span><span class="p">,</span>\
+                           <span class="n">filename</span><span class="o">=</span><span class="s">"ratings_test.txt"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>('ratings_test.txt', &lt;http.client.HTTPMessage at 0x7f41000f26d0&gt;)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">movie_test_data</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_table</span><span class="p">(</span><span class="s">"/content/ratings_test.txt"</span><span class="p">)</span>
+<span class="n">movie_train_data</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_table</span><span class="p">(</span><span class="s">"/content/ratings_train.txt"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">movie_train_data</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>document</th>
+      <th>label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>9976970</td>
+      <td>아 더빙.. 진짜 짜증나네요 목소리</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>3819312</td>
+      <td>흠...포스터보고 초딩영화줄....오버연기조차 가볍지 않구나</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>10265843</td>
+      <td>너무재밓었다그래서보는것을추천한다</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>9045019</td>
+      <td>교도소 이야기구먼 ..솔직히 재미는 없다..평점 조정</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>6483659</td>
+      <td>사이몬페그의 익살스런 연기가 돋보였던 영화!스파이더맨에서 늙어보이기만 했던 커스틴 ...</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>149995</th>
+      <td>6222902</td>
+      <td>인간이 문제지.. 소는 뭔죄인가..</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>149996</th>
+      <td>8549745</td>
+      <td>평점이 너무 낮아서...</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>149997</th>
+      <td>9311800</td>
+      <td>이게 뭐요? 한국인은 거들먹거리고 필리핀 혼혈은 착하다?</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>149998</th>
+      <td>2376369</td>
+      <td>청춘 영화의 최고봉.방황과 우울했던 날들의 자화상</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>149999</th>
+      <td>9619869</td>
+      <td>한국 영화 최초로 수간하는 내용이 담긴 영화</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>150000 rows × 3 columns</p>
+</div>
+
+<h3 id="2-naver-shoppingmall-review-dataset"><strong>2. Naver ShoppingMall Review Dataset</strong></h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">urllib</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="s">"https://raw.githubusercontent.com/bab2min/corpus/master/sentiment/naver_shopping.txt"</span><span class="p">,</span> \
+                    <span class="n">filename</span><span class="o">=</span><span class="s">"shop_ratings.txt"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>('shop_ratings.txt', &lt;http.client.HTTPMessage at 0x7f410008d410&gt;)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">shop_data</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_table</span><span class="p">(</span><span class="s">"/content/shop_ratings.txt"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">shop_data</span> <span class="o">=</span> <span class="n">shop_data</span><span class="p">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s">'5'</span> <span class="p">:</span> <span class="s">"label"</span><span class="p">,</span> <span class="s">"배공빠르고 굿"</span> <span class="p">:</span> <span class="s">"document"</span><span class="p">})</span>
+<span class="n">shop_data</span><span class="p">[</span><span class="s">'label'</span><span class="p">]</span> <span class="o">=</span> <span class="n">shop_data</span><span class="p">[</span><span class="s">'label'</span><span class="p">].</span><span class="nb">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">3</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">shop_data</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(199999, 2)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">shop_train_data</span> <span class="o">=</span> <span class="n">shop_data</span><span class="p">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">150000</span><span class="p">,</span> <span class="p">:]</span>
+<span class="n">shop_test_data</span> <span class="o">=</span> <span class="n">shop_data</span><span class="p">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">150000</span><span class="p">:</span> <span class="p">:]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">shop_train_data</span><span class="p">.</span><span class="n">info</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 150000 entries, 0 to 149999
+Data columns (total 2 columns):
+ #   Column    Non-Null Count   Dtype 
+---  ------    --------------   ----- 
+ 0   label     150000 non-null  int64 
+ 1   document  150000 non-null  object
+dtypes: int64(1), object(1)
+memory usage: 2.3+ MB
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">shop_test_data</span><span class="p">.</span><span class="n">info</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 49999 entries, 150000 to 199998
+Data columns (total 2 columns):
+ #   Column    Non-Null Count  Dtype 
+---  ------    --------------  ----- 
+ 0   label     49999 non-null  int64 
+ 1   document  49999 non-null  object
+dtypes: int64(1), object(1)
+memory usage: 781.4+ KB
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">shop_train_data</span><span class="p">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>label</th>
+      <th>document</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>택배가 엉망이네용 저희집 밑에층에 말도없이 놔두고가고</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>아주좋아요 바지 정말 좋아서2개 더 구매했어요 이가격에 대박입니다. 바느질이 조금 ...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>선물용으로 빨리 받아서 전달했어야 하는 상품이었는데 머그컵만 와서 당황했습니다. 전...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>민트색상 예뻐요. 옆 손잡이는 거는 용도로도 사용되네요 ㅎㅎ</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>비추합니다 계란 뒤집을 때 완전 불편해요 ㅠㅠ 코팅도 묻어나고 보기엔 예쁘고 실용적...</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0</td>
+      <td>주문을 11월6에 시켰는데 11월16일에 배송이 왔네요 ㅎㅎㅎ 여기 회사측과는 전화...</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0</td>
+      <td>넉넉한 길이로 주문했는데도 안 맞네요 별로예요</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0</td>
+      <td>보폴이 계속 때처럼 나오다가 지금은 안나네요~</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0</td>
+      <td>110인데 전문속옷브랜드 위생팬티105보다 작은듯해요. 불편해요. 밴딩부분이 다 신...</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1</td>
+      <td>사이즈도 딱이고 귀엽고 넘 좋아요 ㅎㅎ</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">shop_train_data</span><span class="p">[</span><span class="s">'label'</span><span class="p">].</span><span class="n">value_counts</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0    75109
+1    74891
+Name: label, dtype: int64
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">shop_test_data</span><span class="p">[</span><span class="s">'label'</span><span class="p">].</span><span class="n">value_counts</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1    25071
+0    24928
+Name: label, dtype: int64
+</code></pre></div></div>
+
+<h3 id="3-game-review-dataset"><strong>3. Game Review Dataset</strong></h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">urllib</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="s">"https://raw.githubusercontent.com/bab2min/corpus/master/sentiment/steam.txt"</span><span class="p">,</span> \
+                           <span class="n">filename</span><span class="o">=</span><span class="s">"game_ratings.txt"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>('game_ratings.txt', &lt;http.client.HTTPMessage at 0x7f41000aa3d0&gt;)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">game_data</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_table</span><span class="p">(</span><span class="s">"/content/game_ratings.txt"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">game_data</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>노래가 너무 적음</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>돌겠네 진짜. 황숙아, 어크 공장 그만 돌려라. 죽는다.</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>막노동 체험판 막노동 하는사람인데 장비를 내가 사야돼 뭐지</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>차악!차악!!차악!!! 정말 이래서 왕국을 되찾을 수 있는거야??</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>시간 때우기에 좋음.. 도전과제는 50시간이면 다 깰 수 있어요</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>역시 재미있네요 전작에서 할수 없었던 자유로운 덱 빌딩도 좋네요^^</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>99994</th>
+      <td>0</td>
+      <td>한글화해주면 10개산다</td>
+    </tr>
+    <tr>
+      <th>99995</th>
+      <td>0</td>
+      <td>개쌉노잼 ㅋㅋ</td>
+    </tr>
+    <tr>
+      <th>99996</th>
+      <td>0</td>
+      <td>노잼이네요... 30분하고 지웠어요...</td>
+    </tr>
+    <tr>
+      <th>99997</th>
+      <td>1</td>
+      <td>야생을 사랑하는 사람들을 위한 짧지만 여운이 남는 이야기. 영어는 그리 어렵지 않습니다.</td>
+    </tr>
+    <tr>
+      <th>99998</th>
+      <td>1</td>
+      <td>한국의 메탈레이지를 떠오르게한다 진짜 손맛으로 하는게임</td>
+    </tr>
+  </tbody>
+</table>
+<p>99999 rows × 2 columns</p>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">game_data</span> <span class="o">=</span> <span class="n">game_data</span><span class="p">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s">'0'</span> <span class="p">:</span> <span class="s">"label"</span><span class="p">,</span> <span class="s">'노래가 너무 적음'</span> <span class="p">:</span> <span class="s">"document"</span><span class="p">})</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">game_train_data</span> <span class="o">=</span> <span class="n">game_data</span><span class="p">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">80000</span><span class="p">,</span> <span class="p">:]</span>
+<span class="n">game_test_data</span> <span class="o">=</span> <span class="n">game_data</span><span class="p">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">80000</span><span class="p">:</span> <span class="p">:]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">game_train_data</span><span class="p">.</span><span class="n">info</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 80000 entries, 0 to 79999
+Data columns (total 2 columns):
+ #   Column    Non-Null Count  Dtype 
+---  ------    --------------  ----- 
+ 0   label     80000 non-null  int64 
+ 1   document  80000 non-null  object
+dtypes: int64(1), object(1)
+memory usage: 1.2+ MB
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">game_test_data</span><span class="p">.</span><span class="n">info</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 19999 entries, 80000 to 99998
+Data columns (total 2 columns):
+ #   Column    Non-Null Count  Dtype 
+---  ------    --------------  ----- 
+ 0   label     19999 non-null  int64 
+ 1   document  19999 non-null  object
+dtypes: int64(1), object(1)
+memory usage: 312.6+ KB
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">game_train_data</span><span class="p">[</span><span class="s">'label'</span><span class="p">].</span><span class="n">value_counts</span><span class="p">()</span>
+<span class="n">game_test_data</span><span class="p">[</span><span class="s">'label'</span><span class="p">].</span><span class="n">value_counts</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1    10003
+0     9996
+Name: label, dtype: int64
+</code></pre></div></div>
+
+<h3 id="모든-데이터셋-preprocess-및-merge"><strong>모든 데이터셋 preprocess 및 merge</strong></h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">preprocess_df</span><span class="p">(</span><span class="n">train_data</span><span class="p">,</span> <span class="n">test_data</span><span class="p">):</span>
+
+    <span class="n">train_data</span><span class="p">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s">'document'</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">train_data</span><span class="p">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">train_data</span><span class="p">[</span><span class="s">'document'</span><span class="p">]</span> <span class="o">=</span> <span class="n">train_data</span><span class="p">[</span><span class="s">'document'</span><span class="p">].</span><span class="nb">str</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="s">"[^ㄱ-ㅎㅏ-ㅣ가-힣 ]"</span><span class="p">,</span><span class="s">""</span><span class="p">)</span>
+    <span class="n">train_data</span><span class="p">[</span><span class="s">'document'</span><span class="p">]</span> <span class="o">=</span> <span class="n">train_data</span><span class="p">[</span><span class="s">'document'</span><span class="p">].</span><span class="nb">str</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="s">'^ +'</span><span class="p">,</span> <span class="s">""</span><span class="p">)</span>   
+    <span class="n">train_data</span><span class="p">[</span><span class="s">'document'</span><span class="p">].</span><span class="n">replace</span><span class="p">(</span><span class="s">""</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>      
+    <span class="n">train_data</span><span class="p">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">train_data</span><span class="p">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s">'document'</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="n">test_data</span><span class="p">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s">'document'</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">test_data</span><span class="p">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">test_data</span><span class="p">[</span><span class="s">'document'</span><span class="p">]</span> <span class="o">=</span> <span class="n">test_data</span><span class="p">[</span><span class="s">'document'</span><span class="p">].</span><span class="nb">str</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="s">"[^ㄱ-ㅎㅏ-ㅣ가-힣 ]"</span><span class="p">,</span><span class="s">""</span><span class="p">)</span>
+    <span class="n">test_data</span><span class="p">[</span><span class="s">'document'</span><span class="p">]</span> <span class="o">=</span> <span class="n">test_data</span><span class="p">[</span><span class="s">'document'</span><span class="p">].</span><span class="nb">str</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="s">'^ +'</span><span class="p">,</span> <span class="s">""</span><span class="p">)</span>   
+    <span class="n">test_data</span><span class="p">[</span><span class="s">'document'</span><span class="p">].</span><span class="n">replace</span><span class="p">(</span><span class="s">""</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>      
+    <span class="n">test_data</span><span class="p">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">test_data</span><span class="p">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s">'document'</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">train_data</span><span class="p">,</span> <span class="n">test_data</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">movie_train_data</span><span class="p">,</span> <span class="n">movie_test_data</span> <span class="o">=</span> <span class="n">preprocess_df</span><span class="p">(</span><span class="n">movie_train_data</span><span class="p">,</span> <span class="n">movie_test_data</span><span class="p">)</span>
+<span class="n">shop_train_data</span><span class="p">,</span> <span class="n">shop_test_data</span> <span class="o">=</span> <span class="n">preprocess_df</span><span class="p">(</span><span class="n">shop_train_data</span><span class="p">,</span> <span class="n">shop_test_data</span><span class="p">)</span>
+<span class="n">game_train_data</span><span class="p">,</span> <span class="n">game_test_data</span> <span class="o">=</span> <span class="n">preprocess_df</span><span class="p">(</span><span class="n">game_train_data</span><span class="p">,</span> <span class="n">game_test_data</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">movie_train_data</span><span class="p">,</span> <span class="n">movie_test_data</span><span class="p">,</span> <span class="n">shop_train_data</span><span class="p">,</span> <span class="n">shop_test_data</span><span class="p">,</span> <span class="n">game_train_data</span><span class="p">,</span> <span class="n">game_test_data</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">df_list</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">df</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(143620, 3)
+(48389, 3)
+(149638, 2)
+(49936, 2)
+(79517, 2)
+(19970, 2)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># column 순서 바꾸고 id column 삭제
+</span>
+<span class="n">movie_train_data</span><span class="p">.</span><span class="n">drop</span><span class="p">(</span><span class="s">'id'</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">movie_train_data</span> <span class="o">=</span> <span class="n">movie_train_data</span><span class="p">[[</span><span class="s">'label'</span><span class="p">,</span> <span class="s">'document'</span><span class="p">]]</span>
+<span class="n">movie_test_data</span><span class="p">.</span><span class="n">drop</span><span class="p">(</span><span class="s">'id'</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">movie_test_data</span> <span class="o">=</span> <span class="n">movie_test_data</span><span class="p">[[</span><span class="s">'label'</span><span class="p">,</span> <span class="s">'document'</span><span class="p">]]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">movie_train_data</span>
+<span class="n">movie_test_data</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>label</th>
+      <th>document</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>굳 ㅋ</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>뭐야 이 평점들은 나쁘진 않지만 점 짜리는 더더욱 아니잖아</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>지루하지는 않은데 완전 막장임 돈주고 보기에는</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>만 아니었어도 별 다섯 개 줬을텐데 왜 로 나와서 제 심기를 불편하게 하죠</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1</td>
+      <td>음악이 주가 된 최고의 음악영화</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>49995</th>
+      <td>1</td>
+      <td>오랜만에 평점 로긴했네ㅋㅋ 킹왕짱 쌈뽕한 영화를 만났습니다 강렬하게 육쾌함</td>
+    </tr>
+    <tr>
+      <th>49996</th>
+      <td>0</td>
+      <td>의지 박약들이나 하는거다 탈영은 일단 주인공 김대희 닮았고 이등병 찐따</td>
+    </tr>
+    <tr>
+      <th>49997</th>
+      <td>0</td>
+      <td>그림도 좋고 완성도도 높았지만 보는 내내 불안하게 만든다</td>
+    </tr>
+    <tr>
+      <th>49998</th>
+      <td>0</td>
+      <td>절대 봐서는 안 될 영화 재미도 없고 기분만 잡치고 한 세트장에서 다 해먹네</td>
+    </tr>
+    <tr>
+      <th>49999</th>
+      <td>0</td>
+      <td>마무리는 또 왜이래</td>
+    </tr>
+  </tbody>
+</table>
+<p>48389 rows × 2 columns</p>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># movie_train_data
+# shop_train_data
+</span><span class="n">game_train_data</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>label</th>
+      <th>document</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>돌겠네 진짜 황숙아 어크 공장 그만 돌려라 죽는다</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>막노동 체험판 막노동 하는사람인데 장비를 내가 사야돼 뭐지</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>차악차악차악 정말 이래서 왕국을 되찾을 수 있는거야</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>시간 때우기에 좋음 도전과제는 시간이면 다 깰 수 있어요</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>역시 재미있네요 전작에서 할수 없었던 자유로운 덱 빌딩도 좋네요</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>79995</th>
+      <td>0</td>
+      <td>어느정도 재미가 있긴 하지만 지금 하기엔 너무 짜증나는 점이 많은 게임 돈모아서 다...</td>
+    </tr>
+    <tr>
+      <th>79996</th>
+      <td>1</td>
+      <td>평가 읽을 시간에 듀얼하셈 듀얼근 손실 옴 반박시 듀얼</td>
+    </tr>
+    <tr>
+      <th>79997</th>
+      <td>1</td>
+      <td>이후로는 게임이 상당히 변화했고 십자군 시스템과 혈통 시스템은 상당히 맘에 듭니다 ...</td>
+    </tr>
+    <tr>
+      <th>79998</th>
+      <td>1</td>
+      <td>냥겜</td>
+    </tr>
+    <tr>
+      <th>79999</th>
+      <td>1</td>
+      <td>달껄룩의 찬란한 모험기</td>
+    </tr>
+  </tbody>
+</table>
+<p>79517 rows × 2 columns</p>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># concat all three datasets
+</span>
+<span class="n">train_data</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">concat</span><span class="p">([</span><span class="n">movie_train_data</span><span class="p">,</span> <span class="n">shop_train_data</span><span class="p">,</span> <span class="n">game_train_data</span><span class="p">],</span> <span class="n">join</span><span class="o">=</span><span class="s">'outer'</span><span class="p">)</span>
+<span class="n">test_data</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">concat</span><span class="p">([</span><span class="n">movie_test_data</span><span class="p">,</span> <span class="n">shop_test_data</span><span class="p">,</span> <span class="n">game_test_data</span><span class="p">],</span> <span class="n">join</span><span class="o">=</span><span class="s">'outer'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train_data</span><span class="p">.</span><span class="n">shape</span>
+<span class="c1"># test_data.shape
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(372775, 2)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train_data</span><span class="p">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>label</th>
+      <th>document</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>아 더빙 진짜 짜증나네요 목소리</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>흠포스터보고 초딩영화줄오버연기조차 가볍지 않구나</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>너무재밓었다그래서보는것을추천한다</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>교도소 이야기구먼 솔직히 재미는 없다평점 조정</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>사이몬페그의 익살스런 연기가 돋보였던 영화스파이더맨에서 늙어보이기만 했던 커스틴 던...</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0</td>
+      <td>막 걸음마 뗀 세부터 초등학교 학년생인 살용영화ㅋㅋㅋ별반개도 아까움</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0</td>
+      <td>원작의 긴장감을 제대로 살려내지못했다</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0</td>
+      <td>별 반개도 아깝다 욕나온다 이응경 길용우 연기생활이몇년인지정말 발로해도 그것보단 낫...</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1</td>
+      <td>액션이 없는데도 재미 있는 몇안되는 영화</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1</td>
+      <td>왜케 평점이 낮은건데 꽤 볼만한데 헐리우드식 화려함에만 너무 길들여져 있나</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<hr />
+
+<h2 id="tokenization--padding"><strong>Tokenization &amp; Padding</strong></h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">stopwords</span> <span class="o">=</span> <span class="p">[</span><span class="s">'의'</span><span class="p">,</span><span class="s">'가'</span><span class="p">,</span><span class="s">'이'</span><span class="p">,</span><span class="s">'은'</span><span class="p">,</span><span class="s">'들'</span><span class="p">,</span><span class="s">'는'</span><span class="p">,</span><span class="s">'좀'</span><span class="p">,</span><span class="s">'잘'</span><span class="p">,</span><span class="s">'걍'</span><span class="p">,</span><span class="s">'과'</span><span class="p">,</span><span class="s">'도'</span><span class="p">,</span><span class="s">'를'</span><span class="p">,</span><span class="s">'으로'</span><span class="p">,</span><span class="s">'자'</span><span class="p">,</span><span class="s">'에'</span><span class="p">,</span><span class="s">'와'</span><span class="p">,</span><span class="s">'한'</span><span class="p">,</span><span class="s">'하다'</span><span class="p">]</span>
+<span class="n">stopwords</span> <span class="o">+=</span> <span class="p">[</span><span class="s">'이'</span><span class="p">,</span> <span class="s">'있'</span><span class="p">,</span> <span class="s">'하'</span><span class="p">,</span> <span class="s">'것'</span><span class="p">,</span> <span class="s">'들'</span><span class="p">,</span> <span class="s">'그'</span><span class="p">,</span> <span class="s">'되'</span><span class="p">,</span> <span class="s">'수'</span><span class="p">,</span> <span class="s">'이'</span><span class="p">,</span> <span class="s">'보'</span><span class="p">,</span> <span class="s">'않'</span><span class="p">,</span> <span class="s">'없'</span><span class="p">,</span> <span class="s">'나'</span><span class="p">,</span> <span class="s">'사람'</span><span class="p">,</span> <span class="s">'주'</span><span class="p">,</span> <span class="s">'아니'</span><span class="p">,</span> <span class="s">'등'</span><span class="p">,</span> <span class="s">'같'</span><span class="p">,</span> <span class="s">'우리'</span><span class="p">,</span> <span class="s">'때'</span><span class="p">,</span> <span class="s">'년'</span><span class="p">,</span> <span class="s">'가'</span><span class="p">,</span> <span class="s">'한'</span><span class="p">,</span> <span class="s">'지'</span><span class="p">,</span> <span class="s">'대하'</span><span class="p">,</span> <span class="s">'오'</span><span class="p">,</span> <span class="s">'말'</span><span class="p">,</span> <span class="s">'일'</span><span class="p">,</span> <span class="s">'그렇'</span><span class="p">,</span> <span class="s">'위하'</span><span class="p">]</span>
+<span class="n">stopwords</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">stopwords</span><span class="p">))</span>
+<span class="c1"># stopwords
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">konlpy.tag</span> <span class="kn">import</span> <span class="n">Okt</span>      
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.preprocessing.text</span> <span class="kn">import</span> <span class="n">Tokenizer</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.preprocessing.sequence</span> <span class="kn">import</span> <span class="n">pad_sequences</span>
+
+<span class="n">okt</span> <span class="o">=</span> <span class="n">Okt</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x_train</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">train_data</span><span class="p">[</span><span class="s">'document'</span><span class="p">]):</span>
+    <span class="n">tokenized_sent</span> <span class="o">=</span> <span class="n">okt</span><span class="p">.</span><span class="n">morphs</span><span class="p">(</span><span class="n">sentence</span><span class="p">,</span> <span class="n">stem</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>      <span class="c1"># 형태소 별로 문장 분할
+</span>    <span class="n">tokenized_sent</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">tokenized_sent</span> <span class="k">if</span> <span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stopwords</span><span class="p">]</span>   <span class="c1"># 불용어 제거
+</span>    <span class="n">x_train</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">tokenized_sent</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>100%|██████████| 372775/372775 [24:49&lt;00:00, 250.33it/s]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x_train</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[['아', '더빙', '진짜', '짜증나다', '목소리'],
+ ['흠', '포스터', '보고', '초딩', '영화', '줄', '오버', '연기', '조차', '가볍다', '않다']]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x_test</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">test_data</span><span class="p">[</span><span class="s">'document'</span><span class="p">]):</span>
+    <span class="n">tokenized_sent</span> <span class="o">=</span> <span class="n">okt</span><span class="p">.</span><span class="n">morphs</span><span class="p">(</span><span class="n">sentence</span><span class="p">,</span> <span class="n">stem</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>      <span class="c1"># 형태소 별로 문장 분할
+</span>    <span class="n">tokenized_sent</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">tokenized_sent</span> <span class="k">if</span> <span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stopwords</span><span class="p">]</span>   <span class="c1"># 불용어 제거
+</span>    <span class="n">x_test</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">tokenized_sent</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>100%|██████████| 118295/118295 [09:59&lt;00:00, 197.30it/s]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">test_data</span><span class="p">[</span><span class="s">'document'</span><span class="p">][:</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">x_test</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[['굳다', 'ㅋ'], ['뭐', '야', '평점', '나쁘다', '않다', '점', '짜다', '리', '더', '더욱', '아니다']]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x_train_raw</span> <span class="o">=</span> <span class="n">x_train</span>
+<span class="n">x_test_raw</span> <span class="o">=</span> <span class="n">x_test</span>
+</code></pre></div></div>
+
+<h3 id="tokenizer-로-단어사전-만들기--정수-encoding"><strong>Tokenizer 로 단어사전 만들기 &amp; 정수 Encoding</strong></h3>
+<ul>
+  <li>단어사전은 train_data 로 만들어야 함</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">Tokenizer</span><span class="p">()</span>
+<span class="n">tokenizer</span><span class="p">.</span><span class="n">fit_on_texts</span><span class="p">(</span><span class="n">x_train</span><span class="p">)</span>  
+
+<span class="n">tokenizer</span><span class="p">.</span><span class="n">word_index</span>      <span class="c1"># 빈도수가 높은 단어별로 작은 수의 양의 정수를 부여함
+</span><span class="nb">len</span><span class="p">(</span><span class="n">tokenizer</span><span class="p">.</span><span class="n">word_index</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>75147
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">threshold</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">total_cnt</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokenizer</span><span class="p">.</span><span class="n">word_index</span><span class="p">)</span> <span class="c1"># 단어의 수
+</span><span class="n">rare_cnt</span> <span class="o">=</span> <span class="mi">0</span>      
+<span class="n">total_freq</span> <span class="o">=</span> <span class="mi">0</span>     
+<span class="n">rare_freq</span> <span class="o">=</span> <span class="mi">0</span>       
+
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">tokenizer</span><span class="p">.</span><span class="n">word_counts</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">total_freq</span> <span class="o">+=</span> <span class="n">value</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="n">value</span> <span class="o">&lt;</span> <span class="n">threshold</span><span class="p">):</span>
+        <span class="n">rare_cnt</span> <span class="o">=</span> <span class="n">rare_cnt</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">rare_freq</span> <span class="o">=</span> <span class="n">rare_freq</span> <span class="o">+</span> <span class="n">value</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">'단어 집합(vocabulary)의 크기 :'</span><span class="p">,</span><span class="n">total_cnt</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'등장 빈도가 %s번 이하인 희귀 단어의 수: %s'</span><span class="o">%</span><span class="p">(</span><span class="n">threshold</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">rare_cnt</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"단어 집합에서 희귀 단어의 비율:"</span><span class="p">,</span> <span class="p">(</span><span class="n">rare_cnt</span> <span class="o">/</span> <span class="n">total_cnt</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"전체 등장 빈도에서 희귀 단어 등장 빈도 비율:"</span><span class="p">,</span> <span class="p">(</span><span class="n">rare_freq</span> <span class="o">/</span> <span class="n">total_freq</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>단어 집합(vocabulary)의 크기 : 75147
+등장 빈도가 3번 이하인 희귀 단어의 수: 48485
+단어 집합에서 희귀 단어의 비율: 64.52020706082745
+전체 등장 빈도에서 희귀 단어 등장 빈도 비율: 1.5172733686959021
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vocab_size</span> <span class="o">=</span> <span class="n">total_cnt</span> <span class="o">-</span> <span class="n">rare_cnt</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">vocab_size</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>26663
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">Tokenizer</span><span class="p">(</span><span class="n">vocab_size</span><span class="p">)</span>
+<span class="n">tokenizer</span><span class="p">.</span><span class="n">fit_on_texts</span><span class="p">(</span><span class="n">x_train</span><span class="p">)</span>   <span class="c1"># 0번 단어 ~ 19395번 단어까지만 사용
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Referring to word_index, text --&gt; numeric sequences  
+</span>
+<span class="n">x_train</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">.</span><span class="n">texts_to_sequences</span><span class="p">(</span><span class="n">x_train</span><span class="p">)</span>
+<span class="n">x_test</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">.</span><span class="n">texts_to_sequences</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">x_train</span><span class="p">[:</span><span class="mi">3</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x_test</span><span class="p">[:</span><span class="mi">3</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[[64, 1007, 30, 364, 1329], [897, 1127, 69, 1146, 4, 236, 1843, 99, 1259, 328, 15], [354, 4758, 3973, 4417, 1, 83, 12]]
+[[668, 160], [86, 246, 101, 375, 15, 53, 254, 770, 34, 1074, 20], [151, 15, 117, 861, 140, 102, 68, 315, 176]]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">len</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+<span class="c1"># len(x_test)
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>118295
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y_train</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">train_data</span><span class="p">[</span><span class="s">'label'</span><span class="p">])</span>
+<span class="n">y_test</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">test_data</span><span class="p">[</span><span class="s">'label'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Remove empty sequence in x_train, which means those seq are composed of only the words that are under set threshold
+</span>
+<span class="n">drop_target</span> <span class="o">=</span> <span class="p">[</span><span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">x_train</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sentence</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">x_train</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">delete</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">drop_target</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>       <span class="c1"># np.delete(array, delete_target_idx, axis=0(row) or 1(col))
+</span><span class="n">y_train</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">delete</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">drop_target</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x_train</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y_train</span><span class="p">))</span>       <span class="c1"># 143620 --&gt; 143376
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>372193
+372193
+</code></pre></div></div>
+
+<h3 id="padding"><strong>Padding</strong></h3>
+<ul>
+  <li>모델이 처리할 수 있도록 X_train과 X_test의 모든 샘플의 길이를 특정 길이로 동일하게 맞춤</li>
+  <li>padding_len</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">'리뷰의 최대 길이 :'</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="n">x_train</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'리뷰의 평균 길이 :'</span><span class="p">,</span><span class="nb">sum</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="n">x_train</span><span class="p">))</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">x_train</span><span class="p">))</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">hist</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">x_train</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'length of samples'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'number of samples'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>리뷰의 최대 길이 : 68
+리뷰의 평균 길이 : 11.614372113392783
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/92680829/144726149-7a4b8670-2bc3-4a47-83e3-e505aafb37ce.png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">find_padding_len</span><span class="p">(</span><span class="n">set_len</span><span class="p">):</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="n">x_train</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">l</span> <span class="o">&lt;=</span> <span class="n">set_len</span><span class="p">:</span>
+            <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">cnt</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">x_train</span><span class="p">))</span><span class="o">*</span><span class="mi">100</span>
+
+<span class="k">for</span> <span class="n">set_len</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">find_padding_len</span><span class="p">(</span><span class="n">set_len</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"길이 {0} : {1}%"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">set_len</span><span class="p">,</span> <span class="n">tmp</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>길이 10 : 59.378870639694995%
+길이 15 : 75.60620430798%
+길이 20 : 84.42609076473765%
+길이 25 : 90.24833889944196%
+길이 30 : 94.36824443232409%
+길이 35 : 97.26539725357543%
+길이 40 : 99.18187606967352%
+길이 45 : 99.86969126232896%
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">padding_len</span> <span class="o">=</span> <span class="mi">35</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x_train</span> <span class="o">=</span> <span class="n">pad_sequences</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">maxlen</span> <span class="o">=</span> <span class="n">padding_len</span><span class="p">,</span> <span class="n">truncating</span><span class="o">=</span><span class="s">'post'</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="s">'post'</span><span class="p">)</span>
+<span class="n">x_test</span> <span class="o">=</span> <span class="n">pad_sequences</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">maxlen</span> <span class="o">=</span> <span class="n">padding_len</span><span class="p">,</span> <span class="n">truncating</span><span class="o">=</span><span class="s">'post'</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="s">'post'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x_train</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[   64,  1007,    30, ...,     0,     0,     0],
+       [  897,  1127,    69, ...,     0,     0,     0],
+       [  354,  4758,  3973, ...,     0,     0,     0],
+       ...,
+       [  470,   824,    51, ...,     0,     0,     0],
+       [  688,  1106,     8, ...,     0,     0,     0],
+       [19611,  5647,  2779, ...,     0,     0,     0]], dtype=int32)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x_train</span><span class="p">.</span><span class="n">shape</span>       <span class="c1"># padding 완료
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(372193, 35)
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="lstm-training-with-dataset"><strong>LSTM Training with DATASET</strong></h2>
+
+<h3 id="import-modules"><strong>Import Modules</strong></h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tensorflow.keras.layers</span> <span class="kn">import</span> <span class="n">Embedding</span><span class="p">,</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">LSTM</span><span class="p">,</span> <span class="n">Bidirectional</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span><span class="p">,</span> <span class="n">load_model</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.callbacks</span> <span class="kn">import</span> <span class="n">EarlyStopping</span><span class="p">,</span> <span class="n">ModelCheckpoint</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">emb_dim</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">cur_dim</span> <span class="o">=</span> <span class="mi">26663</span>     <span class="c1"># vocab size
+</span><span class="n">padding_len</span> <span class="o">=</span> <span class="mi">35</span>
+</code></pre></div></div>
+
+<h3 id="modeling"><strong>Modeling</strong></h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">([</span>
+    <span class="n">Embedding</span><span class="p">(</span><span class="n">cur_dim</span><span class="p">,</span> <span class="n">emb_dim</span><span class="p">,</span> <span class="n">input_length</span><span class="o">=</span><span class="n">padding_len</span><span class="p">),</span>      
+    <span class="n">Bidirectional</span><span class="p">(</span><span class="n">LSTM</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">return_sequences</span><span class="o">=</span><span class="bp">True</span><span class="p">)),</span>
+    <span class="n">LSTM</span><span class="p">(</span><span class="mi">32</span><span class="p">),</span>
+    <span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'sigmoid'</span><span class="p">)</span>
+<span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span><span class="p">.</span><span class="n">summary</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Model: "sequential_1"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ embedding_1 (Embedding)     (None, 35, 100)           2666300   
+                                                                 
+ bidirectional_1 (Bidirectio  (None, 35, 256)          234496    
+ nal)                                                            
+                                                                 
+ lstm_3 (LSTM)               (None, 32)                36992     
+                                                                 
+ dense_1 (Dense)             (None, 1)                 33        
+                                                                 
+=================================================================
+Total params: 2,937,821
+Trainable params: 2,937,821
+Non-trainable params: 0
+_________________________________________________________________
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pydot</span>
+<span class="kn">import</span> <span class="nn">graphviz</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">SVG</span>
+<span class="kn">from</span> <span class="nn">keras.utils.vis_utils</span> <span class="kn">import</span> <span class="n">model_to_dot</span>
+
+<span class="n">SVG</span><span class="p">(</span><span class="n">model_to_dot</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">show_shapes</span><span class="o">=</span><span class="bp">True</span><span class="p">).</span><span class="n">create</span><span class="p">(</span><span class="n">prog</span><span class="o">=</span><span class="s">'dot'</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s">'svg'</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/92680829/144725961-81ab2635-f689-4fa6-8d6e-edef15d84330.png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s">'adam'</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s">'binary_crossentropy'</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s">'acc'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">checkpoint_path</span> <span class="o">=</span> <span class="s">'my_checkpoint.ckpt'</span>
+<span class="n">checkpoint</span> <span class="o">=</span> <span class="n">ModelCheckpoint</span><span class="p">(</span><span class="n">checkpoint_path</span><span class="p">,</span> 
+                             <span class="n">save_weights_only</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> 
+                             <span class="n">save_best_only</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> 
+                             <span class="n">monitor</span><span class="o">=</span><span class="s">'val_loss'</span><span class="p">,</span>
+                             <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">earlystop</span> <span class="o">=</span> <span class="n">EarlyStopping</span><span class="p">(</span><span class="n">monitor</span><span class="o">=</span><span class="s">"val_loss"</span><span class="p">,</span> 
+                          <span class="n">min_delta</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span>        
+                          <span class="n">patience</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="training"><strong>Training</strong></h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">epochs</span><span class="o">=</span><span class="mi">10</span>
+<span class="n">history</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> 
+                    <span class="n">validation_data</span><span class="o">=</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">),</span>
+                    <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">checkpoint</span><span class="p">,</span> <span class="n">earlystop</span><span class="p">],</span>
+                    <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Epoch 1/10
+11631/11632 [============================&gt;.] - ETA: 0s - loss: 0.3492 - acc: 0.8493
+Epoch 00001: val_loss improved from inf to 0.33655, saving model to my_checkpoint.ckpt
+11632/11632 [==============================] - 428s 37ms/step - loss: 0.3492 - acc: 0.8493 - val_loss: 0.3366 - val_acc: 0.8570
+Epoch 2/10
+11632/11632 [==============================] - ETA: 0s - loss: 0.2986 - acc: 0.8740
+Epoch 00002: val_loss improved from 0.33655 to 0.32506, saving model to my_checkpoint.ckpt
+11632/11632 [==============================] - 429s 37ms/step - loss: 0.2986 - acc: 0.8740 - val_loss: 0.3251 - val_acc: 0.8614
+Epoch 3/10
+11632/11632 [==============================] - ETA: 0s - loss: 0.2634 - acc: 0.8908
+Epoch 00003: val_loss did not improve from 0.32506
+11632/11632 [==============================] - 429s 37ms/step - loss: 0.2634 - acc: 0.8908 - val_loss: 0.3457 - val_acc: 0.8606
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span><span class="p">.</span><span class="n">load_weights</span><span class="p">(</span><span class="n">checkpoint_path</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;tensorflow.python.training.tracking.util.CheckpointLoadStatus at 0x7fe9f7682b10&gt;
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">loss</span><span class="p">,</span> <span class="n">acc</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>3697/3697 [==============================] - 57s 13ms/step - loss: 0.3251 - acc: 0.8614
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span><span class="p">.</span><span class="n">save_weights</span><span class="p">(</span><span class="s">'lstm_model.h5'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="s">"model"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>WARNING:absl:Found untraced functions such as lstm_cell_3_layer_call_fn, lstm_cell_3_layer_call_and_return_conditional_losses, lstm_cell_1_layer_call_fn, lstm_cell_1_layer_call_and_return_conditional_losses, lstm_cell_2_layer_call_fn while saving (showing 5 of 15). These functions will not be directly callable after loading.
+
+
+INFO:tensorflow:Assets written to: model/assets
+
+
+INFO:tensorflow:Assets written to: model/assets
+WARNING:absl:&lt;keras.layers.recurrent.LSTMCell object at 0x7f4102637a50&gt; has the same name 'LSTMCell' as a built-in Keras object. Consider renaming &lt;class 'keras.layers.recurrent.LSTMCell'&gt; to avoid naming conflicts when loading with `tf.keras.models.load_model`. If renaming is not possible, pass the object in the `custom_objects` parameter of the load function.
+WARNING:absl:&lt;keras.layers.recurrent.LSTMCell object at 0x7f4102700d90&gt; has the same name 'LSTMCell' as a built-in Keras object. Consider renaming &lt;class 'keras.layers.recurrent.LSTMCell'&gt; to avoid naming conflicts when loading with `tf.keras.models.load_model`. If renaming is not possible, pass the object in the `custom_objects` parameter of the load function.
+WARNING:absl:&lt;keras.layers.recurrent.LSTMCell object at 0x7f41027710d0&gt; has the same name 'LSTMCell' as a built-in Keras object. Consider renaming &lt;class 'keras.layers.recurrent.LSTMCell'&gt; to avoid naming conflicts when loading with `tf.keras.models.load_model`. If renaming is not possible, pass the object in the `custom_objects` parameter of the load function.
+</code></pre></div></div>
+
+<h3 id="모델-성능"><strong>모델 성능</strong></h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">"Model Loss : {0}</span><span class="se">\n</span><span class="s">Model Accuracy : {1}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nb">round</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="nb">round</span><span class="p">(</span><span class="n">acc</span><span class="p">,</span> <span class="mi">4</span><span class="p">)))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Model Loss : 0.3251
+Model Accuracy : 0.8614
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="학습된-모델로-naver-twitter-에서-크롤링한-게시글-감정분석-후-엑셀파일-생성"><strong>학습된 모델로 Naver, Twitter 에서 크롤링한 게시글 감정분석 후 엑셀파일 생성</strong></h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">naver_emo</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s">"/content/NAVER_코로나, 감정.xlsx"</span><span class="p">)</span>
+<span class="n">naver_mood</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s">"/content/NAVER_코로나, 기분.xlsx"</span><span class="p">)</span>
+<span class="n">naver_daily</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s">"/content/NAVER_코로나, 일상.xlsx"</span><span class="p">)</span>
+
+<span class="n">twitter_emo</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s">"/content/Tweets_코로나, 감정.xlsx"</span><span class="p">)</span>
+<span class="n">twitter_mood</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s">"/content/Tweets_코로나, 기분.xlsx"</span><span class="p">)</span>
+<span class="n">twitter_daily</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s">"/content/Tweets_코로나, 일상.xlsx"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">naver_emo</span><span class="p">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s">'Tweets'</span> <span class="p">:</span> <span class="s">'Contents'</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">naver_mood</span><span class="p">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s">'Tweets'</span> <span class="p">:</span> <span class="s">'Contents'</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">naver_daily</span><span class="p">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s">'Tweets'</span> <span class="p">:</span> <span class="s">'Contents'</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">twitter_emo</span><span class="p">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s">'Tweets'</span> <span class="p">:</span> <span class="s">'Contents'</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">twitter_mood</span><span class="p">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s">'Tweets'</span> <span class="p">:</span> <span class="s">'Contents'</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">twitter_daily</span><span class="p">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s">'Tweets'</span> <span class="p">:</span> <span class="s">'Contents'</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">naver_emo</span><span class="p">[</span><span class="s">'Positive'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">naver_emo</span><span class="p">[</span><span class="s">'Negative'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">naver_mood</span><span class="p">[</span><span class="s">'Positive'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">naver_mood</span><span class="p">[</span><span class="s">'Negative'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">naver_daily</span><span class="p">[</span><span class="s">'Positive'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">naver_daily</span><span class="p">[</span><span class="s">'Negative'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">twitter_emo</span><span class="p">[</span><span class="s">'Positive'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">twitter_emo</span><span class="p">[</span><span class="s">'Negative'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">twitter_mood</span><span class="p">[</span><span class="s">'Positive'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">twitter_mood</span><span class="p">[</span><span class="s">'Negative'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">twitter_daily</span><span class="p">[</span><span class="s">'Positive'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">twitter_daily</span><span class="p">[</span><span class="s">'Negative'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">naver_emo</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>Weekly Frequency</th>
+      <th>Contents</th>
+      <th>Positive</th>
+      <th>Negative</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>20200101</td>
+      <td>146</td>
+      <td>['년 월 일 비대면온라인개강성경적감정코칭총신대학교평생교육원 전문교육아카데미', '...</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>20200107</td>
+      <td>166</td>
+      <td>['스스로 변화를 이끌어내는 셀프코칭 일 감정일기 프로젝트 기 모집 일정 연기', ...</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>20200114</td>
+      <td>164</td>
+      <td>['왜 나는 항상 먹고나서 후회할까 원데이클래쓰 차 오픈 코로나 사태로 잠정 보류'...</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>20200121</td>
+      <td>890</td>
+      <td>[' 우한 발생 신종 코로나 바이러스 폐렴 질환 확산과 주식 시장', '신종코로나바...</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>20200201</td>
+      <td>896</td>
+      <td>[' 감정일기  코로나 바이러스', ' 미국 증시의 이격 조정 그리고 신종 코로나 ...</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>83</th>
+      <td>20210921</td>
+      <td>896</td>
+      <td>[' 위드코로나 길어질수록 내 감정을 해치는 영향들', '생장일지 감정을 기록하는 ...</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>84</th>
+      <td>20211001</td>
+      <td>880</td>
+      <td>['앵콜전시 화무십일홍 전시  코로나 블루시대 인 작가의 감정과 사유 아트포스터 전...</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>85</th>
+      <td>20211007</td>
+      <td>898</td>
+      <td>['앵콜전시 화무십일홍 전시  코로나 블루시대 인 작가의 감정과 사유 아트포스터 전...</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>86</th>
+      <td>20211014</td>
+      <td>894</td>
+      <td>['일본인  중국 싫다코로나 속  국민감정 역대 최악', '일본인  중국 싫다코로나...</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>87</th>
+      <td>20211021</td>
+      <td>894</td>
+      <td>['일본인  중국 싫다코로나 속  국민감정 역대 최악', '일본인  중국 싫다코로나...</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>88 rows × 5 columns</p>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">get_sentiment</span><span class="p">(</span><span class="n">sen</span><span class="p">):</span>
+    <span class="n">sen</span> <span class="o">=</span> <span class="n">okt</span><span class="p">.</span><span class="n">morphs</span><span class="p">(</span><span class="n">sen</span><span class="p">,</span> <span class="n">stem</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">sen</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">sen</span> <span class="k">if</span> <span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stopwords</span><span class="p">]</span>
+    <span class="n">encoded</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">.</span><span class="n">texts_to_sequences</span><span class="p">([</span><span class="n">sen</span><span class="p">])</span>       <span class="c1"># label encoding
+</span>    <span class="n">padded</span> <span class="o">=</span> <span class="n">pad_sequences</span><span class="p">(</span><span class="n">encoded</span><span class="p">,</span> <span class="n">maxlen</span><span class="o">=</span><span class="n">padding_len</span><span class="p">)</span>       <span class="c1"># padding
+</span>    <span class="c1"># print(padded)
+</span>    <span class="n">score</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">padded</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">score</span> <span class="o">&gt;=</span> <span class="mf">0.65</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pos_sen</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">neg_sen</span> <span class="o">=</span> <span class="p">[]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">measure_sentiment_for_each_df</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">contents</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'Contents'</span><span class="p">])):</span>
+        <span class="n">content_list</span> <span class="o">=</span> <span class="n">contents</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">','</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">sen</span> <span class="ow">in</span> <span class="n">content_list</span><span class="p">:</span>
+            <span class="n">sen</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s">"[^ㄱ-ㅎㅏ-ㅣ가-힣 ]"</span><span class="p">,</span> <span class="s">""</span><span class="p">,</span> <span class="n">sen</span><span class="p">)</span>
+            <span class="n">tmp_res</span> <span class="o">=</span> <span class="n">get_sentiment</span><span class="p">(</span><span class="n">sen</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">tmp_res</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">df</span><span class="p">[</span><span class="s">'Positive'</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">pos_sen</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">sen</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">df</span><span class="p">[</span><span class="s">'Negative'</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">neg_sen</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">sen</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pd</span><span class="p">.</span><span class="n">options</span><span class="p">.</span><span class="n">mode</span><span class="p">.</span><span class="n">chained_assignment</span> <span class="o">=</span> <span class="bp">None</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">twitter_mood</span><span class="p">,</span> <span class="n">twitter_daily</span><span class="p">]</span>
+<span class="n">df_name_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">"twitter_mood"</span><span class="p">,</span> <span class="s">"twitter_daily"</span><span class="p">]</span>
+<span class="c1"># f"{df_name_list[3]}"
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">df_list</span><span class="p">):</span>
+    <span class="n">measure_sentiment_for_each_df</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">.</span><span class="n">to_excel</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">df_name_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s">.xlsx"</span><span class="p">)</span>
+    <span class="n">keywords</span> <span class="o">=</span> <span class="p">{</span><span class="s">'pos'</span> <span class="p">:</span> <span class="p">[</span><span class="n">pos_sen</span><span class="p">],</span> <span class="s">'neg'</span><span class="p">:</span> <span class="p">[</span><span class="n">neg_sen</span><span class="p">]}</span>
+    <span class="n">keywords_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">keywords</span><span class="p">)</span>
+    <span class="n">keywords_df</span><span class="p">.</span><span class="n">to_excel</span><span class="p">(</span><span class="s">"categorized_keywords.xlsx"</span><span class="p">)</span>
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  0%|          | 0/2 [00:00&lt;?, ?it/s]
+0it [00:00, ?it/s][A
+1it [00:01,  1.30s/it][A
+3it [00:01,  2.60it/s][A
+4it [00:03,  1.16it/s][A
+5it [00:12,  3.78s/it][A
+6it [00:21,  5.31s/it][A
+7it [00:33,  7.36s/it][A
+8it [01:01, 13.89s/it][A
+9it [01:31, 18.66s/it][A
+10it [01:59, 21.54s/it][A
+11it [02:26, 23.26s/it][A
+12it [02:53, 24.31s/it][A
+13it [03:14, 23.56s/it][A
+14it [03:36, 23.08s/it][A
+15it [03:54, 21.41s/it][A
+16it [04:11, 20.03s/it][A
+17it [04:21, 17.03s/it][A
+18it [04:39, 17.24s/it][A
+19it [04:52, 16.00s/it][A
+20it [05:08, 16.17s/it][A
+21it [05:17, 14.08s/it][A
+22it [05:29, 13.37s/it][A
+23it [05:38, 12.14s/it][A
+24it [05:47, 11.10s/it][A
+25it [05:55, 10.01s/it][A
+26it [06:02,  9.13s/it][A
+27it [06:08,  8.37s/it][A
+28it [06:14,  7.62s/it][A
+29it [06:19,  6.78s/it][A
+30it [06:25,  6.57s/it][A
+31it [06:48, 11.43s/it][A
+32it [07:15, 16.07s/it][A
+33it [07:31, 16.04s/it][A
+34it [07:46, 15.73s/it][A
+35it [07:57, 14.47s/it][A
+36it [08:08, 13.33s/it][A
+37it [08:15, 11.53s/it][A
+38it [08:24, 10.64s/it][A
+39it [08:30,  9.43s/it][A
+40it [08:37,  8.52s/it][A
+41it [08:42,  7.54s/it][A
+42it [08:46,  6.46s/it][A
+43it [08:53,  6.65s/it][A
+44it [09:04,  7.94s/it][A
+45it [09:17,  9.46s/it][A
+46it [09:32, 11.26s/it][A
+47it [09:47, 12.12s/it][A
+48it [10:01, 12.81s/it][A
+49it [10:10, 11.70s/it][A
+50it [10:18, 10.69s/it][A
+51it [10:26,  9.88s/it][A
+52it [10:35,  9.49s/it][A
+53it [10:42,  8.60s/it][A
+54it [10:47,  7.74s/it][A
+55it [10:53,  7.07s/it][A
+56it [10:59,  6.78s/it][A
+57it [11:04,  6.32s/it][A
+58it [11:08,  5.72s/it][A
+59it [11:15,  5.83s/it][A
+60it [11:20,  5.75s/it][A
+61it [11:24,  5.31s/it][A
+62it [11:31,  5.56s/it][A
+63it [11:37,  5.78s/it][A
+64it [11:43,  6.01s/it][A
+65it [11:48,  5.49s/it][A
+66it [11:54,  5.69s/it][A
+67it [12:00,  5.79s/it][A
+68it [12:05,  5.56s/it][A
+69it [12:10,  5.55s/it][A
+70it [12:15,  5.19s/it][A
+71it [12:21,  5.40s/it][A
+72it [12:24,  4.67s/it][A
+73it [12:28,  4.73s/it][A
+74it [12:45,  8.27s/it][A
+75it [12:57,  9.24s/it][A
+76it [13:06,  9.34s/it][A
+77it [13:13,  8.73s/it][A
+78it [13:24,  9.43s/it][A
+79it [13:33,  9.05s/it][A
+80it [13:43,  9.37s/it][A
+81it [13:49,  8.32s/it][A
+82it [13:57,  8.32s/it][A
+83it [14:06,  8.68s/it][A
+84it [14:15,  8.63s/it][A
+85it [14:22,  8.04s/it][A
+86it [14:29,  7.95s/it][A
+87it [14:36,  7.61s/it][A
+88it [14:44, 10.05s/it]
+ 50%|█████     | 1/2 [14:45&lt;14:45, 885.01s/it]
+0it [00:00, ?it/s][A
+2it [00:00, 17.78it/s][A
+4it [00:00,  5.88it/s][A
+5it [00:04,  1.17s/it][A
+6it [00:08,  2.15s/it][A
+7it [00:14,  3.20s/it][A
+8it [00:40,  9.99s/it][A
+9it [01:08, 15.57s/it][A
+10it [01:34, 18.69s/it][A
+11it [02:02, 21.36s/it][A
+12it [02:30, 23.27s/it][A
+13it [02:59, 24.97s/it][A
+14it [03:25, 25.44s/it][A
+15it [03:45, 23.84s/it][A
+16it [04:01, 21.49s/it][A
+17it [04:17, 19.61s/it][A
+18it [04:46, 22.59s/it][A
+19it [05:02, 20.61s/it][A
+20it [05:34, 24.01s/it][A
+21it [05:43, 19.65s/it][A
+22it [05:54, 16.91s/it][A
+23it [06:04, 14.80s/it][A
+24it [06:13, 13.21s/it][A
+25it [06:22, 11.82s/it][A
+26it [06:32, 11.15s/it][A
+27it [06:40, 10.44s/it][A
+28it [07:07, 15.23s/it][A
+29it [07:14, 12.80s/it][A
+30it [07:21, 11.17s/it][A
+31it [07:51, 16.76s/it][A
+32it [08:17, 19.48s/it][A
+33it [08:35, 19.11s/it][A
+34it [08:52, 18.49s/it][A
+35it [09:05, 16.70s/it][A
+36it [09:21, 16.48s/it][A
+37it [09:28, 13.87s/it][A
+38it [09:29,  9.93s/it][A
+39it [09:38,  9.58s/it][A
+40it [10:03, 14.35s/it][A
+41it [10:30, 18.05s/it][A
+42it [10:58, 20.92s/it][A
+43it [11:11, 18.55s/it][A
+44it [11:29, 18.62s/it][A
+45it [11:45, 17.69s/it][A
+46it [12:01, 17.25s/it][A
+47it [12:18, 17.02s/it][A
+48it [12:31, 15.91s/it][A
+49it [12:46, 15.74s/it][A
+50it [13:00, 15.08s/it][A
+51it [13:11, 13.93s/it][A
+52it [13:21, 12.81s/it][A
+53it [13:30, 11.41s/it][A
+54it [13:40, 11.00s/it][A
+55it [13:50, 10.74s/it][A
+56it [14:05, 12.17s/it][A
+57it [14:13, 10.75s/it][A
+58it [14:24, 10.85s/it][A
+59it [14:35, 10.88s/it][A
+60it [14:47, 11.18s/it][A
+61it [15:00, 11.95s/it][A
+62it [15:11, 11.65s/it][A
+63it [15:22, 11.40s/it][A
+64it [15:25,  8.81s/it][A
+65it [15:34,  8.80s/it][A
+66it [15:47, 10.18s/it][A
+67it [15:55,  9.53s/it][A
+68it [16:03,  8.98s/it][A
+69it [16:10,  8.34s/it][A
+70it [16:17,  7.99s/it][A
+71it [16:24,  7.72s/it][A
+72it [16:31,  7.54s/it][A
+73it [16:36,  6.79s/it][A
+74it [16:42,  6.55s/it][A
+75it [16:52,  7.58s/it][A
+76it [17:04,  8.93s/it][A
+77it [17:12,  8.71s/it][A
+78it [17:21,  8.64s/it][A
+79it [17:36, 10.58s/it][A
+80it [17:51, 12.05s/it][A
+81it [18:11, 14.23s/it][A
+82it [18:33, 16.66s/it][A
+83it [18:45, 15.29s/it][A
+84it [19:15, 19.84s/it][A
+85it [19:41, 21.51s/it][A
+86it [20:13, 14.11s/it]
+100%|██████████| 2/2 [34:59&lt;00:00, 1049.80s/it]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">naver_emo</span>
+<span class="c1"># naver_mood
+# naver_daily
+</span>
+<span class="c1"># twitter_emo
+# twitter_mood
+</span><span class="n">twitter_daily</span><span class="p">.</span><span class="n">to_excel</span><span class="p">(</span><span class="s">"twitter_daily_2.xlsx"</span><span class="p">)</span>
+</code></pre></div></div>
+:ET

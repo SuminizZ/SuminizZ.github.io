@@ -1,0 +1,96 @@
+I"�<h2 id="폰트-변경-및-크기-조절-예시-폰트--리디바탕">폰트 변경 및 크기 조절 (예시 폰트 : 리디바탕)</h2>
+<p><br /></p>
+
+<h3 id="폰트-변경"><strong>폰트 변경</strong></h3>
+<ul>
+  <li>일단 woff 형식으로 된 원하는 폰트를 다운받아 <code class="language-plaintext highlighter-rouge">./assets/fonts</code> 폴더에 넣어준다.</li>
+  <li><code class="language-plaintext highlighter-rouge">./assets/css/main.css</code> 의 내부에 아래 코드를 추가한다.<br />
+(<strong>font-family</strong> 에 원하는 폰트 이름을 넣고, <strong>src : url()</strong>안에 해당 폰트의 경로를 넣어준다.)<br />
+<br />
+    <div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">@font-face</span> <span class="p">{</span>
+  <span class="nl">font-family</span><span class="p">:</span> <span class="s2">'RIDIBatang'</span><span class="p">;</span>
+  <span class="nl">src</span><span class="p">:</span> <span class="sx">url('/assets/fonts/RIDIBatang.woff')</span> <span class="n">format</span><span class="p">(</span><span class="s2">'woff'</span><span class="p">);</span>
+  <span class="nl">font-weight</span><span class="p">:</span> <span class="nb">normal</span><span class="p">;</span>
+  <span class="nl">font-style</span><span class="p">:</span> <span class="nb">normal</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">_sass/minimal-mistakes/_variables.scss</code> 파일의 <strong>system typefaces &gt; sans-serif</strong> 항목을 “RIDIBatang” 으로 변경한다. <br />
+<br />
+    <div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span><span class="nt">sans-serif</span><span class="o">:</span> <span class="s1">"RIDIBatang"</span><span class="o">,</span> <span class="nt">-apple-system</span><span class="o">,</span> <span class="nt">BlinkMacSystemFont</span><span class="o">,</span> <span class="s1">"Roboto"</span><span class="o">,</span> <span class="s1">"Segoe UI"</span><span class="o">,</span>
+<span class="s1">"Helvetica Neue"</span><span class="o">,</span> <span class="s1">"Lucida Grande"</span><span class="o">,</span> <span class="nt">Arial</span><span class="o">,</span> <span class="nt">sans-serif</span> <span class="o">!</span><span class="nt">default</span><span class="o">;</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="폰트-크기-조절"><strong>폰트 크기 조절</strong></h3>
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">_sass/_reset.scss</code> 에서 아래 코드의 <strong>font-size</strong> 를 조절한다. 대략 14~17px 정도가 적당한 듯하다. 창 크기 조절시에 폰트 크기 변경되는 효과를 제거해줬다. <br /></p>
+
+    <div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c">/* ==========================================================================
+  STYLE RESETS
+  ========================================================================== */</span>
+    
+  <span class="o">*</span><span class="p">{</span> <span class="nl">box-sizing</span><span class="p">:</span> <span class="n">border-box</span><span class="p">;</span> <span class="p">}</span>
+    
+  <span class="nt">html</span> <span class="p">{</span>
+  <span class="c">/* apply a natural box layout model to all elements */</span>
+  <span class="nl">box-sizing</span><span class="p">:</span> <span class="n">border-box</span><span class="p">;</span>
+  <span class="nl">background-color</span><span class="p">:</span> <span class="err">$</span><span class="n">background-color</span><span class="p">;</span>
+  <span class="nl">font-size</span><span class="p">:</span> <span class="m">15px</span><span class="p">;</span>
+  <span class="err">@include</span> <span class="err">breakpoint($medium)</span> <span class="err">{</span>
+      <span class="nl">font-size</span><span class="p">:</span> <span class="m">17px</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">@include</span> <span class="n">breakpoint</span><span class="p">(</span><span class="err">$</span><span class="nb">large</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nl">font-size</span><span class="p">:</span> <span class="m">17px</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">@include</span> <span class="n">breakpoint</span><span class="p">(</span><span class="err">$</span><span class="nb">x-large</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nl">font-size</span><span class="p">:</span> <span class="m">17px</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="nt">-webkit-text-size-adjust</span><span class="o">:</span> <span class="err">100</span><span class="o">%;</span>
+  <span class="nt">-ms-text-size-adjust</span><span class="o">:</span> <span class="err">100</span><span class="o">%;</span>
+  <span class="err">}</span>
+</code></pre></div>    </div>
+    <p><br /></p>
+  </li>
+</ul>
+
+<h2 id="프로필-사진-업로드-및-프로필-figure-조절">프로필 사진 업로드 및 프로필 Figure 조절</h2>
+<p><br /></p>
+
+<h3 id="업로드"><strong>업로드</strong></h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">assets/images</code> 폴더에 원하는 프로필 사진을 추가한다</li>
+  <li><code class="language-plaintext highlighter-rouge">_config.yml</code> 폴더의 <strong>Site Author</strong> 항목의 <strong>avatar</strong> 값으로 프로필 사진의 위치를 기입해준다. <br />
+<br />
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">avatar</span> <span class="p">:</span> <span class="s">"/assets/avatar.jpg"</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="프로필-figure-조절"><strong>프로필 Figure 조절</strong></h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">_sass/_sidebar.scss</code> &gt;  <strong>Author profile and links</strong> 에서 <strong>author_avatar &gt; img</strong> 섹션의 값을 조절한다.</li>
+  <li><strong>max_width</strong> 로 사진의 크기를 변경한다(내 기준 160-180px 정도가 적당한 거 같다.)</li>
+  <li><strong>border_radius</strong> 는 이미지의 각진 정도인데, 50% 가 max(완전 곡선) 이고 그보다 낮아지면 각이 생긴다 0% 에 가까울 수록 직사각형이 된다.</li>
+  <li>비율은 원본 사진 비율 그대로 유지되는 거 같다.</li>
+  <li><strong>author_avatar &gt; padding</strong> 값을 조절하면 프로필 사진의 위치 및 여백 크기도 바꿀 수 있다. <br />
+<br />
+    <div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">.author__avatar</span> <span class="p">{</span>
+<span class="nl">display</span><span class="p">:</span> <span class="nb">table-cell</span><span class="p">;</span>
+<span class="nl">vertical-align</span><span class="p">:</span> <span class="nb">top</span><span class="p">;</span>
+<span class="nl">width</span><span class="p">:</span> <span class="m">36px</span><span class="p">;</span>
+<span class="nl">height</span><span class="p">:</span> <span class="m">36px</span><span class="p">;</span>
+<span class="nl">padding-top</span><span class="p">:</span> <span class="m">20px</span><span class="p">;</span>
+<span class="nl">padding-right</span><span class="p">:</span> <span class="m">30px</span><span class="p">;</span>
+<span class="nl">padding-bottom</span><span class="p">:</span> <span class="m">30px</span><span class="p">;</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+:ET

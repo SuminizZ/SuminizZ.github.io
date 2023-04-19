@@ -1,0 +1,17 @@
+I"<p><br /></p>
+
+<ul>
+  <li>
+    <p>Entropy is the averaged amount of bits to express the message, derived from the theromodynamic concept of entropy in physics <br /></p>
+
+    <p>    $\large \sum_{i}^{n}\,p(x_{i})\,\log{p(x_{i})}$</p>
+  </li>
+</ul>
+
+<h3 id="summary-notes">Summary Notes</h3>
+
+<ul>
+  <li><a href="https://drive.google.com/file/d/17E1L4417BJVggUa83DZ1c8lmq9awJoDs/view?usp=share_link" target="_blank"><span style="color:purple"><strong>Entropy, KL Divergence, and Mutual Information</strong></span></a></li>
+</ul>
+
+:ET

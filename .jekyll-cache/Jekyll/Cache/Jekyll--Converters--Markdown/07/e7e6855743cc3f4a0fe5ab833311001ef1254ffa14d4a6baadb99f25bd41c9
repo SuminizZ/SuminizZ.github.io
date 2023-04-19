@@ -1,0 +1,191 @@
+I"�+<p><br /></p>
+
+<h1 id="loss-funciton">Loss Funciton</h1>
+<ul>
+  <li>There are largely two paradigms to define Loss Function
+    <ul>
+      <li>Minimizing Error - MAE, MSE</li>
+      <li>Maximizing Likelihood - Maximum Likelihood Estimation (MLE)</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="--error-minimization"><strong>- Error Minimization</strong></h2>
+<ul>
+  <li>minimizes the error between predicted value and actual value</li>
+  <li>Mean Absolute Error (MAE), Mean Squared Error(MSE)</li>
+  <li>
+    <p>Actually you’ll be able to derive all these cost functions with a few modifications to MLE, which will be covered later at anoter posting</p>
+  </li>
+  <li>To copmute error, first we need to define <strong>“how to measure the magnitude of error”</strong>
+    <ul>
+      <li>For this, We can use the concept of <strong>“Norm”, which is a measure of magnitude or length of vector</strong></li>
+      <li>We can also use this norm as a distance function</li>
+      <li>
+        <p>There are two types of frequently used Norm<br /> :
+  <img src="https://user-images.githubusercontent.com/92680829/175437870-a8a8132a-d7ef-4565-8e5a-7131aec71c26.png" width="420" /></p>
+      </li>
+      <li><strong>Vector L1 Norm</strong>
+        <ul>
+          <li>L1 norm is calculated as the <strong>sum of the absolute vector values</strong>, where the absolute value of a scalar uses the notation |a1|.</li>
+          <li>In effect, the norm is a calculation of the <strong>Manhattan distance</strong> from the origin of the vector space.</li>
+          <li>For example, if you got data x=(1,2,3), y=(-1,2,4), then the distance of vector x, y with L1 norm is d(x,y) = |1-(-1)| + |2-2| + |3-4| = 2 + 0 + 1 = 3</li>
+        </ul>
+      </li>
+      <li><strong>Vector L2 norm</strong>
+        <ul>
+          <li>L2 norm can be defined as the <strong>square root of the inner product of a vector</strong>.</li>
+          <li>It is also known as the Euclidean norm as it’s used to calculate the <strong>Euclidean distance</strong> from the origin</li>
+          <li>d(x, y) with L2 norm is root(4 + 0 + 1) = root(5)</li>
+        </ul>
+      </li>
+    </ul>
+
+    <p><br /></p>
+
+    <p><img src="https://user-images.githubusercontent.com/92680829/175439398-81058366-012a-4b4c-9d1f-817885bfbe7c.png" width="590" />
+  <br /></p>
+
+    <ul>
+      <li>Norm is also used in Regularization, which also will be explained at later posting</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Now we’ve learned how we can measure the magnitude of error vector using L1 and L2 norm, let’s apply this concept to understand what “MAE” and “MSE” are and how they differ from each other.</p>
+
+<h3 id="1-mean-absolute-error-mae">1. Mean Absolute Error (MAE)</h3>
+<ul>
+  <li>MAE is alternatively called as “L1 Loss” as it calculates <strong>the mean of L1 norm of error vector</strong></li>
+  <li>
+    <p><img src="https://user-images.githubusercontent.com/92680829/175493501-ae492f95-1832-4ae9-b87e-80c5240edd27.png" width="200" /></p>
+  </li>
+  <li>Absolute scalar difference (L1 loss) at certain data point<br />
+  <img src="https://user-images.githubusercontent.com/92680829/175494216-f83c6d56-5af0-4df7-a1d3-10c26493cb1d.png" width="400" /></li>
+</ul>
+
+<h3 id="2-mean-squared-errormse">2. Mean Squared Error(MSE)</h3>
+<ul>
+  <li>MSE, the L2 Loss fucntion, calculates the mean of squared L2 norm of error vector</li>
+  <li>
+    <p><img src="https://user-images.githubusercontent.com/92680829/175494526-cdcb8d63-d479-4b23-8bca-c255198003f9.png" width="220" /></p>
+  </li>
+  <li>Basically, MSE calculates the area of square with the length of error (predicted - real)<br />
+  <img src="https://user-images.githubusercontent.com/92680829/175493918-9ba61ebd-7b76-4122-be48-62bfc7665fbd.png" width="380" /></li>
+</ul>
+
+<h3 id="mae-vs-mse-and-rmse-root-mean-squared-error">MAE vs MSE and RMSE (Root Mean Squared Error)</h3>
+<h4 id="1-sensitivity-to-outliers">1. Sensitivity to Outliers</h4>
+<ul>
+  <li>As each error component of MSE is squared, loss increases at a squared scale as the error increses, which makes MSE more sensitive to outliers.</li>
+  <li>Thus, when a dataset has a large number of outlier cases, MAE is sometimes employed as an alternative to the MSE.</li>
+</ul>
+
+<h4 id="2-differentiability">2. Differentiability</h4>
+<ul>
+  <li>MAE is not differentiable at its minimum where it forms cusp, thus you need to split the function into sections to calcualte the derivative.</li>
+  <li>MSE is differentiable at all data piont as it is quadratic function (its derivative exists in its entire domain)</li>
+</ul>
+
+<h4 id="rmse-root-mean-squared-error"><strong>RMSE (Root Mean Squared Error)</strong></h4>
+<ul>
+  <li>square root of the MSE
+    <ul>
+      <li><img src="https://user-images.githubusercontent.com/92680829/175776920-e7df2c48-ebf7-4728-b4a0-e6f74c78a45e.png" width="320" /></li>
+    </ul>
+  </li>
+  <li>RMSE is measured in the same units as the original data unlike MSE, thus <strong>less sensitive to outliers</strong> than MSE.</li>
+  <li>RMSE doesn’t use absolute value, so it is <strong>differentiable at all data points</strong> unlike MAE.</li>
+  <li>But, since the errors are squared before they’re averaged, the RMSE still gives a relatively high penalty to errors.</li>
+  <li>Thus, RMSE is preffered over MAE when large errors are particularly undesirable</li>
+</ul>
+
+<hr />
+
+<p>While both of the cost functions, MAE and MSE, are usually used for Regression problem, Cross-Entropy (CE) is widely used for Classification problem (binary or multi-classification)<br />
+This is because of the non-linearity of the model used for classification task, while regression uses linear model.<br /> 
+Non-linearity causes MAE or MSE loss functions to become non-convex, which means gradient-based optimization cannot guarantee the convergence of model, which means the failure of learning. <br />
+(you can see the convexity of certain funciton by taking second derivative of that function, and see if its &gt; 0) <br />
+To deal with this non-convex problems for non-linear model, we can alternatively use cross-entropy function<br />
+Next, we will understand what Maximum Likelihood Estimation (MLE) is, and derive Cross-Entropy Loss funciton by taking negative log to MLE.</p>
+
+<h2 id="maximum-likelihood-estimation-mle">Maximum Likelihood Estimation (MLE)</h2>
+<ul>
+  <li>
+    <p>Unlike Error Minimization, MLE tries to <strong>maximize a likelihood function</strong> in order to find the probability distribution and parameters that best explain the observed data&lt;/br&gt;</p>
+  </li>
+  <li>
+    <p>Let me give you a simple example for intuitive understanding of MLE</p>
+  </li>
+  <li>
+    <p><img src="https://user-images.githubusercontent.com/92680829/175931377-fb6342bb-2191-466f-8a4f-cd4858406190.png" width="500" /></p>
+  </li>
+  <li>which curve do you think can be the best fit for the observed data plotted as a histrogram ?</li>
+  <li>it’s pretty clear that the first curve (colored with blue, N(35, 5.5)) doesn’t fit the data well, while the third (green) or fourth one (brown) seems to be the best fit, maximizing the likelihood that our data actually follows the distribution close to them.</li>
+  <li>Just like what we’ve done with the example above, finding the curve that can best expain the data is what MLE does</li>
+</ul>
+
+<h3 id="likelihood-function">Likelihood Function</h3>
+<ul>
+  <li>it describes the <strong>joint probability of the observed data</strong> as a function of the parameters of certain probability distribution</li>
+  <li>multiply the likelihood (height of the distribution) of each datapoint at the given statistical model
+    <ul>
+      <li>
+        <p>likelihoods are the y-axis values for fixed data points with assumed distribution 
+  <img src="https://user-images.githubusercontent.com/92680829/175931136-b024fa41-25fe-439f-9cd9-96573a185574.png" width="400" /></p>
+      </li>
+      <li>The likelihood, given multiple <strong>independent events</strong>, is the <strong>product of the likelihoods of each of the independent events</strong></li>
+      <li>This follows from the definition of independence in probability: the probabilities of two independent events happening is the product of each probability.</li>
+      <li><img src="https://user-images.githubusercontent.com/92680829/175221881-067d8464-1d27-4e33-8c6d-490942195d24.png" width="180" /></li>
+    </ul>
+  </li>
+  <li>now let’s take a log to make <strong>Log-likelihood fucntion</strong>
+    <ul>
+      <li>
+        <p><img src="https://user-images.githubusercontent.com/92680829/175222229-b654e7b8-3c41-4d43-9c30-426cdff105b3.png" width="300" /></p>
+      </li>
+      <li>As log is monotonically increasing, it only changes the scale, not alter the ranks of original data</li>
+      <li><strong>Advantages of taking Log</strong>
+        <ol>
+          <li>taking log can undo the exp, making it easier to compute</li>
+          <li>can prevent arithmetic underflow which is a condition in a computer program where the result of calculation is more precise than the computer can actually compute.
+            <ul>
+              <li>as the probaility is always smaller than 1, repeating multiplying some vlaue smaller than 1 can signify the underflow</li>
+              <li>but taking log can resolve this problem because the log of a product is the sum of the logs</li>
+            </ul>
+          </li>
+        </ol>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="maximum-likelihood-estimation-mle-1">Maximum Likelihood Estimation (MLE)</h3>
+<ul>
+  <li>Finding the parameters of the probability distribution under which the observed data is most probable (or under which it has highest probability density)</li>
+  <li>This practically means finding parameters with which likelihood function has maximum value
+    <ul>
+      <li><img src="https://user-images.githubusercontent.com/92680829/175224140-53922a32-b11a-4413-87da-f684a829daca.png" width="200" /></li>
+    </ul>
+  </li>
+  <li>Process
+    <ul>
+      <li>First assume that the data comes from a certain distribution</li>
+      <li>Then randomly pick some parameters for that distribution</li>
+      <li>Then calculate the likelihood of the observed data under the assumed distribution</li>
+      <li>Then use <strong>Optimization Algorithm</strong> like Gradient Descent to find the best parameters and distribution that maximize the likelihood
+        <ul>
+          <li>by taking partial derivative to log-likelihood function with respect to parameters and find the point where it becomes zero</li>
+          <li><img src="https://user-images.githubusercontent.com/92680829/175234783-998dbb41-43b8-4d3e-954a-27b9794adea6.png" width="410" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<p>Actually, maximizing log-likelihood function is identical to mimizing the negative log-likelihood function and solving negative log likelihood is closely related to solving Cross-Entropy function.</p>
+
+<p>For next posting, we’ll see how negative log likelihood acts as a flexible loss function that can cover all types of problems (Regression, Binary Classification, Multi-Classification).</p>
+:ET
