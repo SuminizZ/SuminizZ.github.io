@@ -42,12 +42,12 @@ http://www.tipue.com/search
     max-height: 15px;
     padding: 14px;
     border: 1px solid #aeaeb8;
-    border-radius: 20px;
+    border-radius: 15px;
     -moz-appearance: none;
     -webkit-appearance: none;
      box-shadow: none;
     outline: 0;
-    margin: 2.5px 0 auto;
+    margin: 2.5px 3px 0 auto;
 }
 /* .tipue_search_icon
 {
@@ -70,10 +70,10 @@ http://www.tipue.com/search
 
 #tipue_search_content
 {
-     max-width: 750px;
-     width: 750px;
+     max-width: 90%;
+     width: 90%;
 	padding-top: 20px;
-	margin: 0 5px auto;
+     margin: 2.5px 3px 0 auto;
 }
 #tipue_search_results_count
 {

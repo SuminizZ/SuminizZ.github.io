@@ -5,7 +5,7 @@ img: ml/opt/pd-ipm.png
 categories: [ml-opt] 
 tag : [Coursera, ML, Machine Learning]
 toc : true
-toc_sticky : truer
+toc_sticky : true
 ---
 
 <br>

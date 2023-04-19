@@ -54,7 +54,7 @@
                     {% endfor %}
                     <a class="dropdown-item" href="{{ "/ml/cs229" | prepend: site.baseurl }}">CS229 ({{cs229_sum}})</a>
                     <a class="dropdown-item" href="{{ "/ml/opt" | prepend: site.baseurl }}">Optimization ({{opt_sum}})</a>
-                    <a class="dropdown-item" href="{{ "/ml/opt" | prepend: site.baseurl }}">Information Theory ({{inform_sum}})</a>
+                    <a class="dropdown-item" href="{{ "/ml/inform" | prepend: site.baseurl }}">Information Theory ({{inform_sum}})</a>
                 </div>
             </li>
 
@@ -95,7 +95,7 @@
                 <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('python-dropdown')"
                    role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
-                    Python
+                    PYTHON
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="python-dropdown">
                     {% for category in site.categories %}
@@ -145,7 +145,7 @@
             </li>
 
             <li class="nav-item dropdown
-            {% if page.url == '/stats/topics/' or page.url == '/stats/18.650/' %} active {% endif %}">
+            {% if page.url == '/stats/topics/' or page.url == '/stats/18650/' %} active {% endif %}">
                 <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('stats-dropdown')"
                    role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
@@ -161,7 +161,7 @@
                     {% endif %}
                     {% endfor %}
                     <a class="dropdown-item" href="{{ "/stats/topics" | prepend: site.baseurl }}">Various Topics ({{topics_sum}})</a>
-                    <a class="dropdown-item" href="{{ "/stats/18.650" | prepend: site.baseurl }}">Statistics for Application (MIT 18.650) ({{18650_sum}})</a>
+                    <a class="dropdown-item" href="{{ "/stats/18650" | prepend: site.baseurl }}">Statistics for Application (MIT 18.650) ({{18650_sum}})</a>
                 </div>
             </li>
 
@@ -248,7 +248,7 @@
             </li> 
             </li>
             <li class="nav-item {% if page.url == '/' %} active {% endif %}">
-                <a class="nav-link"> Search  </a>
+                <a class="nav-link"> SEARCH  </a>
             </li>
 
             <form action="/search">
