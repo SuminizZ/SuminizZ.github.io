@@ -1035,7 +1035,8 @@
    .content-box {
      /* max-width: 1000px; */
      font-weight: 550;
-     padding: 10px 15px 15px 270px;
+     max-height : 500px;
+     padding: 5px 15px 15px 270px;
      display: -webkit-box;
      display: -webkit-flex;
      display: -ms-flexbox;
@@ -1134,8 +1135,11 @@
    }
 
    .post {
-     width: 95%;
-     max-width: 95%;
+     width: 90%;
+     max-width: 90%;
+     /* max-height: 15rem; */
+     /* padding: 0 270px 270px; */
+     /* margin-left: 20px; */
      margin-bottom: 1.15rem;
      display: -webkit-box;
      display: -webkit-flex;
@@ -1172,6 +1176,8 @@
    .post .post-thumbnail {
      width: 30%;
      max-width: 100%;
+     margin : 20px 0 0 0;
+     max-height : 180px;
      min-height: 10rem;
      -webkit-background-size: cover;
              background-size: cover;

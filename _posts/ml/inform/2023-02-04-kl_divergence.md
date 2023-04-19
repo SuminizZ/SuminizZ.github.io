@@ -7,14 +7,16 @@ tag : [Information Thoery, KL Divergence, ML]
 toc : true
 toc_sticky : true
 ---
+
 <br/>
 
-- Entropy is the averaged amount of bits to express the message, derived from the theromodynamic concept of entropy in physics <br/>
-    
-    &emsp;&emsp;&emsp; $\large \sum_{i}^{n}\,p(x_{i})\,\log{p(x_{i})}$
+### Contents
+- Entropy, Cross Entropy, Conditional Entropy
+- KL Divergence
+- Mutual Information
+- KL Divergence of Two Different Normal Distribution & Bernoulli Distribution
 
-### Summary Notes
-
-- [<span style="color:purple">**Entropy, KL Divergence, and Mutual Information**</span>](https://drive.google.com/file/d/17E1L4417BJVggUa83DZ1c8lmq9awJoDs/view?usp=share_link){:target="_blank"}
+### Notes 
+- [<span style="color:purple">**Entropy, KL Divergence, and Mutual Information**</span>](https://drive.google.com/file/d/19bcc1joSFlIA31pPV2-ShzYikXPPMwIb/view?usp=share_link){:target="_blank"}
 
 
