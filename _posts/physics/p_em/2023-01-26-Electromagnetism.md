@@ -28,7 +28,7 @@ toc_sticky : true
 
 - [<span style="color:purple">**05_Ampere’s - Lenz’s - Faraday’s Law**</span>](https://drive.google.com/file/d/1OlDUIuZg6K47SGNugvcxtkoo340jmvMU/view?usp=share_link){:target="_blank"}
 
-- [<span style="color:purple">**06_Inductance - LCR Circuits (DC-AC)**</span>](hhttps://drive.google.com/file/d/1u3vqWlFrW6bLrsA1_3HwVoNToGK6G5K-/view?usp=share_link){:target="_blank"}
+- [<span style="color:purple">**06_Inductance - LCR Circuits (DC-AC)**</span>](https://drive.google.com/file/d/1u3vqWlFrW6bLrsA1_3HwVoNToGK6G5K-/view?usp=share_link){:target="_blank"}
 
 - [<span style="color:purple">**07_Maxwell’s Equation 1 - EM Waves**</span>](https://drive.google.com/file/d/1h8cDUtd39ybW2vcp7ZX_AJW15I_2FBxS/view?usp=share_link){:target="_blank"}
 
