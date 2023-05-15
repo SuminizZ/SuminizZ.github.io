@@ -1,0 +1,14 @@
+I"Ç<h2 id="cs231n-2020-convolutional-neural-networks-for-visual-recognition">CS231n 2020: Convolutional Neural Networks for Visual Recognition</h2>
+<p><br /></p>
+
+<h3 id="assignment-2">Assignment 2</h3>
+
+<ul>
+  <li><a href="https://github.com/SuminizZ/cs231n_Assignments/blob/main/git2/assignments/assignment2/FullyConnectedNets.ipynb" target="_blank">Q1 : Fully-connected Neural Network.</a> (<em>Done</em>)</li>
+  <li><a href="https://github.com/SuminizZ/cs231n_Assignments/blob/main/git2/assignments/assignment2/BatchNormalization.ipynb" target="_blank">Q2 : Batch Normalization.</a> (<em>Done</em>)</li>
+  <li><a href="https://github.com/SuminizZ/cs231n_Assignments/blob/main/git2/assignments/assignment2/Dropout.ipynb" target="_blank">Q3 : Dropout.</a> (<em>Done</em>)</li>
+  <li><a href="https://github.com/SuminizZ/cs231n_Assignments/blob/main/git2/assignments/assignment2/ConvolutionalNetworks.ipynb" target="_blank">Q4 : Convolutional Networks.</a>(<em>Done</em>)</li>
+  <li><a href="">Q5: PyTorch / TensorFlow on CIFAR-10.</a> ()</li>
+  <li><a href="https://github.com/SuminizZ/cs231n_Assignments/tree/main/git2/assignments/assignment2/cs231n" target="_blank">Layers &amp; Classifiers</a> (<em>Done</em>)</li>
+</ul>
+:ET
