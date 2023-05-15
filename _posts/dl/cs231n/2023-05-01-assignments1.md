@@ -1,6 +1,6 @@
 ---
 layout: post
-title : "[cs231n 2020] Assignments 1 - Implementation of KNN, SVM Loss, Softmax Loss, Two Layer DNN with Python"
+title : "[cs231n 2020] Assignments 1 : Implementation of KNN, SVM Loss, Softmax Loss, Two Layer DNN with Python"
 img: dl/cs231n.png
 categories: [stats-cs231n]  
 tag : [cs231n, DL, Assignments]

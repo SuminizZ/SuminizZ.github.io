@@ -1,6 +1,6 @@
 ---
 layout: post
-title : "[cs231n 2020] Assignments 2 - Implementation of Fully Connected Neural Network, Batch Normalization, Dropout, Covolutional Networks with Python "
+title : "[cs231n 2020] Assignments 2 : Implementation of FC DNN, Batch Normalization, Dropout, Covolutional Networks with Python "
 img: dl/cs231n.png
 categories: [stats-cs231n]  
 tag : [cs231n, DL, Assignments]
