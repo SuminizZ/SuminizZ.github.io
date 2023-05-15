@@ -1,4 +1,4 @@
-I"�<p><br /></p>
+I"�<p><br /></p>
 
 <h2 id="백준-1874-스택-수열--실버-2">백준 1874 스택 수열 : 실버 2</h2>
 
@@ -12,34 +12,34 @@
 
 <p><br /></p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sys</span> 
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">sys</span> 
 
-<span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
-<span class="n">data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">rstrip</span><span class="p">()),</span> <span class="n">sys</span><span class="p">.</span><span class="n">stdin</span><span class="p">.</span><span class="n">readlines</span><span class="p">()))</span>
+<span class="n">n</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="nf">input</span><span class="p">())</span>
+<span class="n">data</span> <span class="o">=</span> <span class="nf">list</span><span class="p">(</span><span class="nf">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nf">int</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="nf">rstrip</span><span class="p">()),</span> <span class="n">sys</span><span class="p">.</span><span class="n">stdin</span><span class="p">.</span><span class="nf">readlines</span><span class="p">()))</span>
 
 <span class="k">def</span> <span class="nf">makeSeq</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
     <span class="n">myStack</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">num</span> <span class="o">=</span> <span class="mi">1</span>  
 
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
         <span class="n">cur</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
 
-        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">myStack</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">myStack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">cur</span><span class="p">:</span>   
-            <span class="n">myStack</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
-            <span class="n">result</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">"+"</span><span class="p">)</span>
+        <span class="k">while</span> <span class="nf">len</span><span class="p">(</span><span class="n">myStack</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">myStack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">cur</span><span class="p">:</span>   
+            <span class="n">myStack</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+            <span class="n">result</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="s">"+"</span><span class="p">)</span>
             <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
 
         <span class="k">if</span> <span class="n">myStack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">cur</span><span class="p">:</span>   
             <span class="k">return</span> <span class="s">"NO"</span>
 
         <span class="k">elif</span> <span class="n">myStack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">cur</span><span class="p">:</span>
-            <span class="n">myStack</span><span class="p">.</span><span class="n">pop</span><span class="p">()</span>
-            <span class="n">result</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">"-"</span><span class="p">)</span>
+            <span class="n">myStack</span><span class="p">.</span><span class="nf">pop</span><span class="p">()</span>
+            <span class="n">result</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="s">"-"</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
-<span class="k">print</span> <span class="p">(</span><span class="n">makeSeq</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+<span class="nf">print </span><span class="p">(</span><span class="nf">makeSeq</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
 </code></pre></div></div>
 
 <p><br /></p>

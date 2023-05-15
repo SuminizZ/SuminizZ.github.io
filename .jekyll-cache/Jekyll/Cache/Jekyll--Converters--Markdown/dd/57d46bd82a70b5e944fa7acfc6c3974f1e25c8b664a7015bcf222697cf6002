@@ -10,8 +10,8 @@
 <span class="na">title </span><span class="pi">:</span> <span class="s2">"</span><span class="s">Category"</span>
 <span class="na">layout </span><span class="pi">:</span> <span class="s">categories</span>
 <span class="na">permalink </span><span class="pi">:</span> <span class="s">/categories/</span>
-<span class="na">author_profile </span><span class="pi">:</span> <span class="no">true</span>
-<span class="na">sidebar_main </span><span class="pi">:</span> <span class="no">true</span>
+<span class="na">author_profile </span><span class="pi">:</span> <span class="kc">true</span>
+<span class="na">sidebar_main </span><span class="pi">:</span> <span class="kc">true</span>
 <span class="nn">---</span>
 </code></pre></div>    </div>
   </li>
@@ -20,8 +20,8 @@
 <span class="na">title </span><span class="pi">:</span> <span class="s2">"</span><span class="s">Tag"</span>
 <span class="na">layout </span><span class="pi">:</span> <span class="s">tags</span>
 <span class="na">permalink </span><span class="pi">:</span> <span class="s">/tags/</span>
-<span class="na">author_profile </span><span class="pi">:</span> <span class="no">true</span>
-<span class="na">sidebar_main </span><span class="pi">:</span> <span class="no">true</span>
+<span class="na">author_profile </span><span class="pi">:</span> <span class="kc">true</span>
+<span class="na">sidebar_main </span><span class="pi">:</span> <span class="kc">true</span>
 <span class="nn">---</span>
 </code></pre></div>    </div>
     <p><br /></p>
