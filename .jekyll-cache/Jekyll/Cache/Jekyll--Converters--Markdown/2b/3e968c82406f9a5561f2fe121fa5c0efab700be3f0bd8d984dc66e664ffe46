@@ -1,0 +1,16 @@
+I"a<h2 id="cs231n-2020-convolutional-neural-networks-for-visual-recognition">CS231n 2020: Convolutional Neural Networks for Visual Recognition</h2>
+
+<p><br /></p>
+
+<h3 id="summary-notes">Summary Notes</h3>
+
+<ul>
+  <li><a href="https://drive.google.com/file/d/11dzd0NPJNKgl2RC79hNGFniZVRUK6m6T/view?usp=share_link" target="_blank">Batch Normalization</a></li>
+</ul>
+
+<h3 id="implementation">Implementation</h3>
+
+<ul>
+  <li><a href="https://github.com/SuminizZ/cs231n_Assignments/blob/main/assignment2/cs231n/optim.py" target="_blank">Python Implementation for SGD, SGD with Momentum, RMSProp, Adam</a></li>
+</ul>
+:ET

@@ -3,7 +3,7 @@ layout: post
 title : "[Convex Optimization] Primal-Dual Interior-Point Method (PD-IPM)"
 img: ml/opt/pd-ipm.png
 categories: [ml-opt] 
-tag : [Coursera, ML, Machine Learning]
+tag : [Optimization, ML]
 toc : true
 toc_sticky : true
 ---

@@ -954,7 +954,7 @@
      width: 240px;
      height: 100%;
      padding: 10px 20px;
-     background-color: #d9dada48;
+     background-color: hsla(240, 20%, 94%, 0.901);
    }
 
    .about {
@@ -1531,7 +1531,16 @@
 /* - - - - - - - - - - Media Styles - - - - - - - - - - */
 
 /* Medium Devices, Tablets (Horizontal view) */
-@media only screen and (max-width: 1250px) {
+@media only screen and (max-width: 1350px) {
+  .sidebar {
+    width: 200px;
+    height: 100%;
+  }
+  .wrapper {
+    font-family:"NanumGothicCoding";
+    max-width: 1300px;
+    position: relative;
+  }
   .post {
     width: 85%;
     max-width: 100%;
@@ -1541,14 +1550,14 @@
     width: 30%;
   }
   .category-box {
-    padding: 0px 0px 0px 200px;
-    font-size: 11px;
+    padding: 0px 0px 0px 220px;
+    font-size: 11.5px;
     font-weight: 500;
     /* color: #b21d1d; */
     /* background-color: #a41212; */
   }
   .content-box {
-    padding: 10px 15px 15px 200px;
+    padding: 10px 15px 15px 220px;
   }s
   .post .post-content {
     width: 100%;

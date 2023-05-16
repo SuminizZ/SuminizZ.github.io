@@ -3,7 +3,7 @@ layout: post
 title : "[Convex Optimization] Quasi-Newton Method 2 : SR1, BFGS, DFP"
 img: ml/opt/convex.jpg
 categories: [ml-opt] 
-tag : [Coursera, ML, Machine Learning]
+tag : [Optimization, ML]
 toc : true
 toc_sticky : true
 ---

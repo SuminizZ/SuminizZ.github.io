@@ -3,7 +3,7 @@ layout: post
 title : "[Convex Optimization] Interior-Point Method with Barrier Function"
 img: ml/opt/ipm_b.png
 categories: [ml-opt] 
-tag : [Coursera, ML, Machine Learning]
+tag : [Optimization, ML]
 toc : true
 toc_sticky : true
 ---

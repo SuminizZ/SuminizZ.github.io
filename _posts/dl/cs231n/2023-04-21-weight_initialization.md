@@ -1,8 +1,8 @@
 ---
 layout: post
-title : "[cs231n 2020] Weight Initialization & Activation Functions"
-img: dl/cs231n.png
-categories: [stats-cs231n]  
+title : "[cs231n Lecture 6] Weight Initialization & Activation Functions"
+img: dl/cs231n/wi.png
+categories: [dl-cs231n]  
 tag : [cs231n, DL, Assignments]
 toc : true
 toc_sticky : true
@@ -10,6 +10,7 @@ toc_sticky : true
 
 ## CS231n 2020: Convolutional Neural Networks for Visual Recognition
 
-- Lecture Notes 
+<br/>
 
-    <img src="https://drive.google.com/file/d/1t-kuOYMrRXslp-PL0ecxoNx2bxaPWZEv/view?usp=share_link">{:target="_blank"} 
+### Summary Notes 
+- [Weight Initialization & Activation Functions](https://drive.google.com/file/d/1t-kuOYMrRXslp-PL0ecxoNx2bxaPWZEv/view?usp=share_link){:target="_blank"}

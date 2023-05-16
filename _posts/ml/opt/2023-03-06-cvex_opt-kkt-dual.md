@@ -3,7 +3,7 @@ layout: post
 title : "[Convex Optimization] Karush Kuhn Tucker (KKT) Conditions and Strong Duality"
 img: ml/opt/kkt.png
 categories: [ml-opt] 
-tag : [Coursera, ML, Machine Learning]
+tag : [Optimization, ML]
 toc : true
 toc_sticky : true
 ---
