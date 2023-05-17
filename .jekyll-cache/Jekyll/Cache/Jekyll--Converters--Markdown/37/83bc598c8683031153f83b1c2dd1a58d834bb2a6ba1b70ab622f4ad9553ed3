@@ -1,4 +1,4 @@
-I"<p><br /></p>
+I"<p><br /></p>
 
 <h2 id="백준-15486-퇴사-2--실버-1">백준 15486 퇴사 2 : 실버 1</h2>
 
@@ -17,23 +17,23 @@
 
 <p><br /></p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sys</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">sys</span>
 <span class="nb">input</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">stdin</span><span class="p">.</span><span class="n">readline</span>
 
 <span class="n">consult</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-    <span class="n">consult</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">input</span><span class="p">().</span><span class="n">split</span><span class="p">()))</span>
+<span class="n">n</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="nf">input</span><span class="p">())</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">consult</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nf">list</span><span class="p">(</span><span class="nf">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nf">input</span><span class="p">().</span><span class="nf">split</span><span class="p">()))</span>
 
 <span class="n">dp</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
 
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">i</span> <span class="o">+</span> <span class="n">consult</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">:</span>
-        <span class="n">dp</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">consult</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">consult</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]],</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">consult</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>       <span class="c1"># i 번째 날의 최대 이익
+        <span class="n">dp</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">consult</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="nf">max</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">consult</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]],</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">consult</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>       <span class="c1"># i 번째 날의 최대 이익
 </span>
-    <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>       <span class="c1"># 한 번도 if 문 타지못한 끝 쪽의 날짜들을 위한 코드
+    <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nf">max</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>       <span class="c1"># 한 번도 if 문 타지못한 끝 쪽의 날짜들을 위한 코드
 </span>
-<span class="k">print</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">n</span><span class="p">])</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">n</span><span class="p">])</span>
 </code></pre></div></div>
 
 <p><br /></p>

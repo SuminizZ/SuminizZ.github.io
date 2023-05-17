@@ -1,6 +1,6 @@
 ---
 layout: post
-title : "[Signals & Systems 05] Dirichlet Conditions & Excercises on Fourier Seriers"
+title : "[Signals & Systems 05] Dirichlet Conditions & Excercises on Fourier Series"
 img: dl/sss/dirichlet.jpg
 categories: [dl-sss]  
 tag : [Signals & Systems]

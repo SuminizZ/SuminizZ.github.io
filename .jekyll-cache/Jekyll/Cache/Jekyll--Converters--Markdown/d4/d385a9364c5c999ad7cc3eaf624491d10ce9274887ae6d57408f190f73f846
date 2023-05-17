@@ -14,7 +14,7 @@
     <div class="language-md highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
 <span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Page</span><span class="nv"> </span><span class="s">Not</span><span class="nv"> </span><span class="s">Found"</span>
 <span class="na">excerpt</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Page</span><span class="nv"> </span><span class="s">not</span><span class="nv"> </span><span class="s">found.</span><span class="nv"> </span><span class="s">Your</span><span class="nv"> </span><span class="s">pixels</span><span class="nv"> </span><span class="s">are</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">another</span><span class="nv"> </span><span class="s">canvas."</span>
-<span class="na">sitemap</span><span class="pi">:</span> <span class="no">false</span>
+<span class="na">sitemap</span><span class="pi">:</span> <span class="kc">false</span>
 <span class="na">permalink</span><span class="pi">:</span> <span class="s">/404.html</span>
 <span class="s">&lt;img src="https://i.stack.imgur.com/cGqdX.png" width="1000px"/&gt;</span>
 <span class="s">&lt;br&gt;</span>

@@ -1,4 +1,4 @@
-I"#<p><br /></p>
+I"#<p><br /></p>
 
 <h2 id="백준-1463-1로-만들기--실버-3">백준 1463 1로 만들기 : 실버 3</h2>
 
@@ -20,22 +20,22 @@
   <li>DP[k] 는 어차피 ‘상태’ 에 대한 값이기 때문에 과정 상관 없이 가능한 경우를 모두 고려해 그 중 최소값만 저장하면 된다.</li>
 </ul>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sys</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">sys</span>
 <span class="nb">input</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">stdin</span><span class="p">.</span><span class="n">readline</span>
 
-<span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
-<span class="n">DP</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+<span class="n">n</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="nf">input</span><span class="p">())</span>
+<span class="n">DP</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
 
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
-    <span class="n">cnt</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s">'inf'</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="nf">float</span><span class="p">(</span><span class="s">'inf'</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">i</span><span class="o">%</span><span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">cnt</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">cnt</span><span class="p">,</span> <span class="n">DP</span><span class="p">[</span><span class="n">i</span><span class="o">//</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">cnt</span> <span class="o">=</span> <span class="nf">min</span><span class="p">(</span><span class="n">cnt</span><span class="p">,</span> <span class="n">DP</span><span class="p">[</span><span class="n">i</span><span class="o">//</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">i</span><span class="o">%</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">cnt</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">cnt</span><span class="p">,</span> <span class="n">DP</span><span class="p">[</span><span class="n">i</span><span class="o">//</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">cnt</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">cnt</span><span class="p">,</span> <span class="n">DP</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">cnt</span> <span class="o">=</span> <span class="nf">min</span><span class="p">(</span><span class="n">cnt</span><span class="p">,</span> <span class="n">DP</span><span class="p">[</span><span class="n">i</span><span class="o">//</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="nf">min</span><span class="p">(</span><span class="n">cnt</span><span class="p">,</span> <span class="n">DP</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">DP</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">cnt</span>
 
-<span class="k">print</span><span class="p">(</span><span class="n">DP</span><span class="p">[</span><span class="n">n</span><span class="p">])</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">DP</span><span class="p">[</span><span class="n">n</span><span class="p">])</span>
 </code></pre></div></div>
 
 <p><br /></p>
@@ -48,40 +48,40 @@
   <li>popleft 과정에서 재정렬에 시간이 소요돼 시간초과가 나오는 거 같다.</li>
 </ul>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">sys</span>
+<span class="kn">from</span> <span class="n">collections</span> <span class="kn">import</span> <span class="n">deque</span>
 <span class="nb">input</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">stdin</span><span class="p">.</span><span class="n">readline</span>
 
-<span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
+<span class="n">n</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="nf">input</span><span class="p">())</span>
 
-<span class="n">tmps</span> <span class="o">=</span> <span class="n">deque</span><span class="p">([[</span><span class="n">n</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+<span class="n">tmps</span> <span class="o">=</span> <span class="nf">deque</span><span class="p">([[</span><span class="n">n</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
 
 <span class="k">while</span> <span class="n">tmps</span><span class="p">:</span>
-    <span class="n">cur_num</span><span class="p">,</span> <span class="n">cur_cnt</span> <span class="o">=</span> <span class="n">tmps</span><span class="p">.</span><span class="n">popleft</span><span class="p">()</span>
+    <span class="n">cur_num</span><span class="p">,</span> <span class="n">cur_cnt</span> <span class="o">=</span> <span class="n">tmps</span><span class="p">.</span><span class="nf">popleft</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">cur_num</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="n">cur_cnt</span><span class="p">)</span>
-        <span class="n">sys</span><span class="p">.</span><span class="nb">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">cur_cnt</span><span class="p">)</span>
+        <span class="n">sys</span><span class="p">.</span><span class="nf">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">nxt_cnt</span> <span class="o">=</span> <span class="n">cur_cnt</span> <span class="o">+</span> <span class="mi">1</span>
 
     <span class="k">if</span> <span class="n">cur_num</span><span class="o">%</span><span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">tmp3</span> <span class="o">=</span> <span class="n">cur_num</span><span class="o">/</span><span class="mi">3</span>
         <span class="k">if</span> <span class="n">tmp3</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="n">nxt_cnt</span><span class="p">)</span>
-            <span class="n">sys</span><span class="p">.</span><span class="nb">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-        <span class="n">tmps</span><span class="p">.</span><span class="n">append</span><span class="p">([</span><span class="n">tmp3</span><span class="p">,</span> <span class="n">nxt_cnt</span><span class="p">])</span>
+            <span class="nf">print</span><span class="p">(</span><span class="n">nxt_cnt</span><span class="p">)</span>
+            <span class="n">sys</span><span class="p">.</span><span class="nf">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">tmps</span><span class="p">.</span><span class="nf">append</span><span class="p">([</span><span class="n">tmp3</span><span class="p">,</span> <span class="n">nxt_cnt</span><span class="p">])</span>
 
     <span class="k">if</span> <span class="n">cur_num</span><span class="o">%</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">tmp2</span> <span class="o">=</span> <span class="n">cur_num</span><span class="o">/</span><span class="mi">2</span>
         <span class="k">if</span> <span class="n">tmp2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="n">nxt_cnt</span><span class="p">)</span>
-            <span class="n">sys</span><span class="p">.</span><span class="nb">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-        <span class="n">tmps</span><span class="p">.</span><span class="n">append</span><span class="p">([</span><span class="n">tmp2</span><span class="p">,</span> <span class="n">nxt_cnt</span><span class="p">])</span>
+            <span class="nf">print</span><span class="p">(</span><span class="n">nxt_cnt</span><span class="p">)</span>
+            <span class="n">sys</span><span class="p">.</span><span class="nf">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">tmps</span><span class="p">.</span><span class="nf">append</span><span class="p">([</span><span class="n">tmp2</span><span class="p">,</span> <span class="n">nxt_cnt</span><span class="p">])</span>
     
     <span class="n">tmp1</span> <span class="o">=</span> <span class="n">cur_num</span><span class="o">-</span><span class="mi">1</span>
     <span class="k">if</span> <span class="n">tmp1</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="n">nxt_cnt</span><span class="p">)</span>
-        <span class="n">sys</span><span class="p">.</span><span class="nb">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">tmps</span><span class="p">.</span><span class="n">append</span><span class="p">([</span><span class="n">tmp1</span><span class="p">,</span> <span class="n">nxt_cnt</span><span class="p">])</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">nxt_cnt</span><span class="p">)</span>
+        <span class="n">sys</span><span class="p">.</span><span class="nf">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">tmps</span><span class="p">.</span><span class="nf">append</span><span class="p">([</span><span class="n">tmp1</span><span class="p">,</span> <span class="n">nxt_cnt</span><span class="p">])</span>
 </code></pre></div></div>
 
 <p><br /></p>

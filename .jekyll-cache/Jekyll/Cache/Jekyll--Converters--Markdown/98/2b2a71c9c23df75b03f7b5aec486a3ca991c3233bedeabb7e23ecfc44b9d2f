@@ -1,4 +1,4 @@
-I"�<p><br /></p>
+I"<p><br /></p>
 
 <h2 id="프로그래머스-lvl-3--여행경로">프로그래머스 LvL 3 : 여행경로<br /></h2>
 <p><br />
@@ -10,25 +10,25 @@
 
 <p><br /></p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
 <span class="k">def</span> <span class="nf">solution</span><span class="p">(</span><span class="n">tickets</span><span class="p">):</span>
-    <span class="n">graph</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>      
+    <span class="n">graph</span> <span class="o">=</span> <span class="nf">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>      
     <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="ow">in</span> <span class="n">tickets</span><span class="p">:</span>    
-        <span class="n">graph</span><span class="p">[</span><span class="n">start</span><span class="p">].</span><span class="n">append</span><span class="p">(</span><span class="n">end</span><span class="p">)</span>            <span class="c1"># 단일 방향
-</span>        <span class="n">graph</span><span class="p">[</span><span class="n">start</span><span class="p">].</span><span class="n">sort</span><span class="p">(</span><span class="n">reverse</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>    <span class="c1"># 알파벳 오름차순으로 정렬
+        <span class="n">graph</span><span class="p">[</span><span class="n">start</span><span class="p">].</span><span class="nf">append</span><span class="p">(</span><span class="n">end</span><span class="p">)</span>            <span class="c1"># 단일 방향
+</span>        <span class="n">graph</span><span class="p">[</span><span class="n">start</span><span class="p">].</span><span class="nf">sort</span><span class="p">(</span><span class="n">reverse</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>    <span class="c1"># 알파벳 오름차순으로 정렬
 </span>    
     <span class="n">stack</span> <span class="o">=</span> <span class="p">[</span><span class="s">'ICN'</span><span class="p">]</span>     <span class="c1"># 항상 출발은 인천공항
 </span>    <span class="n">route</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
     
     <span class="k">while</span> <span class="n">stack</span><span class="p">:</span>
         <span class="n">cur</span> <span class="o">=</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> 
         <span class="k">if</span> <span class="n">cur</span> <span class="ow">in</span> <span class="n">graph</span> <span class="ow">and</span> <span class="n">graph</span><span class="p">[</span><span class="n">cur</span><span class="p">]:</span>      <span class="c1"># 해당 공항에서 출발하는 티켓이 남아있을 때
-</span>            <span class="n">stack</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">graph</span><span class="p">[</span><span class="n">cur</span><span class="p">].</span><span class="n">pop</span><span class="p">())</span>   <span class="c1"># 사용한 ticket 은 pop, 공항 자체를 pop 시키는 게 아니라는 점이 포인트
+</span>            <span class="n">stack</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">graph</span><span class="p">[</span><span class="n">cur</span><span class="p">].</span><span class="nf">pop</span><span class="p">())</span>   <span class="c1"># 사용한 ticket 은 pop, 공항 자체를 pop 시키는 게 아니라는 점이 포인트
 </span>        <span class="k">else</span><span class="p">:</span>
-            <span class="n">route</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">stack</span><span class="p">.</span><span class="n">pop</span><span class="p">())</span>       <span class="c1"># 최종 도착지(이 공항에서 출발하는 티켓이 없음)
+            <span class="n">route</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">stack</span><span class="p">.</span><span class="nf">pop</span><span class="p">())</span>       <span class="c1"># 최종 도착지(이 공항에서 출발하는 티켓이 없음)
 </span>    
-    <span class="n">route</span><span class="p">.</span><span class="n">reverse</span><span class="p">()</span>     <span class="c1"># 도착한 순서대로 route 에 append 되기 때문에 reverse 를 시켜야 출발 -&gt; 도착 여행경로가 됨
+    <span class="n">route</span><span class="p">.</span><span class="nf">reverse</span><span class="p">()</span>     <span class="c1"># 도착한 순서대로 route 에 append 되기 때문에 reverse 를 시켜야 출발 -&gt; 도착 여행경로가 됨
 </span>    
     <span class="k">return</span> <span class="n">route</span>
 </code></pre></div></div>

@@ -16,4 +16,4 @@ toc_sticky : true
 - Convolution Introduction
 
 ### Summary Notes 
-- [CT & DT Convolution](https://drive.google.com/file/d/1rTXewtN2WrhZ2IO8T7O9O9Q-HDTw7dcI/view?usp=share_link){:target="_blank"}
+- [CT & DT Convolution](https://drive.google.com/file/d/1O3CEv4PC6Lb7B-kRd3ih9xA6HLa3UQ44/view?usp=share_link){:target="_blank"}

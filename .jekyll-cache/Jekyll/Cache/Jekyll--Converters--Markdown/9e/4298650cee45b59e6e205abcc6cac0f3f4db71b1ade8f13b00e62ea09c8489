@@ -9,7 +9,7 @@
 <span class="na">layout </span><span class="pi">:</span> <span class="s">single</span>
 <span class="na">title </span><span class="pi">:</span> <span class="s2">"</span><span class="s">Github</span><span class="nv"> </span><span class="s">블로그</span><span class="nv"> </span><span class="s">셋업하기"</span>
 <span class="na">categories </span><span class="pi">:</span> <span class="s">Blog-Setup</span>
-<span class="na">toc </span><span class="pi">:</span> <span class="no">true</span>
+<span class="na">toc </span><span class="pi">:</span> <span class="kc">true</span>
 <span class="nn">---</span>
 </code></pre></div>    </div>
   </li>
