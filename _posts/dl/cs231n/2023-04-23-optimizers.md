@@ -17,6 +17,6 @@ toc_sticky : true
 - [Optimizers - Nesterov Momentum, RMSProp, Adam  - Regularization](https://drive.google.com/file/d/11dzd0NPJNKgl2RC79hNGFniZVRUK6m6T/view?usp=share_link){:target="_blank"}
 
 
-### Implementation
+### Implementation from Scratch
 
 - [Python Implementation for SGD, SGD with Momentum, RMSProp, Adam](https://github.com/SuminizZ/cs231n_Assignments/blob/main/assignment2/cs231n/optim.py){:target="_blank"}
