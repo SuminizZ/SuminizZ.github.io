@@ -8,7 +8,18 @@ toc : true
 toc_sticky : true
 ---
 
-### **# Reference**
+## Outlines 
+- [Reference](#reference)
+- [Attention for RNN Encoder-Decoder Networks](#-attention-for-rnn-encoder-decoder-networks)
+- [Issue of Interest](#-issue-of-interest)
+- [Model Architectures of BiRNN with Attention](#-model-architectures-of-birnn-with-attention)
+  * [1. Encoder](#-1.-encoder)
+  * [2. Decoder](#-2.-decoder)
+- [BiRNN Ecoder-Decoder with Attention Mechanism Summary](#-birnn-ecoder-decoder-with-attention-mechanism-summary)
+
+<br/>
+
+###  **Reference**
 - Bahdanau, Cho, & Bengio. Neural machine translation by jointly learning to align and translate. In ICLR, 2015.
 - [Attention for RNN Seq2Seq Models](https://www.youtube.com/watch?v=B3uws4cLcFw&list=PLgtf4d9zHHO8p_zDKstvqvtkv80jhHxoE&index=1){:target="_blank"}
 
@@ -33,13 +44,15 @@ Basic encoder-decoder network has limited performance on the translation of long
 
 The encoder takes a variable-length input and transforms it into a state with a fixed shape and the decoder maps the encoded fixed shaped vector into again, variable-length translated output.
 
-Use of this limited length of context vector acts as an information bottleneck in a sense that as the length of the source sentences increases, more information needs to be squashed and packed into that fixed length context vector, which results in the loss of detailed or possibly important information of the original source input.
+This is because in a basic RNN encoder-decoder framework, decoder uses a context vector as it's initial input and it is computed from the final hidden state of encoder, which is typically a fixed-length vector. 
+
+Use of this fixed length of context vector acts as an information bottleneck in a sense that as the length of the source sentences increases, more information needs to be squashed and packed into that fixed length context vector, which results in the loss of detailed or possibly important information of the original source input.
 
 This can be shown in the Figure 2. presented above where the BLEU score of the model with basic encoder tends to decrease as the length of source sentence increases.
 
 <br/>
 
-### **# Model Architectures of BiRNN + Attention**
+### **# Model Architectures of BiRNN with Attention**
 
 &emsp;The most common encoder-decoder framework used in machine translation is RNN. Here, This is the detailed architecture of proposed attention RNN model (RNNsearch) used in the paper.
 
@@ -86,9 +99,9 @@ This can be shown in the Figure 2. presented above where the BLEU score of the m
 
 - **Alignment Model** (Different from what's in the paper, but more generally used)
 
-    - $\large k_{i}\,=\, W_{K} \times h_{i}$   (for i = 1 to m, m : number of hidden states in encoder)
+    - $\large k_{i}\,=\, W_{K} \times h_{i}$   (for i = 1 to m, m : number of hidden states in encoder, $W_{K}\,\in\,\mathbb{R}^{n \times 2n} $)
     
-    - $\large q_{j}\,=\, W_{Q} \times s_{j}$ 
+    - $\large q_{j}\,=\, W_{Q} \times s_{j}$ ($W_{K}\,\in\,\mathbb{R}^{n \times n} $)
 
     - Take inner product with $k_{i}$ and $q_{j}$ and normalize it so that $\alpha_{i}$ adds up to 1<br/> 
         - Search for a set of positions ($i$) in a source sentence that is most relevant to hidden state($s_{j}$) of current predicting word.
@@ -108,10 +121,23 @@ This can be shown in the Figure 2. presented above where the BLEU score of the m
     <img src="https://github.com/SuminizZ/Physics/assets/92680829/b37713b4-25a1-4561-9cb8-2d906bcf66bc" width="400px"> <br/>
 
     &emsp;&emsp;where $\large C_{i}\,=\, \sum\limits_{j=1}^{m}\,\alpha_{ij}\,h_{j}$
+    
+    - $W,\,W_{z},\,W_{r} \in \mathbb{R}^{n \times m}$, &emsp;$U,\,U_{z},\,U_{r} \in \mathbb{R}^{n \times n}$, &emsp;$C,\,C_{z},\,C_{r} \in \mathbb{R}^{n \times 2n}$
+
+<br/>
+
+### **# BiRNN Ecoder-Decoder with Attention Mechanism Summary**
+
+<img src="https://github.com/SuminizZ/Physics/assets/92680829/4a58a967-e981-4610-8689-520424ef65ef" width="850px"> <br/>
 
 
+------------------------------------
+<br/>
 
+&emsp;By introducing attention method to basic RNN encoder-decoder framework, the limitation in translation performance on long sentences can be addressed by allowing dynamic search of different parts of the input sequence. 
 
+Fine-tuned context vector with attention will free the network from having to compress a whole soure sentence equally into a fixed-length vector and let the model to only focus on the input information relevant to generation of next target word.
 
+<br/>
 
-
+<img width="929" alt="Screen Shot 2023-05-23 at 9 24 26 PM" src="https://github.com/SuminizZ/Physics/assets/92680829/10edfb3c-7834-4d0b-8716-d242010a89d6">
