@@ -107,7 +107,7 @@ This can be shown in the Figure 2. presented above where the BLEU score of the m
 
     <img src="https://github.com/SuminizZ/Physics/assets/92680829/b37713b4-25a1-4561-9cb8-2d906bcf66bc" width="400px"> <br/>
 
-    where $\large C_{i}\,=\, \sum\limits_{j=1}^{m}\,\alpha_{ij}\,h_{j}$
+    &emsp;&emsp;where $\large C_{i}\,=\, \sum\limits_{j=1}^{m}\,\alpha_{ij}\,h_{j}$
 
 
 
