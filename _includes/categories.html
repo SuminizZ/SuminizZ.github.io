@@ -22,21 +22,38 @@
                     {% if category[0] == "dl-tsf" %}
                         {% assign tsf_sum = category[1].size %}
                     {% endif %}
-                     <!-- {% if category[0] == "dl-topics" %}
-                        {% assign topics_sum = category[1].size %}
-                    {% endif %} -->
                     {% if category[0] == "dl-cs231n" %}
                         {% assign cs231n_sum = category[1].size %}
                     {% endif %}   
                     {% if category[0] == "dl-sss" %}
                         {% assign sss_sum = category[1].size %}
-                    {% endif %}                                  
+                    {% endif %}
                     {% endfor %}
                     <a class="dropdown-item" href="{{ "/dl/dls" | prepend: site.baseurl }}">Deep Learning Specialization ({{dls_sum}}) </a>
                     <a class="dropdown-item" href="{{ "/dl/tsf" | prepend: site.baseurl }}">TensorFlow ({{tsf_sum}})</a>
                     <a class="dropdown-item" href="{{ "/dl/cs231n" | prepend: site.baseurl }}">cs231n (Stanford) ({{cs231n_sum}})</a>
                     <a class="dropdown-item" href="{{ "/dl/sss" | prepend: site.baseurl }}">Signals & Systems ({{sss_sum}})</a>
-                    <!-- <a class="dropdown-item" href="{{ "/dl/topics" | prepend: site.baseurl }}">Related Topics ({{topics_sum}})</a> -->
+                </div>
+            </li>
+
+            <li class="nav-item dropdown
+            {% if page.url == '/papers/transformer/' or page.url == '/papers/cv/'%} active {% endif %}">
+                <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('paper-dropdown')"
+                   role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-vexpanded="false">
+                    PAPERS
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="paper-dropdown">
+                    {% for category in site.categories %}
+                    {% if category[0] == "papers-transformer" %}
+                        {% assign transformer_sum = category[1].size %}
+                    {% endif %}   
+                    {% if category[0] == "papers-cv" %}
+                        {% assign cv_sum = category[1].size %}
+                    {% endif %}                                 
+                    {% endfor %}
+                    <a class="dropdown-item" href="{{ "/papers/transformer" | prepend: site.baseurl }}">Computer Vision ({{cv_sum}})</a>
+                    <a class="dropdown-item" href="{{ "/papers/cv" | prepend: site.baseurl }}">Transformer ({{transformer_sum}})</a>
                 </div>
             </li>
 

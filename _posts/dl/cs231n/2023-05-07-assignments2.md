@@ -1,6 +1,6 @@
 ---
 layout: post
-title : "[cs231n 2020] Assignments 2 : Implementation of FC DNN, Batch Normalization, Dropout, Covolutional Networks with Python "
+title : "[cs231n 2020] Assignments 2 : Implementation of FC DNN, Batch Normalization, Dropout, Covolutional Networks"
 img: dl/cs231n/cs231n.png
 categories: [dl-cs231n]  
 tag : [cs231n, DL, Assignments]
@@ -11,7 +11,7 @@ toc_sticky : true
 ## CS231n 2020: Convolutional Neural Networks for Visual Recognition
 <br/>
 
-###  Assignment 2
+###  Assignment 2 
 
 - [Q1 : Fully-connected Neural Network.](https://github.com/SuminizZ/cs231n_Assignments/blob/main/assignment2/FullyConnectedNets.ipynb){:target="_blank"} (_Done_)
 - [Q2 : Batch Normalization.](https://github.com/SuminizZ/cs231n_Assignments/blob/main/assignment2/BatchNormalization.ipynb){:target="_blank"} (_Done_)

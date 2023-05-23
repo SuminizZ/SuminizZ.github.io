@@ -951,7 +951,7 @@
      top: 0;
      left: 0;
      bottom: 0;
-     width: 220px;
+     width: 230px;
      height: 100%;
      padding: 10px 20px;
      background-color: hsla(240, 20%, 94%, 0.901);
@@ -1025,7 +1025,7 @@
    }
 
    .category-box {
-     padding: 0px 0px 0px 220px;
+     padding: 0px 0px 0px 230px;
      font-size: 13px;
      font-weight: 500;
      /* color: #b21d1d; */
@@ -1036,7 +1036,7 @@
      /* max-width: 1000px; */
      font-weight: 550;
      max-height : 500px;
-     padding: 5px 15px 15px 250px;
+     padding: 5px 15px 15px 255px;
      display: -webkit-box;
      display: -webkit-flex;
      display: -ms-flexbox;

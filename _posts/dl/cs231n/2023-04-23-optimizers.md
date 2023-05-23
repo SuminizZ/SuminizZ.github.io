@@ -1,6 +1,6 @@
 ---
 layout: post
-title : "[cs231n Lecture 7] Optimizers : Nesterov Momentum, RMSProp, Adam (Lecture Summary & Python Implementation)"
+title : "[cs231n Lecture 7] Optimizers : Nesterov Momentum, RMSProp, Adam (Lecture Summary & Implementation)"
 img: dl/cs231n/opts.png
 categories: [dl-cs231n]  
 tag : [cs231n, DL, Assignments]
