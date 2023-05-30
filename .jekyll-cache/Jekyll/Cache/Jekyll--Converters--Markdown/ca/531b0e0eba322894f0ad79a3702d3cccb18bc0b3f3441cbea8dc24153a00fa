@@ -1,4 +1,4 @@
-I"�<p><br /></p>
+I"�<p><br /></p>
 
 <h2 id="백준-13904-과제--골드-3">백준 13904 과제 : 골드 3</h2>
 
@@ -12,25 +12,25 @@
 
 <p><br /></p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sys</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">sys</span>
 <span class="nb">input</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">stdin</span><span class="p">.</span><span class="n">readline</span>
-<span class="kn">from</span> <span class="nn">heapq</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="n">heapq</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="n">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
 
-<span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
+<span class="n">n</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="nf">input</span><span class="p">())</span>
 <span class="n">tasks</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">howmany</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-    <span class="n">d</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">input</span><span class="p">().</span><span class="n">split</span><span class="p">())</span>
-    <span class="n">heappush</span><span class="p">(</span><span class="n">tasks</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span><span class="p">,</span> <span class="n">d</span><span class="p">])</span>
+<span class="n">howmany</span> <span class="o">=</span> <span class="nf">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">d</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="nf">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nf">input</span><span class="p">().</span><span class="nf">split</span><span class="p">())</span>
+    <span class="nf">heappush</span><span class="p">(</span><span class="n">tasks</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span><span class="p">,</span> <span class="n">d</span><span class="p">])</span>
     <span class="n">howmany</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>              <span class="c1"># 해당 마감일의 과제가 몇 번 count 됐는지 기록
 </span>
 <span class="n">cnt</span><span class="p">,</span> <span class="n">max_d</span><span class="p">,</span> <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
 <span class="k">while</span> <span class="n">tasks</span><span class="p">:</span>
-    <span class="n">cur_s</span><span class="p">,</span> <span class="n">cur_d</span> <span class="o">=</span> <span class="n">heappop</span><span class="p">(</span><span class="n">tasks</span><span class="p">)</span>
+    <span class="n">cur_s</span><span class="p">,</span> <span class="n">cur_d</span> <span class="o">=</span> <span class="nf">heappop</span><span class="p">(</span><span class="n">tasks</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">cnt</span> <span class="o">&gt;=</span> <span class="n">cur_d</span><span class="p">:</span>      <span class="c1"># 현재까지 완료한 과제 수가 마감일보다 많을 때
 </span>        <span class="n">tmp_cnt</span> <span class="o">=</span> <span class="mi">0</span>           
-        <span class="k">for</span> <span class="n">tmp_d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_d</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>       <span class="c1"># 현재 마감일보다 마감일이 같거나 높은 모든 과제에 대해 양보 가능한지 확인
+        <span class="k">for</span> <span class="n">tmp_d</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_d</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>       <span class="c1"># 현재 마감일보다 마감일이 같거나 높은 모든 과제에 대해 양보 가능한지 확인
 </span>            <span class="n">tmp_cnt</span> <span class="o">+=</span> <span class="n">howmany</span><span class="p">[</span><span class="n">tmp_d</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">tmp_d</span> <span class="o">&gt;=</span> <span class="n">cur_d</span> <span class="ow">and</span> <span class="n">tmp_cnt</span> <span class="o">&gt;=</span> <span class="n">tmp_d</span><span class="p">:</span>      <span class="c1"># 양보 불가
 </span>                <span class="k">break</span>
@@ -41,10 +41,10 @@
     <span class="k">else</span><span class="p">:</span>                       <span class="c1"># 타겟 과제의 마감일이 완료한 과제수보다 클 때(아직 마감기한이 남은 경우), 그냥 넣어줌
 </span>        <span class="n">total</span> <span class="o">+=</span> <span class="n">cur_s</span>
         <span class="n">howmany</span><span class="p">[</span><span class="n">cur_d</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="n">max_d</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_d</span><span class="p">,</span> <span class="n">cur_d</span><span class="p">)</span>
+        <span class="n">max_d</span> <span class="o">=</span> <span class="nf">max</span><span class="p">(</span><span class="n">max_d</span><span class="p">,</span> <span class="n">cur_d</span><span class="p">)</span>
         <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
 
-<span class="k">print</span><span class="p">(</span><span class="o">-</span><span class="n">total</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="o">-</span><span class="n">total</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p><br /></p>

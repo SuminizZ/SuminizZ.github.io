@@ -1,6 +1,6 @@
 ---
 layout: post
-title : "[Paper Review] Neural Machine Translation by Jointly Learning to Align and Translate, Bahdanau & Bengio (2015)"
+title : "[Paper Review] Neural Machine Translation by Jointly Learning to Align and Translate (Attention, 2015)"
 img: papers/attention_2015.png
 categories: [papers-transformer]  
 tag : [Paper Review, Attention, Transformer]
@@ -10,12 +10,12 @@ toc_sticky : true
 
 ## Outlines 
 - [Reference](#reference)
-- [Attention for RNN Encoder-Decoder Networks](#-attention-for-rnn-encoder-decoder-networks)
-- [Issue of Interest](#-issue-of-interest)
-- [Model Architectures of BiRNN with Attention](#-model-architectures-of-birnn-with-attention)
-  * [1. Encoder](#-1.-encoder)
-  * [2. Decoder](#-2.-decoder)
-- [BiRNN Ecoder-Decoder with Attention Mechanism Summary](#-birnn-ecoder-decoder-with-attention-mechanism-summary)
+- [Attention for RNN Encoder-Decoder Networks](#attention-for-rnn-encoder-decoder-networks)
+- [Issue of Interest](#issue-of-interest)
+- [Model Architectures of BiRNN with Attention](#model-architectures-of-birnn-with-attention)
+  * [1. Encoder](#1.-encoder)
+  * [2. Decoder](#2.-decoder)
+- [BiRNN Ecoder-Decoder with Attention Mechanism Summary](#birnn-ecoder-decoder-with-attention-mechanism-summary)
 
 <br/>
 
@@ -25,7 +25,7 @@ toc_sticky : true
 
 <br/>
 
-### **# Attention for RNN Encoder-Decoder Networks**
+### **Attention for RNN Encoder-Decoder Networks**
 
 &emsp;This paper proposes a novel approach called "Attention" to improve the performance of machine translation using encoder-decoder (Seq2Seq) architeture. 
 
@@ -38,7 +38,7 @@ Basic encoder-decoder network has limited performance on the translation of long
 
 <br/>
 
-### **# Issue of Interest**
+### **Issue of Interest**
 
 &emsp;The underlying cause behind the poor performance of original encoder-decoder network mainly lies on the fact that the encoder needs to compress the source sentence, regardless of its original legnth, into a fixed-length vector.
 
@@ -52,7 +52,7 @@ This can be shown in the Figure 2. presented above where the BLEU score of the m
 
 <br/>
 
-### **# Model Architectures of BiRNN with Attention**
+### **Model Architectures of BiRNN with Attention**
 
 &emsp;The most common encoder-decoder framework used in machine translation is RNN. Here, This is the detailed architecture of proposed attention RNN model (RNNsearch) used in the paper.
 
@@ -126,7 +126,7 @@ This can be shown in the Figure 2. presented above where the BLEU score of the m
 
 <br/>
 
-### **# BiRNN Ecoder-Decoder with Attention Mechanism Summary**
+### **BiRNN Ecoder-Decoder with Attention Mechanism Summary**
 
 <img src="https://github.com/SuminizZ/Physics/assets/92680829/4a58a967-e981-4610-8689-520424ef65ef" width="850px"> <br/>
 
