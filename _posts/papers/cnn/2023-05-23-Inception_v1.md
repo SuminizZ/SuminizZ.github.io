@@ -1,8 +1,8 @@
 ---
 layout: post
 title : "[Paper Review & Implementation] Going deeper with convolutions (GoogleNet/Inception Net v1, 2014)"
-img: papers/cv/inception_v1.png
-categories: [papers-cv]  
+img: papers/cnn/inception_v1.png
+categories: [papers-cnn]  
 tag : [Paper Review, CNN, GoogleNet, Inception Net v1]
 toc : true
 toc_sticky : true

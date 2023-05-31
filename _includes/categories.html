@@ -8,6 +8,31 @@
             </li>
 
             <li class="nav-item dropdown
+            {% if page.url == '/papers/transformer/' or page.url == '/papers/cnn/' or page.url == '/papers/xai/%} active {% endif %}">
+                <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('papers-dropdown')"
+                   role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-vexpanded="false">
+                    PAPERS
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="papers-dropdown">
+                    {% for category in site.categories %}
+                    {% if category[0] == "papers-transformer" %}
+                        {% assign transformer_sum = category[1].size %}
+                    {% endif %}   
+                    {% if category[0] == "papers-cnn" %}
+                        {% assign cnn_sum = category[1].size %}
+                    {% endif %}
+                    {% if category[0] == "papers-xai" %}
+                        {% assign xai_sum = category[1].size %}
+                    {% endif %}                                  
+                    {% endfor %}
+                    <a class="dropdown-item" href="{{ "/papers/cnn" | prepend: site.baseurl }}">Convolutional Neural Networks ({{cnn_sum}})</a>
+                    <a class="dropdown-item" href="{{ "/papers/transformer" | prepend: site.baseurl }}">Transformer ({{transformer_sum}})</a>
+                    <a class="dropdown-item" href="{{ "/papers/xai" | prepend: site.baseurl }}">Interpretability & Explainability ({{xai_sum}})</a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown
             {% if page.url == '/dl/dls/' or page.url == '/dl/tf/' or page.url == '/dl/topics/' or page.url == '/dl/cs231n/' or page.url == '/dl/sss/'%} active {% endif %}">
                 <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('dl-dropdown')"
                    role="button" data-toggle="dropdown"
@@ -35,28 +60,6 @@
                     <a class="dropdown-item" href="{{ "/dl/sss" | prepend: site.baseurl }}">Signals & Systems ({{sss_sum}})</a>
                 </div>
             </li>
-
-            <li class="nav-item dropdown
-            {% if page.url == '/papers/transformer/' or page.url == '/papers/cv/'%} active {% endif %}">
-                <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('paper-dropdown')"
-                   role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-vexpanded="false">
-                    PAPERS
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="paper-dropdown">
-                    {% for category in site.categories %}
-                    {% if category[0] == "papers-transformer" %}
-                        {% assign transformer_sum = category[1].size %}
-                    {% endif %}   
-                    {% if category[0] == "papers-cv" %}
-                        {% assign cv_sum = category[1].size %}
-                    {% endif %}                                 
-                    {% endfor %}
-                    <a class="dropdown-item" href="{{ "/papers/cv" | prepend: site.baseurl }}">Computer Vision ({{cv_sum}})</a>
-                    <a class="dropdown-item" href="{{ "/papers/transformer" | prepend: site.baseurl }}">Transformer ({{transformer_sum}})</a>
-                </div>
-            </li>
-
 
             <li class="nav-item dropdown
             {% if page.url == '/ml/cs229/' or page.url == '/ml/opt/' or page.url == 'ml/inform' %} active {% endif %}">
