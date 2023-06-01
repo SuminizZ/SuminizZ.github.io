@@ -1,0 +1,24 @@
+I"�<h2 id="outlines"><strong>Outlines</strong></h2>
+<ul>
+  <li><a href="#references"><strong>References</strong></a></li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="references"><strong>References</strong></h2>
+<ul>
+  <li><a href="https://arxiv.org/pdf/1712.09913.pdf" target="_blank"> Visualizing the Loss Landscape of Neural Nets, Hao Li1 (2018)</a></li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="varying-trainability-of-networks-architectures"><strong>Varying Trainability of Networks Architectures</strong></h2>
+
+<ul>
+  <li>
+    <p>ResNet successfully address the degradation issue of deeper layers where training performance tends to decay with the depth of neural networks by introducing a novel architecture design named “skip-connection”. Authors of the paper explained the reason behind the poorer trainability of deeper networks than its shallower counterpart is that deeper networks have difficulties in approximating identity mappings and to deal with this, they added some shortcut paths that directly connects the input to output of 2 or more layers that only fits the residual part (gap between the input and desired underlying output). Letting the networks to fit complicated functions only for residuals and simply adding the input to that residual mappings improve the training accuracy of the networks even with very deep structure over than 100 layers. The fundamental mechanism of this improvement, however, has not been clearly explained.</p>
+
+    <p>dramatically improves the trainability of ne</p>
+  </li>
+</ul>
+:ET

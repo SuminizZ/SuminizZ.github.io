@@ -1,0 +1,47 @@
+I"
+<h2 id="outlines"><strong>Outlines</strong></h2>
+<ul>
+  <li><a href="#references"><strong>References</strong></a></li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="references"><strong>References</strong></h2>
+<ul>
+  <li><a href="https://arxiv.org/pdf/1712.09913.pdf" target="_blank"> Visualizing the Loss Landscape of Neural Nets, Hao Li1 (2018)</a></li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="varying-trainability-of-networks-architectures"><strong>Varying Trainability of Networks Architectures</strong></h2>
+<p><br /></p>
+
+<ul>
+  <li>
+    <p>ResNet successfully address the degradation issue of deeper layers where training performance tends to decay with the depth of neural networks by introducing a novel architecture design named “skip-connection”. Authors of the paper explained the reason behind the poorer trainability of deeper networks than its shallower counterpart is that deeper networks have difficulties in approximating identity mappings and to deal with this, they added some shortcut paths that directly connects the input to output of 2 or more layers that only fits the residual part (gap between the input and desired underlying output). Letting the networks to fit complicated functions only for residuals and simply adding the input to that residual mappings improve the training accuracy of the networks even with very deep structure over than 100 layers. This examples tells the trainability of networks is highly dependent of the architecture design choices. However, the fundamental mechanism of they affects the performance of networks has not been clearly explained.</p>
+  </li>
+  <li>
+    <p>This paper provides a variety of visualizations for the loss landscapes of multiple networks architectures (e.g. VGG, ResNet, WideNet), helping intuitive understanding of how the geometry of neural loss function affects the generalization error and trainabiltiy of the networks.</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<p>   <img width="600" alt="image" src="https://github.com/SuminizZ/Physics/assets/92680829/141f483e-cb1e-48c0-b7ff-2ccd2c525870" /></p>
+
+<p><br /></p>
+
+<h2 id="basic-visualizations-of-loss-function"><strong>Basic Visualizations of Loss Function</strong></h2>
+
+<p><br /></p>
+
+<h3 id="1-1-dimensional-linear-interpolation"> <strong>1. 1-Dimensional Linear Interpolation</strong></h3>
+
+<ul>
+  <li>choose two sets of parameters $\large \theta$ and $\large \theta^{\prime}$, and plot the values of the loss function along the line
+connecting these two points.</li>
+</ul>
+
+<p>$e^{\theta(\alpha)} = (1-\alpha)\theta + \alpha\theta^{\prime}$</p>
+
+:ET

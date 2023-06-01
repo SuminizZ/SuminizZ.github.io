@@ -1,0 +1,11 @@
+I"®<h3 id="principal-component-anaylsis-pca"><strong>Principal Component Anaylsis (PCA)</strong></h3>
+
+<ul>
+  <li>Identify the axes, known as principal components, that capture the most significant patterns in the original distribution of the data
+    <ul>
+      <li>axes (eigenvectors of covariance matrix) with maximum eigenvalues</li>
+      <li>every principal components are orthogonal to each other</li>
+    </ul>
+  </li>
+</ul>
+:ET

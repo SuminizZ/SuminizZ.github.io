@@ -1,6 +1,6 @@
 ---
 layout : post
-title : "[MIT 18.06 23] Spectral Theorem and Schur's Theorem"
+title : "[MIT 18.06 23] Symmetric Matrices and Positive Definiteness"
 img : linalgb/mitocw_linalg.png
 categories : 
     - [math-linalgb]

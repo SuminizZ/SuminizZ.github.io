@@ -71,9 +71,9 @@ toc_sticky : true
 
 ## **Label Smoothing**
 
-<img>
 
-<br/>
+<img src="https://github.com/SuminizZ/Physics/assets/92680829/3481be07-0836-49ab-afc5-48f4fd83bf9b">
+
 
 ## **Implementation with PyTorch**
 
