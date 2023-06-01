@@ -9,11 +9,7 @@ toc_sticky : true
 ---
 
 ## **Outlines** 
-- [References](#references)
-- [Inception V1 Architecture](#inception-v1-architecture)
-- [Implementation with PyTorch](#implementation-with-pytorch)
-- [Model Summary](#model-summary)
-- [Forward Pass](#forward-pass)
+- [**References**](#references)
 
 <br/>
 
@@ -22,4 +18,9 @@ toc_sticky : true
 
 <br/>
 
-Introduction of the "skip-connection" in anetwork architecture dramatically improves the trainability of ne
+## **Varying Trainability of Networks Architectures**
+
+- ResNet successfully address the degradation issue of deeper layers where training performance tends to decay with the depth of neural networks by introducing a novel architecture design named "skip-connection". Authors of the paper explained the reason behind the poorer trainability of deeper networks than its shallower counterpart is that deeper networks have difficulties in approximating identity mappings and to deal with this, they added some shortcut paths that directly connects the input to output of 2 or more layers that only fits the residual part (gap between the input and desired underlying output). Letting the networks to fit complicated functions only for residuals and simply adding the input to that residual mapping improves the training accuracy of the networks even with very deep structure. The fundamental mechanism of this improvement, however, has not been clearly explained.  
+
+
+  dramatically improves the trainability of ne

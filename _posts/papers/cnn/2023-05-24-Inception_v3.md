@@ -3,19 +3,19 @@ layout: post
 title : "[Paper Review & Implementation] Rethinking the Inception Architecture for Computer Vision (GoogleNet/Inception Net v2-3, 2015)"
 img: papers/cnn/inception_v3.png
 categories: [papers-cnn]  
-tag : [Paper Review, CNN, GoogleNet, Inception Net v3]
+tag : [Paper Review, CNN, GoogleNet, Inception Net v3, Implementation, PyTorch]
 toc : true
 toc_sticky : true
 ---
 
 
 ## **Outlines** 
-- [References](#references)
-- [Inception v2-v3 Architecture](#inception-v2-v3-architecture)
-- [Label Smoothing](#label-smoothing)
-- [Implementation with PyTorch](#implementation-with-pytorch)
-- [Model Summary](#model-summary)
-- [Forward Pass](#forward-pass)
+- [**References**](#references)
+- [**Inception v2-v3 Architecture**](#inception-v2-v3-architecture)
+- [**Label Smoothing**](#label-smoothing)
+- [**Implementation with PyTorch**](#implementation-with-pytorch)
+- [**Model Summary**](#model-summary)
+- [**Forward Pass**](#forward-pass)
 
 <br/>
 

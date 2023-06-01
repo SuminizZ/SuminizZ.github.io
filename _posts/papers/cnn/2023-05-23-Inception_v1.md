@@ -3,17 +3,17 @@ layout: post
 title : "[Paper Review & Implementation] Going deeper with convolutions (GoogleNet/Inception Net v1, 2014)"
 img: papers/cnn/inception_v1.png
 categories: [papers-cnn]  
-tag : [Paper Review, CNN, GoogleNet, Inception Net v1]
+tag : [Paper Review, GoogleNet, Inception Net v1, CNN, Implementation, PyTorch]
 toc : true
 toc_sticky : true
 ---
 
 ## **Outlines** 
-- [References](#references)
-- [Inception V1 Architecture](#inception-v1-architecture)
-- [Implementation with PyTorch](#implementation-with-pytorch)
-- [Model Summary](#model-summary)
-- [Forward Pass](#forward-pass)
+- [**References**](#references)
+- [**Inception V1 Architecture**](#inception-v1-architecture)
+- [**Implementation with PyTorch**](#implementation-with-pytorch)
+- [**Model Summary**](#model-summary)
+- [**Forward Pass**](#forward-pass)
 
 <br/>
 
