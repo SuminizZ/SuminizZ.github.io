@@ -7,6 +7,11 @@
     src: url('../fonts/NanumGothicCoding.ttf');
    }
 
+   @font-face {
+    font-family:"MyCurFont";
+    src: url('../fonts/NanumGothicCoding.ttf');
+   }
+
    /**
     * 1. Correct the line height in all browsers.
     * 2. Prevent adjustments of font size after orientation changes in
@@ -27,7 +32,7 @@
     * Remove the margin in all browsers (opinionated).
     */
    body {
-     font-family: "NanumGothicCoding";
+     font-family: "MyCurFont";
      margin: 0;
      font-size: 0.5rem;
    }
@@ -49,17 +54,17 @@
     * `article` contexts in Chrome, Firefox, and Safari.
     */
    h1 {
-     font-size: 12px;
+     font-size: 13px;
      /* font-weight: 200; */
      margin: 0.5em 0;
    }
    h2 {
-    font-size: 10px;
+    font-size: 11px;
     /* font-weight: 200; */
     margin: 0.5em 0;
   }
   h3 {
-    font-size: 10px;
+    font-size: 11px;
     /* font-weight: 200; */
     margin: 0.5em 0;
   }
@@ -103,7 +108,7 @@
     * 2. Correct the odd `em` font sizing in all browsers.
     */
    pre {
-     font-family: NanumGothicCoding, NanumGothicCoding;
+     font-family: MyCurFont, NanumGothicCoding, NanumGothicCoding;
      /* 1 */
      font-size: 0.6em;
      /* 2 */
@@ -159,7 +164,7 @@
    code,
    kbd,
    samp {
-     font-family: NanumGothicCoding, NanumGothicCoding;
+     font-family: MyCurFont, NanumGothicCoding, NanumGothicCoding;
      /* 1 */
      font-size: 10px;
      /* 2 */
@@ -792,7 +797,7 @@
    }
 
    body {
-     font-family: 'NanumGothicCoding', sans-serif;
+     font-family: 'MyCurFont', 'NanumGothicCoding', sans-serif;
      font-size: 1rem;
      color: #515151;
      background-color: #fbfbfb;
@@ -904,7 +909,7 @@
    }
 
    .wrapper {
-     font-family:"NanumGothicCoding";
+     font-family: 'MyCurFont', "NanumGothicCoding";
      max-width: 1450px;
      position: relative;
    }
@@ -954,7 +959,7 @@
      width: 230px;
      height: 100%;
      padding: 10px 20px;
-     background-color: hsla(240, 20%, 94%, 0.901);
+     background-color: hsla(240, 23%, 95%, 0.993);
    }
 
    .about {
@@ -1030,6 +1035,7 @@
      font-weight: 500;
      /* color: #b21d1d; */
      /* background-color: #a41212; */
+     background-color: hsla(240, 23%, 95%, 0.993);
    }
 
    .content-box {
@@ -1194,17 +1200,17 @@
    .post .post-content .post-date,
    .post .post-content .post-words {
      margin : 10px 0;
-     font-size: 12px;
+     font-size: 13px;
    }
 
    .post .post-content .post-title {
      margin: 8px 0 auto;
-     font-size: 26px;
+     font-size: 25px;
      font-weight: 700;
    }
 
    .post .post-content .post-title a {
-     font-family: 'NanumGothicCoding', serif;
+     font-family: 'MyCurFont', 'NanumGothicCoding', serif;
      text-decoration: none;
      color: #1c1f1f;
      font-weight: 590;
@@ -1216,7 +1222,7 @@
    }
 
    a.older-posts, a.newer-posts {
-     font-size: 14px;
+     font-size: 12px;
      display: inline-block;
      color: #515151;
      -webkit-transition: -webkit-transform .2s;
@@ -1242,7 +1248,7 @@
    .wrap-content {
      width: 1100px;
      padding: 15px;
-     font-size : 15.5px;
+     font-size : 16px;
    }
 
    .wrap-content a {
@@ -1336,7 +1342,7 @@
      padding: 5px 10px;
      margin-left: 5px;
      color: #263959;
-     font-size: 12px;
+     font-size: 13px;
      -webkit-transition: background-color .3s;
      -o-transition: background-color .3s;
      transition: background-color .3s;
@@ -1473,7 +1479,7 @@
   font-size: 8pt;
   line-height: 1;
   font-weight: 400;
-  font-family: "NanumGothicCoding", 'Open Sans', 'Source Sans Pro';
+  font-family: 'MyCurFont', "NanumGothicCoding", 'Open Sans', 'Source Sans Pro';
   -webkit-text-size-adjust: 100%;
   margin: 10px 0 auto;
   padding: 10px 0 50px 0;
@@ -1549,7 +1555,7 @@
     height: 100%;
   }
   .wrapper {
-    font-family:"NanumGothicCoding";
+    font-family: 'MyCurFont', "NanumGothicCoding";
     max-width: 1250px;
     position: relative;
   }

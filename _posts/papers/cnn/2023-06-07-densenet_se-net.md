@@ -1,6 +1,6 @@
 ---
 layout: post
-title : "[Paper Review & Implementation] Densely Connected Convolutional Networks (DenseNet, 2018) & Squeeze-and-Excitation Networks (SE-Net, 2019)"
+title : "[Paper Review - brief] Densely Connected Convolutional Networks (DenseNet, 2018) & Squeeze-and-Excitation Networks (SE-Net, 2019)"
 img: papers/cnn/densenet.png
 categories: [papers-cnn]  
 tag : [Paper Review, DenseNet, SE-Net, CNN, Implementation, PyTorch]
