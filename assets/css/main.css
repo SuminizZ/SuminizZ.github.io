@@ -1202,8 +1202,8 @@
    .post .post-content .post-words {
      margin : 10px 0;
      font-size: 13px;
-     /* color: #d925df;  */
-     color: #d925df;
+     /* color: #df9b25;  */
+     color: #df9b25;
    }
 
    .post .post-content .post-title {
@@ -1523,7 +1523,7 @@
 [pagination] [disabled] {
   /* opacity: .5; */
   font-weight: bold;
-  color: #d925df;
+  color: #df9b25;
   pointer-events: none;
 }
 @media (min-width: 350px) {
