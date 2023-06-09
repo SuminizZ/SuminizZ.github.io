@@ -4,7 +4,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto" id="navbar-row">
             <li class="nav-item {% if page.url == '/' %} active {% endif %}">
-                <a class="nav-link" href="{{ site.baseurl }}/">ALL ({{sum}})  </a>
+                <a class="nav-link" style="color: #d925df;" href="{{ site.baseurl }}/">ALL <span style="color: #3f3f3f;">({{sum}})</span>  </a>
             </li>
 
             <li class="nav-item dropdown
@@ -282,7 +282,7 @@
             </li> 
 
             <li class="nav-item {% if page.url == '/' %} active {% endif %}">
-                <a class="nav-link" style="color:rgb(5,94,94)"> SEARCH  </a>
+                <a class="nav-link" style="color:#d925df;"> SEARCH  </a>
             </li>
             <form action="/search">
                 <div class="tipue_search_left">
@@ -297,7 +297,7 @@
                 <a class="nav-link"> </a>
             </li>  
             <li class="nav-item {% if page.url == '/' %} active {% endif %}">
-                <a class="nav-link" style="color: rgb(5, 94, 94);" href="{{ "/tags/" | prepend: site.baseurl }}"> TAGS </a>
+                <a class="nav-link" style="color:#d925df;" href="{{ "/tags/" | prepend: site.baseurl }}"> TAGS </a>
             </li> 
 
         </ul>
