@@ -19,13 +19,13 @@ toc_sticky : true
 
 <br/>
 
-###  **Reference**
+##  **Reference**
 - Bahdanau, Cho, & Bengio. Neural machine translation by jointly learning to align and translate. In ICLR, 2015.
 - [Attention for RNN Seq2Seq Models](https://www.youtube.com/watch?v=B3uws4cLcFw&list=PLgtf4d9zHHO8p_zDKstvqvtkv80jhHxoE&index=1){:target="_blank"}
 
 <br/>
 
-### **Attention for RNN Encoder-Decoder Networks**
+## **Attention for RNN Encoder-Decoder Networks**
 
 &emsp;This paper proposes a novel approach called "Attention" to improve the performance of machine translation using encoder-decoder (Seq2Seq) architeture. 
 
@@ -38,7 +38,7 @@ Basic encoder-decoder network has limited performance on the translation of long
 
 <br/>
 
-### **Issue of Interest**
+## **Issue of Interest**
 
 &emsp;The underlying cause behind the poor performance of original encoder-decoder network mainly lies on the fact that the encoder needs to compress the source sentence, regardless of its original legnth, into a fixed-length vector.
 
@@ -52,7 +52,7 @@ This can be shown in the Figure 2. presented above where the BLEU score of the m
 
 <br/>
 
-### **Model Architectures of BiRNN with Attention**
+## **Model Architectures of BiRNN with Attention**
 
 &emsp;The most common encoder-decoder framework used in machine translation is RNN. Here, This is the detailed architecture of proposed attention RNN model (RNNsearch) used in the paper.
 
@@ -63,7 +63,7 @@ This can be shown in the Figure 2. presented above where the BLEU score of the m
 <br/>
 
 
-#### **1. Encoder**
+### **1. Encoder**
 
 &emsp;First, the model takes source sentences at each time step as input, and compute the forward and backward states of them. 
 
@@ -93,11 +93,24 @@ This can be shown in the Figure 2. presented above where the BLEU score of the m
 
 <Br/>
 
-#### **2. Decoder** 
+### **2. Decoder** 
 
 - <p align="left"><img src="https://github.com/SuminizZ/Physics/assets/92680829/96441f0c-8892-4af0-bb03-ca7a5ff60269" width="260px"></p>
 
-- **Alignment Model** (Different from what's in the paper, but more generally used)
+<br/>
+
+#### **Alignment Model** 
+
+<br/>
+
+- **Additive Attention**
+    
+    - $\large a(s_{i−1}, h_{j}) = v_{a}^{T} \, tanh (W_{a}\,s_{i−1} + U_{a}\,h_{j})$ 
+    
+    <br/>
+
+
+- **Dot-Product Attention** (Different from what's in the paper, but more generally used)
 
     - $\large k_{i}\,=\, W_{K} \times h_{i}$   (for i = 1 to m, m : number of hidden states in encoder, $W_{K}\,\in\,\mathbb{R}^{n \times 2n} $)
     

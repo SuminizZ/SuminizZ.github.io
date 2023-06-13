@@ -1,0 +1,72 @@
+I"�#<p><br /></p>
+
+<h2 id="백준-1446-녹색-옷-입은-애가-젤다지--골드-4">백준 1446 녹색 옷 입은 애가 젤다지? : 골드 4</h2>
+
+<p><br /></p>
+
+<p><img src="https://user-images.githubusercontent.com/92680829/140431204-b0f7da77-393a-4b0e-8455-8aa8cab3095a.png" />
+<img src="https://user-images.githubusercontent.com/92680829/140431312-2feaa1f0-06ab-4f6c-b1c9-9438cab223e1.png" /></p>
+
+<p><br /></p>
+
+<h2 id="solution"><strong>Solution</strong></h2>
+
+<p><br /></p>
+
+<h3 id="bfs--dikjstra--맵-구현">BFS + DIKJSTRA + 맵 구현</h3>
+
+<p><br /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">sys</span>
+<span class="nb">input</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">stdin</span><span class="p">.</span><span class="n">readline</span>
+<span class="kn">from</span> <span class="n">heapq</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">cost_map</span><span class="p">):</span>
+    <span class="n">dirs</span> <span class="o">=</span> <span class="p">[(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span>         <span class="c1"># 모든 좌표는 (r, c)
+</span>    <span class="n">min_cost</span> <span class="o">=</span> <span class="p">[[</span><span class="nf">float</span><span class="p">(</span><span class="s">'inf'</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>     <span class="c1"># (k, l) 까지 이동하는 데 걸린 최소 cost
+</span>    <span class="n">hq</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="nf">heappush</span><span class="p">(</span><span class="n">hq</span><span class="p">,</span> <span class="p">[</span><span class="n">cost_map</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span> <span class="p">)</span>      
+    <span class="k">while</span> <span class="n">hq</span><span class="p">:</span>
+        <span class="n">c_cost</span><span class="p">,</span> <span class="p">(</span><span class="n">c_r</span><span class="p">,</span> <span class="n">c_c</span><span class="p">)</span> <span class="o">=</span> <span class="nf">heappop</span><span class="p">(</span><span class="n">hq</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">:</span>
+            <span class="n">n_r</span><span class="p">,</span> <span class="n">n_c</span> <span class="o">=</span> <span class="n">c_r</span> <span class="o">+</span> <span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">c_c</span> <span class="o">+</span> <span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">n_r</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">n_c</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="ow">and</span> <span class="n">min_cost</span><span class="p">[</span><span class="n">n_r</span><span class="p">][</span><span class="n">n_c</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">c_cost</span><span class="p">:</span>
+                <span class="n">n_cost</span> <span class="o">=</span> <span class="n">c_cost</span> <span class="o">+</span> <span class="n">cost_map</span><span class="p">[</span><span class="n">n_r</span><span class="p">][</span><span class="n">n_c</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">min_cost</span><span class="p">[</span><span class="n">n_r</span><span class="p">][</span><span class="n">n_c</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">n_cost</span><span class="p">:</span>
+                    <span class="n">min_cost</span><span class="p">[</span><span class="n">n_r</span><span class="p">][</span><span class="n">n_c</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_cost</span>
+                    <span class="nf">heappush</span><span class="p">(</span><span class="n">hq</span><span class="p">,</span> <span class="p">[</span><span class="n">n_cost</span><span class="p">,</span> <span class="p">(</span><span class="n">n_r</span><span class="p">,</span> <span class="n">n_c</span><span class="p">)])</span>
+
+    <span class="k">return</span> <span class="n">min_cost</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">caves</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="nf">input</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="k">break</span>
+        <span class="n">caves</span><span class="p">.</span><span class="nf">append</span><span class="p">([</span><span class="nf">list</span><span class="p">(</span><span class="nf">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nf">input</span><span class="p">().</span><span class="nf">split</span><span class="p">()))</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n</span><span class="p">)])</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"Problem {}: {}"</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">caves</span><span class="p">),</span> <span class="nf">solve</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">caves</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])))</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">break</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h2 id="풀이과정-및-느낀점"><strong>풀이과정 및 느낀점</strong></h2>
+
+<p><br /></p>
+
+<p>이번 문제는 BFS + 다익스트라 + 그래프 구현 이 세 가지 알고리즘이 적절히 섞인 문제였다.
+<br />
+다익스트라 알고리즘에서 존재하는 노드 간의 연결성 및 간선 가중치 값 정보를 이 문제에서는 동굴에서 가능한 이동방향과 (dirs) 각 좌표에서의 루피(cost) 가 대체해준다.
+<br />
+때문에 heapq 를 통해 <strong>연결된 좌표들 중에서 최소 비용을 가진 좌표</strong>만을 계속 반환해주면서, 그 좌표를 방문해서 해당 좌표까지 이동하는 데 걸리는 현재까지의 최소 cost 를 min_cost 값으로 갱신해주면 된다.
+<br />
+<br />
+그리고 이 문제의 또 다른 포인트는 input 을 받는 코드인데, 보통의 경우 입력은 하나의 케이스만이 주어지거나, 혹은 정확히 몇 개의 test case 를 수행할 건지 개수 자체가 명시가 되어 그 만큼만 for 문을 돌려 입력을 받으면 된다.
+<br />
+하지만 이 문제 같은 경우 테스트 케이스의 개수가 고정되어 있지 않아서 while True + try-except 로 일단 계속 input 을 받고, 더이상 input 이 입력되지 않아 오류가 뜨면 그 때 while 문을 탈출하도록 해줬다.
+<br />
+<br />
+좀 급하게 풀긴 했지만 나름 신선한 문제였다.</p>
+
+:ET

@@ -1225,7 +1225,7 @@
    }
 
    a.older-posts, a.newer-posts {
-     font-size: 11px;
+     font-size: 12px;
      display: inline-block;
      color: #515151;
      -webkit-transition: -webkit-transform .2s;
@@ -1251,7 +1251,7 @@
    .wrap-content {
      width: 1050px;
      padding: 15px;
-     font-size : 15px;
+     font-size : 16.5px;
    }
 
    .wrap-content a {

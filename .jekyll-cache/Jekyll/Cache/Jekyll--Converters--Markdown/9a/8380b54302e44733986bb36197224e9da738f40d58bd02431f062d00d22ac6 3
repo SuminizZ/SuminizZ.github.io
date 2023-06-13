@@ -1,0 +1,39 @@
+I"F<h2 id="git-pull-해서-기존-데이터-날렸을-때-복구">git pull 해서 기존 데이터 날렸을 때 복구</h2>
+
+<p><br /></p>
+
+<h3 id="log-확인">Log 확인</h3>
+<ul>
+  <li>git log  # git log 확인</li>
+  <li>git log –pretty==online    # git log 정리해서 보기</li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="reset--revert">Reset &amp; Revert</h3>
+<ol>
+  <li>git reflog
+    <ul>
+      <li>reflog 하면 원하는 head 및 commitID 를 확인할 수 있다. head 이름 복사</li>
+    </ul>
+  </li>
+  <li>git reset
+    <ul>
+      <li>reset –hard “HEAD@{1}”</li>
+      <li>reset –hard “commitID”</li>
+      <li>reset –hard : 복구된 이력 이후의 내용 모두 삭제</li>
+      <li>reset –soft : 복구된 이력 이후 내용 유지</li>
+      <li>reset –mixed 도 있지만, 사용할 일이 딱히 없을 듯하다.</li>
+    </ul>
+  </li>
+  <li>git revert
+    <ul>
+      <li>revert “commitID”</li>
+      <li>reset 과 달리 새로운 commit 을 발행하는 형태로 복구하기 때문에 rollback 이력까지 남길 수 있다.</li>
+      <li>revert 가 더 안전한 방법이니, 중요한 project 라면 revert 를 사용하는 게 나을 듯하다.</li>
+    </ul>
+  </li>
+</ol>
+
+<p><a href="https://niceman.tistory.com/187" target="_blank"><u><span style="color:blue">참고 포스팅</span></u></a></p>
+:ET

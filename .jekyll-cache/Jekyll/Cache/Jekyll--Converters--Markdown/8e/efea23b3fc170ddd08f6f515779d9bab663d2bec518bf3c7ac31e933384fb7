@@ -1,0 +1,27 @@
+I"•<h2 id="outlines"><strong>Outlines</strong></h2>
+<ul>
+  <li><a href="#references"><strong>References</strong></a></li>
+  <li><a href="#split-transform-merge-strategy"><strong>Split-Transform-Merge Strategy</strong></a></li>
+  <li><a href="#equivalent-building-blocks-for-resnext"><strong>Equivalent Building Blocks for ResNeXt</strong></a></li>
+  <li><a href="#basic-building-block-bottleneck"><strong>Basic Building Block (Bottleneck)</strong></a></li>
+  <li><a href="#comparison-with-other-neural-architectures"><strong>Comparison with Other Neural Architectures</strong></a></li>
+  <li><a href="#resnext-architecture"><strong>ResNeXt Architecture</strong></a></li>
+  <li><a href="#implementation-with-pytorch"><strong>Implementation with PyTorch</strong></a></li>
+  <li><a href="#model-summary"><strong>Model Summary</strong></a></li>
+  <li><a href="#other-types-of-convolution"><strong>Other Types of Convolution</strong></a></li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="references"><strong>References</strong></h2>
+
+<p><br /></p>
+
+<ul>
+  <li><a href="https://arxiv.org/abs/1608.06993" target="_blank">Densely Connected Convolutional Networks, Gao Huang (2018)</a></li>
+  <li><a href="https://arxiv.org/abs/1709.01507" target="_blank">Squeeze-and-Excitation Networks, Jie Hu (2019)</a></li>
+  <li><a href="https://hyukppen.modoo.at/?link=5db82s6p" target="_blank">https://hyukppen.modoo.at/?link=5db82s6p</a></li>
+</ul>
+
+<p><br /></p>
+:ET

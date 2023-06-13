@@ -1,0 +1,50 @@
+I"�<p><br /></p>
+
+<h2 id="백준-14501-퇴사-1--실버-3">백준 14501 퇴사 1 : 실버 3</h2>
+
+<p><br /></p>
+
+<p><img src="https://user-images.githubusercontent.com/92680829/139305297-ad4c3942-501a-4ed5-91ec-9097c9ac99b1.png" width="700px" />
+<img src="https://user-images.githubusercontent.com/92680829/139305397-2d527fc5-5fe8-4a3f-a16b-f4ff5fc7d9db.png" width="700px" /></p>
+
+<p><br /></p>
+
+<h2 id="solution"><strong>Solution</strong></h2>
+
+<p><br /></p>
+
+<h3 id="dp-memoization-활용bottom-up">DP Memoization 활용(Bottom-up)</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">sys</span>
+<span class="nb">input</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">stdin</span><span class="p">.</span><span class="n">readline</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="nf">input</span><span class="p">())</span>
+<span class="n">consult</span> <span class="o">=</span> <span class="p">[[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="n">day</span><span class="p">,</span> <span class="n">pay</span> <span class="o">=</span> <span class="nf">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nf">input</span><span class="p">().</span><span class="nf">split</span><span class="p">())</span>
+    <span class="n">consult</span><span class="p">.</span><span class="nf">append</span><span class="p">([</span><span class="n">day</span><span class="p">,</span> <span class="n">pay</span><span class="p">])</span>
+
+<span class="n">DP</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>      <span class="c1"># k 일까지 상담을 진행했을 때 얻을 수 있는 최대이익
+</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">j</span> <span class="o">+</span> <span class="n">consult</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">i</span><span class="p">:</span>
+            <span class="n">DP</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nf">max</span><span class="p">(</span><span class="n">DP</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">DP</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+    
+    <span class="k">if</span> <span class="n">i</span> <span class="o">+</span> <span class="n">consult</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">DP</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">consult</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="nf">max</span><span class="p">(</span><span class="n">DP</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h2 id="풀이과정-및-느낀점"><strong>풀이과정 및 느낀점</strong></h2>
+
+<p><br /></p>
+
+<p>상대적으로 쉬운 DP 문제이다. DP 는 기본적으로 개념 정의만 똑바로 하고 점화식을 올바르게 세우는 게 가장 중요한 거 같다.
+<br />
+다만 이 풀이를 이후의 포스팅에 올라올 15486 번 퇴사2에 적용하면 시간초과에 걸리게 된다.
+<br />
+따라서 다른 풀이가 필요한데, 그 풀이는 이후에 별도 포스팅으로 업로드할 예정이다.</p>
+:ET

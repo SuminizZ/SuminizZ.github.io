@@ -1,0 +1,287 @@
+I"{}<h2 id="outlines"><strong>Outlines</strong></h2>
+<ul>
+  <li><a href="#references"><strong>References</strong></a></li>
+  <li><a href="#vggnet-architecture"><strong>VGGnet Architecture</strong></a></li>
+  <li><a href="#implementation-with-pytorch"><strong>Implementation with PyTorch</strong></a></li>
+  <li><a href="#model-summary"><strong>Model Summary</strong></a></li>
+  <li><a href="#parameters"><strong>Parameters</strong></a></li>
+  <li><a href="#forward-pass"><strong>Forward Pass</strong></a></li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="references"><strong>References</strong></h2>
+<ul>
+  <li><a href="https://arxiv.org/pdf/1409.1556.pdf" target="_blank">VERY DEEP CONVOLUTIONAL NETWORKS FOR LARGE-SCALE IMAGE RECOGNITION (Karen Simonyan &amp; Andrew Zisserman)</a></li>
+  <li><a href="https://pytorch.org/hub/pytorch_vision_vgg/">https://pytorch.org/hub/pytorch_vision_vgg/</a></li>
+  <li><a href="https://hyukppen.modoo.at/?link=5db82s6p">https://hyukppen.modoo.at/?link=5db82s6p</a></li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="vggnet-architecture"><strong>VGGnet Architecture</strong></h2>
+<p><br /></p>
+
+<p align="center"><img src="https://github.com/SuminizZ/Physics/assets/92680829/fffaba87-5594-4625-b52f-9e9bf4faafda" width="700" /></p>
+<p><br /></p>
+
+<p align="center"><img src="https://github.com/SuminizZ/Physics/assets/92680829/5057622a-4e31-43e1-a997-8708bcf3a3cd" width="570px" /></p>
+
+<ol>
+  <li>
+    <p><strong>LRN (Local Response Normalisation)</strong> : doesn’t really contribute to improving performance</p>
+
+    <ul>
+      <li>useful for unbounded activations (e.g. ReLU)</li>
+      <li>damps the output among neighborhoods with uniformly large responses and creates higher contrast in activation map, allowing for detection of distinctively large activation within neighborhood. <br /></li>
+    </ul>
+
+    <p><img src="https://github.com/SuminizZ/Physics/assets/92680829/3b2185a7-27e1-4e87-93a1-9dccfbf47f6c" width="400px" /></p>
+
+    <ul>
+      <li>not used anymore, instead can use batch normalization</li>
+    </ul>
+  </li>
+</ol>
+
+<p><br /></p>
+
+<ol>
+  <li>
+    <p><strong>repeat 3x3 convolution</strong></p>
+
+    <ol>
+      <li>can build deepest-possible networks with locational focus: using smallest sized receptive field to capture all direcitons (left, righ, up, down), which prevents representational bottleneck that might occur due to an extreme compression with large receptive fields</li>
+      <li>increase non-linearity by adding extra maxpooling layers between deep 3x3 conv layers -&gt; can build more complex and non-linear predicting functions</li>
+      <li>save computational resources : can reduce dimension of parameters by factorizing large sized feature maps into multiple smaller sized maps while maintaining the size of receptive field. (share parameters between adjacent pixels)
+        <ul>
+          <li>instead of using one 5x5 feature map, can divide it into two 3x3 maps with 1 non-linearity activatation added in-between.</li>
+        </ul>
+      </li>
+    </ol>
+  </li>
+</ol>
+
+<p><br /></p>
+
+<h2 id="implementation-with-pytorch"><strong>Implementation with PyTorch</strong></h2>
+
+<p><br /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">configs</span> <span class="o">=</span> <span class="p">{</span><span class="s">'A'</span> <span class="p">:</span> <span class="p">[</span><span class="mi">64</span><span class="p">,</span> <span class="s">'M'</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="s">'M'</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="s">'M'</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="s">'M'</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="s">'M'</span><span class="p">],</span>
+           <span class="s">'B'</span> <span class="p">:</span> <span class="p">[</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="s">'M'</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="s">'M'</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="s">'M'</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="s">'M'</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="s">'M'</span><span class="p">],</span>
+           <span class="s">'C'</span> <span class="p">:</span> <span class="p">[</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="s">'M'</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="s">'M'</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="s">'M'</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="p">(</span><span class="mi">512</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="s">'M'</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="p">(</span><span class="mi">512</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="s">'M'</span><span class="p">],</span>
+           <span class="s">'D'</span> <span class="p">:</span> <span class="p">[</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="s">'M'</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="s">'M'</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="s">'M'</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="s">'M'</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="s">'M'</span><span class="p">],</span> 
+           <span class="s">'E'</span> <span class="p">:</span> <span class="p">[</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="s">'M'</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="s">'M'</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="s">'M'</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="s">'M'</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="s">'M'</span><span class="p">]}</span>
+</code></pre></div></div>
+<p><br /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># input_shape = (N, 3, 224, 224)
+</span>
+<span class="k">class</span> <span class="nc">VGGnet</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">bn</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">,</span> <span class="n">init_weights</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+        <span class="nf">super</span><span class="p">().</span><span class="nf">__init__</span><span class="p">()</span>
+        <span class="n">layers</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">build_layers</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">bn</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">features</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Sequential</span><span class="p">(</span><span class="o">*</span><span class="n">layers</span><span class="p">)</span>    <span class="c1"># (512,7,7) 
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">avgpool</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">AdaptiveAvgPool2d</span><span class="p">((</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>  <span class="c1"># set the shape of output as (7,7)
+</span>        <span class="n">self</span><span class="p">.</span><span class="n">fc</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Sequential</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">512</span><span class="o">*</span><span class="mi">7</span><span class="o">*</span><span class="mi">7</span><span class="p">,</span> <span class="mi">4096</span><span class="p">),</span>
+                                <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">(),</span>
+                                <span class="n">nn</span><span class="p">.</span><span class="nc">Dropout</span><span class="p">(</span><span class="n">p</span><span class="p">),</span>
+                                <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">4096</span><span class="p">,</span><span class="mi">4096</span><span class="p">),</span>
+                                <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">(),</span>
+                                <span class="n">nn</span><span class="p">.</span><span class="nc">Dropout</span><span class="p">(</span><span class="n">p</span><span class="p">),</span>
+                                <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">())</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">classifier</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="mi">4096</span><span class="p">,</span><span class="n">num_classes</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">init_weights</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">self</span><span class="p">.</span><span class="nf">modules</span><span class="p">():</span>
+                <span class="k">if</span> <span class="nf">isinstance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">nn</span><span class="p">.</span><span class="n">Conv2d</span><span class="p">):</span>
+                    <span class="n">nn</span><span class="p">.</span><span class="n">init</span><span class="p">.</span><span class="nf">kaiming_normal_</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">weight</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">'fan_out'</span><span class="p">,</span> <span class="n">nonlinearity</span><span class="o">=</span><span class="s">'relu'</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">m</span><span class="p">.</span><span class="n">bias</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                        <span class="n">nn</span><span class="p">.</span><span class="n">init</span><span class="p">.</span><span class="nf">constant_</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">bias</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="nf">isinstance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">):</span>
+                    <span class="n">nn</span><span class="p">.</span><span class="n">init</span><span class="p">.</span><span class="nf">normal_</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">weight</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1e-2</span><span class="p">)</span>
+                    <span class="n">nn</span><span class="p">.</span><span class="n">init</span><span class="p">.</span><span class="nf">constant_</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">bias</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="nf">isinstance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">nn</span><span class="p">.</span><span class="n">BatchNorm2d</span><span class="p">):</span>
+                    <span class="n">nn</span><span class="p">.</span><span class="n">init</span><span class="p">.</span><span class="nf">constant_</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">weight</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                    <span class="n">nn</span><span class="p">.</span><span class="n">init</span><span class="p">.</span><span class="nf">constant_</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">bias</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">features</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">avgpool</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">flatten</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">fc</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">classifier</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">out</span> 
+
+    <span class="k">def</span> <span class="nf">build_layers</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">bn</span><span class="p">):</span>
+        <span class="n">layers</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">in_channel</span> <span class="o">=</span> <span class="mi">3</span>
+
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">config</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">v</span> <span class="o">==</span> <span class="s">'M'</span><span class="p">:</span>
+                <span class="n">layers</span> <span class="o">+=</span> <span class="p">[</span><span class="n">nn</span><span class="p">.</span><span class="nc">MaxPool2d</span><span class="p">(</span><span class="mi">2</span><span class="p">)]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nf">type</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">bn</span><span class="p">:</span>
+                        <span class="n">layers</span> <span class="o">+=</span> <span class="p">[</span><span class="n">nn</span><span class="p">.</span><span class="nc">Conv2d</span><span class="p">(</span><span class="n">in_channel</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+                                <span class="n">nn</span><span class="p">.</span><span class="nc">BatchNorm2d</span><span class="p">(</span><span class="n">v</span><span class="p">),</span>
+                                <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">()]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">layers</span> <span class="o">+=</span> <span class="p">[</span><span class="n">nn</span><span class="p">.</span><span class="nc">Conv2d</span><span class="p">(</span><span class="n">in_channel</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+                                <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">()]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">v</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="n">v</span>
+                    <span class="k">if</span> <span class="n">bn</span><span class="p">:</span>
+                        <span class="n">layers</span> <span class="o">+=</span> <span class="p">[</span><span class="n">nn</span><span class="p">.</span><span class="nc">Conv2d</span><span class="p">(</span><span class="n">in_channel</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">size</span><span class="p">),</span>
+                                   <span class="n">nn</span><span class="p">.</span><span class="nc">BatchNorm2d</span><span class="p">(</span><span class="n">v</span><span class="p">),</span>
+                                   <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">()]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">layers</span> <span class="o">+=</span> <span class="p">[</span><span class="n">nn</span><span class="p">.</span><span class="nc">Conv2d</span><span class="p">(</span><span class="n">in_channel</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">size</span><span class="p">),</span>
+                                   <span class="n">nn</span><span class="p">.</span><span class="nc">ReLU</span><span class="p">()]</span>
+                <span class="n">in_channel</span> <span class="o">=</span> <span class="n">v</span>
+
+        <span class="k">return</span> <span class="n">layers</span>        
+                    
+            
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h2 id="model-summary"><strong>Model Summary</strong></h2>
+
+<p><br /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span> <span class="o">=</span> <span class="nc">VGGnet</span><span class="p">(</span><span class="n">configs</span><span class="p">[</span><span class="s">'E'</span><span class="p">],</span> <span class="bp">True</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="nf">summary</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">input_size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">),</span> <span class="n">device</span><span class="o">=</span><span class="s">'cpu'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>==========================================================================================
+Layer (type:depth-idx)                   Output Shape              Param #
+==========================================================================================
+VGGnet                                   [2, 1000]                 --
+├─Sequential: 1-1                        [2, 512, 7, 7]            --
+│    └─Conv2d: 2-1                       [2, 64, 224, 224]         1,792
+│    └─BatchNorm2d: 2-2                  [2, 64, 224, 224]         128
+│    └─ReLU: 2-3                         [2, 64, 224, 224]         --
+│    └─Conv2d: 2-4                       [2, 64, 224, 224]         36,928
+│    └─BatchNorm2d: 2-5                  [2, 64, 224, 224]         128
+│    └─ReLU: 2-6                         [2, 64, 224, 224]         --
+│    └─MaxPool2d: 2-7                    [2, 64, 112, 112]         --
+│    └─Conv2d: 2-8                       [2, 128, 112, 112]        73,856
+│    └─BatchNorm2d: 2-9                  [2, 128, 112, 112]        256
+│    └─ReLU: 2-10                        [2, 128, 112, 112]        --
+│    └─Conv2d: 2-11                      [2, 128, 112, 112]        147,584
+│    └─BatchNorm2d: 2-12                 [2, 128, 112, 112]        256
+│    └─ReLU: 2-13                        [2, 128, 112, 112]        --
+│    └─MaxPool2d: 2-14                   [2, 128, 56, 56]          --
+│    └─Conv2d: 2-15                      [2, 256, 56, 56]          295,168
+│    └─BatchNorm2d: 2-16                 [2, 256, 56, 56]          512
+│    └─ReLU: 2-17                        [2, 256, 56, 56]          --
+│    └─Conv2d: 2-18                      [2, 256, 56, 56]          590,080
+│    └─BatchNorm2d: 2-19                 [2, 256, 56, 56]          512
+│    └─ReLU: 2-20                        [2, 256, 56, 56]          --
+│    └─Conv2d: 2-21                      [2, 256, 56, 56]          590,080
+│    └─BatchNorm2d: 2-22                 [2, 256, 56, 56]          512
+│    └─ReLU: 2-23                        [2, 256, 56, 56]          --
+│    └─Conv2d: 2-24                      [2, 256, 56, 56]          590,080
+│    └─BatchNorm2d: 2-25                 [2, 256, 56, 56]          512
+│    └─ReLU: 2-26                        [2, 256, 56, 56]          --
+│    └─MaxPool2d: 2-27                   [2, 256, 28, 28]          --
+│    └─Conv2d: 2-28                      [2, 512, 28, 28]          1,180,160
+│    └─BatchNorm2d: 2-29                 [2, 512, 28, 28]          1,024
+│    └─ReLU: 2-30                        [2, 512, 28, 28]          --
+│    └─Conv2d: 2-31                      [2, 512, 28, 28]          2,359,808
+│    └─BatchNorm2d: 2-32                 [2, 512, 28, 28]          1,024
+│    └─ReLU: 2-33                        [2, 512, 28, 28]          --
+│    └─Conv2d: 2-34                      [2, 512, 28, 28]          2,359,808
+│    └─BatchNorm2d: 2-35                 [2, 512, 28, 28]          1,024
+│    └─ReLU: 2-36                        [2, 512, 28, 28]          --
+│    └─Conv2d: 2-37                      [2, 512, 28, 28]          2,359,808
+│    └─BatchNorm2d: 2-38                 [2, 512, 28, 28]          1,024
+│    └─ReLU: 2-39                        [2, 512, 28, 28]          --
+│    └─MaxPool2d: 2-40                   [2, 512, 14, 14]          --
+│    └─Conv2d: 2-41                      [2, 512, 14, 14]          2,359,808
+│    └─BatchNorm2d: 2-42                 [2, 512, 14, 14]          1,024
+│    └─ReLU: 2-43                        [2, 512, 14, 14]          --
+│    └─Conv2d: 2-44                      [2, 512, 14, 14]          2,359,808
+│    └─BatchNorm2d: 2-45                 [2, 512, 14, 14]          1,024
+│    └─ReLU: 2-46                        [2, 512, 14, 14]          --
+│    └─Conv2d: 2-47                      [2, 512, 14, 14]          2,359,808
+│    └─BatchNorm2d: 2-48                 [2, 512, 14, 14]          1,024
+│    └─ReLU: 2-49                        [2, 512, 14, 14]          --
+│    └─Conv2d: 2-50                      [2, 512, 14, 14]          2,359,808
+│    └─BatchNorm2d: 2-51                 [2, 512, 14, 14]          1,024
+│    └─ReLU: 2-52                        [2, 512, 14, 14]          --
+│    └─MaxPool2d: 2-53                   [2, 512, 7, 7]            --
+├─AdaptiveAvgPool2d: 1-2                 [2, 512, 7, 7]            --
+├─Sequential: 1-3                        [2, 4096]                 --
+│    └─Linear: 2-54                      [2, 4096]                 102,764,544
+│    └─ReLU: 2-55                        [2, 4096]                 --
+│    └─Dropout: 2-56                     [2, 4096]                 --
+│    └─Linear: 2-57                      [2, 4096]                 16,781,312
+│    └─ReLU: 2-58                        [2, 4096]                 --
+│    └─Dropout: 2-59                     [2, 4096]                 --
+│    └─ReLU: 2-60                        [2, 4096]                 --
+├─Linear: 1-4                            [2, 1000]                 4,097,000
+==========================================================================================
+Total params: 143,678,248
+Trainable params: 143,678,248
+Non-trainable params: 0
+Total mult-adds (G): 39.29
+==========================================================================================
+Input size (MB): 1.20
+Forward/backward pass size (MB): 475.41
+Params size (MB): 574.71
+Estimated Total Size (MB): 1051.33
+==========================================================================================
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h2 id="parameters"><strong>Parameters</strong></h2>
+
+<p><br /></p>
+
+<p><img width="500" alt="image" src="https://github.com/SuminizZ/Physics/assets/92680829/1240600d-b2cf-4ef3-ba5f-4e18f14154bd" /></p>
+
+<p><br /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">configs</span><span class="p">.</span><span class="nf">items</span><span class="p">():</span>
+    <span class="n">tmp_model</span> <span class="o">=</span> <span class="nc">VGGnet</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="bp">True</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"ConvNet Configuration </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s"> Parameters : </span><span class="si">{</span><span class="nf">sum</span><span class="p">([</span><span class="n">p</span><span class="p">.</span><span class="nf">numel</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">tmp_model</span><span class="p">.</span><span class="nf">parameters</span><span class="p">()</span> <span class="k">if</span> <span class="n">p</span><span class="p">.</span><span class="n">requires_grad</span><span class="p">])</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ConvNet Configuration A Parameters : 132868840
+ConvNet Configuration B Parameters : 133053736
+ConvNet Configuration C Parameters : 133647400
+ConvNet Configuration D Parameters : 138365992
+ConvNet Configuration E Parameters : 143678248
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h2 id="forward-pass"><strong>Forward Pass</strong></h2>
+
+<p><br /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">224</span><span class="p">,</span><span class="mi">224</span><span class="p">)</span>
+<span class="n">out</span> <span class="o">=</span> <span class="nf">model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">out</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">out</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>torch.Size([2, 1000])
+
+tensor([[-0.0761, -0.1180,  1.7652,  ...,  1.2305, -1.1635,  0.3651],
+        [-0.4145,  0.1778,  0.8768,  ...,  0.8948, -0.0290,  0.2008]],
+       grad_fn=&lt;AddmmBackward0&gt;)
+</code></pre></div></div>
+
+:ET

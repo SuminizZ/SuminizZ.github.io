@@ -1,0 +1,49 @@
+I"�<p><br /></p>
+
+<h2 id="백준-11866-요세푸스-순열--실버-4">백준 11866 요세푸스 순열 : 실버 4</h2>
+
+<p><br /></p>
+
+<p><img src="https://user-images.githubusercontent.com/92680829/137763651-e9c1d24a-f212-418e-b799-9ad2298ab0bb.png" /></p>
+
+<p><br /></p>
+
+<h2 id="solution"><strong>Solution</strong></h2>
+
+<p><br /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">sys</span>
+<span class="kn">from</span> <span class="n">collections</span> <span class="kn">import</span> <span class="n">deque</span>
+<span class="n">n</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="nf">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">sys</span><span class="p">.</span><span class="n">stdin</span><span class="p">.</span><span class="nf">readline</span><span class="p">().</span><span class="nf">split</span><span class="p">())</span>
+
+<span class="k">def</span> <span class="nf">josephus</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="n">circle</span> <span class="o">=</span> <span class="nf">deque</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">circle</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">k</span>
+
+        <span class="k">while</span> <span class="n">r</span><span class="o">-</span><span class="mi">1</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>       
+            <span class="n">circle</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">circle</span><span class="p">.</span><span class="nf">popleft</span><span class="p">())</span>
+            <span class="n">r</span> <span class="o">-=</span> <span class="mi">1</span>
+
+        <span class="n">result</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">circle</span><span class="p">.</span><span class="nf">popleft</span><span class="p">())</span>
+
+    <span class="k">return</span> <span class="n">result</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="s">'&lt;'</span><span class="o">+</span><span class="s">', '</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="nf">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nf">josephus</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">)))</span><span class="o">+</span><span class="s">'&gt;'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h2 id="풀이과정-및-느낀점"><strong>풀이과정 및 느낀점</strong></h2>
+
+<p><br /></p>
+
+<p>FIFO 특성을 반영할 수 있는 큐 자료구조에 대한 문제이다. <br />
+우선 k번째 순서 사람을 선택하기 위해 while 문으로 1씩 줄여가면서 가장 앞에 있는 사람을 뒤로 보내준다.<br />
+k 번째 사람이 가장 앞에 오면 그 사람을 result 에 append 해준다. <br />
+이렇게 n 명의 원순열을 다 완성할 때까지 해당 과정을 반복해주면 된다.</p>
+:ET

@@ -1,0 +1,176 @@
+I"["<h2 id="outlines">Outlines</h2>
+<ul>
+  <li><a href="#reference">Reference</a></li>
+  <li><a href="#attention-for-rnn-encoder-decoder-networks">Attention for RNN Encoder-Decoder Networks</a></li>
+  <li><a href="#issue-of-interest">Issue of Interest</a></li>
+  <li><a href="#model-architectures-of-birnn-with-attention">Model Architectures of BiRNN with Attention</a>
+    <ul>
+      <li><a href="#1.-encoder">1. Encoder</a></li>
+      <li><a href="#2.-decoder">2. Decoder</a></li>
+    </ul>
+  </li>
+  <li><a href="#birnn-ecoder-decoder-with-attention-mechanism-summary">BiRNN Ecoder-Decoder with Attention Mechanism Summary</a></li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="reference"><strong>Reference</strong></h2>
+<ul>
+  <li>Bahdanau, Cho, &amp; Bengio. Neural machine translation by jointly learning to align and translate. In ICLR, 2015.</li>
+  <li><a href="https://www.youtube.com/watch?v=B3uws4cLcFw&amp;list=PLgtf4d9zHHO8p_zDKstvqvtkv80jhHxoE&amp;index=1" target="_blank">Attention for RNN Seq2Seq Models</a></li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="attention-for-rnn-encoder-decoder-networks"><strong>Attention for RNN Encoder-Decoder Networks</strong></h2>
+
+<p> This paper proposes a novel approach called “Attention” to improve the performance of machine translation using encoder-decoder (Seq2Seq) architeture.</p>
+
+<p>Encoder-decoders refers to a system where the model encodes a source sentence into a fixed-length vector from which the decoder outputs a translation corresponding to the given source sentence.</p>
+
+<p>Basic encoder-decoder network has limited performance on the translation of long sentences and this paper successfully mitigates the issue by introducing the concept of “attention” that allows the model to automatically focus on the information relevant to the predicting target word.</p>
+
+<p align="center"><img src="https://github.com/SuminizZ/Physics/assets/92680829/d61fe383-84ed-4ce6-ac64-ae11d354abda" width="700px" /></p>
+
+<p><br /></p>
+
+<h2 id="issue-of-interest"><strong>Issue of Interest</strong></h2>
+
+<p> The underlying cause behind the poor performance of original encoder-decoder network mainly lies on the fact that the encoder needs to compress the source sentence, regardless of its original legnth, into a fixed-length vector.</p>
+
+<p>The encoder takes a variable-length input and transforms it into a state with a fixed shape and the decoder maps the encoded fixed shaped vector into again, variable-length translated output.</p>
+
+<p>This is because in a basic RNN encoder-decoder framework, decoder uses a context vector as it’s initial input and it is computed from the final hidden state of encoder, which is typically a fixed-length vector.</p>
+
+<p>Use of this fixed length of context vector acts as an information bottleneck in a sense that as the length of the source sentences increases, more information needs to be squashed and packed into that fixed length context vector, which results in the loss of detailed or possibly important information of the original source input.</p>
+
+<p>This can be shown in the Figure 2. presented above where the BLEU score of the model with basic encoder tends to decrease as the length of source sentence increases.</p>
+
+<p><br /></p>
+
+<h2 id="model-architectures-of-birnn-with-attention"><strong>Model Architectures of BiRNN with Attention</strong></h2>
+
+<p> The most common encoder-decoder framework used in machine translation is RNN. Here, This is the detailed architecture of proposed attention RNN model (RNNsearch) used in the paper.</p>
+
+<p align="center"><img src="https://github.com/SuminizZ/Physics/assets/92680829/75d63a2f-3df2-46cb-9048-116ee8ca4ffc" width="800px" /></p>
+
+<p>(image from <a href="https://www.youtube.com/watch?v=S2msiG9g7Us" target="_blank">https://www.youtube.com/watch?v=S2msiG9g7Us</a> )</p>
+
+<p><br /></p>
+
+<h3 id="1-encoder"><strong>1. Encoder</strong></h3>
+
+<p> First, the model takes source sentences at each time step as input, and compute the forward and backward states of them.</p>
+
+<ul>
+  <li><strong>Input (Source Sentence) &amp; Output (Translation) :</strong> <br /></li>
+</ul>
+
+<p>   $\large x = (x_1, \ldots, x_{T_x}), \quad x_i \in \mathbb{R}^{K_x}$  <br />
+   $\large y = (y_1, \ldots, y_{T_y}), \quad y_i \in \mathbb{R}^{K_y}$ <br /></p>
+
+<p>   $T_{x}$ and $T_{y}$ respectively denote the lengths of source and target sentences.</p>
+
+<ul>
+  <li>
+    <p><strong>Bidirectional RNN (BiRNN) Model :</strong></p>
+
+    <p><img src="https://github.com/SuminizZ/Physics/assets/92680829/8fcfe692-9c59-4aab-9a63-4dbd73ed8b8c" width="400px" /> <br /></p>
+
+    <p>$\large E \in \mathbb{R}^{m \times K_x}$ : word embedding matrix  <br /></p>
+
+    <p>$\large W, \vec{W}_z, \vec{W}_r \in \mathbb{R}^{n \times m}$ : weight matrices where m denotes the embedding dimensionality <br /></p>
+
+    <p>$\large \vec{U}, \vec{U}_z, \vec{U}_r \in \mathbb{R}^{n \times n}$ : weight matrices where n denotes the number of hidden units <br /></p>
+
+    <p>Repeat the same step backwards to get backward states of input. (embedding matrix is shared unlike the weight matrices) <br /> 
+  vertically Concatenate the forward and backward states into one complete hidden states matrix.</p>
+
+    <p>$\large h_i = \begin{bmatrix} \overrightarrow{h}_i  &amp; <br />
+                \overleftarrow{h}_i \end{bmatrix}^\intercal$</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="2-decoder"><strong>2. Decoder</strong></h3>
+
+<ul>
+  <li>
+    <p align="left"><img src="https://github.com/SuminizZ/Physics/assets/92680829/96441f0c-8892-4af0-bb03-ca7a5ff60269" width="260px" /></p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h4 id="alignment-model"><strong>Alignment Model</strong></h4>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>Additive Attention</strong></p>
+
+    <ul>
+      <li>$\large a(si−1, hj) = v_{a}^{T} \, tanh (W_{a}\,s_{i−1} + U_{a}\,h_{j})$
+<br /></li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Dot-Product Attention</strong> (Different from what’s in the paper, but more generally used)</p>
+
+    <ul>
+      <li>
+        <p>$\large k_{i}\,=\, W_{K} \times h_{i}$   (for i = 1 to m, m : number of hidden states in encoder, $W_{K}\,\in\,\mathbb{R}^{n \times 2n} $)</p>
+      </li>
+      <li>
+        <p>$\large q_{j}\,=\, W_{Q} \times s_{j}$ ($W_{K}\,\in\,\mathbb{R}^{n \times n} $)</p>
+      </li>
+      <li>Take inner product with $k_{i}$ and $q_{j}$ and normalize it so that $\alpha_{i}$ adds up to 1<br />
+        <ul>
+          <li>Search for a set of positions ($i$) in a source sentence that is most relevant to hidden state($s_{j}$) of current predicting word.</li>
+          <li>$\large \alpha_{i} = Softmax(k_{i}.dot(q_{j}))$  (for i = 1 to m)</li>
+          <li>$\large \alpha_{i}$ represents how much each hidden state of source sentence contributes to predicting the translation in the decoder.<br /></li>
+        </ul>
+      </li>
+      <li>$\large \alpha_{i}$ = align($h_{i}$, $s_{j}$) = $\large \frac{\exp(k_i^\top q)}{\sum_{j=1}^{n} \exp(k_j^\top q)}$ <br /></li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Create Context Vector using $\large \alpha_{i}$</strong></p>
+
+    <ul>
+      <li>$\large c_{j}\,=\,\alpha_{1}\,h_{1} + \alpha_{2}\,h_{2} + \ldots + \alpha_{m}\,h_{m}$ = $\large \sum\limits_{i=1}^{m}\,\alpha_{ji}\,h_{i}$</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Compute Hidden states $\large s_{i}$ of decoder with context vector $\large c_{i}$</strong></p>
+
+    <p><img src="https://github.com/SuminizZ/Physics/assets/92680829/b37713b4-25a1-4561-9cb8-2d906bcf66bc" width="400px" /> <br /></p>
+
+    <p>  where $\large C_{i}\,=\, \sum\lixmits_{j=1}^{m}\,\alpha_{ij}\,h_{j}$</p>
+
+    <ul>
+      <li>$W,\,W_{z},\,W_{r} \in \mathbb{R}^{n \times m}$,  $U,\,U_{z},\,U_{r} \in \mathbb{R}^{n \times n}$,  $C,\,C_{z},\,C_{r} \in \mathbb{R}^{n \times 2n}$</li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="birnn-ecoder-decoder-with-attention-mechanism-summary"><strong>BiRNN Ecoder-Decoder with Attention Mechanism Summary</strong></h3>
+
+<p><img src="https://github.com/SuminizZ/Physics/assets/92680829/4a58a967-e981-4610-8689-520424ef65ef" width="850px" /> <br /></p>
+
+<hr />
+
+<p><br /></p>
+
+<p> By introducing attention method to basic RNN encoder-decoder framework, the limitation in translation performance on long sentences can be addressed by allowing dynamic search of different parts of the input sequence.</p>
+
+<p>Fine-tuned context vector with attention will free the network from having to compress a whole soure sentence equally into a fixed-length vector and let the model to only focus on the input information relevant to generation of next target word.</p>
+
+<p><br /></p>
+
+<p><img width="929" alt="Screen Shot 2023-05-23 at 9 24 26 PM" src="https://github.com/SuminizZ/Physics/assets/92680829/10edfb3c-7834-4d0b-8716-d242010a89d6" /></p>
+:ET
