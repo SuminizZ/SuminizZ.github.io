@@ -9,13 +9,13 @@ toc_sticky : true
 ---
 
 ## Outlines 
-- [Reference](#reference)
-- [Attention for RNN Encoder-Decoder Networks](#attention-for-rnn-encoder-decoder-networks)
-- [Issue of Interest](#issue-of-interest)
-- [Model Architectures of BiRNN with Attention](#model-architectures-of-birnn-with-attention)
-  * [1. Encoder](#1.-encoder)
-  * [2. Decoder](#2.-decoder)
-- [BiRNN Ecoder-Decoder with Attention Mechanism Summary](#birnn-ecoder-decoder-with-attention-mechanism-summary)
+- [**Reference**](#reference)
+- [**Attention for RNN Encoder-Decoder Networks**](#attention-for-rnn-encoder-decoder-networks)
+- [**Issue of Interest**](#issue-of-interest)
+- [**Model Architectures of BiRNN with Attention**](#model-architectures-of-birnn-with-attention)
+  * [**1. Encoder**](#1.-encoder)
+  * [**2. Decoder**](#2.-decoder)
+- [**BiRNN Ecoder-Decoder with Attention Mechanism Summary**](#birnn-ecoder-decoder-with-attention-mechanism-summary)
 
 <br/>
 
