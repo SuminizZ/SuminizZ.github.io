@@ -258,7 +258,12 @@ toc_sticky : true
   
   - Padded sequences should not be considered when computing attention scores, thus need to be masked. 
 
-- **Subsequent Mask**
+#### **Subsequent Mask**
+
+<br/>
+
+- **Teacher Forcing**
+
 
   - During training, the target input sequences entered into decoder are not it's own predictions. Instead, it uses the method called **"Teacher Forcing"** where ground-truth translated sequences are given as an input to the decoder. 
 
@@ -268,6 +273,19 @@ toc_sticky : true
 
   - During the **inference phase**, the initial input sequences to the decoder is typically a <sos> (start-of-sequence) token followed by generated elements of the output sequences. 
     
+<br/>
+
+- **Subsequent Masking**
+
+  - However, using teacher focing in decoder can cause another problem in transformer because it processes every sequential position in a parallelized manner.
+  
+  - When the true labels are provided as input sequences during training, the decoder happens to possess full acess to the answers for entire positions even the subsequent ones to the current target. 
+
+  - To prevent this, authors added a particular mask called **subsequent mask** that effectively masks the positions (i+1 ~ N) following the current predicting target (ith)
+
+  &emsp;&emsp;&emsp;<img width="382" alt="image" src="https://github.com/SuminizZ/Algorithm/assets/92680829/a4902eac-e658-4d35-917d-f9fd6a483ed0">
+
+
 <br/>
 
 ## **Comparisoin of Computational Efficiency to Other Models**
