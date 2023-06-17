@@ -1,0 +1,387 @@
+I"[8<h2 id="outlines">Outlines</h2>
+<ul>
+  <li><a href="#reference"><strong>Reference</strong></a></li>
+  <li><a href="#constraint-of-recurrent-models--sequential-computation"><strong>Constraint of Recurrent Models : Sequential Computation</strong></a></li>
+  <li><a href="#issue-of-interest"><strong>Issue of Interest</strong></a></li>
+  <li><a href="#model-architectures-of-birnn-with-attention"><strong>Model Architectures of BiRNN with Attention</strong></a>
+    <ul>
+      <li><a href="#1.-encoder"><strong>1. Encoder</strong></a></li>
+      <li><a href="#2.-decoder"><strong>2. Decoder</strong></a></li>
+    </ul>
+  </li>
+  <li><a href="#birnn-ecoder-decoder-with-attention-mechanism-summary"><strong>BiRNN Ecoder-Decoder with Attention Mechanism Summary</strong></a></li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="reference"><strong>Reference</strong></h2>
+
+<ul>
+  <li><a href="https://arxiv.org/abs/1706.03762" target="_blank">Attention Is All You Need, Ashish Vaswani, 2017</a></li>
+  <li><a href="https://cpm0722.github.io/pytorch-implementation/transformer" target="_blank">[NLP 논문 구현] pytorch로 구현하는 Transformer (Attention is All You Need)</a></li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="constraint-of-recurrent-models--sequential-computation"><strong>Constraint of Recurrent Models : Sequential Computation</strong></h2>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p>The most fundamental weakness of traditional recurrent models (e.g. RNN, LSTM) is that they process the data sequentially.</p>
+  </li>
+  <li>
+    <p>Hidden state ($\large h_{t}$) for every time step depends on the hidden state passed from previous time step ($\large h_{t-1}$) and the current input ($\large x_{t}$).</p>
+  </li>
+  <li>
+    <p>This sequential nature of recurrent networks significantly limits their ability to capture long sentences as the amout of computations required increases with the legnth of sentence.</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<p>   <img src="https://github.com/SuminizZ/Algorithm/assets/92680829/3deba090-4167-4df7-b150-5bfefab58b09" width="500" /></p>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p>Transformer introduced in this paper successfully removes the recurrent characteristics out of the network architecture and only utilizes the attention mechanisms.</p>
+  </li>
+  <li>
+    <p>Attention has been a widely used mechanism in NLP as it enables the model to figure out interdependencies between sequences and focus on the particalar part with great relevance to the target position being predicted.</p>
+  </li>
+  <li>
+    <p>Using this method, one can compute the relative association between the entire sequences and current target with just a single matrix multiplication.</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="attention-of-transformer"><strong>Attention of Transformer</strong></h2>
+
+<p><br /></p>
+
+<h3 id="scaled-dot-product-attention"><strong>Scaled Dot-Product Attention</strong></h3>
+
+<p><br /></p>
+
+<p>   <img width="300" alt="image" src="https://github.com/SuminizZ/Algorithm/assets/92680829/6fda8245-3a56-4822-b970-1011ed843e85" /></p>
+
+<ul>
+  <li>
+    <p>This is the typical attention where a single set of query, key, and value vectors is used to compute the attention weights between the input elements.</p>
+  </li>
+  <li>
+    <p>Each one of query ($\large Q$), key ($\large K$), and value ($\large V$) is a linear projection of target and input sequences.</p>
+
+    <ul>
+      <li>
+        <p>Query comes from the target sequences while key and value vector is from input sequences.</p>
+      </li>
+      <li>
+        <p>Although key and value vectors originate from the same source sequences, they possess distinct values due to undergoing different linear transformation.</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Attention Score</strong></p>
+
+    <p>  $\large \text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V$</p>
+
+    <ul>
+      <li>
+        <p>Take the dot product between a query and the corresponding key to compute the compatibility between the input elements and target position.</p>
+      </li>
+      <li>
+        <p>Scale it with $\large \sqrt{d_k}$, which is the embedding dimension of a signle attention head. (equals to $\large \frac{d_{model}}{h}$)</p>
+
+        <ul>
+          <li>This is because the variation of a single element of attention score (dot product of q and k) increases by a factor of $\large d_k$ compared to that of q and k.</li>
+        </ul>
+      </li>
+      <li>
+        <p>Now apply softmax function to get an attention probability matrix, which provides a probabilistic representation of how much the input sequences and targe sequences are related.</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>Multiply the attention probability score matrix with the value to finally get an attention.</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="multi-head-attention-mha"><strong>Multi-Head Attention (MHA)</strong></h3>
+
+<p><br /></p>
+
+<p>   <img width="300" alt="image" src="https://github.com/SuminizZ/Algorithm/assets/92680829/76dee4a6-5838-427e-b51c-a2c13abbf8af" /></p>
+
+<ul>
+  <li>
+    <p>The Transformer introduces a novel modification to the conventional attention mechanism by increasing the number of attention layers running in parallel, referred to as “Multi-Head Attention”.</p>
+  </li>
+  <li>
+    <p>This is done by multiplying the number of attention by a factor <strong>h</strong> (named as attention head) and computing the attention score for every head.</p>
+  </li>
+  <li>
+    <p>Intuitively, each of attention head holds a distinct contextual information captured from different parts of input sequences, which increases expressiveness and provides a more comprehensive “attention” with respect to the target word.</p>
+  </li>
+  <li>
+    <p><strong>Attention Scores</strong></p>
+
+    <p>  $\large \text{MultiHead}(Q, K, V) = \text{Concat}(\text{head}_1, \ldots, \text{head}_h) \text{WO}, \text{where } \text{head}_i = \text{Attention}(QWQ_i, KW K_i, V WV_i)$</p>
+
+    <ul>
+      <li>
+        <p>All the underlying computations are same as the scaled dot-product attention explained above, but the operation is repeated by the number of heads.</p>
+      </li>
+      <li>
+        <p>In the final stage of multi-head attention layer, every attention computed in parallel is cocatenated and enters into the <strong>point-wise feed forward layer</strong>.</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="point-wise-feed-forward-layer"><strong>Point-Wise Feed Forward Layer</strong></h3>
+
+<p><br /></p>
+
+<p>  $\large \text{FFN}(x) = \max(0, xW_1 + b_1)W_2 + b_2$</p>
+
+<ul>
+  <li>
+    <p>FC layer -&gt; ReLU (GELU these days) non-linearity -&gt; FC layer</p>
+  </li>
+  <li>
+    <p>Can add complexity and expressiveness of each features computed from attention layers.</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="embedding-and-positional-encoding"><strong>Embedding and Positional Encoding</strong></h2>
+
+<p><br /></p>
+
+<h3 id="token-embedding"><strong>Token Embedding</strong></h3>
+
+<p><br /></p>
+
+<p>   <img width="316" alt="image" src="https://github.com/SuminizZ/Algorithm/assets/92680829/be918008-9f8e-41b4-9e7e-5971e9ce8a4c" /></p>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p>As always applied to NLP datasets, each token of input sequences is embedded into a certain dimensionality.</p>
+  </li>
+  <li>
+    <p>Parameters of embedding layer are learned during training.</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="positional-encoding"><strong>Positional Encoding</strong></h3>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p>Although parallelized operation of transformer is a huge computational advantage over recurrent networks, it leads to the loss of positional information of sequential data, which is critical in NLP.</p>
+  </li>
+  <li>
+    <p>To give an information about the relative order of the sequence to transformer networks, authors add a pre-processing step called “positional encdoing”.</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h4 id="positional-encoding-matrix"><strong>Positional Encoding Matrix</strong></h4>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p>$\large P \in \mathbb{R}^{l\times d}$, where $P_{ij} = $ \(\large \begin{cases}
+\text{sin}\left(i \cdot 10000^{-\frac{j}{d}}\right) &amp; \text{if j is even} \\
+\text{cos}\left(i \cdot 10000^{-\frac{(j-1)}{d}}\right) &amp; \text{otherwise} \\
+\end{cases}\)</p>
+  </li>
+  <li>
+    <p>Here, $\large i$ indicates the $\large i\text{th}$ position of token, and $\large j$ indicates $\large j\text{th}$ dimension of entire embedding dimension.</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<p>  <img src="https://github.com/SuminizZ/Physics/assets/92680829/148128a4-0a8e-4612-97b1-a3287e5d7411" width="600" /></p>
+
+<ul>
+  <li>Each position $\large i$ in input sequence corresponds to a sinusoid with distinct wavelength, $\large \frac{2π}{10000^{-j/d}}$</li>
+</ul>
+
+<p><br /></p>
+
+<p> <img src="https://github.com/SuminizZ/Physics/assets/92680829/4ba11c2c-6b42-482a-ac3d-395e13a9b911" width="700" /></p>
+
+<ul>
+  <li>$\large k$ here corresponds to $\large i$.</li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="encoder-and-decoder-architecture"><strong>Encoder and Decoder Architecture</strong></h2>
+
+<p><br /></p>
+
+<p>   <img width="500" alt="image" src="https://github.com/SuminizZ/Algorithm/assets/92680829/e434073b-0c93-45a2-b21b-222399ac03ce" /></p>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p>Transformer in this paper is a <strong>seq-to-seq model</strong> that performs translation tasks.</p>
+  </li>
+  <li>
+    <p>Input sequence for encoder would be a in source language to be translated and one of the inputs and the output of the decoder is in translated target language.</p>
+  </li>
+  <li>
+    <p>Encoder transfers the fixed-dimensional encoded sequences, often referred to as <strong>Context Vector</strong>, to decoder and decoder utilizes it as key and value vectors for multi-head attention (not self)</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="encoder"><strong>Encoder</strong></h3>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>Self Multi-Head Attention</strong></p>
+
+    <ul>
+      <li>Query, key, and value vectors all are from input sequences, computing attention with respect to itself.</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Encoder Block</strong></p>
+
+    <ul>
+      <li>
+        <p>Single encoder block consistis of two sub-layers, a multi-head attention layer followed by layer normalization and a point-wise feed forward layer also followed by layer norm.</p>
+      </li>
+      <li>
+        <p>Repaeat a block for <strong>N</strong> times to get final output.</p>
+      </li>
+      <li>
+        <p>Make sure that the shapes of input and output of every layer and block are identical.</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Residual Connection</strong></p>
+
+    <ul>
+      <li>Residual connection introduced in ResNet architecture is also adopted here in transformer around each of the two sub layers (multi-head attention and point-wise feed forward).</li>
+    </ul>
+  </li>
+  <li>
+    <p>Provides the context vectors for Decoder.</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="decoder"><strong>Decoder</strong></h3>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p>Composed of a stack of N identical layers with three sub-layers</p>
+
+    <ul>
+      <li>A modification added to prevent the model from getting access to positions subsequent to current position (Explained later in <strong>Subsequent Masking</strong>)</li>
+    </ul>
+  </li>
+  <li>
+    <p>Performs two multi-head attentions: one for self-attention, which operates on the target input sequences, and one for cross-attention, which connects the output of the first attention layer of the decoder with the encoded source sequences transferrred from the encoder.</p>
+  </li>
+  <li>
+    <p>Output of second attention layer is passed feed-forward layer</p>
+  </li>
+  <li>
+    <p>Residual connections around each of the sub-layers, followed by layer normalization.</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="pad-masking-and-subsequent-masking"><strong>Pad Masking and Subsequent Masking</strong></h3>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>Pad Mask</strong></p>
+
+    <ul>
+      <li>
+        <p>All input sentences are padded to have fixed length.</p>
+      </li>
+      <li>
+        <p>Padded sequences should not be considered when computing attention scores, thus need to be masked.</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Subsequent Mask</strong></p>
+
+    <ul>
+      <li>
+        <p>During training, the target input sequences entered into decoder are not it’s own predictions. Instead, it uses the method called <strong>“Teacher Forcing”</strong> where ground-truth translated sequences are given as an input to the decoder.</p>
+      </li>
+      <li>
+        <p>This is because in the machine translation task, the model outputs the next word based on the previous output generated by the model. During the initial stage of learning, it is highly unlikely for the model to give correct predictions as the parameters have not been sufficiently optimized yet. Hence, training the model given the incorrect inputs accumulates the errors and thus significantly drops the speed of convergence.</p>
+      </li>
+      <li>
+        <p>To tackle this issue, one gives the model an access to correct ground-truth to stablilize and speed up the training process.</p>
+      </li>
+      <li>
+        <p>During the <strong>inference phase</strong>, the initial input sequences to the decoder is typically a <sos> (start-of-sequence) token followed by generated elements of the output sequences.</sos></p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="computations"><strong>Computations</strong></h2>
+
+<p><br /></p>
+
+<p><img width="780" alt="image" src="https://github.com/SuminizZ/Algorithm/assets/92680829/b9b17f6c-1054-4adb-80ea-7ef1e011f40e" /></p>
+
+<p><br /></p>
+
+<h2 id="performance-of-transformer-in-machine-translation"><strong>Performance of Transformer in Machine Translation</strong></h2>
+
+<p><br /></p>
+
+<p><img width="700" alt="image" src="https://github.com/SuminizZ/Algorithm/assets/92680829/8641ae83-5d4d-460c-b195-d621b7c228b2" /></p>
+
+<p><br /></p>
+
+<h3 id="performance-of-transformer-in-machine-translation-1"><strong>Performance of Transformer in Machine Translation</strong></h3>
+
+<p><br /></p>
+
+<p><img width="750" alt="image" src="https://github.com/SuminizZ/Algorithm/assets/92680829/cb0b9f68-3f82-469e-9b78-e83e4e443931" /></p>
+:ET

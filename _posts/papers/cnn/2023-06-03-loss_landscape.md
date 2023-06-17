@@ -23,8 +23,6 @@ toc_sticky : true
 
 ## **References**
 
-<br/>
-
 - [Visualizing the Loss Landscape of Neural Nets, Hao Li1 (2018)](https://arxiv.org/pdf/1712.09913.pdf){:target="_blank"}
 - [Qualitatively characterizing neural network optimization problems, Ian J. Goodfellow (2015)](https://arxiv.org/abs/1412.6544){:target='_blank'}
 

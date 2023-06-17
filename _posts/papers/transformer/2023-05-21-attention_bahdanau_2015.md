@@ -110,7 +110,7 @@ This can be shown in the Figure 2. presented above where the BLEU score of the m
     <br/>
 
 
-- **Dot-Product Attention** (Different from what's in the paper, but more generally used)
+- **Dot-Product Attention** (Different from what's suggested in the paper, but more generally used)
 
     - $\large k_{i}\,=\, W_{K} \times h_{i}$   (for i = 1 to m, m : number of hidden states in encoder, $W_{K}\,\in\,\mathbb{R}^{n \times 2n} $)
     
