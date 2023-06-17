@@ -253,11 +253,13 @@ toc_sticky : true
 
 <br/>
 
-- **Pad Mask**
+#### **Pad Mask**
   
   - All input sentences are padded to have fixed length. 
   
   - Padded sequences should not be considered when computing attention scores, thus need to be masked. 
+
+<br/>
 
 #### **Subsequent Mask**
 
