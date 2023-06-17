@@ -13,6 +13,7 @@ toc_sticky : true
 - [**Implementation with PyTorch**](#implementation-with-pytorch)
 - [**Constraint of Recurrent Models : Sequential Computation**](#constraint-of-recurrent-models--sequential-computation)
 - [**Attention of Transformer**](#attention-of-transformer)
+- [**Embedding and Positional Encoding**](#embedding-and-positional-encoding)
 - [**Encoder and Decoder Architecture**](#encoder-and-decoder-architecture)
 - [**Comparisoin of Computational Efficiency to Other Models**](#comparisoin-of-computational-efficiency-to-other-models)
 - [**Performance of Transformer in Machine Translation**](#performance-of-transformer-in-machine-translation)
