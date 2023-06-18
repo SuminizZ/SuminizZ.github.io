@@ -11,7 +11,7 @@ toc_sticky : true
 <br/>
 
 
-## PHYS 200 - Fundamentals of Physics (Yale OCW) : Classical Mechanics
+## PHYS 201 - Fundamentals of Physics II (Yale OCW) : Electromagnetism & Quantum Mechanics
 <br/>
 
 ### -  Lecture Notes
