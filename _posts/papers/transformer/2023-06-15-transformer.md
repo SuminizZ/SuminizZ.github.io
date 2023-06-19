@@ -242,7 +242,7 @@ toc_sticky : true
 
 - Performs two multi-head attentions: one for self-attention, which operates on the target input sequences, and one for cross-attention, which connects the output of the first attention layer of the decoder with the encoded source sequences transferrred from the encoder.
 
-- Output of second attention layer is passed feed-forward layer 
+- Output of second attention layer is then passed to feed-forward layer.
 
 - Residual connections around each of the sub-layers, followed by layer normalization.
 
@@ -280,7 +280,7 @@ toc_sticky : true
 
 - **Subsequent Masking**
 
-  - However, using teacher focing in decoder can cause another problem in transformer because it processes every sequential position in a parallelized manner.
+  - However, using teacher focing in decoder can cause another problem in transformer because it processes every sequential position all at once in a parallelized manner.
   
   - When the true labels are provided as input sequences during training, the decoder happens to possess full acess to the answers for entire positions even the subsequent ones to the current target. 
 
