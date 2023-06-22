@@ -8,7 +8,7 @@
             </li>
 
             <li class="nav-item dropdown
-            {% if page.url == '/papers/transformer/' or page.url == '/papers/cnn/' or page.url == '/papers/xai/%} active {% endif %}">
+            {% if page.url == '/papers/transformer/' or page.url == '/papers/cnn/' or page.url == '/papers/xai/' or page.url == '/papers/objd/'%} active {% endif %}">
                 <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('papers-dropdown')"
                    role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-vexpanded="false">
@@ -24,11 +24,15 @@
                     {% endif %}
                     {% if category[0] == "papers-xai" %}
                         {% assign xai_sum = category[1].size %}
-                    {% endif %}                                  
+                    {% endif %}   
+                    {% if category[0] == "papers-objd" %}
+                        {% assign objd_sum = category[1].size %}
+                    {% endif %}                               
                     {% endfor %}
                     <a class="dropdown-item" href="{{ "/papers/cnn" | prepend: site.baseurl }}">Convolutional Neural Networks ({{cnn_sum}})</a>
                     <a class="dropdown-item" href="{{ "/papers/transformer" | prepend: site.baseurl }}">Transformer ({{transformer_sum}})</a>
                     <a class="dropdown-item" href="{{ "/papers/xai" | prepend: site.baseurl }}">Interpretability & Explainability ({{xai_sum}})</a>
+                    <a class="dropdown-item" href="{{ "/papers/objd" | prepend: site.baseurl }}">Object Detection ({{objd_sum}})</a>
                 </div>
             </li>
 

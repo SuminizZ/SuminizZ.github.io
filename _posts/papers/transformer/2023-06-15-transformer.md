@@ -24,15 +24,15 @@ toc_sticky : true
 
 <br/>
 
-- [**Implementation**](https://github.com/SuminizZ/Implementation/tree/main/Transformer){:target="_blank"}
+- [**github/Implementation/Transformer**](https://github.com/SuminizZ/Implementation/tree/main/Transformer){:target="_blank"}
 
 
 <br/>
 
 ##  **Reference**
 
-- [Attention Is All You Need, Ashish Vaswani, 2017](https://arxiv.org/abs/1706.03762){:target="_blank"}
-- [[NLP 논문 구현] pytorch로 구현하는 Transformer (Attention is All You Need)](https://cpm0722.github.io/pytorch-implementation/transformer){:target="_blank"}
+- [**Attention Is All You Need, Ashish Vaswani, 2017**](https://arxiv.org/abs/1706.03762){:target="_blank"}
+- [**[NLP 논문 구현] pytorch로 구현하는 Transformer (Attention is All You Need)**](https://cpm0722.github.io/pytorch-implementation/transformer){:target="_blank"}
 
 <br/>
 

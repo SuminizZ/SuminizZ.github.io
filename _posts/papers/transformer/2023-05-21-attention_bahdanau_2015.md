@@ -20,8 +20,8 @@ toc_sticky : true
 <br/>
 
 ##  **Reference**
-- Bahdanau, Cho, & Bengio. Neural machine translation by jointly learning to align and translate. In ICLR, 2015.
-- [Attention for RNN Seq2Seq Models](https://www.youtube.com/watch?v=B3uws4cLcFw&list=PLgtf4d9zHHO8p_zDKstvqvtkv80jhHxoE&index=1){:target="_blank"}
+- **Bahdanau, Cho, & Bengio. Neural machine translation by jointly learning to align and translate. In ICLR, 2015.**
+- [**Attention for RNN Seq2Seq Models**](https://www.youtube.com/watch?v=B3uws4cLcFw&list=PLgtf4d9zHHO8p_zDKstvqvtkv80jhHxoE&index=1){:target="_blank"}
 
 <br/>
 
