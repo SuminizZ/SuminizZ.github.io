@@ -1,6 +1,6 @@
 ---
 layout: post
-title : "[cs231n 2020] Assignments 1 : Implementation of KNN, SVM Loss, Softmax Loss, Two Layer DNN"
+title : "[cs231n 2021] Assignments 1 : Implementation of KNN, SVM Loss, Softmax Loss, Two Layer DNN"
 img: dl/cs231n/cs231n.png
 categories: [dl-cs231n]  
 tag : [cs231n, DL, Assignments]
@@ -8,7 +8,7 @@ toc : true
 toc_sticky : true
 ---
 
-## CS231n 2020: Convolutional Neural Networks for Visual Recognition
+## CS231n 2021: Convolutional Neural Networks for Visual Recognition
 <br/>
 
 ###  Assignment 1
