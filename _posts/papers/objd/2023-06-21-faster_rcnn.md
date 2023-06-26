@@ -292,3 +292,4 @@ def get_anchor_labels(ious, valid_anchors):
 
 - Get parameterized locations of anchor boxes.
 
+    - Parameterizes the 4 coordinates of anchor boxes with each one's closest ground-truth boxes.
