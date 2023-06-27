@@ -956,7 +956,7 @@
      top: 0;
      left: 0;
      bottom: 0;
-     width: 210px;
+     width: 225px;
      height: 100%;
      padding: 10px 20px;
      /* background-color: hsla(240, 23%, 95%, 0.993); */
@@ -1031,7 +1031,7 @@
    }
 
    .category-box {
-     padding: 0px 0px 0px 210px;
+     padding: 0px 0px 0px 225px;
      font-size: 13px;
      font-weight: 500;
      /* color: #b21d1d; */
@@ -1043,7 +1043,7 @@
      /* max-width: 1000px; */
      font-weight: 550;
      max-height : 500px;
-     padding: 5px 15px 15px 230px;
+     padding: 5px 15px 15px 242px;
      display: -webkit-box;
      display: -webkit-flex;
      display: -ms-flexbox;
@@ -1142,8 +1142,8 @@
    }
 
    .post {
-     width: 85%;
-     max-width: 85%;
+     width: 88%;
+     max-width: 88%;
      /* max-height: 15rem; */
      /* padding: 0 270px 270px; */
      /* margin-left: 20px; */
