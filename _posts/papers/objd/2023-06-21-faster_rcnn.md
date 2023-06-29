@@ -276,7 +276,7 @@ def get_anchor_labels(ious, valid_anchors):
     pos_label_threshold = 0.7
     neg_label_threshold = 0.3
 
-    labels[max_iou_gtb_vals >=  pos_label_threshold] = 1     # have Io
+    labels[max_iou_gtb_vals >=  pos_label_threshold] = 1    
     labels[max_iou_gtb_vals <  neg_label_threshold] = 0
 
     max_iou_bbox = bbox[max_iou_gtb_idxs]
@@ -311,6 +311,36 @@ def get_anchor_labels(ious, valid_anchors):
     - otherwise, all are set to be -1, which will be ignored in further steps.
 
     - Fix the upper limit of the number of positive labels as 128. If the number of positively labeled boxes is bigger than the limit, randomly de-select them untill it reaches to the limit. 
+
+
+<br/>
+
+```python
+# parameterizes the 4 coordinates of anchor boxes with each one's closest ground-truth boxe
+
+def get_anchor_regs(ious, valid_anchors, bbox):
+    bbox = torch.Tensor(bbox)
+
+    max_iou_gt_idxs = ious.argmax(axis=1)
+    gt_locs = bbox[max_iou_gt_idxs]
+
+    w, h = (gt_locs[:, 2] - gt_locs[:, 0]), (gt_locs[:, 3] - gt_locs[:, 1])
+    ctr_x, ctr_y = gt_locs[:, 0] + w*0.5, gt_locs[:, 1] + h*0.5
+
+    wa, ha = (valid_anchors[:, 2] - valid_anchors[:, 0]), (valid_anchors[:, 3] - valid_anchors[:, 1])
+    ctr_xa, ctr_ya = valid_anchors[:, 0] + wa*0.5, valid_anchors[:, 1] + ha*0.5
+
+    eps = torch.finfo(w.dtype).eps
+    w, h, wa, ha = np.maximum(w, eps), np.maximum(h, eps), np.maximum(wa, eps), np.maximum(ha, eps)
+
+    dx, dy = (ctr_x - ctr_xa)/wa, (ctr_y - ctr_ya)/ha
+    dw, dh = torch.log(w/wa), torch.log(h/ha)
+
+    gt_regs = torch.cat([dx.unsqueeze(1), dy.unsqueeze(1), dw.unsqueeze(1), dh.unsqueeze(1)], dim=1)
+    return gt_regs
+```
+
+<br/>
 
 - Get **parameterized locations** of anchor boxes.
 
