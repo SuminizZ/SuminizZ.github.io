@@ -66,7 +66,7 @@ toc_sticky : true
 
 - **Faster R-CNN**
 
-    &emsp;&emsp;<img src="https://github.com/SuminizZ/Algorithm/assets/92680829/98fec387-b682-4759-b5c6-5661fbd50bd4" width="600">
+    &emsp;&emsp;<img src="https://github.com/SuminizZ/Algorithm/assets/92680829/98fec387-b682-4759-b5c6-5661fbd50bd4" width="800">
 
     - Faster R-CNN uses internal RPN, which shares CNN with object detection networks. This RPN directly generates region proposals from extracted feature maps and passes them into NMS and proposal target layers to get final region proposals.
 
@@ -84,7 +84,7 @@ toc_sticky : true
 
 <br/>
 
-- [**Full codes here**](https://github.com/SuminizZ/Implementation/tree/main/Faster_R-CNN)
+- [**Full codes here**](https://github.com/SuminizZ/Implementation/tree/main/Faster_R-CNN){:target="_blank"}
 
 <br/>
 
