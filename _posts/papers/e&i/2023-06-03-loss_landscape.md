@@ -136,9 +136,13 @@ toc_sticky : true
 
 #### **1. Skip Connection and Depth**
 
+<br/>
+
 &emsp;&emsp;**Figure 5. : The effect of Skip Connection on Non-Convexity**
 
 &emsp;<img src="https://github.com/SuminizZ/Physics/assets/92680829/aa8341fa-6d58-4141-b77e-074718907960" width="750">
+
+<br/>
 
 - Comparision between loss surface of ResNet (skip connection) and VGG-like (no skip connection) nets with incresing network depth from 20 to 110 layers optimized for CIFAR-10.
 
@@ -155,6 +159,7 @@ toc_sticky : true
 
 #### **2. Width of Networks : The Number of Filters Per Layer**
 
+<br/>
 
 &emsp;&emsp;**Figure 6. : Wide-ResNet-56 on CIFAR-10 with (top row) and without skip-connection (bottom row)**
 
@@ -190,6 +195,8 @@ toc_sticky : true
 
 ## **Visualization of Optimization Paths Using PCA Directions**
 
+<br/>
+
 - The problem of using randomly selected direction vectors is that those vectors are highly likely to be orthogonal to optimization trajectory.
 
 - This is because two random vectors are in extremely high dimensional space (the nubmer of parameters used can range from a few miliions or even bilions), while the trajectory lie in extremely low dimensional space (1 or 2). High dimensional vectors are orthogonal to random vectors with very high probability (called "blessing of dimensionality") and thus, orthogonal to low dimensional optimization trajectories.
@@ -198,6 +205,7 @@ toc_sticky : true
 
 &emsp;&emsp;&emsp;&emsp;<img src="https://github.com/SuminizZ/Physics/assets/92680829/79891a8c-0cb1-4cf5-9e97-2dfa5843f076" width="600">
 
+<br/>
 
 - To visualize the trajectory onto the loss surface, one can perform PCA to find a linear subspace that maximally preserves the original shape of optimization trajectory. 
     - First, creates the matrix $\large M = [\theta_0 - \theta_n; \dots ; \theta_{n-1} - \theta_n]$ and apply PCA to find two most explanatory components (2 eigenvectors with first and second biggest eigenvalues)
