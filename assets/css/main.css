@@ -1255,11 +1255,12 @@
    }
 
    .wrap-content a {
-    color: #825bb2;
+    color: #86808d;
   }
 
   .wrap-content a:hover {
-    color: #9c86c0;
+    color: #9053ec;
+    text-decoration: none;
   }
   
 
