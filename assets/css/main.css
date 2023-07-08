@@ -86,7 +86,7 @@
     * Add the correct margin in IE 8.
     */
    figure {
-     margin: 1em 20px;
+     margin: 1em 15px;
    }
 
    /**
@@ -166,7 +166,7 @@
    samp {
      font-family: MyCurFont, NanumGothicCoding, NanumGothicCoding;
      /* 1 */
-     font-size: 10px;
+     font-size: 7px;
      /* 2 */
    }
 
@@ -189,7 +189,7 @@
     * Add the correct font size in all browsers.
     */
    small {
-     font-size: 70%;
+     font-size: 65%;
    }
 
    /**
@@ -1251,7 +1251,7 @@
    .wrap-content {
      width: 1050px;
      padding: 15px;
-     font-size : 16.5px;
+     font-size : 16px;
    }
 
    .wrap-content a {
