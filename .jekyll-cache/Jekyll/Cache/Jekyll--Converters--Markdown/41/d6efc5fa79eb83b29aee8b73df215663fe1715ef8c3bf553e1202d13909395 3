@@ -1,0 +1,59 @@
+I"}<h3 id="docker-사용하기">docker 사용하기</h3>
+
+<h4 id="1-도커-이미지-가져오기">1. 도커 이미지 가져오기</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker pull <span class="o">[</span>image]
+</code></pre></div></div>
+
+<h4 id="2-dockerfile-생성">2. Dockerfile 생성</h4>
+
+<div class="language-docker highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">FROM</span><span class="s"> [사용할 OS image] #ubuntu:20.04</span>
+
+<span class="k">RUN </span>apt-get update
+<span class="k">RUN </span>apt-get <span class="nb">install </span>python3 <span class="nt">-y</span>
+<span class="k">RUN </span>apt-get <span class="nb">install </span>python3-pip <span class="nt">-y</span>
+
+<span class="k">RUN </span>pip3 <span class="nb">install </span>flask
+
+<span class="k">RUN </span>pip3 <span class="nb">install </span>pandas
+<span class="k">RUN </span>pip3 <span class="nb">install </span>numpy
+</code></pre></div></div>
+
+<h4 id="3-dockerfile을-이미지로-만들어-준다">3. Dockerfile을 이미지로 만들어 준다</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cd</span> <span class="o">[</span>Dockerfile이 있는 경로]       <span class="c"># C:\Users\LG\Desktop\yd_mid_project\yeardream_env_image</span>
+<span class="nv">$ </span>docker build <span class="nt">-t</span> <span class="s2">"이미지 이름"</span> <span class="nb">.</span>
+</code></pre></div></div>
+
+<h4 id="4-이미지를-container로-띄우기">4. 이미지를 container로 띄우기</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cd</span> <span class="o">[</span>path1 : 실제 docker를 연결할 경로]          <span class="c"># C:\Users\LG\Desktop\yd_mid_project\yeardream_env     </span>
+
+<span class="nv">$ </span>docker run <span class="nt">-it</span> <span class="nt">--name</span> <span class="s2">"container이름"</span> <span class="se">\</span>
+<span class="nt">-v</span> <span class="s2">"복사한 경로(path1)"</span> : <span class="s2">"docker 내부의 경로 (path2)"</span><span class="se">\ </span>     <span class="c"># path2 : /root/[whatever]</span>
+<span class="nt">-p</span> 8000:5000<span class="se">\ </span>                             <span class="c"># local : server</span>
+<span class="s2">"사용할 이미지 이름"</span> /bin/bash              <span class="c"># //bin/bash or bin/bash or bash (window 의 경우)</span>
+</code></pre></div></div>
+<ul>
+  <li>container 띄운 결과
+  <br />
+  <img src="https://user-images.githubusercontent.com/92680829/140861048-7aae8239-13f2-4ffe-8b84-fcf1c7530c1a.png" width="300px" /></li>
+</ul>
+
+<h4 id="5-그-외-container-실행-종료-및-삭제">5. 그 외 container 실행, 종료 및 삭제</h4>
+
+<ul>
+  <li>container 에서 나가려면  ctrl + d</li>
+  <li>컨테이너 종료 없이 빠져나오려면 <strong>Ctrl + P, Q</strong></li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#container 실행</span>
+<span class="nv">$ </span>docker start <span class="s2">"container이름"</span>
+
+<span class="c">#접속하기</span>
+<span class="nv">$ </span>docker <span class="nb">exec</span> <span class="nt">-it</span> <span class="s2">"container 이름"</span> /bin/bash
+
+<span class="c">#container 삭제하기</span>
+<span class="nv">$ </span>docker remove <span class="s2">"container 이름"</span>
+</code></pre></div></div>
+:ET

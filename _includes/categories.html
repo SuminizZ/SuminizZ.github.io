@@ -240,22 +240,22 @@
             </li> -->
 
             <li class="nav-item dropdown
-            {% if page.url == '/etc/ns/' %} active {% endif %}">
-                <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('etc-dropdown')"
+            {% if page.url == '/psm/cv/' %} active {% endif %}">
+                <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('psm-dropdown')"
                    role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
-                    ETC
+                    PSM
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="etc-dropdown">
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="psm-dropdown">
                     {% for category in site.categories %}
-                    {% if category[0] == "etc-ns" %}
-                        {% assign ns_sum = category[1].size %}
+                    {% if category[0] == "psm-cv" %}
+                        {% assign cv_sum = category[1].size %}
                     {% endif %}
                      <!-- {% if category[0] == "github-git" %}
                         {% assign git_sum = category[1].size %}
                     {% endif %}                                   -->
                     {% endfor %}
-                    <a class="dropdown-item" href="{{ "/etc/ns" | prepend: site.baseurl }}">Neuroscience ({{ns_sum}})</a>
+                    <a class="dropdown-item" href="{{ "/etc/ns" | prepend: site.baseurl }}">CV ({{cv_sum}})</a>
                     <!-- <a class="dropdown-item" href="{{ "/de/hadoop" | prepend: site.baseurl }}">Database</a> -->
                 </div>
             </li>

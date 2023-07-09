@@ -1,0 +1,451 @@
+I"5^<h2 id="outlines">Outlines</h2>
+<ul>
+  <li><a href="#reference"><strong>Reference</strong></a></li>
+  <li><a href="#implementation-with-pytorch"><strong>Implementation with PyTorch</strong></a></li>
+  <li><a href="#constraint-of-recurrent-models--sequential-computation"><strong>Constraint of Recurrent Models : Sequential Computation</strong></a></li>
+  <li><a href="#attention-of-transformer"><strong>Attention of Transformer</strong></a></li>
+  <li><a href="#embedding-and-positional-encoding"><strong>Embedding and Positional Encoding</strong></a></li>
+  <li><a href="#encoder-and-decoder-architecture"><strong>Encoder and Decoder Architecture</strong></a></li>
+  <li><a href="#comparisoin-of-computational-efficiency-to-other-models"><strong>Comparisoin of Computational Efficiency to Other Models</strong></a></li>
+  <li><a href="#performance-of-transformer-in-machine-translation"><strong>Performance of Transformer in Machine Translation</strong></a></li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="implementation-with-pytorch"><strong>Implementation with PyTorch</strong></h2>
+
+<p><br /></p>
+
+<ul>
+  <li><a href="https://github.com/SuminizZ/Implementation/tree/main/ViT" target="_blank"><strong>github/Implementation/ViT</strong></a></li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="reference"><strong>Reference</strong></h2>
+
+<ul>
+  <li><a href="https://arxiv.org/abs/1706.03762" target="_blank"><strong>An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale, Alexey Dosovitskiy, 2021</strong></a></li>
+  <li><a href="https://daebaq27.tistory.com/108" target="_blank"><strong>[Paper Review] Vision Transformer (ViT)</strong></a></li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="transformer-for-computer-vision"><strong>Transformer for Computer Vision</strong></h2>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p>This paper developed an image classfication model only with a pure transformer applied directly to the sequence of patched images while removing the convolutional networks completely out of the architecture, which has been typically used in vision task.</p>
+  </li>
+  <li>
+    <p>There have been multiple other trials to incorporate transformer networks into computer vision before. However, those works couldn’t achieve practical effectiveness to be applied to hardware accelerators as they require specialized attention patterns.</p>
+
+    <ul>
+      <li>
+        <p>Parmar et al. (2018) : Applied the self-attention only in local neighborhoods for each query pixel (not patchified) instead of globally.</p>
+      </li>
+      <li>
+        <p>Child et al. (2019) : Sparse Transformer - sparsely arrange the area subjected to attention</p>
+      </li>
+    </ul>
+
+    <p><br /></p>
+
+    <p>   <img src="https://github.com/SuminizZ/Algorithm/assets/92680829/6d8a0bbd-0393-4eda-bfce-2c513348db62" width="600" /></p>
+  </li>
+  <li>
+    <p>Vision Transformer (ViT) suggested in this paper, on the other hand, successfully utilized the transformer structure without any complex modifications.</p>
+  </li>
+  <li>
+    <p>The model tried to compensate the relative simpleness of the networks architecture by undergoing severe pre-training on lareger datasets (greater than ImageNet) and finally could outperform the CNN based ResNet-like networks with much fewer computational complexities.</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="transformer-vs-cnn--lack-of-inductive-bias"><strong>Transformer vs CNN : Lack of Inductive Bias</strong></h2>
+
+<p><br /></p>
+
+<h3 id="convolutional-layer"><strong>Convolutional Layer</strong></h3>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p>CNN is designed for specific application to image data, thus has strong inherent inductive bias about the structure of image data such as locality and translational invariance.</p>
+
+    <ul>
+      <li>
+        <p><strong>Locality</strong> : Apply fixed sized 2-Dimensional filters to capture neighborhood structure with an assumption that elements composing important patterns to recognize the image are adjacently localized in small area, rather than broadly spread over the image.</p>
+
+        <ul>
+          <li>Filters to capture a specific feature share identical parameters regardless of that feature’s absolute position on the image.</li>
+        </ul>
+      </li>
+    </ul>
+
+    <p><br /></p>
+
+    <p>   <img src="https://github.com/SuminizZ/Algorithm/assets/92680829/dacd026e-4bbb-4c0c-b18e-b5258c5f75d3" width="400" /></p>
+
+    <p><br /></p>
+
+    <ul>
+      <li><strong>Translational Invariance</strong> : Using locally focused filter, hardly affected by global translation of the image along with axes.</li>
+    </ul>
+
+    <p>  <img src="https://github.com/SuminizZ/Algorithm/assets/92680829/a5281226-50a7-480b-a3b9-c4394f31b8b8" width="600" /></p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<ul>
+  <li>Transformer, however, lacks some of these inductive biases associated with the characteristics of image data.</li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="adding-image-specific-inductive-bias--positional-embedding-pe"><strong>Adding Image-Specific Inductive Bias : Positional Embedding (PE)</strong></h3>
+
+<p><br /></p>
+
+<ul>
+  <li>In addition to pre-training on large datasets, ViT does have its own way to overcome its insufficient inductive bias.</li>
+</ul>
+
+<p><br /></p>
+
+<h4 id="learnable-position-embedding"><strong>Learnable Position Embedding</strong></h4>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p>PE matrix contains weights with shape of <strong>sequence length x embedding_dimension</strong>.</p>
+  </li>
+  <li>
+    <p>Different from postional encoding, all parameters are not fixed and optimized during training just like other learnable paramters in the networks.</p>
+  </li>
+  <li>
+    <p>Through this process, one can embed the sense of relative position (order) of each patch across the image inside the model.</p>
+  </li>
+  <li>
+    <p>The effect of position embeddings in spatial representation will be further addressed later in this post.</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="architecture-of-vit"><strong>Architecture of ViT</strong></h2>
+
+<p><br /></p>
+
+<p>  <strong>Figure 1: Model overview</strong></p>
+
+<p>  <img src="https://github.com/SuminizZ/Algorithm/assets/92680829/b0105523-a736-4d14-bbd8-f2be3b7b7d50" width="700" /></p>
+
+<p><br /></p>
+
+<p>  <img src="https://github.com/SuminizZ/Algorithm/assets/92680829/87541248-ebef-4da4-838d-5a5ad8b992ad" width="850" /></p>
+
+<p><br /></p>
+
+<h3 id="embeddings"><strong>Embeddings</strong></h3>
+
+<p><br /></p>
+
+<p>  <img src="https://github.com/SuminizZ/Algorithm/assets/92680829/aa883ade-0ba3-4420-8919-7534836751e8" width="1000" /></p>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>1. Image Input</strong> : n_batch (B) x channel (C) x Height (H) x Width (W)</p>
+  </li>
+  <li>
+    <p><strong>2. Patch + Position Embedding</strong> :</p>
+
+    <ul>
+      <li>
+        <p>Concatenate the output of both embeddings to get a final input for the encoder of ViT.</p>
+      </li>
+      <li>
+        <p><strong>Patch Embedding</strong> :</p>
+
+        <ul>
+          <li>
+            <p>Patchify : <strong>B x C x H x W → B x N x (C*P*P)</strong> where P is a patch size and N = (H*W) / (C*P*P)</p>
+          </li>
+          <li>
+            <p>Embedding :  Input_dim (C*P*P) → embed_dim (D)</p>
+          </li>
+        </ul>
+
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">class</span> <span class="nc">PatchEmbedding</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+            
+      <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">input_dim</span><span class="p">,</span> <span class="n">embed_dim</span><span class="p">):</span>
+          <span class="nb">super</span><span class="p">(</span><span class="n">PatchEmbedding</span><span class="p">,</span> <span class="bp">self</span><span class="p">).</span><span class="n">__init__</span><span class="p">()</span>
+          <span class="s">"""
+          Embedding image input (n_batch, channel, H, W) into (n_batch, N, (P*P*C)) where N = H*W/P*P*C
+          Args :
+              - p : patch size
+          """</span>
+          <span class="bp">self</span><span class="p">.</span><span class="n">p</span> <span class="o">=</span> <span class="n">p</span>
+          <span class="bp">self</span><span class="p">.</span><span class="n">patch_embedding</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">Rearrange</span><span class="p">(</span><span class="s">'b c (h1 p) (w1 p) → b (h1 w1) (c p p)'</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">p</span><span class="p">),</span>
+                                              <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">input_dim</span><span class="p">,</span> <span class="n">embed_dim</span><span class="p">))</span>
+
+      <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+          <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">patch_embedding</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+          <span class="k">return</span> <span class="n">x</span> 
+</code></pre></div>        </div>
+      </li>
+    </ul>
+
+    <p><br /></p>
+
+    <ul>
+      <li>
+        <p><strong>Positional Embedding</strong> :</p>
+
+        <ul>
+          <li>Shape : N x D</li>
+        </ul>
+
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">class</span> <span class="nc">PositionalEmbedding</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+
+      <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">embed_dim</span><span class="p">,</span> <span class="n">max_len</span><span class="o">=</span><span class="mi">5000</span><span class="p">):</span>
+          <span class="s">"""
+          Construct the PositionalEncoding layer.
+          Args:
+          - embed_dim: the size of the embed dimension
+          - dropout: the dropout value
+          - max_len: the maximum possible length of the incoming sequence
+          """</span>
+          <span class="nb">super</span><span class="p">(</span><span class="n">PositionalEncoding</span><span class="p">,</span> <span class="bp">self</span><span class="p">).</span><span class="n">__init__</span><span class="p">()</span>
+                
+          <span class="bp">self</span><span class="p">.</span><span class="n">pos_emb</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="n">max_len</span><span class="p">,</span> <span class="n">embed_dim</span><span class="p">))</span>      
+
+      <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+          <span class="n">n_batch</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">embed_dim</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">shape</span>
+          <span class="n">pe_output</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="p">.</span><span class="n">pos_emb</span><span class="p">[:</span><span class="n">N</span><span class="p">,</span> <span class="p">:]</span>
+          <span class="k">return</span> <span class="n">pe_output</span>
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p><strong>3. Classification Token Embedding</strong> :</p>
+
+    <ul>
+      <li>
+        <p>Add a specific a token to seqeunce dimension (<strong>N → N + 1</strong>) that holds classfication information</p>
+      </li>
+      <li>
+        <p>In the final step, this class token sequence will be linearly transformed to possess probability score for each class (<strong>D → num_classes</strong>)</p>
+
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">class</span> <span class="nc">ClassTokenEmbedding</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+
+      <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_batch</span><span class="p">,</span> <span class="n">embed_dim</span><span class="p">):</span>
+          <span class="nb">super</span><span class="p">(</span><span class="n">PatchEmbedding</span><span class="p">,</span> <span class="bp">self</span><span class="p">).</span><span class="n">__init__</span><span class="p">()</span>
+          <span class="s">"""
+          Add classfication token to the sequence of embedded patches. (n_batch, N, embed_dim) -&gt; (n_batch, N+1, embed_dim)
+          Args :
+              - n_batch : batch size
+              - embed_dim : patch embedded dimension 
+          """</span>
+          <span class="bp">self</span><span class="p">.</span><span class="n">classtoken</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n_batch</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">embed_dim</span><span class="p">))</span>
+
+      <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+                
+          <span class="k">return</span> <span class="n">torch</span><span class="p">.</span><span class="n">cat</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">classtoken</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="transformer-encoder-block"><strong>Transformer Encoder Block</strong></h3>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p>Almost identical with the transformer encoder structure in the previous post except that layernorm layer is implemented before MHA and MLP sub-layers</p>
+  </li>
+  <li>
+    <p>Consists of 2 sub-layers, MHA and MLP with GELU non-linearity, with residual connection inserted between each sub-layer.</p>
+  </li>
+  <li>
+    <p>Repeated for L times</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="mlp-head-for-classification-token-sequence"><strong>MLP Head for Classification Token Sequence</strong></h3>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p>Linear transformation applied to class token to compute final classification scores with preceding normalization step.</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">class</span> <span class="nc">ClassificationHead</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+      <span class="s">"""
+      Final MLP to get classification head : eithr mean or first element 
+      """</span>
+      <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">embed_dim</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">,</span> <span class="n">pool</span><span class="p">):</span>
+          <span class="nb">super</span><span class="p">(</span><span class="n">ClassificationHead</span><span class="p">,</span> <span class="bp">self</span><span class="p">).</span><span class="n">__init__</span><span class="p">()</span>
+
+          <span class="bp">self</span><span class="p">.</span><span class="n">pool</span> <span class="o">=</span> <span class="n">pool</span>
+          <span class="bp">self</span><span class="p">.</span><span class="n">layernorm</span> <span class="o">=</span> <span class="n">LayerNorm</span><span class="p">(</span><span class="n">embed_dim</span><span class="p">)</span>
+          <span class="bp">self</span><span class="p">.</span><span class="n">mlp</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Sequential</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">layernorm</span><span class="p">,</span>
+                                  <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">embed_dim</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">))</span>
+
+      <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">x</span><span class="p">):</span>
+          <span class="s">"""
+          Args
+              - x : output of encoder (n_batch, N, embed_dim)
+          """</span>
+          <span class="n">classhead</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">pool</span> <span class="o">==</span> <span class="s">'mean'</span> <span class="k">else</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
+
+          <span class="n">classhead</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">mlp</span><span class="p">(</span><span class="n">classhead</span><span class="p">)</span>
+          <span class="k">return</span> <span class="n">classhead</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="image-representation-encoded-in-vision-transformer"><strong>Image Representation Encoded in Vision Transformer</strong></h2>
+
+<p><br /></p>
+
+<p>  <strong>1. Figure 7 (left) : RGB values of first-layer embedding filters of ViT-L/32</strong></p>
+
+<p>  <img src="https://github.com/SuminizZ/Algorithm/assets/92680829/14cc2b36-b8a8-4c8c-acd8-cfdbe32bf897" width="500" /></p>
+
+<ul>
+  <li>
+    <p>28 principal Embedding filters of initial linear embedding layer. (Extracted through PCA)</p>
+  </li>
+  <li>
+    <p>Each filter seems to represent certain spatial patterns such as line, edge, circle, and rectangles, which are similar to the low-level features captured from early stages of CNN.</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<p>  <strong>2. Figure 7 (center) : Cosine similarity between the position embeddings</strong></p>
+
+<p>  <img src="https://github.com/SuminizZ/Algorithm/assets/92680829/79805d2c-7f5d-4a5f-9753-c68e816b519c" width="450" /></p>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p>Add learned position embedding to former linear projections.</p>
+  </li>
+  <li>
+    <p>Each box represents cosine similarity between position embeddings of the patch with indicated row and coloumn and position embeddings of all patches.</p>
+  </li>
+  <li>
+    <p>Closer patches tend to share similar positional embeddings, showing that position embedding can encode the relative distance between patches.</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<p>  <strong>2. Figure 7 (right) : Size of attended area by head and network depth</strong></p>
+
+<p>  <img src="https://github.com/SuminizZ/Algorithm/assets/92680829/1e58d67b-eb9a-47b2-8823-4b8d6e94102a" width="385" /></p>
+
+<ul>
+  <li>
+    <p>Attended area is analogous to the receptive field size in CNN, indicating the pixel distance across images a single attention can capture.</p>
+  </li>
+  <li>
+    <p>Each dot shows the average distance spanned by attention weights of one of the 16 heads at different layers.</p>
+  </li>
+  <li>
+    <p>Earlier layers tend to show high variations in the average distance, but still some of them attend to the entire image globally while others attend to the smaller localized area close to the query patch location.</p>
+  </li>
+  <li>
+    <p>As depth increases, attention distance increases to the most regions of the image for all heads.</p>
+  </li>
+  <li>
+    <p>This shows that each attention becomes able to capture higher-level features that reflect the general representation of the image as layer depth increases, which is quite similar to CNN.</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="comparision-of-multiple-vit-variants-with-state-of-the-art-on-popular-image-datasets"><strong>Comparision of Multiple ViT Variants with State-of-the-Art on Popular Image Datasets</strong></h2>
+
+<p><br /></p>
+
+<p>  <img src="https://github.com/SuminizZ/Algorithm/assets/92680829/6110c117-b00b-4c8f-8906-b14a13421cb7" width="600" /></p>
+
+<ul>
+  <li>ViT configurations on those used for BERT (Devlin et al., 2019). The base and large models are directly adopted from BERT and the larger huge model is added in this paer.</li>
+</ul>
+
+<p>  <strong>Table 2.</strong></p>
+
+<p>  <img src="https://github.com/SuminizZ/Algorithm/assets/92680829/594a4d29-64b6-46af-ab6c-42ec85360eca" width="900" /></p>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p>Large and huge ViT models pre-trained on the JFT-300M dataset outperform ResNet-based baselines on all fine-tuning datasets, while taking substantially less computational resources to pre-train. ViT pre-trained on the smaller public ImageNet-21k dataset performs well too, but sligtly weaker.</p>
+  </li>
+  <li>
+    <p>The results show that vision transformers pre-trained with larger dataset can achieve better performance in spite of weak inductive biases compared to CNN.</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="effect-of-larger-pre-training-datasets-on-the-performance-of-vit"><strong>Effect of Larger Pre-Training Datasets on the Performance of ViT</strong></h2>
+
+<p><br /></p>
+
+<p>  <strong>Figure 3, 4.</strong></p>
+
+<p>  <img src="https://github.com/SuminizZ/Algorithm/assets/92680829/b0bf4986-f898-4c79-bced-e2ea5039fe59" width="800" /></p>
+
+<ul>
+  <li>
+    <p>When pre-trained on the smallest dataset, ImageNet, ViT-Large models underperform compared to ViT-Base models and BiT ResNets (gray shaded area). With ImageNet-21k pre-training, their performances are similar.</p>
+  </li>
+  <li>
+    <p>Only with JFT-300M, the largest dataset, do the large ViTs start to overtake smaller ViT and BiT.</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<hr />
+<p><br /></p>
+
+<ul>
+  <li>
+    <p>To summarize, the vision transformer effectively utilized the transformer structure in computer vision with minimal modifications, surpassing the performance of previous state-of-the-art ResNet-based CNN models while significantly reducing computational cost.</p>
+  </li>
+  <li>
+    <p>The performance of ViT after fine-tuning depends largely on the size of pre-trained dataset.</p>
+  </li>
+</ul>
+:ET
