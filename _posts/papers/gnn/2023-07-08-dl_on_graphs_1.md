@@ -25,8 +25,8 @@ toc_sticky : true
 
 <br/>
 
-- [**Deep Learning on Graphs: A Survey, Ziwei Zhang, Peng Cui and Wenwu Zhu, 2020**](https://arxiv.org/pdf/1812.04202.pdf){:target="_blank"}
-- [**The Graph Neural Network Model, Franco Scarselli, 2009**](https://ro.uow.edu.au/cgi/viewcontent.cgi?article=10501&context=infopapers){:target="_blank"}
+- [**Deep Learning on Graphs: A Survey, Zhang et al, 2020**](https://arxiv.org/pdf/1812.04202.pdf){:target="_blank"}
+- [**The Graph Neural Network Model, Scarselli et al, 2009**](https://ro.uow.edu.au/cgi/viewcontent.cgi?article=10501&context=infopapers){:target="_blank"}
 
 <br/>
 
@@ -60,14 +60,14 @@ toc_sticky : true
 
 <br/>
 
-- Substantial research efforts have been made to tackle the challenges and apply deep learning methods to graphs. 
+- Substantial research efforts have been made to tackle these challenges and apply deep learning methods to graphs. 
 
-- Specifically, these methods can be classified as 5 categories, **Graph RNNs**, **GCNs**, **GAEs**, **Graph RL**, and **graph adversarial methods**. 
+- Specifically, the methods can be classified as 5 categories, **Graph RNNs**, **GCNs**, **GAEs**, **Graph RL**, and **graph adversarial methods**. 
 
 &emsp; <img width="950" alt="image" src="https://github.com/SuminizZ/Algorithm/assets/92680829/03369d64-73ff-4583-957d-36bfef662b9c">
 
 
-- This paper provides systematic and detailed overview of these prior works and connections between these multiple methods. 
+- This paper provides systematic and detailed overview of the prior works and connections between them.
 
 - Note that this paper mainly focus on unsigned graphs.
 
@@ -128,7 +128,7 @@ toc_sticky : true
 
 <br/>
    
-- RNNs refer to gated recurrent networks and LSTM-based models mainly designed for processing sequential data. 
+- RNNs refer to recurrent networks such as gated recurrent networks (GRU) and LSTM mainly designed for processing sequential data. 
 
 - Graph RNNs aim to capture recursive and sequential patterns of graphs. 
 
@@ -145,6 +145,8 @@ toc_sticky : true
 #### **1.1.1. Graph Neural Networks (GNNs)**
 
 <br/>
+
+- Extends a existing recurrent neural network for processing the data represented in graph domains.
 
 - Encode graph structural information where the node $\large v_{n}$ is represented as a low-dimensional state vector $\large x_{n}$ (denoted as $\large s_{n}$ in paper)
    
@@ -241,4 +243,17 @@ toc_sticky : true
 
 <br/>
 
-- 
+- There have been other attempts to generalize RNNs to capture graph-level patterns, including temporal patterns in dynamic graphs.
+
+- [**You et al**](https://arxiv.org/abs/1802.08773){:target='_blank'} : 
+
+    - GraphRNN learns to generate graphs by training on a representative set of graphs.
+
+    - It divides the graph generation process into a sequence of node and edge formations using two RNNS, one for the nodes and the other for edges, conditioned on the graph structure generated so far.
+
+-  **Dynamic graph neural network (DGNN)**
+
+    - Utilized LSTM to learn temporal dynamics between nodes. 
+
+    - Detailed explanation about this model is [**HERE**](){:target='_blank'}.
+
