@@ -86,9 +86,13 @@ toc_sticky : true
 
 - **Laplacian Matrix**
 
-    - $\large D - A$ 
+    &emsp; <img src="https://github.com/SuminizZ/Algorithm/assets/92680829/02ee8961-a60d-40f9-b9ca-198fedde1e88" width="480">
 
-    &emsp; <img src="https://github.com/SuminizZ/Algorithm/assets/92680829/02ee8961-a60d-40f9-b9ca-198fedde1e88" width="500">
+    - $\large D - A$
+
+        - $\large D(i, i) = \sum_{j} A(i, j)$
+
+        - A : Adjacency matrix whose element (i, j) is 1 if node i, j is connected and 0 if not.
 
     - Eigendecomposition of laplacian matrix is denoted as $\large L\,=\,Q\Lambda Q^{T}$ where $\large \Lambda$ is a diagonal matrix containing eigenvalues and $\large Q$ is corresponding eigenvectors.
 
@@ -204,7 +208,7 @@ toc_sticky : true
 
 - Replace the function $\large f_{w}$ with 
 
-    <img width="460" alt="image" src="https://github.com/SuminizZ/Algorithm/assets/92680829/812f3e9f-d8c0-492a-889d-76cd6641b805">
+    <img width="430" alt="image" src="https://github.com/SuminizZ/Algorithm/assets/92680829/812f3e9f-d8c0-492a-889d-76cd6641b805">
 
     - Instead of concatenating all neighboring nodes into a single vector, it sums their values across all neighborhoods.
 
@@ -243,7 +247,7 @@ toc_sticky : true
 
 <br/>
 
-- There have been other attempts to generalize RNNs to capture graph-level patterns, including temporal patterns in dynamic graphs.
+- There have been other attempts to apply RNNs to capture graph-level patterns, including temporal patterns in dynamic graphs.
 
 - [**You et al**](https://arxiv.org/abs/1802.08773){:target='_blank'} : 
 
@@ -257,3 +261,47 @@ toc_sticky : true
 
     - Detailed explanation about this model is [**HERE**](){:target='_blank'}.
 
+- **Graph RNN** combined with other structures such as **GCN** can be a good solution. 
+
+    - **RMGCNN** : applied LSTM to GCN to progressively reconstruct a grpah. 
+
+    - **Dynamic GCN** : applied an LSTM to gather the results of GCNs from different time slices in dynamic networks to capture both the spatial and temporal graph information.
+
+ 
+<br/>
+
+## **2. Graph Convolutional Networks (GCN)**
+
+<br/>
+
+- Aims to generalize convolutional networks (CNN) to graphs. 
+
+    **Illustration of GCN**
+
+    <img src="https://github.com/SuminizZ/Algorithm/assets/92680829/395a9aa0-93a8-4218-8239-c2acc051734a" width="620">
+
+<br/>
+    
+### **2.1. Convolution Operation**
+
+<br/>
+
+- There are largely two types of convolution methods used in GCN, one is spectral method and the other is spatial method.
+
+<br/>
+
+#### **2.1.1. Spectral Methods : Graph Fourier Transform**
+
+<br/>
+
+- Performs convolution by **transforming the node representation into the spectral domain** using fourier transform.
+
+- **Fourier transform of graph signal** : **Eigen-decomposition of laplacian matrix** of the graph. 
+
+    1. Fourier transform is a linear combinations of orthonormal bases. (here, each basis is a complex exponential function with different frequencies.)
+
+    2. Finding orthogonal basis of a symmetric matrix with real eigenvalues can be done by eigenvector decomposition.
+
+    &emsp; -> <span style='color:red'>If one can find a matrix associated to the graph signal and that matrix is real-symmetric, then fourier transform of the graph signal can be done by the eigen-decomposition of the matrix. </span>
+
+    3. laplacian matrix represents captures the 
