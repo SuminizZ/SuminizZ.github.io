@@ -29,8 +29,8 @@ toc_sticky : true
 
 <br/>
 
-- [**Convolutional Neural Networks on Graphs with Fast Localized Spectral Filtering, Defferrard et al, 2016**](https://arxiv.org/pdf/1606.09375.pdf){:target="_blank"}
-- [**Semi-Supervised Classification with Graph Convolutional Networks, Kipf et al, 2017**](https://arxiv.org/pdf/1609.02907.pdf){:target="_blank"}
+- [**DeepWalk: Online Learning of Social Representations, Perozzi et al, 2014**](https://arxiv.org/pdf/1403.6652.pdf){:target="_blank"}
+- [**node2vec: Scalable Feature Learning for Networks, Grover et al, 2017**](https://arxiv.org/pdf/1609.02907.pdf){:target="_blank"}
 - [**Spectral GCN**](https://tootouch.github.io/research/spectral_gcn/){:target="_blank"}
 - [**ChebNet PyTorch Implementation**](https://github.com/dsgiitr/graph_nets/blob/master/ChebNet/Chebnet_Blog%2BCode.ipynb){:target="_blank"}
 - [**[논문 리뷰] Graph Neural Networks (GCN, GraphSAGE, GAT)**](https://www.youtube.com/watch?v=yY-DpulpUwk){:target="_blank"}
