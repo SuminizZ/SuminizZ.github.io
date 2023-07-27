@@ -18,7 +18,7 @@ toc_sticky : true
         - [**1.2.1. RandomWalk**](#121-randomwalk)  
         - [**1.2.2. Hierarchical Skip-Gram**](#122-hierarchical-skip-gram)    
 - [**2. Node2Vec**](#2-node2vec)
-    - [**2.1. Random Walk with Search Bias**](#21-random-walk-with-search-bias)
+    - [**2.1. Biased Random Walks**](#21-biased-random-walks)
     - [**2.2. Comparison to Other Node Embedding Strategies**](#22-comparison-to-other-node-embedding-strategies) 
 
 <br/>
@@ -349,7 +349,7 @@ def HierarchicalSkipGram(wvi,  w):
 
 <br/>
 
-### **2.1. Random Walk with Search Bias**
+### **2.1. Biased Random Walks**
 
 <br/>
 
@@ -391,6 +391,8 @@ def HierarchicalSkipGram(wvi,  w):
 
     - 2 : one step further away from node $\large t$
 
+    - Based on the distance $\large d_{tx}$, node2vec determines the bias to be applied to the target edge $\large (v, x)$.
+
 <br/>
 
 #### **2.1.3. Parameters $\large p$ and $\large q$**
@@ -423,7 +425,7 @@ def HierarchicalSkipGram(wvi,  w):
 
     - DFS-like exploration.
 
-- setting all p and q to be 1 equals to previously introduced DeepWalk.
+- Setting p and q to be 1 (uniform for all $\large d_{tx}$) equals to previously introduced DeepWalk.
 
 - By biasing the random walk probability to flexibly explore various types of network structures, incorporating both BFS and DFS methods, node2vec can learn node embeddings that captures more comprehensive representation of the graph's neighborhood structure.
 
