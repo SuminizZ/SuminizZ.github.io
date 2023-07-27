@@ -427,7 +427,9 @@ def HierarchicalSkipGram(wvi,  w):
 
 - Setting p and q to be 1 (uniform for all $\large d_{tx}$) equals to previously introduced DeepWalk.
 
-- By biasing the random walk probability to flexibly explore various types of network structures, incorporating both BFS and DFS methods, node2vec can learn node embeddings that captures more comprehensive representation of the graph's neighborhood structure.
+- By biasing the random walk probability with these parameters p and q, node2vec flexibly explores various types of network structures, incorporating both BFS and DFS methods.
+
+- Hence, it can learn node embeddings that captures more comprehensive representation of the graph's neighborhood structure.
 
 <br/>
 
