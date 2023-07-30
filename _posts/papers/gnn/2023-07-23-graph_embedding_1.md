@@ -1,6 +1,6 @@
 ---
 layout: post
-title : "[Paper Review & Partial Implementation] Graph Embeddings - Part 1 : DeepWalk, Node2Vec"
+title : "[Paper Review & Partial Implementation] Random Walks Based Graph Embeddings : DeepWalk, Node2Vec"
 img: papers/gnn/gembd1.png
 categories: [papers-gnn]  
 tag : [Paper Review, GNN, Graph Embedding, DeepWalk, Node2Vec]
@@ -458,4 +458,4 @@ in several real-world networks from diverse domains.
 
 - Up until now, I've examined two graph embedding methods based on random walks: DeepWalk and node2vec, which are considered relatively early in the field.
 
-- The next post will adress two different graph embedding approaches, SDNE and Graph2Vec, which do not rely on random walk algorithms.
+- Next posts will adress different types of graph embedding approaches, SDNE, GraphSAGE, and GAT, which do not rely on random walk algorithms.
