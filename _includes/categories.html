@@ -8,7 +8,7 @@
             </li>
 
             <li class="nav-item dropdown
-            {% if page.url == '/papers/transformer/' or page.url == '/papers/cnn/' or page.url == '/papers/xai/' or page.url == '/papers/objd/' or page.url == '/papers/gnn/'%} active {% endif %}">
+            {% if page.url == '/papers/transformer/' or page.url == '/papers/cnn/' or page.url == '/papers/xai/' or page.url == '/papers/rep/' or page.url == '/papers/objd/' or page.url == '/papers/gnn/'%} active {% endif %}">
                 <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('papers-dropdown')"
                    role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-vexpanded="false">
@@ -25,6 +25,9 @@
                     {% if category[0] == "papers-xai" %}
                         {% assign xai_sum = category[1].size %}
                     {% endif %}   
+                    {% if category[0] == "papers-rep" %}
+                        {% assign rep_sum = category[1].size %}
+                    {% endif %}  
                     {% if category[0] == "papers-objd" %}
                         {% assign objd_sum = category[1].size %}
                     {% endif %}
@@ -34,7 +37,8 @@
                     {% endfor %}
                     <a class="dropdown-item" href="{{ "/papers/cnn" | prepend: site.baseurl }}">Convolutional Neural Networks ({{cnn_sum}})</a>
                     <a class="dropdown-item" href="{{ "/papers/transformer" | prepend: site.baseurl }}">Transformer ({{transformer_sum}})</a>
-                    <a class="dropdown-item" href="{{ "/papers/xai" | prepend: site.baseurl }}">Explainable AI({{xai_sum}})</a>
+                    <a class="dropdown-item" href="{{ "/papers/xai" | prepend: site.baseurl }}">Explainable AI ({{xai_sum}})</a>
+                    <a class="dropdown-item" href="{{ "/papers/rep" | prepend: site.baseurl }}">Representation ({{rep_sum}})</a>
                     <a class="dropdown-item" href="{{ "/papers/objd" | prepend: site.baseurl }}">Object Detection ({{objd_sum}})</a>
                     <a class="dropdown-item" href="{{ "/papers/gnn" | prepend: site.baseurl }}">Graph Neural Networks ({{gnn_sum}})</a>
                 </div>
