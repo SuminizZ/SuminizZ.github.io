@@ -18,7 +18,7 @@ toc_sticky : true
 
 - [**03. Connection and Geodesics**](https://drive.google.com/file/d/1KLgP8KoHsGSiHbSXXDtN_xBaW2mjCL9q/view?usp=drive_link){:target="_blank"}
 
-- [**04. Levi-Civita Connection, Riemannian Curvature Tensor**](https://drive.google.com/file/d/1mJ9nMph0T19agDRLRGniUEnQC5X2mwk1/view?usp=drive_link){:target="_blank"}
+- [**04. Levi-Civita Connection, Riemannian Curvature Tensor**](https://drive.google.com/file/d/17RDey3DuqgdKpQRpoo887jCjf2n5u0aQ/view?usp=drive_link){:target="_blank"}
   
 
 <br/>
