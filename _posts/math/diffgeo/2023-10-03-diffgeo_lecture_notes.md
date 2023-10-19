@@ -1,6 +1,6 @@
 ---
 layout: post
-title : "[Geometry] Basic Concepts on Differential Geometry"
+title : "[Differential Geometry] Basic Concepts on Differential Geometry"
 img: diffgeo/diffgeo.jpeg
 categories: [math-diffgeo]  
 tag : [Math, Geometry, Differential Geometry]
