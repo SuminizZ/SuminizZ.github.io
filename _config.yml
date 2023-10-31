@@ -8,7 +8,7 @@ site-twitter: #if your site has a twitter account, enter it here
 # Author Settings
 author: SUMIN PARK # add your name
 author-img: me.jpg # add your photo
-# about-author: One Step at a Time # add description
+about-author: Interested in Geometric Deep Neural Networks and Their Phyiscal Applications  # add description
 # social-twitter: # add your Twitter handle
 # social-facebook: # add your Facebook handle
 social-github: "fab fa-fw fa-github"
