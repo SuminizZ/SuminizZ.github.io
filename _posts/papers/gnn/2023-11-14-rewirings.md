@@ -1,6 +1,6 @@
 ---
 layout: post
-title : "[Paper Review] Summaries of Papers on Graph Rewiring to Address Over-Squashing"
+title : "[Papers Review] Summaries of Papers on Graph Rewiring to Address Over-Squashing"
 img: papers/gnn/rewirings.png
 categories: [papers-gnn]  
 tag : [Paper Review, GNN, Rewiring, Over-Squashing, LRI]
