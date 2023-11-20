@@ -1,7 +1,7 @@
 ---
 layout: post
 title : "[MIT RES 18-009] Notes on Learn Differential Equations"
-img: diffeq/mit18009.png
+img: diffeq/mitdiffeq.png
 categories: [math-diffeq]  
 tag : [Math, MIT OCW, Differential Equations]
 toc : true2020
