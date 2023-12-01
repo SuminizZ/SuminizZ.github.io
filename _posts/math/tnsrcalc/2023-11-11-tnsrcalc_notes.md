@@ -19,6 +19,10 @@ toc_sticky : true
 - [**03_Tensor Product - Raising and Lower Index with Metric Tensor**](https://drive.google.com/file/d/137poJaeFo0FhmrRhOJIqUezWzYwwrtRe/view?usp=drive_link){:target="_blank"}
 
 - [**04_Metric Tensor - Arc Length on Flat or Curved Space**](https://drive.google.com/file/d/19eMAsSluE3roRz-O2a4MeqmzFgJegTmo/view?usp=drive_link){:target="_blank"}
+
+- [**05_Gradient vs Differential Operator**](https://drive.google.com/file/d/1XP5Tm23DTmJycJCgC0rKlMqDtJnM5GP4/view?usp=drive_link){:target="_blank"}
+
+- [**06_Geodesic Euqation and Crystoffel Symbols**](https://drive.google.com/file/d/1TAl1dqfw7HN3fqpvRpA2vmPTIipNUE9E/view?usp=drive_link){:target="_blank"}
   
 
 <br/>

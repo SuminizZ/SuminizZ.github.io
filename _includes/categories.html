@@ -74,7 +74,7 @@
             </li>
 
             <li class="nav-item dropdown
-            {% if page.url == '/ml/cs229/' or page.url == '/ml/opt/' or page.url == 'ml/inform' %} active {% endif %}">
+            {% if page.url == '/ml/cs229/' or page.url == '/ml/opt/' or page.url == 'ml/inform' or page.url == 'ml/rl' %} active {% endif %}">
                 <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('ml-dropdown')"
                    role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-vexpanded="false">
@@ -90,11 +90,15 @@
                     {% endif %} 
                     {% if category[0] == "ml-inform" %}
                         {% assign inform_sum = category[1].size %}
-                    {% endif %}                                   
+                    {% endif %}    
+                    {% if category[0] == "ml-rl" %}
+                        {% assign rl_sum = category[1].size %}
+                    {% endif %}                                
                     {% endfor %}
                     <a class="dropdown-item" href="{{ "/ml/cs229" | prepend: site.baseurl }}">CS229 ({{cs229_sum}})</a>
                     <a class="dropdown-item" href="{{ "/ml/opt" | prepend: site.baseurl }}">Optimization ({{opt_sum}})</a>
                     <a class="dropdown-item" href="{{ "/ml/inform" | prepend: site.baseurl }}">Information Theory ({{inform_sum}})</a>
+                    <a class="dropdown-item" href="{{ "/ml/rl" | prepend: site.baseurl }}">Reinforcement Learning ({{rl_sum}})</a>
                 </div>
             </li>
 
