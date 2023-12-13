@@ -1,16 +1,16 @@
-I"��<h2 id="필요한-module-import">필요한 module import</h2>
+I"ה<h2 id="필요한-module-import">필요한 module import</h2>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">konlpy</span>
 </code></pre></div></div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span> 
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span> 
+<span class="kn">import</span> <span class="n">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="n">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 
-<span class="kn">from</span> <span class="nn">konlpy.tag</span> <span class="kn">import</span> <span class="n">Twitter</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
-<span class="kn">from</span> <span class="nn">wordcloud</span> <span class="kn">import</span> <span class="n">WordCloud</span>
-<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span> <span class="n">konlpy.tag</span> <span class="kn">import</span> <span class="n">Twitter</span>
+<span class="kn">from</span> <span class="n">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="kn">from</span> <span class="n">wordcloud</span> <span class="kn">import</span> <span class="n">WordCloud</span>
+<span class="kn">from</span> <span class="n">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
 </code></pre></div></div>
 
 <h2 id="naver-twitter-에서-크롤링한-데이터-load-하기">Naver, Twitter 에서 크롤링한 데이터 load 하기</h2>
@@ -18,18 +18,18 @@
   <li>crawling 할 때 사용한 source code 는 <a href="https://suminizz.github.io/categories/crawling">여기</a></li>
 </ul>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">naver_emo</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s">"/content/Naver/NAVER_코로나, 감정.xlsx"</span><span class="p">)</span>
-<span class="n">naver_mood</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s">"/content/Naver/NAVER_코로나, 기분.xlsx"</span><span class="p">)</span>
-<span class="n">naver_daily</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s">"/content/Naver/NAVER_코로나, 일상.xlsx"</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">naver_emo</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">read_excel</span><span class="p">(</span><span class="s">"/content/Naver/NAVER_코로나, 감정.xlsx"</span><span class="p">)</span>
+<span class="n">naver_mood</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">read_excel</span><span class="p">(</span><span class="s">"/content/Naver/NAVER_코로나, 기분.xlsx"</span><span class="p">)</span>
+<span class="n">naver_daily</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">read_excel</span><span class="p">(</span><span class="s">"/content/Naver/NAVER_코로나, 일상.xlsx"</span><span class="p">)</span>
 
-<span class="n">twitter_emo</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s">"/content/Twitter/Tweets_코로나, 감정.xlsx"</span><span class="p">)</span>
-<span class="n">twitter_mood</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s">"/content/Twitter/Tweets_코로나, 기분.xlsx"</span><span class="p">)</span>
-<span class="n">twitter_daily</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s">"/content/Twitter/Tweets_코로나, 일상.xlsx"</span><span class="p">)</span>
+<span class="n">twitter_emo</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">read_excel</span><span class="p">(</span><span class="s">"/content/Twitter/Tweets_코로나, 감정.xlsx"</span><span class="p">)</span>
+<span class="n">twitter_mood</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">read_excel</span><span class="p">(</span><span class="s">"/content/Twitter/Tweets_코로나, 기분.xlsx"</span><span class="p">)</span>
+<span class="n">twitter_daily</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">read_excel</span><span class="p">(</span><span class="s">"/content/Twitter/Tweets_코로나, 일상.xlsx"</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">naver_emo</span><span class="p">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s">'Tweets'</span> <span class="p">:</span> <span class="s">'Contents'</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="n">naver_mood</span><span class="p">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s">'Tweets'</span> <span class="p">:</span> <span class="s">'Contents'</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="n">naver_daily</span><span class="p">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s">'Tweets'</span> <span class="p">:</span> <span class="s">'Contents'</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">naver_emo</span><span class="p">.</span><span class="nf">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s">'Tweets'</span> <span class="p">:</span> <span class="s">'Contents'</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">naver_mood</span><span class="p">.</span><span class="nf">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s">'Tweets'</span> <span class="p">:</span> <span class="s">'Contents'</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">naver_daily</span><span class="p">.</span><span class="nf">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s">'Tweets'</span> <span class="p">:</span> <span class="s">'Contents'</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </code></pre></div></div>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">naver_daily</span>
@@ -148,19 +148,19 @@
 <h4 id="1-문장--형태소-단위로-잘라서-list-에-append">1. 문장 –&gt; 형태소 단위로 잘라서 list 에 append</h4>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">get_morphs</span><span class="p">(</span><span class="n">df_naver</span><span class="p">,</span> <span class="n">df_twitter</span><span class="p">):</span>
-    <span class="n">twt</span> <span class="o">=</span> <span class="n">Twitter</span><span class="p">()</span>
+    <span class="n">twt</span> <span class="o">=</span> <span class="nc">Twitter</span><span class="p">()</span>
 
     <span class="k">global</span> <span class="n">remove</span>
     <span class="n">morphs</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">morphs_twt</span> <span class="o">=</span> <span class="p">[]</span>
 
-    <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">df_naver</span><span class="p">[</span><span class="s">'Contents'</span><span class="p">]):</span>
-        <span class="n">morph</span> <span class="o">=</span> <span class="n">twt</span><span class="p">.</span><span class="n">pos</span><span class="p">(</span><span class="n">sentence</span><span class="p">)</span>
-        <span class="n">morphs</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">morph</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="nf">tqdm</span><span class="p">(</span><span class="n">df_naver</span><span class="p">[</span><span class="s">'Contents'</span><span class="p">]):</span>
+        <span class="n">morph</span> <span class="o">=</span> <span class="n">twt</span><span class="p">.</span><span class="nf">pos</span><span class="p">(</span><span class="n">sentence</span><span class="p">)</span>
+        <span class="n">morphs</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">morph</span><span class="p">)</span>
 
-    <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">df_twitter</span><span class="p">[</span><span class="s">'Tweets'</span><span class="p">]):</span>
-        <span class="n">morph</span> <span class="o">=</span> <span class="n">twt</span><span class="p">.</span><span class="n">pos</span><span class="p">(</span><span class="n">sentence</span><span class="p">)</span>
-        <span class="n">morphs_twt</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">morph</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="nf">tqdm</span><span class="p">(</span><span class="n">df_twitter</span><span class="p">[</span><span class="s">'Tweets'</span><span class="p">]):</span>
+        <span class="n">morph</span> <span class="o">=</span> <span class="n">twt</span><span class="p">.</span><span class="nf">pos</span><span class="p">(</span><span class="n">sentence</span><span class="p">)</span>
+        <span class="n">morphs_twt</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">morph</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">morphs</span><span class="p">,</span> <span class="n">morphs_twt</span> 
 </code></pre></div></div>
@@ -168,36 +168,36 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">get_freqs_all</span><span class="p">(</span><span class="n">morphs</span><span class="p">,</span> <span class="n">morphs_twt</span><span class="p">,</span> <span class="n">keyword</span><span class="p">):</span>
     <span class="n">words</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">morphs</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="nf">tqdm</span><span class="p">(</span><span class="n">morphs</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">sentence</span><span class="p">:</span>
           <span class="k">if</span> <span class="n">elem</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s">"Noun"</span><span class="p">,</span> <span class="s">"Adjective"</span><span class="p">,</span> <span class="s">"Adverb"</span><span class="p">]:</span>
               <span class="n">tmp</span> <span class="o">=</span> <span class="n">elem</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
               <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">remove</span><span class="p">:</span>
-                  <span class="n">tmp</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="s">""</span><span class="p">)</span>
+                  <span class="n">tmp</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">.</span><span class="nf">replace</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="s">""</span><span class="p">)</span>
               <span class="k">if</span> <span class="n">tmp</span><span class="p">:</span>
-                <span class="n">words</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
+                <span class="n">words</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
 
     <span class="n">words_twt</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">morphs_twt</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="nf">tqdm</span><span class="p">(</span><span class="n">morphs_twt</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">sentence</span><span class="p">:</span>
           <span class="k">if</span> <span class="n">elem</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s">"Noun"</span><span class="p">,</span> <span class="s">"Adjective"</span><span class="p">,</span> <span class="s">"Adverb"</span><span class="p">]:</span>
               <span class="n">tmp</span> <span class="o">=</span> <span class="n">elem</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
               <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">remove</span><span class="p">:</span>
-                  <span class="n">tmp</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="s">""</span><span class="p">)</span>
+                  <span class="n">tmp</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">.</span><span class="nf">replace</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="s">""</span><span class="p">)</span>
               <span class="k">if</span> <span class="n">tmp</span><span class="p">:</span>
-                <span class="n">words_twt</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
+                <span class="n">words_twt</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
 
-    <span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span>
-    <span class="n">words_twt</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words_twt</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span> <span class="k">if</span> <span class="nf">len</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">words_twt</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words_twt</span> <span class="k">if</span> <span class="nf">len</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span>
 
     <span class="n">words_total</span> <span class="o">=</span> <span class="n">words</span> <span class="o">+</span> <span class="n">words_twt</span>
 
-    <span class="n">counter_total</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">words_total</span><span class="p">)</span>
-    <span class="n">freqs_total</span> <span class="o">=</span> <span class="n">counter_total</span><span class="p">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">freqs_total</span><span class="p">[:</span><span class="mi">30</span><span class="p">])</span>
+    <span class="n">counter_total</span> <span class="o">=</span> <span class="nc">Counter</span><span class="p">(</span><span class="n">words_total</span><span class="p">)</span>
+    <span class="n">freqs_total</span> <span class="o">=</span> <span class="n">counter_total</span><span class="p">.</span><span class="nf">most_common</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">freqs_total</span><span class="p">[:</span><span class="mi">30</span><span class="p">])</span>
 
-    <span class="n">freqs_total_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">freqs_total</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s">'키워드'</span><span class="p">,</span> <span class="s">'빈도수'</span><span class="p">])</span>
-    <span class="n">freqs_total_df</span><span class="p">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">keyword</span> <span class="o">+</span> <span class="s">"_total_freq.xlsx"</span><span class="p">)</span>
+    <span class="n">freqs_total_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nc">DataFrame</span><span class="p">(</span><span class="n">freqs_total</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s">'키워드'</span><span class="p">,</span> <span class="s">'빈도수'</span><span class="p">])</span>
+    <span class="n">freqs_total_df</span><span class="p">.</span><span class="nf">to_excel</span><span class="p">(</span><span class="n">keyword</span> <span class="o">+</span> <span class="s">"_total_freq.xlsx"</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">freqs_total</span>
 
@@ -211,23 +211,23 @@
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
 </code></pre></div></div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">matplotlib.font_manager</span> <span class="k">as</span> <span class="n">fm</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">matplotlib.font_manager</span> <span class="k">as</span> <span class="n">fm</span>
 <span class="n">fontpath</span><span class="o">=</span><span class="s">"/usr/share/fonts/truetype/nanum/NanumBarunGothic.ttf"</span>
-<span class="n">font</span> <span class="o">=</span> <span class="n">fm</span><span class="p">.</span><span class="n">FontProperties</span><span class="p">(</span><span class="n">fname</span><span class="o">=</span><span class="n">fontpath</span><span class="p">)</span>
+<span class="n">font</span> <span class="o">=</span> <span class="n">fm</span><span class="p">.</span><span class="nc">FontProperties</span><span class="p">(</span><span class="n">fname</span><span class="o">=</span><span class="n">fontpath</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">wordcloud</span> <span class="kn">import</span> <span class="n">ImageColorGenerator</span>
-<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">wordcloud</span> <span class="kn">import</span> <span class="n">ImageColorGenerator</span>
+<span class="kn">from</span> <span class="n">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 
-<span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">Image</span><span class="p">.</span><span class="nb">open</span><span class="p">(</span><span class="s">'/content/cloud2.jpg'</span><span class="p">))</span>
-<span class="n">colors</span> <span class="o">=</span> <span class="n">ImageColorGenerator</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">(</span><span class="n">Image</span><span class="p">.</span><span class="nf">open</span><span class="p">(</span><span class="s">'/content/cloud2.jpg'</span><span class="p">))</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="nc">ImageColorGenerator</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
 </code></pre></div></div>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">get_wordcloud</span><span class="p">(</span><span class="n">freqs</span><span class="p">,</span> <span class="n">add_stopwords</span><span class="p">):</span>
     <span class="n">stopwords</span> <span class="o">=</span> <span class="p">[</span><span class="s">"기초"</span><span class="p">,</span> <span class="s">"같고"</span><span class="p">,</span> <span class="s">"자주"</span><span class="p">,</span> <span class="s">"인해"</span><span class="p">,</span> <span class="s">"아이"</span><span class="p">]</span>
     <span class="n">stopwords</span> <span class="o">+=</span> <span class="n">add_stopwords</span>
     
-    <span class="n">wordcloud</span> <span class="o">=</span> <span class="n">WordCloud</span><span class="p">(</span><span class="n">font_path</span><span class="o">=</span><span class="n">fontpath</span><span class="p">,</span> 
+    <span class="n">wordcloud</span> <span class="o">=</span> <span class="nc">WordCloud</span><span class="p">(</span><span class="n">font_path</span><span class="o">=</span><span class="n">fontpath</span><span class="p">,</span> 
                           <span class="n">background_color</span><span class="o">=</span><span class="s">"black"</span><span class="p">,</span>
                           <span class="n">relative_scaling</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
                           <span class="n">colormap</span><span class="o">=</span><span class="s">'tab20c'</span><span class="p">,</span>
@@ -235,16 +235,16 @@
                           <span class="n">stopwords</span><span class="o">=</span><span class="n">stopwords</span><span class="p">,</span>
                           <span class="n">contour_color</span><span class="o">=</span><span class="s">'black'</span><span class="p">,</span>
                           <span class="p">)</span>
-    <span class="n">cloud</span> <span class="o">=</span> <span class="n">wordcloud</span><span class="p">.</span><span class="n">generate_from_frequencies</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">freqs</span><span class="p">))</span>
-    <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
-    <span class="n">plt</span><span class="p">.</span><span class="n">axis</span><span class="p">(</span><span class="s">"off"</span><span class="p">)</span>
-    <span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cloud</span><span class="p">)</span>
-    <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">cloud</span> <span class="o">=</span> <span class="n">wordcloud</span><span class="p">.</span><span class="nf">generate_from_frequencies</span><span class="p">(</span><span class="nf">dict</span><span class="p">(</span><span class="n">freqs</span><span class="p">))</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">axis</span><span class="p">(</span><span class="s">"off"</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">imshow</span><span class="p">(</span><span class="n">cloud</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
 </code></pre></div></div>
 
 <h2 id="코로나--감정-from-naver-twitter"><strong>코로나 + 감정 from Naver, Twitter</strong></h2>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">morphs_emo</span><span class="p">,</span> <span class="n">morph_emo_twt</span> <span class="o">=</span> <span class="n">get_morphs</span><span class="p">(</span><span class="n">naver_emo</span><span class="p">,</span> <span class="n">twitter_emo</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">morphs_emo</span><span class="p">,</span> <span class="n">morph_emo_twt</span> <span class="o">=</span> <span class="nf">get_morphs</span><span class="p">(</span><span class="n">naver_emo</span><span class="p">,</span> <span class="n">twitter_emo</span><span class="p">)</span>
 </code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/local/lib/python3.7/dist-packages/konlpy/tag/_okt.py:16: UserWarning: "Twitter" has changed to "Okt" since KoNLPy v0.4.5.
@@ -257,7 +257,7 @@
 <span class="n">morph_emo_twt</span>
 </code></pre></div></div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">emo_freqs</span> <span class="o">=</span> <span class="n">get_freqs_all</span><span class="p">(</span><span class="n">morphs_emo</span><span class="p">,</span> <span class="n">morph_emo_twt</span><span class="p">,</span> <span class="s">"감정"</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">emo_freqs</span> <span class="o">=</span> <span class="nf">get_freqs_all</span><span class="p">(</span><span class="n">morphs_emo</span><span class="p">,</span> <span class="n">morph_emo_twt</span><span class="p">,</span> <span class="s">"감정"</span><span class="p">)</span>
 </code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>100%|██████████| 88/88 [00:08&lt;00:00, 10.57it/s]
@@ -302,7 +302,7 @@
  ('시작', 1027)]
 </code></pre></div></div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">get_wordcloud</span><span class="p">(</span><span class="n">emo_freqs</span><span class="p">,</span> <span class="p">[])</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">get_wordcloud</span><span class="p">(</span><span class="n">emo_freqs</span><span class="p">,</span> <span class="p">[])</span>
 </code></pre></div></div>
 
 <p><img src="https://user-images.githubusercontent.com/92680829/144725015-1312eaba-96c7-4d6e-ac83-b66db841fb02.png" /></p>
@@ -311,7 +311,7 @@
 
 <h2 id="코로나--기분-from-naver-twitter"><strong>코로나 + 기분 from Naver, Twitter</strong></h2>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">morphs</span><span class="p">,</span> <span class="n">morphs_twt</span> <span class="o">=</span> <span class="n">get_morphs</span><span class="p">(</span><span class="n">naver_mood</span><span class="p">,</span> <span class="n">twitter_mood</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">morphs</span><span class="p">,</span> <span class="n">morphs_twt</span> <span class="o">=</span> <span class="nf">get_morphs</span><span class="p">(</span><span class="n">naver_mood</span><span class="p">,</span> <span class="n">twitter_mood</span><span class="p">)</span>
 </code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/local/lib/python3.7/dist-packages/konlpy/tag/_okt.py:16: UserWarning: "Twitter" has changed to "Okt" since KoNLPy v0.4.5.
@@ -324,7 +324,7 @@
 <span class="n">morphs_twt</span>
 </code></pre></div></div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mood_freqs</span> <span class="o">=</span> <span class="n">get_freqs_all</span><span class="p">(</span><span class="n">morphs</span><span class="p">,</span> <span class="n">morphs_twt</span><span class="p">,</span> <span class="s">"기분"</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mood_freqs</span> <span class="o">=</span> <span class="nf">get_freqs_all</span><span class="p">(</span><span class="n">morphs</span><span class="p">,</span> <span class="n">morphs_twt</span><span class="p">,</span> <span class="s">"기분"</span><span class="p">)</span>
 </code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>100%|██████████| 88/88 [00:10&lt;00:00,  8.22it/s]
@@ -334,14 +334,14 @@
 [('검사', 5808), ('접종', 3805), ('좋은', 3364), ('전환', 3328), ('사람', 3164), ('일상', 2946), ('여행', 2906), ('마스크', 2594), ('생각', 2505), ('블루', 2478), ('바이러스', 2473), ('후기', 2410), ('시간', 2144), ('시대', 2048), ('마음', 1965), ('하루', 1714), ('아이', 1620), ('우울', 1579), ('시작', 1493), ('극복', 1396), ('이후', 1370), ('생활', 1310), ('화이자', 1246), ('좋게', 1224), ('거리', 1196), ('상황', 1185), ('격리', 1179), ('인해', 1160), ('이제', 1155), ('집콕', 1142)]
 </code></pre></div></div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">get_wordcloud</span><span class="p">(</span><span class="n">mood_freqs</span><span class="p">,</span> <span class="p">[</span><span class="s">"그래도"</span><span class="p">,</span> <span class="s">"진자"</span><span class="p">,</span> <span class="s">"오늘"</span><span class="p">,</span> <span class="s">"같은"</span><span class="p">,</span> <span class="s">"기분"</span><span class="p">,</span> <span class="s">"진짜"</span><span class="p">,</span> <span class="s">"정말"</span><span class="p">,</span> <span class="s">"이번"</span><span class="p">,</span> <span class="s">"없는"</span><span class="p">,</span> <span class="s">"이렇게"</span><span class="p">,</span> <span class="s">"없이"</span><span class="p">])</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">get_wordcloud</span><span class="p">(</span><span class="n">mood_freqs</span><span class="p">,</span> <span class="p">[</span><span class="s">"그래도"</span><span class="p">,</span> <span class="s">"진자"</span><span class="p">,</span> <span class="s">"오늘"</span><span class="p">,</span> <span class="s">"같은"</span><span class="p">,</span> <span class="s">"기분"</span><span class="p">,</span> <span class="s">"진짜"</span><span class="p">,</span> <span class="s">"정말"</span><span class="p">,</span> <span class="s">"이번"</span><span class="p">,</span> <span class="s">"없는"</span><span class="p">,</span> <span class="s">"이렇게"</span><span class="p">,</span> <span class="s">"없이"</span><span class="p">])</span>
 </code></pre></div></div>
 
 <p><img src="https://user-images.githubusercontent.com/92680829/144725034-32001cf5-51d3-4ba6-ac2c-eef18ae9facf.png" /></p>
 
 <h2 id="코로나--일상-from-naver-twitter"><strong>코로나 + 일상 from Naver, Twitter</strong></h2>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">morphs_daily</span><span class="p">,</span> <span class="n">morphs_daily_twt</span> <span class="o">=</span> <span class="n">get_morphs</span><span class="p">(</span><span class="n">naver_daily</span><span class="p">,</span> <span class="n">twitter_daily</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">morphs_daily</span><span class="p">,</span> <span class="n">morphs_daily_twt</span> <span class="o">=</span> <span class="nf">get_morphs</span><span class="p">(</span><span class="n">naver_daily</span><span class="p">,</span> <span class="n">twitter_daily</span><span class="p">)</span>
 </code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/local/lib/python3.7/dist-packages/konlpy/tag/_okt.py:16: UserWarning: "Twitter" has changed to "Okt" since KoNLPy v0.4.5.
@@ -354,7 +354,7 @@
 <span class="n">morphs_daily_twt</span>
 </code></pre></div></div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">daily_freqs</span> <span class="o">=</span> <span class="n">get_freqs_all</span><span class="p">(</span><span class="n">morphs_daily</span><span class="p">,</span> <span class="n">morphs_daily_twt</span><span class="p">,</span> <span class="s">"일상"</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">daily_freqs</span> <span class="o">=</span> <span class="nf">get_freqs_all</span><span class="p">(</span><span class="n">morphs_daily</span><span class="p">,</span> <span class="n">morphs_daily_twt</span><span class="p">,</span> <span class="s">"일상"</span><span class="p">)</span>
 </code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>100%|██████████| 88/88 [00:08&lt;00:00, 10.14it/s]
@@ -399,7 +399,7 @@
  ('상황', 1544)]
 </code></pre></div></div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">get_wordcloud</span><span class="p">(</span><span class="n">daily_freqs</span><span class="p">,</span> <span class="p">[</span><span class="s">"일상"</span><span class="p">,</span> <span class="s">"이제"</span><span class="p">])</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">get_wordcloud</span><span class="p">(</span><span class="n">daily_freqs</span><span class="p">,</span> <span class="p">[</span><span class="s">"일상"</span><span class="p">,</span> <span class="s">"이제"</span><span class="p">])</span>
 </code></pre></div></div>
 
 <p><img src="https://user-images.githubusercontent.com/92680829/144725046-8c3c3fca-2f1c-47ca-aaa1-c44e04565a65.png" /></p>

@@ -1,4 +1,4 @@
-I"�*<p><br /></p>
+I"+<p><br /></p>
 
 <h2 id="백준-1446-지름길--실버-1">백준 1446 지름길 : 실버 1</h2>
 
@@ -24,23 +24,23 @@ heapq 를 정렬하는 데 드는 O(logn) 만큼의 시간이 안 걸렸고 + fo
 
 <p><br /></p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sys</span>
-<span class="n">n</span><span class="p">,</span> <span class="n">total</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">input</span><span class="p">().</span><span class="n">split</span><span class="p">())</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">sys</span>
+<span class="n">n</span><span class="p">,</span> <span class="n">total</span> <span class="o">=</span> <span class="nf">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nf">input</span><span class="p">().</span><span class="nf">split</span><span class="p">())</span>
 <span class="n">graph</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">dist</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">total</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
-<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-    <span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">sys</span><span class="p">.</span><span class="n">stdin</span><span class="p">.</span><span class="n">readline</span><span class="p">().</span><span class="n">split</span><span class="p">())</span>
-    <span class="n">graph</span><span class="p">.</span><span class="n">append</span><span class="p">((</span><span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">d</span><span class="p">))</span>
+<span class="n">dist</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">total</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="nf">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">sys</span><span class="p">.</span><span class="n">stdin</span><span class="p">.</span><span class="nf">readline</span><span class="p">().</span><span class="nf">split</span><span class="p">())</span>
+    <span class="n">graph</span><span class="p">.</span><span class="nf">append</span><span class="p">((</span><span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">d</span><span class="p">))</span>
 
 
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">dist</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">graph</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">e</span><span class="p">:</span>     
-                <span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">dist</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="o">+</span> <span class="n">d</span><span class="p">)</span>
-        <span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nf">min</span><span class="p">(</span><span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">dist</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="o">+</span> <span class="n">d</span><span class="p">)</span>
+        <span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nf">min</span><span class="p">(</span><span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
 
-<span class="k">print</span><span class="p">(</span><span class="n">dist</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">dist</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 </code></pre></div></div>
 
 <p><br /></p>
@@ -50,36 +50,36 @@ heapq 를 정렬하는 데 드는 O(logn) 만큼의 시간이 안 걸렸고 + fo
 
 <p><br /></p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
-<span class="kn">from</span> <span class="nn">heapq</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">sys</span>
+<span class="kn">from</span> <span class="n">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="n">heapq</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="n">sys</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">stdin</span><span class="p">.</span><span class="n">readline</span>
 
-<span class="n">n</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">input</span><span class="p">().</span><span class="n">split</span><span class="p">())</span>
-<span class="n">graph</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>          <span class="c1"># 0~150, default : 자기 노드 + 1 과 연결되어 있음
-</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
-    <span class="n">graph</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">append</span><span class="p">([</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>    <span class="c1"># connected node, weight
+<span class="n">n</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="nf">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nf">input</span><span class="p">().</span><span class="nf">split</span><span class="p">())</span>
+<span class="n">graph</span> <span class="o">=</span> <span class="nf">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>          <span class="c1"># 0~150, default : 자기 노드 + 1 과 연결되어 있음
+</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="n">graph</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="nf">append</span><span class="p">([</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>    <span class="c1"># connected node, weight
 </span>
-<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-    <span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">l</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">input</span><span class="p">().</span><span class="n">split</span><span class="p">())</span> 
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">l</span> <span class="o">=</span> <span class="nf">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nf">input</span><span class="p">().</span><span class="nf">split</span><span class="p">())</span> 
     <span class="k">if</span> <span class="n">e</span> <span class="o">&lt;=</span> <span class="n">d</span><span class="p">:</span>
-        <span class="n">graph</span><span class="p">[</span><span class="n">s</span><span class="p">].</span><span class="n">append</span><span class="p">([</span><span class="n">e</span><span class="p">,</span> <span class="n">l</span><span class="p">])</span>         <span class="c1"># 지름길로 연결된 노드도 추가
+        <span class="n">graph</span><span class="p">[</span><span class="n">s</span><span class="p">].</span><span class="nf">append</span><span class="p">([</span><span class="n">e</span><span class="p">,</span> <span class="n">l</span><span class="p">])</span>         <span class="c1"># 지름길로 연결된 노드도 추가
 </span>
-<span class="n">mindist</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="s">'inf'</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>       
+<span class="n">mindist</span> <span class="o">=</span> <span class="p">[</span><span class="nf">float</span><span class="p">(</span><span class="s">'inf'</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>       
 <span class="n">hq</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">heappush</span><span class="p">(</span><span class="n">hq</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>  <span class="c1"># 현재 노드까지 오면서 누적된 wgt, node
+<span class="nf">heappush</span><span class="p">(</span><span class="n">hq</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>  <span class="c1"># 현재 노드까지 오면서 누적된 wgt, node
 </span>
 <span class="k">while</span> <span class="n">hq</span><span class="p">:</span>
-    <span class="n">cur_w</span><span class="p">,</span> <span class="n">cur_n</span> <span class="o">=</span> <span class="n">heappop</span><span class="p">(</span><span class="n">hq</span><span class="p">)</span>
+    <span class="n">cur_w</span><span class="p">,</span> <span class="n">cur_n</span> <span class="o">=</span> <span class="nf">heappop</span><span class="p">(</span><span class="n">hq</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">mindist</span><span class="p">[</span><span class="n">cur_n</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">cur_w</span><span class="p">:</span> <span class="k">continue</span>     <span class="c1"># 더이상 작아질 수 없음
 </span>    
     <span class="k">for</span> <span class="n">nxt_n</span><span class="p">,</span> <span class="n">nxt_w</span> <span class="ow">in</span> <span class="n">graph</span><span class="p">[</span><span class="n">cur_n</span><span class="p">]:</span>
         <span class="n">dist</span> <span class="o">=</span> <span class="n">cur_w</span> <span class="o">+</span> <span class="n">nxt_w</span>
         <span class="k">if</span> <span class="n">mindist</span><span class="p">[</span><span class="n">nxt_n</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">dist</span><span class="p">:</span>
             <span class="n">mindist</span><span class="p">[</span><span class="n">nxt_n</span><span class="p">]</span> <span class="o">=</span> <span class="n">dist</span>
-            <span class="n">heappush</span><span class="p">(</span><span class="n">hq</span><span class="p">,</span> <span class="p">[</span><span class="n">mindist</span><span class="p">[</span><span class="n">nxt_n</span><span class="p">],</span> <span class="n">nxt_n</span><span class="p">])</span>       <span class="c1"># else : 이미 더 작은 거리로 힙큐에 들어가 있음
+            <span class="nf">heappush</span><span class="p">(</span><span class="n">hq</span><span class="p">,</span> <span class="p">[</span><span class="n">mindist</span><span class="p">[</span><span class="n">nxt_n</span><span class="p">],</span> <span class="n">nxt_n</span><span class="p">])</span>       <span class="c1"># else : 이미 더 작은 거리로 힙큐에 들어가 있음
 </span>
-<span class="k">print</span><span class="p">(</span><span class="n">mindist</span><span class="p">[</span><span class="n">d</span><span class="p">])</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">mindist</span><span class="p">[</span><span class="n">d</span><span class="p">])</span>
 </code></pre></div></div>
 
 <p><br /></p>

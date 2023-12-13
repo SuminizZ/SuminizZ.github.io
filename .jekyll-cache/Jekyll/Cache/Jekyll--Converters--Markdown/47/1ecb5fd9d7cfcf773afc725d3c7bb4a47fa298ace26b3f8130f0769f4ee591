@@ -1,4 +1,4 @@
-I"�<p><br /></p>
+I"�<p><br /></p>
 
 <h2 id="백준-1446-주간미팅--골드-4">백준 1446 주간미팅 : 골드 4</h2>
 
@@ -12,45 +12,45 @@
 
 <p><br /></p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">from</span> <span class="nn">heapq</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">sys</span>
+<span class="kn">from</span> <span class="n">heapq</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="nb">input</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">stdin</span><span class="p">.</span><span class="n">readline</span>
 
-<span class="n">n</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">e</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">input</span><span class="p">().</span><span class="n">split</span><span class="p">())</span>
-<span class="n">kst</span><span class="p">,</span> <span class="n">cf</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">input</span><span class="p">().</span><span class="n">split</span><span class="p">())</span>
-<span class="n">memb_loc</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">input</span><span class="p">().</span><span class="n">split</span><span class="p">()))</span>
+<span class="n">n</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">e</span> <span class="o">=</span> <span class="nf">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nf">input</span><span class="p">().</span><span class="nf">split</span><span class="p">())</span>
+<span class="n">kst</span><span class="p">,</span> <span class="n">cf</span> <span class="o">=</span> <span class="nf">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nf">input</span><span class="p">().</span><span class="nf">split</span><span class="p">())</span>
+<span class="n">memb_loc</span> <span class="o">=</span> <span class="nf">list</span><span class="p">(</span><span class="nf">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nf">input</span><span class="p">().</span><span class="nf">split</span><span class="p">()))</span>
 
-<span class="n">conn</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">v</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
-<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
-    <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">l</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">input</span><span class="p">().</span><span class="n">split</span><span class="p">())</span>
-    <span class="n">conn</span><span class="p">[</span><span class="n">a</span><span class="p">].</span><span class="n">append</span><span class="p">([</span><span class="n">b</span><span class="p">,</span> <span class="n">l</span><span class="p">])</span>          <span class="c1"># bidirectional connection
-</span>    <span class="n">conn</span><span class="p">[</span><span class="n">b</span><span class="p">].</span><span class="n">append</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">l</span><span class="p">])</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">v</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">l</span> <span class="o">=</span> <span class="nf">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nf">input</span><span class="p">().</span><span class="nf">split</span><span class="p">())</span>
+    <span class="n">conn</span><span class="p">[</span><span class="n">a</span><span class="p">].</span><span class="nf">append</span><span class="p">([</span><span class="n">b</span><span class="p">,</span> <span class="n">l</span><span class="p">])</span>          <span class="c1"># bidirectional connection
+</span>    <span class="n">conn</span><span class="p">[</span><span class="n">b</span><span class="p">].</span><span class="nf">append</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">l</span><span class="p">])</span>
 
 <span class="k">def</span> <span class="nf">dist</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">s</span> <span class="o">==</span> <span class="n">d</span><span class="p">:</span>
         <span class="k">return</span> <span class="mi">0</span>
-    <span class="n">cost_map</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="s">'inf'</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">v</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+    <span class="n">cost_map</span> <span class="o">=</span> <span class="p">[</span><span class="nf">float</span><span class="p">(</span><span class="s">'inf'</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">v</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
     <span class="n">hq</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">heappush</span><span class="p">(</span><span class="n">hq</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">s</span><span class="p">])</span>        <span class="c1"># [cur_cummulated_cost, start]
+    <span class="nf">heappush</span><span class="p">(</span><span class="n">hq</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">s</span><span class="p">])</span>        <span class="c1"># [cur_cummulated_cost, start]
 </span>    <span class="k">while</span> <span class="n">hq</span><span class="p">:</span>
-        <span class="n">cur_w</span><span class="p">,</span> <span class="n">cur_n</span> <span class="o">=</span> <span class="n">heappop</span><span class="p">(</span><span class="n">hq</span><span class="p">)</span>
+        <span class="n">cur_w</span><span class="p">,</span> <span class="n">cur_n</span> <span class="o">=</span> <span class="nf">heappop</span><span class="p">(</span><span class="n">hq</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">nxt_n</span><span class="p">,</span> <span class="n">nxt_w</span> <span class="ow">in</span> <span class="n">conn</span><span class="p">[</span><span class="n">cur_n</span><span class="p">]:</span>
             <span class="k">if</span> <span class="n">cost_map</span><span class="p">[</span><span class="n">nxt_n</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">cur_w</span><span class="p">:</span> <span class="k">continue</span>
             <span class="n">dist</span> <span class="o">=</span> <span class="n">nxt_w</span> <span class="o">+</span> <span class="n">cur_w</span> 
             <span class="k">if</span> <span class="n">cost_map</span><span class="p">[</span><span class="n">nxt_n</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">dist</span><span class="p">:</span>
                 <span class="n">cost_map</span><span class="p">[</span><span class="n">nxt_n</span><span class="p">]</span> <span class="o">=</span> <span class="n">dist</span>
-                <span class="n">heappush</span><span class="p">(</span><span class="n">hq</span><span class="p">,</span> <span class="p">[</span><span class="n">dist</span><span class="p">,</span> <span class="n">nxt_n</span><span class="p">])</span>
+                <span class="nf">heappush</span><span class="p">(</span><span class="n">hq</span><span class="p">,</span> <span class="p">[</span><span class="n">dist</span><span class="p">,</span> <span class="n">nxt_n</span><span class="p">])</span>
     
-    <span class="k">if</span> <span class="n">cost_map</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">==</span> <span class="nb">float</span><span class="p">(</span><span class="s">'inf'</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">cost_map</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">==</span> <span class="nf">float</span><span class="p">(</span><span class="s">'inf'</span><span class="p">):</span>
         <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
     <span class="k">else</span><span class="p">:</span> 
         <span class="k">return</span> <span class="n">cost_map</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> 
 
 <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="k">for</span> <span class="n">m_loc</span> <span class="ow">in</span> <span class="n">memb_loc</span><span class="p">:</span>
-    <span class="n">ans</span> <span class="o">+=</span> <span class="n">dist</span><span class="p">(</span><span class="n">m_loc</span><span class="p">,</span> <span class="n">kst</span><span class="p">)</span> <span class="o">+</span> <span class="n">dist</span><span class="p">(</span><span class="n">m_loc</span><span class="p">,</span> <span class="n">cf</span><span class="p">)</span>       <span class="c1"># HOME to KST + HOME to CF
+    <span class="n">ans</span> <span class="o">+=</span> <span class="nf">dist</span><span class="p">(</span><span class="n">m_loc</span><span class="p">,</span> <span class="n">kst</span><span class="p">)</span> <span class="o">+</span> <span class="nf">dist</span><span class="p">(</span><span class="n">m_loc</span><span class="p">,</span> <span class="n">cf</span><span class="p">)</span>       <span class="c1"># HOME to KST + HOME to CF
 </span>
-<span class="k">print</span><span class="p">(</span><span class="n">ans</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">ans</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p><br /></p>

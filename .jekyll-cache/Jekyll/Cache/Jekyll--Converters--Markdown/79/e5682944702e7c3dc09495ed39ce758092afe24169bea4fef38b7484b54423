@@ -1,4 +1,4 @@
-I"~"<p><br /></p>
+I"�"<p><br /></p>
 
 <h2 id="백준-여행가자--골드-4">백준 여행가자 : 골드 4</h2>
 
@@ -12,18 +12,18 @@
 
 <p><br /></p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sys</span>
-<span class="n">sys</span><span class="p">.</span><span class="n">setrecursionlimit</span><span class="p">(</span><span class="mi">10000000</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">sys</span>
+<span class="n">sys</span><span class="p">.</span><span class="nf">setrecursionlimit</span><span class="p">(</span><span class="mi">10000000</span><span class="p">)</span>
 <span class="nb">input</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">stdin</span><span class="p">.</span><span class="n">readline</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="n">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
 
-<span class="n">n</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">()),</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
-<span class="n">graph</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>      <span class="c1"># row
-</span>    <span class="n">tmp</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">input</span><span class="p">().</span><span class="n">split</span><span class="p">()))</span>
-    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>       <span class="c1"># col
+<span class="n">n</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="nf">input</span><span class="p">()),</span> <span class="nf">int</span><span class="p">(</span><span class="nf">input</span><span class="p">())</span>
+<span class="n">graph</span> <span class="o">=</span> <span class="nf">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>      <span class="c1"># row
+</span>    <span class="n">tmp</span> <span class="o">=</span> <span class="nf">list</span><span class="p">(</span><span class="nf">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nf">input</span><span class="p">().</span><span class="nf">split</span><span class="p">()))</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>       <span class="c1"># col
 </span>        <span class="k">if</span> <span class="n">tmp</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">graph</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">].</span><span class="n">append</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">graph</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">].</span><span class="nf">append</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="n">flag</span> <span class="o">=</span> <span class="bp">False</span>
 <span class="k">def</span> <span class="nf">dfs</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">visited</span><span class="p">):</span>       <span class="c1"># dfs
@@ -38,28 +38,28 @@
                 <span class="n">flag</span> <span class="o">=</span> <span class="bp">True</span>
                 <span class="k">return</span> <span class="bp">True</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">visited</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
-                <span class="n">dfs</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">visited</span><span class="p">)</span>
+                <span class="n">visited</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+                <span class="nf">dfs</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">visited</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">flag</span>  
 
-<span class="n">travel</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">input</span><span class="p">().</span><span class="n">split</span><span class="p">()))</span>
+<span class="n">travel</span> <span class="o">=</span> <span class="nf">list</span><span class="p">(</span><span class="nf">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nf">input</span><span class="p">().</span><span class="nf">split</span><span class="p">()))</span>
 
-<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">travel</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>            <span class="c1"># 여행할 도시가 1개뿐일 때
+<span class="k">if</span> <span class="nf">len</span><span class="p">(</span><span class="n">travel</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>            <span class="c1"># 여행할 도시가 1개뿐일 때
 </span>    <span class="k">if</span> <span class="n">travel</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">n</span><span class="p">:</span>           <span class="c1"># 주어진 도시 범위 밖의 여행지이면 NO
-</span>        <span class="k">print</span><span class="p">(</span><span class="s">"NO"</span><span class="p">)</span>
+</span>        <span class="nf">print</span><span class="p">(</span><span class="s">"NO"</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">"YES"</span><span class="p">)</span>
-    <span class="n">sys</span><span class="p">.</span><span class="nb">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"YES"</span><span class="p">)</span>
+    <span class="n">sys</span><span class="p">.</span><span class="nf">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
-<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">travel</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">travel</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
     <span class="n">visited</span> <span class="o">=</span> <span class="p">[</span><span class="n">travel</span><span class="p">[</span><span class="n">k</span><span class="p">]]</span>
     <span class="n">flag</span> <span class="o">=</span> <span class="bp">False</span>
-    <span class="n">res</span> <span class="o">=</span> <span class="n">dfs</span><span class="p">(</span><span class="n">travel</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">travel</span><span class="p">[</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">visited</span><span class="p">)</span>      <span class="c1"># 매 경로마다 가능한지 여부 확인
+    <span class="n">res</span> <span class="o">=</span> <span class="nf">dfs</span><span class="p">(</span><span class="n">travel</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">travel</span><span class="p">[</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">visited</span><span class="p">)</span>      <span class="c1"># 매 경로마다 가능한지 여부 확인
 </span>    <span class="k">if</span> <span class="ow">not</span> <span class="n">res</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">"NO"</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"NO"</span><span class="p">)</span>
         <span class="k">break</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"YES"</span><span class="p">)</span>     
+    <span class="nf">print</span><span class="p">(</span><span class="s">"YES"</span><span class="p">)</span>     
 </code></pre></div></div>
 
 <p><br /></p>
