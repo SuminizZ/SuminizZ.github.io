@@ -1,9 +1,9 @@
 ---
 layout: post
 title : "[Paper Review] Visualizing the Loss Landscape of Neural Nets (Loss Landscape, 2018)"
-img: papers/xai/loss_landscape.png
-categories: [papers-xai]  
-tag : [Paper Review, Loss Landscape, Interpretability & Explainability]
+img: papers/opt/loss_landscape.png
+categories: [papers-opt]  
+tag : [Paper Review, Loss Landscape, Optimization, Explainable AI]
 toc : true
 toc_sticky : true
 ---
