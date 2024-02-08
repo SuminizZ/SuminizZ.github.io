@@ -15,11 +15,11 @@ toc_sticky : true
 - [**1. Markov Process**](#1-markov-process)
 - [**2. Evolution of Markov Chains**](#2-evolution-of-markov-chains)
     - [**2.1. Stationary Distribution and Eigendecomposition**](#21-stationary-distribution-and-eigendecomposition)
-- [**3. Classifications of Markov Chains**](#2-sharpness-aware-minimization-sam)
-    - [**3.1. Various Properties of States**](#21-pac-bayesian-generalization-bound)
-    - [**3.2. Ergodic Chains**](#22-sam-objective)
-    - [**3.3. Reversible Chains**](#22-sam-objective)
-    - [**3.4. Absorbing Chains**](#22-sam-objective)
+- [**3. Classifications of Markov Chains**](#3-classifications-of-markov-chains)
+    - [**3.1. Various Properties of States**](#31-various-properties-of-states)
+    - [**3.2. Ergodic Chains**](#32-ergodic-chains)
+    - [**3.3. Reversible Chains**](#33-reversible-chains)
+    - [**3.4. Absorbing Chains**](#34-absorbing-chains)
 
 <br/>
 
@@ -107,9 +107,9 @@ toc_sticky : true
 
 - Intuitively, this means the total flow of probability mass $\large F^{\pi}$ from all states into each state $\large s_{j}$ is constant.
 
-    - Flow matrix $\large F^{\pi} \,:=\, \pi P$ where the total flow to $\large s_{j}$ is as follows,
+    - Flow matrix $\large F^{\Pi} \,:=\, \Pi P$ where $\large \Pi$ is a diagonal matrix consisting of the entries of $\large \pi$.
     
-        $\large F_{j}^{\pi} \,=\, \sum_{i=1}^{N} \pi_{j} P_{ij}$ 
+        - the total flow to $\large s_{j}$ is $\large F_{j}^{\pi} \,=\, \sum_{i=1}^{N} \pi_{j} P_{ij}$ 
 
 - From the equation $\large \pi P \,=\ \pi$, we can see that $\large P$ needs to have at least one left eigenvector with eigenvalue equal to 1.
 
