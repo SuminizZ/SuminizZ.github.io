@@ -52,7 +52,7 @@ toc_sticky : true
 
         - $\large \lambda = 1$ is the dominant eigenvalue (i.e., $\large \lambda_{pf}$) and thus any other eigenvalues are smaller than 1.
         
-        - Intuitively, consider any $\large \lambda$ larger than 1, then Markov chain will exponentially grow with time, which cannot be the case for stochastic transition matrix used for the evolution of the chain.
+        - Intuitively, consider any $\large \lambda$ larger than 1, then the Markov chain, described as $\large \sigma P^{t} \, = \, \pi \, + \, \sum_{i=1}^{N} c_{i} \lambda_{i}^{t} l_{i}^{T}$, will exponentially grow with time or otherwise $\large \sigma P^{t}$ contains some negative entries as t grows, both contradicting the fact that $\large P$ is a stochastic probability distribution. 
 
     2. **The eigenspace of $\large \lambda = 1$ is guaranteed to be one-dimensional in irreducible chain.**
 
