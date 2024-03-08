@@ -45,7 +45,7 @@
             </li>
 
             <li class="nav-item dropdown
-            {% if page.url == '/dl/dls/' or page.url == '/dl/tf/' or page.url == '/dl/topics/' or page.url == '/dl/cs231n/' or page.url == '/dl/sss/'%} active {% endif %}">
+            {% if page.url == '/dl/dls/' or page.url == '/dl/topics/' or page.url == '/dl/cs231n/' or page.url == '/dl/sss/'%} active {% endif %}">
                 <a class="nav-link dropdown-toggle cursor" onclick="clickDropdown('dl-dropdown')"
                    role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-vexpanded="false">
@@ -56,9 +56,9 @@
                     {% if category[0] == "dl-dls" %}
                         {% assign dls_sum = category[1].size %}
                     {% endif %}
-                    {% if category[0] == "dl-tsf" %}
+                    <!-- {% if category[0] == "dl-tsf" %}
                         {% assign tsf_sum = category[1].size %}
-                    {% endif %}
+                    {% endif %} -->
                     {% if category[0] == "dl-cs231n" %}
                         {% assign cs231n_sum = category[1].size %}
                     {% endif %}   
@@ -67,7 +67,7 @@
                     {% endif %}
                     {% endfor %}
                     <a class="dropdown-item" href="{{ "/dl/dls" | prepend: site.baseurl }}">Deep Learning Specialization ({{dls_sum}}) </a>
-                    <a class="dropdown-item" href="{{ "/dl/tsf" | prepend: site.baseurl }}">TensorFlow ({{tsf_sum}})</a>
+                    <!-- <a class="dropdown-item" href="{{ "/dl/tsf" | prepend: site.baseurl }}">TensorFlow ({{tsf_sum}})</a> -->
                     <a class="dropdown-item" href="{{ "/dl/cs231n" | prepend: site.baseurl }}">cs231n (Stanford) ({{cs231n_sum}})</a>
                     <a class="dropdown-item" href="{{ "/dl/sss" | prepend: site.baseurl }}">Signals & Systems ({{sss_sum}})</a>
                 </div>
