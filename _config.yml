@@ -8,12 +8,12 @@ site-twitter: #if your site has a twitter account, enter it here
 # Author Settings
 author: SUMIN PARK # add your name
 author-img: me/me3.jpg # add your photo
-about-author: 'This blog is for the record of my studying. For more general info including CV, check <a href="https://psmiz.github.io", style="color:#9053ec;">HERE</a>!'
+about-author: 'This blog is for the record of my studying. For more general info including CV, check <b><a href="https://psmiz.github.io", style="color:#3f79f4;">HERE</a>!</b>'
 # social-twitter: # add your Twitter handle
 # social-facebook: # add your Facebook handle
 social-github: "fab fa-fw fa-github"
 # social-linkedin: # add your Linkedin handle
-social-email: "mailto:psmiz@naver.com"
+social-email: "mailto:psmiz@kaist.ac.kr"
 
 # Disqus
 discus-identifier: sumin
