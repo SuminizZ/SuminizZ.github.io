@@ -1,4 +1,4 @@
-I"�<p><br /></p>
+I"�<p><br /></p>
 
 <h2 id="백준-1446-주간미팅--골드-4">백준 1446 주간미팅 : 골드 4</h2>
 
@@ -29,7 +29,7 @@
 <span class="k">def</span> <span class="nf">dist</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">s</span> <span class="o">==</span> <span class="n">d</span><span class="p">:</span>
         <span class="k">return</span> <span class="mi">0</span>
-    <span class="n">cost_map</span> <span class="o">=</span> <span class="p">[</span><span class="nf">float</span><span class="p">(</span><span class="s">'inf'</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">v</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+    <span class="n">cost_map</span> <span class="o">=</span> <span class="p">[</span><span class="nf">float</span><span class="p">(</span><span class="sh">'</span><span class="s">inf</span><span class="sh">'</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">v</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
     <span class="n">hq</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="nf">heappush</span><span class="p">(</span><span class="n">hq</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">s</span><span class="p">])</span>        <span class="c1"># [cur_cummulated_cost, start]
 </span>    <span class="k">while</span> <span class="n">hq</span><span class="p">:</span>
@@ -41,7 +41,7 @@
                 <span class="n">cost_map</span><span class="p">[</span><span class="n">nxt_n</span><span class="p">]</span> <span class="o">=</span> <span class="n">dist</span>
                 <span class="nf">heappush</span><span class="p">(</span><span class="n">hq</span><span class="p">,</span> <span class="p">[</span><span class="n">dist</span><span class="p">,</span> <span class="n">nxt_n</span><span class="p">])</span>
     
-    <span class="k">if</span> <span class="n">cost_map</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">==</span> <span class="nf">float</span><span class="p">(</span><span class="s">'inf'</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">cost_map</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">==</span> <span class="nf">float</span><span class="p">(</span><span class="sh">'</span><span class="s">inf</span><span class="sh">'</span><span class="p">):</span>
         <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
     <span class="k">else</span><span class="p">:</span> 
         <span class="k">return</span> <span class="n">cost_map</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> 

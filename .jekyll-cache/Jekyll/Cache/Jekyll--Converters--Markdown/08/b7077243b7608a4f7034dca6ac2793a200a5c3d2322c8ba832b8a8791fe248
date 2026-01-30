@@ -1,4 +1,4 @@
-I"Tô<h2 id="outlines"><strong>Outlines</strong></h2>
+I"yù<h2 id="outlines"><strong>Outlines</strong></h2>
 <ul>
   <li><a href="#reference"><strong>Reference</strong></a></li>
   <li><a href="#implementation-with-pytorch"><strong>Implementation with PyTorch</strong></a></li>
@@ -96,18 +96,18 @@
 
 <span class="n">architecture_configs</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
-    <span class="s">"M"</span><span class="p">,</span>
+    <span class="sh">"</span><span class="s">M</span><span class="sh">"</span><span class="p">,</span>
     <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">192</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-    <span class="s">"M"</span><span class="p">,</span>
+    <span class="sh">"</span><span class="s">M</span><span class="sh">"</span><span class="p">,</span>
     <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
     <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
     <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
     <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-    <span class="s">"M"</span><span class="p">,</span>
+    <span class="sh">"</span><span class="s">M</span><span class="sh">"</span><span class="p">,</span>
     <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">4</span><span class="p">],</span>
     <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
     <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-    <span class="s">"M"</span><span class="p">,</span>
+    <span class="sh">"</span><span class="s">M</span><span class="sh">"</span><span class="p">,</span>
     <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">2</span><span class="p">],</span>
     <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
     <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
@@ -237,13 +237,13 @@
 <p><br /></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">VOCDataset</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">Dataset</span><span class="p">):</span>
-    <span class="s">'''
+    <span class="sh">'''</span><span class="s">
     Args:
         - csv_file : contain annotations for each img and label file.
         - img_dir : directory that contains all img files (3 x 224 x 224)
         - label_dir : directory that contains all label files
             - each line holds [class_label, x, y, width, height]
-    '''</span>
+    </span><span class="sh">'''</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">csv_file</span><span class="p">,</span> <span class="n">img_dir</span><span class="p">,</span> <span class="n">label_dir</span><span class="p">,</span> <span class="n">S</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">B</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="n">self</span><span class="p">.</span><span class="n">annotations</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">read_csv</span><span class="p">(</span><span class="n">csv_file</span><span class="p">)</span>
         <span class="n">self</span><span class="p">.</span><span class="n">img_dir</span> <span class="o">=</span> <span class="n">img_dir</span>
@@ -264,7 +264,7 @@
             <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">f</span><span class="p">.</span><span class="nf">readlines</span><span class="p">():</span>
                 <span class="n">class_label</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="p">[</span>
                     <span class="nf">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="nf">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">!=</span> <span class="nf">int</span><span class="p">(</span><span class="nf">float</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="k">else</span> <span class="nf">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-                    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">label</span><span class="p">.</span><span class="nf">replace</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">""</span><span class="p">).</span><span class="nf">split</span><span class="p">()</span>
+                    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">label</span><span class="p">.</span><span class="nf">replace</span><span class="p">(</span><span class="sh">"</span><span class="se">\n</span><span class="sh">"</span><span class="p">,</span> <span class="sh">""</span><span class="p">).</span><span class="nf">split</span><span class="p">()</span>
                 <span class="p">]</span>
                 <span class="n">boxes</span><span class="p">.</span><span class="nf">append</span><span class="p">([</span><span class="n">class_label</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">])</span>
 
@@ -347,7 +347,7 @@
 
 <p><br /></p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">get_bboxes</span><span class="p">(</span><span class="n">n_batch</span><span class="p">,</span> <span class="n">loader</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">iou_threshold</span><span class="p">,</span> <span class="n">threshold</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">box_format</span><span class="o">=</span><span class="s">'center'</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">get_bboxes</span><span class="p">(</span><span class="n">n_batch</span><span class="p">,</span> <span class="n">loader</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">iou_threshold</span><span class="p">,</span> <span class="n">threshold</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">box_format</span><span class="o">=</span><span class="sh">'</span><span class="s">center</span><span class="sh">'</span><span class="p">):</span>
     <span class="n">pred_boxes</span><span class="p">,</span> <span class="n">gt_boxes</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
     <span class="n">model</span><span class="p">.</span><span class="nf">eval</span><span class="p">()</span>   <span class="c1"># make sure to turn off the train mode before getting final bboxes. 
@@ -370,7 +370,7 @@
         <span class="n">pred_bboxes</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">concat</span><span class="p">([</span><span class="n">train_idxs</span><span class="p">,</span> <span class="n">pred_bboxes</span><span class="p">],</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">gt_bboxes</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">concat</span><span class="p">([</span><span class="n">train_idxs</span><span class="p">,</span> <span class="n">gt_bboxes</span><span class="p">],</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 
-        <span class="n">pred_boxes</span> <span class="o">+=</span> <span class="nf">non_max_suppression</span><span class="p">(</span><span class="n">pred_bboxes</span><span class="p">,</span> <span class="n">iou_threshold</span><span class="p">,</span> <span class="n">threshold</span><span class="p">,</span> <span class="s">"center"</span><span class="p">)</span>
+        <span class="n">pred_boxes</span> <span class="o">+=</span> <span class="nf">non_max_suppression</span><span class="p">(</span><span class="n">pred_bboxes</span><span class="p">,</span> <span class="n">iou_threshold</span><span class="p">,</span> <span class="n">threshold</span><span class="p">,</span> <span class="sh">"</span><span class="s">center</span><span class="sh">"</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">bb</span> <span class="ow">in</span> <span class="p">[</span><span class="n">box</span><span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span><span class="n">box</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]</span> <span class="k">for</span> <span class="n">box</span> <span class="ow">in</span> <span class="n">gt_bboxes</span><span class="p">]:</span>
             <span class="n">gt_boxes</span> <span class="o">+=</span> <span class="p">[</span><span class="n">b</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">bb</span><span class="p">]</span>
         <span class="c1"># if batch_idx == 10: break
@@ -385,13 +385,13 @@
 <p><br /></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">convert_cellboxes</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">S</span><span class="o">=</span><span class="mi">7</span><span class="p">):</span>
-    <span class="s">"""
+    <span class="sh">"""</span><span class="s">
     Convert output of yolo v1
     (n_batch, 7*7*(5*B+C)) -&gt; (n_batch, 7, 7, [pred_clss, best_confidence_score, center coordinates])
     - Convert bounding boxes with grid split size S relative to cell ratio into entire image ratio.
-    """</span>
+    </span><span class="sh">"""</span>
 
-    <span class="n">predictions</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">.</span><span class="nf">to</span><span class="p">(</span><span class="s">"cpu"</span><span class="p">)</span>
+    <span class="n">predictions</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">.</span><span class="nf">to</span><span class="p">(</span><span class="sh">"</span><span class="s">cpu</span><span class="sh">"</span><span class="p">)</span>
     <span class="n">batch_size</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">predictions</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">.</span><span class="nf">reshape</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
     <span class="n">bboxes1</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">[...,</span> <span class="mi">21</span><span class="p">:</span><span class="mi">25</span><span class="p">]</span>    <span class="c1"># 1 bbox 
@@ -443,12 +443,12 @@
 
 <p><br /></p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">non_max_suppression</span><span class="p">(</span><span class="n">bboxes</span><span class="p">,</span> <span class="n">iou_threshold</span><span class="p">,</span> <span class="n">threshold</span><span class="p">,</span> <span class="n">box_format</span><span class="o">=</span><span class="s">'center'</span><span class="p">):</span>
-    <span class="s">'''
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">non_max_suppression</span><span class="p">(</span><span class="n">bboxes</span><span class="p">,</span> <span class="n">iou_threshold</span><span class="p">,</span> <span class="n">threshold</span><span class="p">,</span> <span class="n">box_format</span><span class="o">=</span><span class="sh">'</span><span class="s">center</span><span class="sh">'</span><span class="p">):</span>
+    <span class="sh">'''</span><span class="s">
     bboxes : (n_batch, 7*7, [pred_clss, best_confidence_score, coordinates (x, y, w, h)])
     iou_threshold != threshold
     threshold here refers to the minimum confidence score to be selected as true bbox.
-    '''</span>
+    </span><span class="sh">'''</span>
     <span class="n">n_batch</span> <span class="o">=</span> <span class="nf">len</span><span class="p">(</span><span class="n">bboxes</span><span class="p">)</span>
     <span class="n">post_nms_bboxes</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">n_batch</span><span class="p">):</span>
@@ -577,12 +577,12 @@
 
 <p><br /></p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">mean_average_precision</span><span class="p">(</span><span class="n">pred_boxes</span><span class="p">,</span> <span class="n">gt_boxes</span><span class="p">,</span> <span class="n">iou_threshold</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">,</span> <span class="n">box_format</span><span class="o">=</span><span class="s">"center"</span><span class="p">):</span>
-    <span class="s">'''
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">mean_average_precision</span><span class="p">(</span><span class="n">pred_boxes</span><span class="p">,</span> <span class="n">gt_boxes</span><span class="p">,</span> <span class="n">iou_threshold</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">,</span> <span class="n">box_format</span><span class="o">=</span><span class="sh">"</span><span class="s">center</span><span class="sh">"</span><span class="p">):</span>
+    <span class="sh">'''</span><span class="s">
     Args:
     pred_boxes = tensor([train_idx, pred_class, best_confidence_score, x, y, w, h])
     gt_boxes = same as pred_boxes
-    '''</span>
+    </span><span class="sh">'''</span>
     <span class="n">average_precisions</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">num_classes</span><span class="p">):</span>
         <span class="n">c_pred_boxes</span> <span class="o">=</span> <span class="p">[</span><span class="n">box</span><span class="p">.</span><span class="nf">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">box</span> <span class="ow">in</span> <span class="n">pred_boxes</span> <span class="k">if</span> <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">c</span><span class="p">]</span>    <span class="c1"># check if class matched, shape : (num_detections, 7)
@@ -613,7 +613,7 @@
                 <span class="n">FP</span><span class="p">[</span><span class="n">pred_idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
                 <span class="k">continue</span>
 
-            <span class="n">ious</span> <span class="o">=</span> <span class="nf">compute_ious</span><span class="p">(</span><span class="s">'center'</span><span class="p">,</span> <span class="n">c_gt_boxes</span><span class="p">[</span><span class="n">target_gt_idxs</span><span class="p">,</span> <span class="mi">3</span><span class="p">:],</span> <span class="n">box</span><span class="p">[</span><span class="mi">3</span><span class="p">:])</span>
+            <span class="n">ious</span> <span class="o">=</span> <span class="nf">compute_ious</span><span class="p">(</span><span class="sh">'</span><span class="s">center</span><span class="sh">'</span><span class="p">,</span> <span class="n">c_gt_boxes</span><span class="p">[</span><span class="n">target_gt_idxs</span><span class="p">,</span> <span class="mi">3</span><span class="p">:],</span> <span class="n">box</span><span class="p">[</span><span class="mi">3</span><span class="p">:])</span>
             <span class="n">best_iou_idx</span> <span class="o">=</span> <span class="n">ious</span><span class="p">.</span><span class="nf">argmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
             <span class="n">best_iou</span> <span class="o">=</span> <span class="n">ious</span><span class="p">[</span><span class="n">best_iou_idx</span><span class="p">]</span>
 
@@ -694,14 +694,14 @@
 
     <span class="n">mAP</span> <span class="o">=</span> <span class="nf">mean_average_precision</span><span class="p">(</span><span class="n">pred_boxes</span><span class="p">,</span> <span class="n">gt_boxes</span><span class="p">,</span> <span class="n">iou_threshold</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">)</span>
     
-    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Train mAP: </span><span class="si">{</span><span class="n">mAP</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Train mAP: </span><span class="si">{</span><span class="n">mAP</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
 
     <span class="n">mean_loss</span> <span class="o">=</span> <span class="nf">compute_loss</span><span class="p">(</span><span class="n">train_loader</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">yolo_loss</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">mean_loss</span> <span class="o">&lt;=</span> <span class="n">prev_loss</span><span class="p">:</span>
         <span class="n">checkpoint</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s">"state_dict"</span><span class="p">:</span> <span class="n">model</span><span class="p">.</span><span class="nf">state_dict</span><span class="p">(),</span>
-            <span class="s">"optimizer"</span><span class="p">:</span> <span class="n">optimizer</span><span class="p">.</span><span class="nf">state_dict</span><span class="p">(),</span>
+            <span class="sh">"</span><span class="s">state_dict</span><span class="sh">"</span><span class="p">:</span> <span class="n">model</span><span class="p">.</span><span class="nf">state_dict</span><span class="p">(),</span>
+            <span class="sh">"</span><span class="s">optimizer</span><span class="sh">"</span><span class="p">:</span> <span class="n">optimizer</span><span class="p">.</span><span class="nf">state_dict</span><span class="p">(),</span>
         <span class="p">}</span>
         <span class="nf">save_checkpoint</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">chkpt_dir</span><span class="p">)</span>
         <span class="n">time</span><span class="p">.</span><span class="nf">sleep</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
@@ -709,7 +709,7 @@
         <span class="n">early_stopping</span> <span class="o">+=</span> <span class="mi">1</span>
     
     <span class="k">if</span> <span class="n">early_stopping</span> <span class="o">==</span> <span class="mi">2</span> <span class="p">:</span>
-        <span class="nf">print</span><span class="p">(</span><span class="s">"----- Early Stopping -----"</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">----- Early Stopping -----</span><span class="sh">"</span><span class="p">)</span>
         <span class="k">break</span>
 
     <span class="n">prev_loss</span> <span class="o">=</span> <span class="n">mean_loss</span>
@@ -736,7 +736,7 @@
 </span>        <span class="n">loop</span><span class="p">.</span><span class="nf">set_postfix</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="n">loss</span><span class="p">.</span><span class="nf">item</span><span class="p">())</span>
 
     <span class="n">mean_loss</span> <span class="o">=</span> <span class="nf">sum</span><span class="p">(</span><span class="n">loss_history</span><span class="p">)</span><span class="o">/</span><span class="nf">len</span><span class="p">(</span><span class="n">loss_history</span><span class="p">)</span>
-    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"  Mean loss : </span><span class="si">{</span><span class="n">mean_loss</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">  Mean loss : </span><span class="si">{</span><span class="n">mean_loss</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">mean_loss</span>
 </code></pre></div></div>
 
@@ -755,13 +755,13 @@
 <p><br /></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">YoloLoss</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="s">"""
+    <span class="sh">"""</span><span class="s">
     Calculate the loss for yolo (v1) model
-    """</span>
+    </span><span class="sh">"""</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">S</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">B</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
         <span class="nf">super</span><span class="p">(</span><span class="n">YoloLoss</span><span class="p">,</span> <span class="n">self</span><span class="p">).</span><span class="nf">__init__</span><span class="p">()</span>
-        <span class="n">self</span><span class="p">.</span><span class="n">mse</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">MSELoss</span><span class="p">(</span><span class="n">reduction</span><span class="o">=</span><span class="s">"sum"</span><span class="p">)</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">mse</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">MSELoss</span><span class="p">(</span><span class="n">reduction</span><span class="o">=</span><span class="sh">"</span><span class="s">sum</span><span class="sh">"</span><span class="p">)</span>
 
         <span class="n">self</span><span class="p">.</span><span class="n">S</span> <span class="o">=</span> <span class="n">S</span>
         <span class="n">self</span><span class="p">.</span><span class="n">B</span> <span class="o">=</span> <span class="n">B</span>
@@ -776,8 +776,8 @@
         <span class="c1">## coordinate regression loss 
 </span>
         <span class="c1"># calculate IoU for the two predicted bounding boxes with target bbox
-</span>        <span class="n">iou_b1</span> <span class="o">=</span> <span class="nf">compute_ious</span><span class="p">(</span><span class="s">'center'</span><span class="p">,</span> <span class="n">predictions</span><span class="p">[...,</span> <span class="mi">21</span><span class="p">:</span><span class="mi">25</span><span class="p">],</span> <span class="n">target</span><span class="p">[...,</span> <span class="mi">21</span><span class="p">:</span><span class="mi">25</span><span class="p">])</span>
-        <span class="n">iou_b2</span> <span class="o">=</span> <span class="nf">compute_ious</span><span class="p">(</span><span class="s">'center'</span><span class="p">,</span> <span class="n">predictions</span><span class="p">[...,</span> <span class="mi">26</span><span class="p">:</span><span class="mi">30</span><span class="p">],</span> <span class="n">target</span><span class="p">[...,</span> <span class="mi">21</span><span class="p">:</span><span class="mi">25</span><span class="p">])</span>
+</span>        <span class="n">iou_b1</span> <span class="o">=</span> <span class="nf">compute_ious</span><span class="p">(</span><span class="sh">'</span><span class="s">center</span><span class="sh">'</span><span class="p">,</span> <span class="n">predictions</span><span class="p">[...,</span> <span class="mi">21</span><span class="p">:</span><span class="mi">25</span><span class="p">],</span> <span class="n">target</span><span class="p">[...,</span> <span class="mi">21</span><span class="p">:</span><span class="mi">25</span><span class="p">])</span>
+        <span class="n">iou_b2</span> <span class="o">=</span> <span class="nf">compute_ious</span><span class="p">(</span><span class="sh">'</span><span class="s">center</span><span class="sh">'</span><span class="p">,</span> <span class="n">predictions</span><span class="p">[...,</span> <span class="mi">26</span><span class="p">:</span><span class="mi">30</span><span class="p">],</span> <span class="n">target</span><span class="p">[...,</span> <span class="mi">21</span><span class="p">:</span><span class="mi">25</span><span class="p">])</span>
         <span class="n">ious</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">cat</span><span class="p">([</span><span class="n">iou_b1</span><span class="p">.</span><span class="nf">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">iou_b2</span><span class="p">.</span><span class="nf">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
         <span class="c1"># Take the box with highest IoU out of the two prediction -&gt; one bounding box prediction per each object 

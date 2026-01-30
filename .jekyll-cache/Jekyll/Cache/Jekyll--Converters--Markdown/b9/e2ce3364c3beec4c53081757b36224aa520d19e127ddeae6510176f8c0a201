@@ -1,4 +1,4 @@
-I"è<h2 id="outlines"><strong>Outlines</strong></h2>
+I"Zè<h2 id="outlines"><strong>Outlines</strong></h2>
 <ul>
   <li><a href="#reference"><strong>Reference</strong></a></li>
   <li><a href="#faster-r-cnn-vs-fast-r-cnn-vs-r-cnn"><strong>Faster R-CNN vs Fast R-CNN vs R-CNN</strong></a></li>
@@ -521,7 +521,7 @@
 
     <span class="n">mtl</span> <span class="o">=</span> <span class="n">L_clss</span> <span class="o">+</span> <span class="n">lamda</span><span class="o">*</span><span class="p">(</span><span class="n">L_reg</span><span class="p">.</span><span class="nf">sum</span><span class="p">()</span><span class="o">/</span><span class="n">N_reg</span><span class="p">)</span>
 
-    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Classification Error : </span><span class="si">{</span><span class="n">L_clss</span><span class="si">}</span><span class="s">  Regression Error : </span><span class="si">{</span><span class="n">L_reg</span><span class="p">.</span><span class="nf">sum</span><span class="p">()</span><span class="o">/</span><span class="n">N_reg</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Classification Error : </span><span class="si">{</span><span class="n">L_clss</span><span class="si">}</span><span class="s">  Regression Error : </span><span class="si">{</span><span class="n">L_reg</span><span class="p">.</span><span class="nf">sum</span><span class="p">()</span><span class="o">/</span><span class="n">N_reg</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">mtl</span>
 </code></pre></div></div>
 
@@ -820,7 +820,7 @@
         <span class="n">output</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
     <span class="n">output</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">cat</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>     <span class="c1"># 128 x 512 x 7 x 7
-</span>    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"roi pooling output size : </span><span class="si">{</span><span class="n">output</span><span class="p">.</span><span class="nf">size</span><span class="p">()</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+</span>    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">roi pooling output size : </span><span class="si">{</span><span class="n">output</span><span class="p">.</span><span class="nf">size</span><span class="p">()</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
     <span class="n">k</span> <span class="o">=</span> <span class="n">output</span><span class="p">.</span><span class="nf">view</span><span class="p">(</span><span class="n">output</span><span class="p">.</span><span class="nf">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>   <span class="c1"># 128 x (512*7*7 = 25088)
 </span>
     <span class="k">return</span> <span class="n">k</span>
@@ -902,7 +902,7 @@
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pred_roi_regs</span> <span class="o">=</span> <span class="n">pred_roi_regs</span><span class="p">.</span><span class="nf">view</span><span class="p">(</span><span class="n">n_sample</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
 <span class="n">pred_roi_regs</span> <span class="o">=</span> <span class="n">pred_roi_regs</span><span class="p">[</span><span class="n">torch</span><span class="p">.</span><span class="nf">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_sample</span><span class="p">).</span><span class="nf">long</span><span class="p">(),</span> <span class="n">gt_roi_labels</span><span class="p">.</span><span class="nf">long</span><span class="p">()]</span>
 <span class="n">mtl</span> <span class="o">=</span> <span class="nf">multi_task_loss</span><span class="p">(</span><span class="n">pred_roi_clss</span><span class="p">,</span> <span class="n">gt_roi_labels</span><span class="p">,</span> <span class="n">pred_roi_regs</span><span class="p">,</span> <span class="n">gt_roi_regs</span><span class="p">,</span> <span class="n">lamda</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Multi Task Loss : </span><span class="si">{</span><span class="n">mtl</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Multi Task Loss : </span><span class="si">{</span><span class="n">mtl</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p><br /></p>

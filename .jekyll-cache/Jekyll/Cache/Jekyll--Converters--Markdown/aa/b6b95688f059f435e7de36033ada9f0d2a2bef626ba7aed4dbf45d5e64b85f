@@ -1,4 +1,4 @@
-I"ô/<h2 id="outlines"><strong>Outlines</strong></h2>
+I"$0<h2 id="outlines"><strong>Outlines</strong></h2>
 <ul>
   <li><a href="#references"><strong>References</strong></a></li>
   <li><a href="#inception-v2-v3-architecture"><strong>Inception v2-v3 Architecture</strong></a></li>
@@ -296,7 +296,7 @@
 <p><br /></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span> <span class="o">=</span> <span class="nc">Inception_V3</span><span class="p">()</span>
-<span class="nf">summary</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">input_size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">299</span><span class="p">,</span> <span class="mi">299</span><span class="p">),</span> <span class="n">device</span><span class="o">=</span><span class="s">'cpu'</span><span class="p">)</span>
+<span class="nf">summary</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">input_size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">299</span><span class="p">,</span> <span class="mi">299</span><span class="p">),</span> <span class="n">device</span><span class="o">=</span><span class="sh">'</span><span class="s">cpu</span><span class="sh">'</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p><br /></p>

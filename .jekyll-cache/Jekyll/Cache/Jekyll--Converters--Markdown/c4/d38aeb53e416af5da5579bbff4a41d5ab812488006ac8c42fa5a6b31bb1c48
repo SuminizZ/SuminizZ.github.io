@@ -1,4 +1,4 @@
-I"�<p><br /></p>
+I"�<p><br /></p>
 
 <h2 id="백준-1874-스택-수열--실버-2">백준 1874 스택 수열 : 실버 2</h2>
 
@@ -27,17 +27,17 @@
 
         <span class="k">while</span> <span class="nf">len</span><span class="p">(</span><span class="n">myStack</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">myStack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">cur</span><span class="p">:</span>   
             <span class="n">myStack</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
-            <span class="n">result</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="s">"+"</span><span class="p">)</span>
+            <span class="n">result</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="sh">"</span><span class="s">+</span><span class="sh">"</span><span class="p">)</span>
             <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
 
         <span class="k">if</span> <span class="n">myStack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">cur</span><span class="p">:</span>   
-            <span class="k">return</span> <span class="s">"NO"</span>
+            <span class="k">return</span> <span class="sh">"</span><span class="s">NO</span><span class="sh">"</span>
 
         <span class="k">elif</span> <span class="n">myStack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">cur</span><span class="p">:</span>
             <span class="n">myStack</span><span class="p">.</span><span class="nf">pop</span><span class="p">()</span>
-            <span class="n">result</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="s">"-"</span><span class="p">)</span>
+            <span class="n">result</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="sh">"</span><span class="s">-</span><span class="sh">"</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+    <span class="k">return</span> <span class="sh">'</span><span class="se">\n</span><span class="sh">'</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
 <span class="nf">print </span><span class="p">(</span><span class="nf">makeSeq</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
 </code></pre></div></div>

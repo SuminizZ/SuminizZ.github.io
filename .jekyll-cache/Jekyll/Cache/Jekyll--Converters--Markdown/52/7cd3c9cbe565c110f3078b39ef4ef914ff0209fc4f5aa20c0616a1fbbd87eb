@@ -1,4 +1,4 @@
-I"+<p><br /></p>
+I"7+<p><br /></p>
 
 <h2 id="백준-1446-지름길--실버-1">백준 1446 지름길 : 실버 1</h2>
 
@@ -65,7 +65,7 @@ heapq 를 정렬하는 데 드는 O(logn) 만큼의 시간이 안 걸렸고 + fo
     <span class="k">if</span> <span class="n">e</span> <span class="o">&lt;=</span> <span class="n">d</span><span class="p">:</span>
         <span class="n">graph</span><span class="p">[</span><span class="n">s</span><span class="p">].</span><span class="nf">append</span><span class="p">([</span><span class="n">e</span><span class="p">,</span> <span class="n">l</span><span class="p">])</span>         <span class="c1"># 지름길로 연결된 노드도 추가
 </span>
-<span class="n">mindist</span> <span class="o">=</span> <span class="p">[</span><span class="nf">float</span><span class="p">(</span><span class="s">'inf'</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>       
+<span class="n">mindist</span> <span class="o">=</span> <span class="p">[</span><span class="nf">float</span><span class="p">(</span><span class="sh">'</span><span class="s">inf</span><span class="sh">'</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>       
 <span class="n">hq</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="nf">heappush</span><span class="p">(</span><span class="n">hq</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>  <span class="c1"># 현재 노드까지 오면서 누적된 wgt, node
 </span>

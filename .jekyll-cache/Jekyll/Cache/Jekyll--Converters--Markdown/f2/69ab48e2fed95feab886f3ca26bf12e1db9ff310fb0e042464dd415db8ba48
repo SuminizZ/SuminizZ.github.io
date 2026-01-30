@@ -1,4 +1,4 @@
-I"�<p><br /></p>
+I"j<p><br /></p>
 
 <h2 id="백준-11866-요세푸스-순열--실버-4">백준 11866 요세푸스 순열 : 실버 4</h2>
 
@@ -33,7 +33,7 @@
 
     <span class="k">return</span> <span class="n">result</span>
 
-<span class="nf">print</span><span class="p">(</span><span class="s">'&lt;'</span><span class="o">+</span><span class="s">', '</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="nf">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nf">josephus</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">)))</span><span class="o">+</span><span class="s">'&gt;'</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s">&lt;</span><span class="sh">'</span><span class="o">+</span><span class="sh">'</span><span class="s">, </span><span class="sh">'</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="nf">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nf">josephus</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">)))</span><span class="o">+</span><span class="sh">'</span><span class="s">&gt;</span><span class="sh">'</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p><br /></p>

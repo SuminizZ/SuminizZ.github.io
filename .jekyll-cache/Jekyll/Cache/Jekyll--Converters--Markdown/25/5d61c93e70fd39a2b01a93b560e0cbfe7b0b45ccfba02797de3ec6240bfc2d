@@ -1,4 +1,4 @@
-I"¥n<h2 id="outlines"><strong>Outlines</strong></h2>
+I"Õn<h2 id="outlines"><strong>Outlines</strong></h2>
 <ul>
   <li><a href="#reference"><strong>Reference</strong></a></li>
   <li><a href="#yolo-v4--designing-the-optimal-model"><strong>YOLO v4 : Designing the Optimal Model</strong></a>
@@ -572,7 +572,7 @@ dataset. However, conversely, the CSPDarknet53 is better compared to CSPResNext5
                                     <span class="nc">Mish</span><span class="p">(),</span>
                                     <span class="n">nn</span><span class="p">.</span><span class="nc">Conv2d</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">3</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">+</span> <span class="n">self</span><span class="p">.</span><span class="n">num_classes</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
 
-        <span class="nf">print</span><span class="p">(</span><span class="s">"num_params : "</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="nf">count_parameters</span><span class="p">())</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">num_params : </span><span class="sh">"</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="nf">count_parameters</span><span class="p">())</span>
 
     <span class="k">def</span> <span class="nf">count_parameters</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nf">sum</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="nf">numel</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">self</span><span class="p">.</span><span class="nf">parameters</span><span class="p">()</span> <span class="k">if</span> <span class="n">p</span><span class="p">.</span><span class="n">requires_grad</span><span class="p">)</span>

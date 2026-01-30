@@ -1,4 +1,4 @@
-I"-^<h2 id="outlines">Outlines</h2>
+I"}_<h2 id="outlines">Outlines</h2>
 <ul>
   <li><a href="#reference"><strong>Reference</strong></a></li>
   <li><a href="#implementation-with-pytorch"><strong>Implementation with PyTorch</strong></a></li>
@@ -189,13 +189,13 @@
             
       <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">input_dim</span><span class="p">,</span> <span class="n">embed_dim</span><span class="p">):</span>
           <span class="nf">super</span><span class="p">(</span><span class="n">PatchEmbedding</span><span class="p">,</span> <span class="n">self</span><span class="p">).</span><span class="nf">__init__</span><span class="p">()</span>
-          <span class="s">"""
+          <span class="sh">"""</span><span class="s">
           Embedding image input (n_batch, channel, H, W) into (n_batch, N, (P*P*C)) where N = H*W/P*P*C
           Args :
               - p : patch size
-          """</span>
+          </span><span class="sh">"""</span>
           <span class="n">self</span><span class="p">.</span><span class="n">p</span> <span class="o">=</span> <span class="n">p</span>
-          <span class="n">self</span><span class="p">.</span><span class="n">patch_embedding</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Sequential</span><span class="p">(</span><span class="nc">Rearrange</span><span class="p">(</span><span class="s">'b c (h1 p) (w1 p) → b (h1 w1) (c p p)'</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">p</span><span class="p">),</span>
+          <span class="n">self</span><span class="p">.</span><span class="n">patch_embedding</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Sequential</span><span class="p">(</span><span class="nc">Rearrange</span><span class="p">(</span><span class="sh">'</span><span class="s">b c (h1 p) (w1 p) → b (h1 w1) (c p p)</span><span class="sh">'</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">p</span><span class="p">),</span>
                                               <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">input_dim</span><span class="p">,</span> <span class="n">embed_dim</span><span class="p">))</span>
 
       <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
@@ -218,13 +218,13 @@
         <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">class</span> <span class="nc">PositionalEmbedding</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
 
       <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">embed_dim</span><span class="p">,</span> <span class="n">max_len</span><span class="o">=</span><span class="mi">5000</span><span class="p">):</span>
-          <span class="s">"""
+          <span class="sh">"""</span><span class="s">
           Construct the PositionalEncoding layer.
           Args:
           - embed_dim: the size of the embed dimension
           - dropout: the dropout value
           - max_len: the maximum possible length of the incoming sequence
-          """</span>
+          </span><span class="sh">"""</span>
           <span class="nf">super</span><span class="p">(</span><span class="n">PositionalEncoding</span><span class="p">,</span> <span class="n">self</span><span class="p">).</span><span class="nf">__init__</span><span class="p">()</span>
                 
           <span class="n">self</span><span class="p">.</span><span class="n">pos_emb</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="n">max_len</span><span class="p">,</span> <span class="n">embed_dim</span><span class="p">))</span>      
@@ -256,12 +256,12 @@
 
       <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">n_batch</span><span class="p">,</span> <span class="n">embed_dim</span><span class="p">):</span>
           <span class="nf">super</span><span class="p">(</span><span class="n">PatchEmbedding</span><span class="p">,</span> <span class="n">self</span><span class="p">).</span><span class="nf">__init__</span><span class="p">()</span>
-          <span class="s">"""
+          <span class="sh">"""</span><span class="s">
           Add classfication token to the sequence of embedded patches. (n_batch, N, embed_dim) -&gt; (n_batch, N+1, embed_dim)
           Args :
               - n_batch : batch size
               - embed_dim : patch embedded dimension 
-          """</span>
+          </span><span class="sh">"""</span>
           <span class="n">self</span><span class="p">.</span><span class="n">classtoken</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="nc">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="nf">randn</span><span class="p">(</span><span class="n">n_batch</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">embed_dim</span><span class="p">))</span>
 
       <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
@@ -302,9 +302,9 @@
     <p>Linear transformation applied to class token to compute final classification scores with preceding normalization step.</p>
 
     <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">class</span> <span class="nc">ClassificationHead</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
-      <span class="s">"""
+      <span class="sh">"""</span><span class="s">
       Final MLP to get classification head : eithr mean or first element 
-      """</span>
+      </span><span class="sh">"""</span>
       <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">embed_dim</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">,</span> <span class="n">pool</span><span class="p">):</span>
           <span class="nf">super</span><span class="p">(</span><span class="n">ClassificationHead</span><span class="p">,</span> <span class="n">self</span><span class="p">).</span><span class="nf">__init__</span><span class="p">()</span>
 
@@ -314,11 +314,11 @@
                                   <span class="n">nn</span><span class="p">.</span><span class="nc">Linear</span><span class="p">(</span><span class="n">embed_dim</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">))</span>
 
       <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="n">x</span><span class="p">):</span>
-          <span class="s">"""
+          <span class="sh">"""</span><span class="s">
           Args
               - x : output of encoder (n_batch, N, embed_dim)
-          """</span>
-          <span class="n">classhead</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="nf">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">self</span><span class="p">.</span><span class="n">pool</span> <span class="o">==</span> <span class="s">'mean'</span> <span class="k">else</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
+          </span><span class="sh">"""</span>
+          <span class="n">classhead</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="nf">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">self</span><span class="p">.</span><span class="n">pool</span> <span class="o">==</span> <span class="sh">'</span><span class="s">mean</span><span class="sh">'</span> <span class="k">else</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
 
           <span class="n">classhead</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="nf">mlp</span><span class="p">(</span><span class="n">classhead</span><span class="p">)</span>
           <span class="k">return</span> <span class="n">classhead</span>

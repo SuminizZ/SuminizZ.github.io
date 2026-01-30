@@ -1,4 +1,4 @@
-I"W*<p><br /></p>
+I"·6<p><br /></p>
 
 <h1 id="planar-data-classification-with-one-hidden-layer"><strong>Planar data classification with one hidden layer</strong></h1>
 <ul>
@@ -55,19 +55,19 @@
     
     <span class="c1"># Plot the contour and training examples
 </span>    <span class="n">plt</span><span class="p">.</span><span class="nf">contourf</span><span class="p">(</span><span class="n">x1x1</span><span class="p">,</span> <span class="n">x2x2</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="p">.</span><span class="n">cm</span><span class="p">.</span><span class="n">Spectral</span><span class="p">)</span>
-    <span class="n">plt</span><span class="p">.</span><span class="nf">ylabel</span><span class="p">(</span><span class="s">'x2'</span><span class="p">)</span>
-    <span class="n">plt</span><span class="p">.</span><span class="nf">xlabel</span><span class="p">(</span><span class="s">'x1'</span><span class="p">)</span>
-    <span class="n">plt</span><span class="p">.</span><span class="nf">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:],</span> <span class="n">c</span><span class="o">=</span><span class="n">Y</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="p">.</span><span class="n">cm</span><span class="p">.</span><span class="n">Spectral</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s">'black'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">ylabel</span><span class="p">(</span><span class="sh">'</span><span class="s">x2</span><span class="sh">'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">xlabel</span><span class="p">(</span><span class="sh">'</span><span class="s">x1</span><span class="sh">'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="nf">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:],</span> <span class="n">c</span><span class="o">=</span><span class="n">Y</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="p">.</span><span class="n">cm</span><span class="p">.</span><span class="n">Spectral</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="sh">'</span><span class="s">black</span><span class="sh">'</span><span class="p">)</span>
     <span class="n">plt</span><span class="p">.</span><span class="nf">title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
     
 <span class="k">def</span> <span class="nf">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    <span class="s">"""
+    <span class="sh">"""</span><span class="s">
     Compute the sigmoid of x
     Arguments:
     x -- A scalar or numpy array of any size.
     Return:
     s -- sigmoid(x)
-    """</span>
+    </span><span class="sh">"""</span>
     
     <span class="n">s</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">np</span><span class="p">.</span><span class="nf">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">s</span>
@@ -79,7 +79,7 @@
 </span>    <span class="n">N</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="n">m</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>       <span class="c1"># number of points per class
 </span>    <span class="n">D</span> <span class="o">=</span> <span class="mi">2</span>       <span class="c1"># dimensionality (2 nodes in single hidden layer)
 </span>    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">zeros</span><span class="p">((</span><span class="n">m</span><span class="p">,</span><span class="n">D</span><span class="p">))</span>       <span class="c1"># data ma trix where each row is a single example 
-</span>    <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">zeros</span><span class="p">((</span><span class="n">m</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s">'uint8'</span><span class="p">)</span>       <span class="c1"># labels vector (0 for red, 1 for blue)
+</span>    <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">zeros</span><span class="p">((</span><span class="n">m</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="sh">'</span><span class="s">uint8</span><span class="sh">'</span><span class="p">)</span>       <span class="c1"># labels vector (0 for red, 1 for blue)
 </span>    <span class="n">a</span> <span class="o">=</span> <span class="mi">4</span>       <span class="c1"># maximum ray of the flower
 </span>
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
@@ -132,8 +132,8 @@
 </span><span class="nf">print</span><span class="p">(</span><span class="n">Y</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>   <span class="c1"># training size
 </span>
 <span class="n">plt</span><span class="p">.</span><span class="nf">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
-<span class="n">plt</span><span class="p">.</span><span class="nf">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:],</span> <span class="n">c</span><span class="o">=</span><span class="n">Y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s">'black'</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="p">.</span><span class="n">cm</span><span class="p">.</span><span class="n">Spectral</span><span class="p">)</span>     
-<span class="n">plt</span><span class="p">.</span><span class="nf">colorbar</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="s">'color'</span><span class="p">)</span>     <span class="c1"># red for 0, Blue for 1 
+<span class="n">plt</span><span class="p">.</span><span class="nf">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:],</span> <span class="n">c</span><span class="o">=</span><span class="n">Y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="sh">'</span><span class="s">black</span><span class="sh">'</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="p">.</span><span class="n">cm</span><span class="p">.</span><span class="n">Spectral</span><span class="p">)</span>     
+<span class="n">plt</span><span class="p">.</span><span class="nf">colorbar</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="sh">'</span><span class="s">color</span><span class="sh">'</span><span class="p">)</span>     <span class="c1"># red for 0, Blue for 1 
 </span></code></pre></div></div>
 <p><img width="191" alt="image" src="https://user-images.githubusercontent.com/92680829/168481094-fa303545-673d-48a6-bc84-d031dbf0bf5c.png" /></p>
 
@@ -150,7 +150,7 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">warnings</span>
 <span class="kn">from</span> <span class="n">sklearn.exceptions</span> <span class="kn">import</span> <span class="n">DataConversionWarning</span>
-<span class="n">warnings</span><span class="p">.</span><span class="nf">filterwarnings</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s">'ignore'</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">DataConversionWarning</span><span class="p">)</span>
+<span class="n">warnings</span><span class="p">.</span><span class="nf">filterwarnings</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="sh">'</span><span class="s">ignore</span><span class="sh">'</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">DataConversionWarning</span><span class="p">)</span>
 </code></pre></div></div>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">lr_clf</span> <span class="o">=</span> <span class="n">sklearn</span><span class="p">.</span><span class="n">linear_model</span><span class="p">.</span><span class="nc">LogisticRegressionCV</span><span class="p">()</span>
@@ -160,7 +160,7 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># plot decision boundary for separating classes (0, 1)
 </span>
-<span class="nf">plot_decision_boundary</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">lr_clf</span><span class="p">.</span><span class="nf">predict</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="s">"Logistic Regression"</span><span class="p">)</span>   
+<span class="nf">plot_decision_boundary</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">lr_clf</span><span class="p">.</span><span class="nf">predict</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="sh">"</span><span class="s">Logistic Regression</span><span class="sh">"</span><span class="p">)</span>   
 </code></pre></div></div>
 
 <p><img width="445" alt="image" src="https://user-images.githubusercontent.com/92680829/168481220-bdba2cd5-7655-4219-9b3e-eec03e270daa.png" /></p>
@@ -169,7 +169,7 @@
 </span><span class="kn">from</span> <span class="n">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
 
 <span class="n">LR_result</span> <span class="o">=</span> <span class="n">lr_clf</span><span class="p">.</span><span class="nf">predict</span><span class="p">(</span><span class="n">X</span><span class="p">.</span><span class="n">T</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="s">"Accuracy with Logistic Regression Classifier : {0}"</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="nf">accuracy_score</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="mi">0</span><span class="p">,:],</span> <span class="n">LR_result</span><span class="p">)))</span>
+<span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Accuracy with Logistic Regression Classifier : {0}</span><span class="sh">"</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="nf">accuracy_score</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="mi">0</span><span class="p">,:],</span> <span class="n">LR_result</span><span class="p">)))</span>
 
 
 <span class="c1"># instead of using sklearn library, you can also calcuate accuracy with code below
@@ -302,7 +302,7 @@
     <span class="c1"># confirm that each param has the right shape
 </span>    <span class="nf">assert</span><span class="p">(</span><span class="n">W1</span><span class="p">.</span><span class="n">shape</span><span class="o">==</span><span class="p">(</span><span class="n">nh</span><span class="p">,</span> <span class="n">nx</span><span class="p">)</span> <span class="ow">and</span> <span class="n">b1</span><span class="p">.</span><span class="n">shape</span><span class="o">==</span><span class="p">(</span><span class="n">nh</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">and</span> <span class="n">W2</span><span class="p">.</span><span class="n">shape</span><span class="o">==</span><span class="p">(</span><span class="n">ny</span><span class="p">,</span> <span class="n">nh</span><span class="p">)</span> <span class="ow">and</span> <span class="n">b2</span><span class="p">.</span><span class="n">shape</span><span class="o">==</span><span class="p">(</span><span class="n">ny</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
     
-    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">'W1'</span> <span class="p">:</span> <span class="n">W1</span><span class="p">,</span> <span class="s">'b1'</span> <span class="p">:</span> <span class="n">b1</span><span class="p">,</span> <span class="s">'W2'</span> <span class="p">:</span> <span class="n">W2</span><span class="p">,</span> <span class="s">'b2'</span> <span class="p">:</span> <span class="n">b2</span><span class="p">}</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="sh">'</span><span class="s">W1</span><span class="sh">'</span> <span class="p">:</span> <span class="n">W1</span><span class="p">,</span> <span class="sh">'</span><span class="s">b1</span><span class="sh">'</span> <span class="p">:</span> <span class="n">b1</span><span class="p">,</span> <span class="sh">'</span><span class="s">W2</span><span class="sh">'</span> <span class="p">:</span> <span class="n">W2</span><span class="p">,</span> <span class="sh">'</span><span class="s">b2</span><span class="sh">'</span> <span class="p">:</span> <span class="n">b2</span><span class="p">}</span>
     
     <span class="k">return</span> <span class="n">params</span>
 </code></pre></div></div>
@@ -310,7 +310,7 @@
 
 <h4 id="forward-propagation">Forward Propagation</h4>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">fp</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
-    <span class="n">W1</span><span class="p">,</span> <span class="n">b1</span><span class="p">,</span> <span class="n">W2</span><span class="p">,</span> <span class="n">b2</span> <span class="o">=</span> <span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="s">'W1'</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="s">'b1'</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="s">'W2'</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="s">'b2'</span><span class="p">])</span> 
+    <span class="n">W1</span><span class="p">,</span> <span class="n">b1</span><span class="p">,</span> <span class="n">W2</span><span class="p">,</span> <span class="n">b2</span> <span class="o">=</span> <span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="sh">'</span><span class="s">W1</span><span class="sh">'</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="sh">'</span><span class="s">b1</span><span class="sh">'</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="sh">'</span><span class="s">W2</span><span class="sh">'</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="sh">'</span><span class="s">b2</span><span class="sh">'</span><span class="p">])</span> 
     
     <span class="n">Z1</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">dot</span><span class="p">(</span><span class="n">W1</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span> <span class="o">+</span> <span class="n">b1</span>  <span class="c1"># (4, 2) x (2, 400) = (4, 400) + b(4, 1) broadcasting
 </span>    <span class="n">A1</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nf">tanh</span><span class="p">(</span><span class="n">Z1</span><span class="p">)</span>
@@ -319,7 +319,7 @@
 </span>    
     <span class="nf">assert</span><span class="p">(</span><span class="n">A2</span><span class="p">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">X</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
     
-    <span class="n">cache</span> <span class="o">=</span> <span class="p">{</span><span class="s">'Z1'</span> <span class="p">:</span> <span class="n">Z1</span><span class="p">,</span> <span class="s">'A1'</span> <span class="p">:</span> <span class="n">A1</span><span class="p">,</span> <span class="s">'Z2'</span> <span class="p">:</span> <span class="n">Z2</span><span class="p">,</span> <span class="s">'A2'</span> <span class="p">:</span> <span class="n">A2</span><span class="p">}</span>
+    <span class="n">cache</span> <span class="o">=</span> <span class="p">{</span><span class="sh">'</span><span class="s">Z1</span><span class="sh">'</span> <span class="p">:</span> <span class="n">Z1</span><span class="p">,</span> <span class="sh">'</span><span class="s">A1</span><span class="sh">'</span> <span class="p">:</span> <span class="n">A1</span><span class="p">,</span> <span class="sh">'</span><span class="s">Z2</span><span class="sh">'</span> <span class="p">:</span> <span class="n">Z2</span><span class="p">,</span> <span class="sh">'</span><span class="s">A2</span><span class="sh">'</span> <span class="p">:</span> <span class="n">A2</span><span class="p">}</span>
            
     <span class="k">return</span> <span class="n">cache</span>
 </code></pre></div></div>
@@ -346,13 +346,13 @@
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># now let's compute gradient descent of neural network with back-propagation
 </span>
 <span class="k">def</span> <span class="nf">bp</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">cache</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
-    <span class="s">""""
+    <span class="sh">""""</span><span class="s">
     Returns: grads -- gradients with respect to different parameters (dW1, dW2, db1, db2)
-    """</span>
+    </span><span class="sh">"""</span>
     <span class="n">m</span> <span class="o">=</span> <span class="n">X</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>   <span class="c1"># 400
 </span>    
-    <span class="n">W1</span><span class="p">,</span> <span class="n">b1</span><span class="p">,</span> <span class="n">W2</span><span class="p">,</span> <span class="n">b2</span> <span class="o">=</span> <span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="s">'W1'</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="s">'b1'</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="s">'W2'</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="s">'b2'</span><span class="p">])</span>     
-    <span class="n">Z1</span><span class="p">,</span> <span class="n">A1</span><span class="p">,</span> <span class="n">Z2</span><span class="p">,</span> <span class="n">A2</span> <span class="o">=</span> <span class="p">(</span><span class="n">cache</span><span class="p">[</span><span class="s">'Z1'</span><span class="p">],</span> <span class="n">cache</span><span class="p">[</span><span class="s">'A1'</span><span class="p">],</span> <span class="n">cache</span><span class="p">[</span><span class="s">'Z2'</span><span class="p">],</span> <span class="n">cache</span><span class="p">[</span><span class="s">'A2'</span><span class="p">])</span>
+    <span class="n">W1</span><span class="p">,</span> <span class="n">b1</span><span class="p">,</span> <span class="n">W2</span><span class="p">,</span> <span class="n">b2</span> <span class="o">=</span> <span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="sh">'</span><span class="s">W1</span><span class="sh">'</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="sh">'</span><span class="s">b1</span><span class="sh">'</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="sh">'</span><span class="s">W2</span><span class="sh">'</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="sh">'</span><span class="s">b2</span><span class="sh">'</span><span class="p">])</span>     
+    <span class="n">Z1</span><span class="p">,</span> <span class="n">A1</span><span class="p">,</span> <span class="n">Z2</span><span class="p">,</span> <span class="n">A2</span> <span class="o">=</span> <span class="p">(</span><span class="n">cache</span><span class="p">[</span><span class="sh">'</span><span class="s">Z1</span><span class="sh">'</span><span class="p">],</span> <span class="n">cache</span><span class="p">[</span><span class="sh">'</span><span class="s">A1</span><span class="sh">'</span><span class="p">],</span> <span class="n">cache</span><span class="p">[</span><span class="sh">'</span><span class="s">Z2</span><span class="sh">'</span><span class="p">],</span> <span class="n">cache</span><span class="p">[</span><span class="sh">'</span><span class="s">A2</span><span class="sh">'</span><span class="p">])</span>
     
     <span class="n">dZ2</span> <span class="o">=</span> <span class="n">A2</span> <span class="o">-</span> <span class="n">Y</span>       <span class="c1"># (1, 400)
 </span>    <span class="n">dW2</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">m</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="p">.</span><span class="nf">dot</span><span class="p">(</span><span class="n">dZ2</span><span class="p">,</span> <span class="n">A1</span><span class="p">.</span><span class="n">T</span><span class="p">)</span>      <span class="c1"># (1, 400) x (400, 4) --&gt; (1, 4)
@@ -362,7 +362,7 @@
 </span>    <span class="n">dW1</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">m</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="p">.</span><span class="nf">dot</span><span class="p">(</span><span class="n">dZ1</span><span class="p">,</span> <span class="n">X</span><span class="p">.</span><span class="n">T</span><span class="p">)</span>        <span class="c1"># (4, 400) * (400, 2)  --&gt; (4, 2)
 </span>    <span class="n">db1</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">m</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="p">.</span><span class="nf">sum</span><span class="p">(</span><span class="n">dZ1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>    <span class="c1"># (1, 1) 
 </span>    
-    <span class="n">grads</span> <span class="o">=</span> <span class="p">{</span><span class="s">'dW1'</span><span class="p">:</span> <span class="n">dW1</span><span class="p">,</span> <span class="s">'dW2'</span><span class="p">:</span> <span class="n">dW2</span><span class="p">,</span> <span class="s">'db1'</span> <span class="p">:</span> <span class="n">db1</span><span class="p">,</span> <span class="s">'db2'</span><span class="p">:</span> <span class="n">db2</span><span class="p">}</span>
+    <span class="n">grads</span> <span class="o">=</span> <span class="p">{</span><span class="sh">'</span><span class="s">dW1</span><span class="sh">'</span><span class="p">:</span> <span class="n">dW1</span><span class="p">,</span> <span class="sh">'</span><span class="s">dW2</span><span class="sh">'</span><span class="p">:</span> <span class="n">dW2</span><span class="p">,</span> <span class="sh">'</span><span class="s">db1</span><span class="sh">'</span> <span class="p">:</span> <span class="n">db1</span><span class="p">,</span> <span class="sh">'</span><span class="s">db2</span><span class="sh">'</span><span class="p">:</span> <span class="n">db2</span><span class="p">}</span>
     
     <span class="k">return</span> <span class="n">grads</span>
 </code></pre></div></div>
@@ -376,15 +376,15 @@
 
 <h4 id="update-parameters">Update Parameters</h4>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">update_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">grads</span><span class="p">,</span> <span class="n">lr</span> <span class="o">=</span> <span class="mf">1.2</span><span class="p">):</span>
-    <span class="n">W1</span><span class="p">,</span> <span class="n">b1</span><span class="p">,</span> <span class="n">W2</span><span class="p">,</span> <span class="n">b2</span> <span class="o">=</span> <span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="s">'W1'</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="s">'b1'</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="s">'W2'</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="s">'b2'</span><span class="p">])</span>     
-    <span class="n">dW1</span><span class="p">,</span> <span class="n">db1</span><span class="p">,</span> <span class="n">dW2</span><span class="p">,</span> <span class="n">db2</span> <span class="o">=</span> <span class="p">(</span><span class="n">grads</span><span class="p">[</span><span class="s">'dW1'</span><span class="p">],</span> <span class="n">grads</span><span class="p">[</span><span class="s">'db1'</span><span class="p">],</span> <span class="n">grads</span><span class="p">[</span><span class="s">'dW2'</span><span class="p">],</span> <span class="n">grads</span><span class="p">[</span><span class="s">'db2'</span><span class="p">])</span>  
+    <span class="n">W1</span><span class="p">,</span> <span class="n">b1</span><span class="p">,</span> <span class="n">W2</span><span class="p">,</span> <span class="n">b2</span> <span class="o">=</span> <span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="sh">'</span><span class="s">W1</span><span class="sh">'</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="sh">'</span><span class="s">b1</span><span class="sh">'</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="sh">'</span><span class="s">W2</span><span class="sh">'</span><span class="p">],</span> <span class="n">params</span><span class="p">[</span><span class="sh">'</span><span class="s">b2</span><span class="sh">'</span><span class="p">])</span>     
+    <span class="n">dW1</span><span class="p">,</span> <span class="n">db1</span><span class="p">,</span> <span class="n">dW2</span><span class="p">,</span> <span class="n">db2</span> <span class="o">=</span> <span class="p">(</span><span class="n">grads</span><span class="p">[</span><span class="sh">'</span><span class="s">dW1</span><span class="sh">'</span><span class="p">],</span> <span class="n">grads</span><span class="p">[</span><span class="sh">'</span><span class="s">db1</span><span class="sh">'</span><span class="p">],</span> <span class="n">grads</span><span class="p">[</span><span class="sh">'</span><span class="s">dW2</span><span class="sh">'</span><span class="p">],</span> <span class="n">grads</span><span class="p">[</span><span class="sh">'</span><span class="s">db2</span><span class="sh">'</span><span class="p">])</span>  
     
     <span class="n">W1</span> <span class="o">-=</span> <span class="n">lr</span><span class="o">*</span><span class="n">dW1</span>   <span class="c1"># (4, 2)
 </span>    <span class="n">W2</span> <span class="o">-=</span> <span class="n">lr</span><span class="o">*</span><span class="n">dW2</span>    <span class="c1"># (1, 4)
 </span>    <span class="n">b1</span> <span class="o">-=</span> <span class="n">lr</span><span class="o">*</span><span class="n">db1</span>    <span class="c1"># (4, 1)
 </span>    <span class="n">b2</span> <span class="o">-=</span> <span class="n">lr</span><span class="o">*</span><span class="n">db2</span>    <span class="c1"># (1, 1)
 </span>    
-    <span class="n">updated_params</span> <span class="o">=</span> <span class="p">{</span><span class="s">'W1'</span> <span class="p">:</span> <span class="n">W1</span><span class="p">,</span> <span class="s">'b1'</span> <span class="p">:</span> <span class="n">b1</span><span class="p">,</span> <span class="s">'W2'</span> <span class="p">:</span> <span class="n">W2</span><span class="p">,</span> <span class="s">'b2'</span> <span class="p">:</span> <span class="n">b2</span><span class="p">}</span>
+    <span class="n">updated_params</span> <span class="o">=</span> <span class="p">{</span><span class="sh">'</span><span class="s">W1</span><span class="sh">'</span> <span class="p">:</span> <span class="n">W1</span><span class="p">,</span> <span class="sh">'</span><span class="s">b1</span><span class="sh">'</span> <span class="p">:</span> <span class="n">b1</span><span class="p">,</span> <span class="sh">'</span><span class="s">W2</span><span class="sh">'</span> <span class="p">:</span> <span class="n">W2</span><span class="p">,</span> <span class="sh">'</span><span class="s">b2</span><span class="sh">'</span> <span class="p">:</span> <span class="n">b2</span><span class="p">}</span>
     
     <span class="k">return</span> <span class="n">updated_params</span>
 </code></pre></div></div>
@@ -392,25 +392,25 @@
 
 <h4 id="build-nn-model">Build NN model</h4>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">nn_model</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">nh</span><span class="p">,</span> <span class="n">num_iter</span><span class="p">,</span> <span class="n">print_cost</span><span class="p">):</span>
-    <span class="s">"""
+    <span class="sh">"""</span><span class="s">
     Arguments:
     num_iterations -- Number of iterations in gradient descent loop
     print_cost -- if True, print the cost every 1000 iterations
     
     Returns:
     parameters -- parameters learnt by model (fp -&gt; compute cost &amp; bp -&gt; update)
-    """</span>
+    </span><span class="sh">"""</span>
     
     <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="nf">seed</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
     <span class="n">nx</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">ny</span> <span class="o">=</span> <span class="nf">layer_sizes</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
     
     <span class="n">params</span> <span class="o">=</span> <span class="nf">initialize_params</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span> <span class="n">nh</span><span class="p">,</span> <span class="n">ny</span><span class="p">)</span>
-    <span class="n">min_cost</span> <span class="o">=</span> <span class="nf">float</span><span class="p">(</span><span class="s">'inf'</span><span class="p">)</span>
+    <span class="n">min_cost</span> <span class="o">=</span> <span class="nf">float</span><span class="p">(</span><span class="sh">'</span><span class="s">inf</span><span class="sh">'</span><span class="p">)</span>
     <span class="n">learning_curve</span> <span class="o">=</span> <span class="p">[]</span>
     
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">num_iter</span><span class="p">):</span>    
         <span class="n">cache</span> <span class="o">=</span> <span class="nf">fp</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
-        <span class="n">A2</span> <span class="o">=</span> <span class="n">cache</span><span class="p">[</span><span class="s">'A2'</span><span class="p">]</span>
+        <span class="n">A2</span> <span class="o">=</span> <span class="n">cache</span><span class="p">[</span><span class="sh">'</span><span class="s">A2</span><span class="sh">'</span><span class="p">]</span>
         <span class="n">cost</span> <span class="o">=</span> <span class="nf">compute_cost</span><span class="p">(</span><span class="n">A2</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
         <span class="n">grads</span> <span class="o">=</span> <span class="nf">bp</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">cache</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
         <span class="n">params</span> <span class="o">=</span> <span class="nf">update_params</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">grads</span><span class="p">)</span>
@@ -423,7 +423,7 @@
             <span class="n">learning_curve</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">cost</span><span class="p">)</span>
             
             <span class="k">if</span> <span class="n">i</span><span class="o">%</span><span class="mi">1000</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="nf">print</span><span class="p">(</span><span class="s">"Cost after iterations {0} : {1}"</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">cost</span><span class="p">))</span>
+                <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Cost after iterations {0} : {1}</span><span class="sh">"</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">cost</span><span class="p">))</span>
                 
     <span class="c1">#   print(cost)
 </span>    
@@ -445,7 +445,7 @@
 
 <h4 id="predict-classes-of-x">Predict classes of X</h4>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="n">best_params</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-    <span class="s">"""
+    <span class="sh">"""</span><span class="s">
     Using the learned parameters, predicts a class for each example in X
     
     Arguments:
@@ -454,10 +454,10 @@
     
     Returns
     predictions -- vector of predictions of our model (red: 0 / blue: 1)
-    """</span>
+    </span><span class="sh">"""</span>
     
     <span class="n">cache</span> <span class="o">=</span> <span class="nf">fp</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">best_params</span><span class="p">)</span>
-    <span class="n">A2</span> <span class="o">=</span> <span class="n">cache</span><span class="p">[</span><span class="s">'A2'</span><span class="p">]</span>    <span class="c1"># predicted values  (not classes)
+    <span class="n">A2</span> <span class="o">=</span> <span class="n">cache</span><span class="p">[</span><span class="sh">'</span><span class="s">A2</span><span class="sh">'</span><span class="p">]</span>    <span class="c1"># predicted values  (not classes)
 </span>    
     <span class="n">preds</span> <span class="o">=</span> <span class="n">A2</span> <span class="o">&gt;</span> <span class="mf">0.5</span>   <span class="c1"># (1, 400)
 </span>    
@@ -469,9 +469,9 @@
 <span class="c1"># plt.figure(figsize=(8, 5))
 # plt.axis([0, 1000, 0, max(learning_curve)])        # [xmin, xmax, ymin, ymax]
 </span><span class="n">plt</span><span class="p">.</span><span class="nf">plot</span><span class="p">(</span><span class="n">learning_curve</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="nf">xlabel</span><span class="p">(</span><span class="s">"Iterations"</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="nf">ylabel</span><span class="p">(</span><span class="s">"Cost"</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="nf">title</span><span class="p">(</span><span class="s">"Learning Curve (Cost by Iterations)"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">xlabel</span><span class="p">(</span><span class="sh">"</span><span class="s">Iterations</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">ylabel</span><span class="p">(</span><span class="sh">"</span><span class="s">Cost</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">title</span><span class="p">(</span><span class="sh">"</span><span class="s">Learning Curve (Cost by Iterations)</span><span class="sh">"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
 </code></pre></div></div>
 <p><br /></p>
 
@@ -483,7 +483,7 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># x : comes with shape (400, 2)
 </span><span class="n">plt</span><span class="p">.</span><span class="nf">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-<span class="nf">plot_decision_boundary</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="nf">predict</span><span class="p">(</span><span class="n">best_params</span><span class="p">,</span> <span class="n">x</span><span class="p">.</span><span class="n">T</span><span class="p">),</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="s">"Neural Network Model with a Single Hidden Layer"</span><span class="p">)</span>
+<span class="nf">plot_decision_boundary</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="nf">predict</span><span class="p">(</span><span class="n">best_params</span><span class="p">,</span> <span class="n">x</span><span class="p">.</span><span class="n">T</span><span class="p">),</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="sh">"</span><span class="s">Neural Network Model with a Single Hidden Layer</span><span class="sh">"</span><span class="p">)</span>
 </code></pre></div></div>
 <p><img width="580" alt="image" src="https://user-images.githubusercontent.com/92680829/168481516-55e35ec9-5cf6-4aac-b0ca-ca2f30266ecb.png" /></p>
 
@@ -491,7 +491,7 @@
     <span class="n">m</span> <span class="o">=</span> <span class="n">Y</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">error</span> <span class="o">=</span> <span class="nf">float</span><span class="p">((</span><span class="n">np</span><span class="p">.</span><span class="nf">dot</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">Y</span><span class="p">,</span> <span class="n">preds</span><span class="p">.</span><span class="n">T</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="p">.</span><span class="nf">dot</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="mi">1</span><span class="o">-</span><span class="n">preds</span><span class="p">.</span><span class="n">T</span><span class="p">))</span><span class="o">/</span><span class="n">m</span><span class="p">)</span>   
     <span class="c1"># same as np.sum(np.multiply(1-Y, preds) + np.multiply(Y, 1-preds))/m
-</span>    <span class="nf">print</span><span class="p">(</span><span class="s">"Accuracy with Neural Network with 1 Hidden Layer with {0} Units: {1} %"</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="n">nh</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">error</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">))</span>
+</span>    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Accuracy with Neural Network with 1 Hidden Layer with {0} Units: {1} %</span><span class="sh">"</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="n">nh</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">error</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">))</span>
     
     <span class="nf">return </span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">error</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span>
 </code></pre></div></div>
@@ -524,7 +524,7 @@
     <span class="n">plt</span><span class="p">.</span><span class="nf">subplot</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">_</span><span class="p">,</span> <span class="n">best_params</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="nf">nn_model</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">nh</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">preds</span> <span class="o">=</span> <span class="nf">predict</span><span class="p">(</span><span class="n">best_params</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
-    <span class="nf">plot_decision_boundary</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="nf">predict</span><span class="p">(</span><span class="n">best_params</span><span class="p">,</span> <span class="n">x</span><span class="p">.</span><span class="n">T</span><span class="p">),</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="s">"Hidden Units {0}"</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="n">nh</span><span class="p">))</span>
+    <span class="nf">plot_decision_boundary</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="nf">predict</span><span class="p">(</span><span class="n">best_params</span><span class="p">,</span> <span class="n">x</span><span class="p">.</span><span class="n">T</span><span class="p">),</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="sh">"</span><span class="s">Hidden Units {0}</span><span class="sh">"</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="n">nh</span><span class="p">))</span>
     <span class="nf">accuracy_score</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">nh</span><span class="p">)</span>
 </code></pre></div></div>
 <p><br />
@@ -551,14 +551,14 @@
 </ul>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">datasets</span> <span class="o">=</span> <span class="nf">dict</span><span class="p">()</span>
-<span class="n">datasets</span><span class="p">[</span><span class="s">'noisy_circles'</span><span class="p">],</span> <span class="n">datasets</span><span class="p">[</span><span class="s">'noisy_moons'</span><span class="p">],</span> <span class="n">datasets</span><span class="p">[</span><span class="s">'blobs'</span><span class="p">],</span> <span class="n">datasets</span><span class="p">[</span><span class="s">'gaussian_quantiles'</span><span class="p">],</span> <span class="n">_</span> <span class="o">=</span> <span class="nf">load_extra_datasets</span><span class="p">()</span>
+<span class="n">datasets</span><span class="p">[</span><span class="sh">'</span><span class="s">noisy_circles</span><span class="sh">'</span><span class="p">],</span> <span class="n">datasets</span><span class="p">[</span><span class="sh">'</span><span class="s">noisy_moons</span><span class="sh">'</span><span class="p">],</span> <span class="n">datasets</span><span class="p">[</span><span class="sh">'</span><span class="s">blobs</span><span class="sh">'</span><span class="p">],</span> <span class="n">datasets</span><span class="p">[</span><span class="sh">'</span><span class="s">gaussian_quantiles</span><span class="sh">'</span><span class="p">],</span> <span class="n">_</span> <span class="o">=</span> <span class="nf">load_extra_datasets</span><span class="p">()</span>
 </code></pre></div></div>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">accuracy_score_2</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
     <span class="n">m</span> <span class="o">=</span> <span class="n">Y</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">error</span> <span class="o">=</span> <span class="nf">float</span><span class="p">((</span><span class="n">np</span><span class="p">.</span><span class="nf">dot</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">Y</span><span class="p">,</span> <span class="n">preds</span><span class="p">.</span><span class="n">T</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="p">.</span><span class="nf">dot</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="mi">1</span><span class="o">-</span><span class="n">preds</span><span class="p">.</span><span class="n">T</span><span class="p">))</span><span class="o">/</span><span class="n">m</span><span class="p">)</span>   
     <span class="c1"># same as np.sum(np.multiply(1-Y, preds) + np.multiply(Y, 1-preds))/m
-</span>    <span class="nf">print</span><span class="p">(</span><span class="s">"Accuracy for Dataset &lt;{0}&gt; with Unit Size 8 : {1}%"</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">error</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">))</span>
+</span>    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">Accuracy for Dataset &lt;{0}&gt; with Unit Size 8 : {1}%</span><span class="sh">"</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">error</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">))</span>
     
     <span class="nf">return </span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">error</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span>
 </code></pre></div></div>
@@ -570,12 +570,12 @@
     <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">datasets</span><span class="p">[</span><span class="n">d</span><span class="p">]</span>
     <span class="c1"># print(X.shape, Y.shape)
 </span>    <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">X</span><span class="p">.</span><span class="n">T</span><span class="p">,</span> <span class="n">Y</span><span class="p">.</span><span class="nf">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">Y</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="k">if</span> <span class="n">d</span> <span class="o">==</span> <span class="s">'blobs'</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">d</span> <span class="o">==</span> <span class="sh">'</span><span class="s">blobs</span><span class="sh">'</span><span class="p">:</span>
         <span class="n">Y</span> <span class="o">=</span> <span class="n">Y</span><span class="o">%</span><span class="mi">2</span>
     
     <span class="n">_</span><span class="p">,</span> <span class="n">best_params</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="nf">nn_model</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">preds</span> <span class="o">=</span> <span class="nf">predict</span><span class="p">(</span><span class="n">best_params</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
-    <span class="nf">plot_decision_boundary</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="nf">predict</span><span class="p">(</span><span class="n">best_params</span><span class="p">,</span> <span class="n">x</span><span class="p">.</span><span class="n">T</span><span class="p">),</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="s">"Datasets : {0} with Unit size 8"</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+    <span class="nf">plot_decision_boundary</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="nf">predict</span><span class="p">(</span><span class="n">best_params</span><span class="p">,</span> <span class="n">x</span><span class="p">.</span><span class="n">T</span><span class="p">),</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="sh">"</span><span class="s">Datasets : {0} with Unit size 8</span><span class="sh">"</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
     <span class="nf">accuracy_score_2</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
 </code></pre></div></div>
 <p><img width="617" alt="image" src="https://user-images.githubusercontent.com/92680829/168481747-301e12ff-4e7d-4d1f-86b0-503ee1a4b2ec.png" /></p>

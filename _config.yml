@@ -8,7 +8,7 @@ site-twitter: #if your site has a twitter account, enter it here
 # Author Settings
 author: SUMIN PARK # add your name
 author-img: me/me3.jpg # add your photo
-about-author: Interested in Geometric Deep Neural Networks and Their Phyiscal Applications  # add description
+about-author: 'This blog is for the record of my studying. For more general info including CV, check <a href="https://psmiz.github.io", style="color:#9053ec;">HERE</a>!'
 # social-twitter: # add your Twitter handle
 # social-facebook: # add your Facebook handle
 social-github: "fab fa-fw fa-github"

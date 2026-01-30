@@ -1,4 +1,4 @@
-I"� <p><br /></p>
+I"y!<p><br /></p>
 
 <h2 id="백준-7662-이중-우선순위-큐--골드-5">백준 7662 이중 우선순위 큐 : 골드 5</h2>
 
@@ -28,14 +28,14 @@
         <span class="n">order</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="nf">input</span><span class="p">().</span><span class="nf">split</span><span class="p">()</span>
         <span class="n">value</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">order</span> <span class="o">==</span> <span class="s">'I'</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">order</span> <span class="o">==</span> <span class="sh">'</span><span class="s">I</span><span class="sh">'</span><span class="p">:</span>
             <span class="nf">heappush</span><span class="p">(</span><span class="n">maxh</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="n">value</span><span class="p">,</span> <span class="n">i</span><span class="p">])</span>
             <span class="nf">heappush</span><span class="p">(</span><span class="n">minh</span><span class="p">,</span> <span class="p">[</span><span class="n">value</span><span class="p">,</span> <span class="n">i</span><span class="p">])</span>
             <span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
 
-        <span class="k">elif</span> <span class="n">order</span> <span class="o">==</span> <span class="s">'D'</span> <span class="ow">and</span> <span class="n">cnt</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">order</span> <span class="o">==</span> <span class="sh">'</span><span class="s">D</span><span class="sh">'</span> <span class="ow">and</span> <span class="n">cnt</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="k">while</span> <span class="n">out</span><span class="p">[</span><span class="n">maxh</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]]:</span>
                     <span class="nf">heappop</span><span class="p">(</span><span class="n">maxh</span><span class="p">)</span>
@@ -55,9 +55,9 @@
         <span class="k">while</span> <span class="n">out</span><span class="p">[</span><span class="n">minh</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]]:</span>
             <span class="nf">heappop</span><span class="p">(</span><span class="n">minh</span><span class="p">)</span>
         <span class="n">mx</span><span class="p">,</span> <span class="n">mn</span> <span class="o">=</span> <span class="o">-</span><span class="n">maxh</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">minh</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">mx</span><span class="si">}</span><span class="s"> </span><span class="si">{</span><span class="n">mn</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="si">{</span><span class="n">mx</span><span class="si">}</span><span class="s"> </span><span class="si">{</span><span class="n">mn</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="nf">print</span><span class="p">(</span><span class="s">"EMPTY"</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">EMPTY</span><span class="sh">"</span><span class="p">)</span>
 
 
 <span class="n">tc</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="nf">input</span><span class="p">())</span>

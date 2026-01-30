@@ -1,4 +1,4 @@
-I"<p><br /></p>
+I"5<p><br /></p>
 
 <h2 id="프로그래머스-lvl-3--여행경로">프로그래머스 LvL 3 : 여행경로<br /></h2>
 <p><br />
@@ -17,7 +17,7 @@
         <span class="n">graph</span><span class="p">[</span><span class="n">start</span><span class="p">].</span><span class="nf">append</span><span class="p">(</span><span class="n">end</span><span class="p">)</span>            <span class="c1"># 단일 방향
 </span>        <span class="n">graph</span><span class="p">[</span><span class="n">start</span><span class="p">].</span><span class="nf">sort</span><span class="p">(</span><span class="n">reverse</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>    <span class="c1"># 알파벳 오름차순으로 정렬
 </span>    
-    <span class="n">stack</span> <span class="o">=</span> <span class="p">[</span><span class="s">'ICN'</span><span class="p">]</span>     <span class="c1"># 항상 출발은 인천공항
+    <span class="n">stack</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">ICN</span><span class="sh">'</span><span class="p">]</span>     <span class="c1"># 항상 출발은 인천공항
 </span>    <span class="n">route</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="nf">print</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
     

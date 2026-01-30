@@ -1,4 +1,4 @@
-I"7u<p><br /></p>
+I"çy<p><br /></p>
 
 <h2 id="sunspot-dataset">Sunspot Dataset</h2>
 <ul>
@@ -36,14 +36,14 @@
     <span class="k">return</span> <span class="n">ds</span><span class="p">.</span><span class="nf">batch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">).</span><span class="nf">prefetch</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">solution_model</span><span class="p">():</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="s">'https://storage.googleapis.com/download.tensorflow.org/data/Sunspots.csv'</span>
-    <span class="n">urllib</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="nf">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="s">'sunspots.csv'</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="sh">'</span><span class="s">https://storage.googleapis.com/download.tensorflow.org/data/Sunspots.csv</span><span class="sh">'</span>
+    <span class="n">urllib</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="nf">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="sh">'</span><span class="s">sunspots.csv</span><span class="sh">'</span><span class="p">)</span>
 
     <span class="n">time_step</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">sunspots</span> <span class="o">=</span> <span class="p">[]</span>
 
-    <span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="s">'sunspots.csv'</span><span class="p">)</span> <span class="k">as</span> <span class="n">csvfile</span><span class="p">:</span>
-        <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="p">.</span><span class="nf">reader</span><span class="p">(</span><span class="n">csvfile</span><span class="p">,</span> <span class="n">delimiter</span> <span class="o">=</span> <span class="s">','</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">sunspots.csv</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="n">csvfile</span><span class="p">:</span>
+        <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="p">.</span><span class="nf">reader</span><span class="p">(</span><span class="n">csvfile</span><span class="p">,</span> <span class="n">delimiter</span> <span class="o">=</span> <span class="sh">'</span><span class="s">,</span><span class="sh">'</span><span class="p">)</span>
         <span class="nf">next</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
             <span class="n">sunspots</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="nf">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
@@ -78,13 +78,13 @@
     
     <span class="n">model</span> <span class="o">=</span> <span class="nc">Sequential</span><span class="p">([</span>
                         <span class="nc">Conv1D</span><span class="p">(</span><span class="mi">70</span><span class="p">,</span> <span class="n">kernel_size</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
-                                <span class="n">padding</span> <span class="o">=</span> <span class="s">'causal'</span><span class="p">,</span>
-                                <span class="n">activation</span> <span class="o">=</span> <span class="s">'relu'</span><span class="p">,</span>
+                                <span class="n">padding</span> <span class="o">=</span> <span class="sh">'</span><span class="s">causal</span><span class="sh">'</span><span class="p">,</span>
+                                <span class="n">activation</span> <span class="o">=</span> <span class="sh">'</span><span class="s">relu</span><span class="sh">'</span><span class="p">,</span>
                                 <span class="n">input_shape</span> <span class="o">=</span> <span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span>
                         <span class="nc">LSTM</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">return_sequences</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
                         <span class="nc">LSTM</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">return_sequences</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
-                        <span class="nc">Dense</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">),</span>
-                        <span class="nc">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">),</span>
+                        <span class="nc">Dense</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="sh">'</span><span class="s">relu</span><span class="sh">'</span><span class="p">),</span>
+                        <span class="nc">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="sh">'</span><span class="s">relu</span><span class="sh">'</span><span class="p">),</span>
                         <span class="nc">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
                         <span class="nc">Lambda</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="mi">400</span><span class="p">)</span>         <span class="c1"># 2. Lambda used
 </span>    <span class="p">])</span> 
@@ -92,13 +92,13 @@
     <span class="n">optimizer</span> <span class="o">=</span> <span class="nc">SGD</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
     <span class="n">loss</span> <span class="o">=</span> <span class="nc">Huber</span><span class="p">()</span>
 
-    <span class="n">model</span><span class="p">.</span><span class="nf">compile</span><span class="p">(</span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">loss</span> <span class="o">=</span> <span class="n">loss</span><span class="p">,</span> <span class="n">metrics</span> <span class="o">=</span> <span class="p">[</span><span class="s">'mae'</span><span class="p">])</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">compile</span><span class="p">(</span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">loss</span> <span class="o">=</span> <span class="n">loss</span><span class="p">,</span> <span class="n">metrics</span> <span class="o">=</span> <span class="p">[</span><span class="sh">'</span><span class="s">mae</span><span class="sh">'</span><span class="p">])</span>
 
-    <span class="n">checkpoint_path</span> <span class="o">=</span> <span class="s">'my_checkpoint.ckpt'</span>
+    <span class="n">checkpoint_path</span> <span class="o">=</span> <span class="sh">'</span><span class="s">my_checkpoint.ckpt</span><span class="sh">'</span>
     <span class="n">checkpoint</span> <span class="o">=</span> <span class="nc">ModelCheckpoint</span><span class="p">(</span><span class="n">checkpoint_path</span><span class="p">,</span>
                                  <span class="n">save_weights_only</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
                                  <span class="n">save_best_only</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
-                                 <span class="n">monitor</span> <span class="o">=</span> <span class="s">'val_mae'</span><span class="p">,</span>
+                                 <span class="n">monitor</span> <span class="o">=</span> <span class="sh">'</span><span class="s">val_mae</span><span class="sh">'</span><span class="p">,</span>
                                  <span class="n">verbose</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
     
     <span class="n">model</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">train_set</span><span class="p">,</span>
@@ -110,9 +110,9 @@
 
     <span class="k">return</span> <span class="n">model</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="sh">'</span><span class="s">__main__</span><span class="sh">'</span><span class="p">:</span>
     <span class="n">model</span> <span class="o">=</span> <span class="nf">solution_model</span><span class="p">()</span>
-    <span class="n">model</span><span class="p">.</span><span class="nf">save</span><span class="p">(</span><span class="s">"model.h5"</span><span class="p">)</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">save</span><span class="p">(</span><span class="sh">"</span><span class="s">model.h5</span><span class="sh">"</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p><br /></p>
@@ -149,8 +149,8 @@
 
 
 <span class="k">def</span> <span class="nf">solution_model</span><span class="p">():</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">read_csv</span><span class="p">(</span><span class="s">'Weekly_U.S.Diesel_Retail_Prices.csv'</span><span class="p">,</span>
-                     <span class="n">infer_datetime_format</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s">'Week of'</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">read_csv</span><span class="p">(</span><span class="sh">'</span><span class="s">Weekly_U.S.Diesel_Retail_Prices.csv</span><span class="sh">'</span><span class="p">,</span>
+                     <span class="n">infer_datetime_format</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="sh">'</span><span class="s">Week of</span><span class="sh">'</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
     <span class="n">N_FEATURES</span> <span class="o">=</span> <span class="nf">len</span><span class="p">(</span><span class="n">df</span><span class="p">.</span><span class="n">columns</span><span class="p">)</span> 
     <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">values</span>
@@ -176,23 +176,23 @@
                                  <span class="n">shift</span><span class="o">=</span><span class="n">SHIFT</span><span class="p">)</span>
 
     <span class="n">model</span> <span class="o">=</span> <span class="nc">Sequential</span><span class="p">([</span>
-                        <span class="nc">Conv1D</span><span class="p">(</span><span class="n">filters</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="s">'causal'</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">[</span><span class="n">N_PAST</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span>
+                        <span class="nc">Conv1D</span><span class="p">(</span><span class="n">filters</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="sh">'</span><span class="s">causal</span><span class="sh">'</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="sh">'</span><span class="s">relu</span><span class="sh">'</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">[</span><span class="n">N_PAST</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span>
                         <span class="nc">Bidirectional</span><span class="p">(</span><span class="nc">LSTM</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="n">return_sequences</span><span class="o">=</span><span class="bp">True</span><span class="p">)),</span>
                         <span class="nc">Bidirectional</span><span class="p">(</span><span class="nc">LSTM</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="n">return_sequences</span><span class="o">=</span><span class="bp">True</span><span class="p">)),</span>
-                        <span class="nc">Dense</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">),</span>
-                        <span class="nc">Dense</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">),</span>
+                        <span class="nc">Dense</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="sh">'</span><span class="s">relu</span><span class="sh">'</span><span class="p">),</span>
+                        <span class="nc">Dense</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="sh">'</span><span class="s">relu</span><span class="sh">'</span><span class="p">),</span>
                         <span class="nc">Dense</span><span class="p">(</span><span class="n">N_FEATURES</span><span class="p">)</span>
     <span class="p">])</span>
 
-    <span class="n">checkpoint_path</span> <span class="o">=</span> <span class="s">'model/my_checkpoint.ckpt'</span>
+    <span class="n">checkpoint_path</span> <span class="o">=</span> <span class="sh">'</span><span class="s">model/my_checkpoint.ckpt</span><span class="sh">'</span>
     <span class="n">checkpoint</span> <span class="o">=</span> <span class="nc">ModelCheckpoint</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">checkpoint_path</span><span class="p">,</span>
                                  <span class="n">save_weights_only</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
                                  <span class="n">save_best_only</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-                                 <span class="n">monitor</span><span class="o">=</span><span class="s">'val_loss'</span><span class="p">,</span>
+                                 <span class="n">monitor</span><span class="o">=</span><span class="sh">'</span><span class="s">val_loss</span><span class="sh">'</span><span class="p">,</span>
                                  <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     
     <span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">optimizers</span><span class="p">.</span><span class="nc">Adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.0005</span><span class="p">)</span>
-    <span class="n">model</span><span class="p">.</span><span class="nf">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s">'mae'</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s">'mae'</span><span class="p">])</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="sh">'</span><span class="s">mae</span><span class="sh">'</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="sh">'</span><span class="s">mae</span><span class="sh">'</span><span class="p">])</span>
 
     <span class="n">model</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">train_set</span><span class="p">,</span>
               <span class="n">validation_data</span><span class="o">=</span><span class="p">(</span><span class="n">valid_set</span><span class="p">),</span>
@@ -202,9 +202,9 @@
 
     <span class="k">return</span> <span class="n">model</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="sh">'</span><span class="s">__main__</span><span class="sh">'</span><span class="p">:</span>
     <span class="n">model</span> <span class="o">=</span> <span class="nf">solution_model</span><span class="p">()</span>
-    <span class="n">model</span><span class="p">.</span><span class="nf">save</span><span class="p">(</span><span class="s">"model.h5"</span><span class="p">)</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">save</span><span class="p">(</span><span class="sh">"</span><span class="s">model.h5</span><span class="sh">"</span><span class="p">)</span>
 
 </code></pre></div></div>
 

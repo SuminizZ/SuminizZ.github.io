@@ -1,4 +1,4 @@
-I"�"<p><br /></p>
+I"H#<p><br /></p>
 
 <h2 id="백준-여행가자--골드-4">백준 여행가자 : 골드 4</h2>
 
@@ -46,9 +46,9 @@
 
 <span class="k">if</span> <span class="nf">len</span><span class="p">(</span><span class="n">travel</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>            <span class="c1"># 여행할 도시가 1개뿐일 때
 </span>    <span class="k">if</span> <span class="n">travel</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">n</span><span class="p">:</span>           <span class="c1"># 주어진 도시 범위 밖의 여행지이면 NO
-</span>        <span class="nf">print</span><span class="p">(</span><span class="s">"NO"</span><span class="p">)</span>
+</span>        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">NO</span><span class="sh">"</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="nf">print</span><span class="p">(</span><span class="s">"YES"</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">YES</span><span class="sh">"</span><span class="p">)</span>
     <span class="n">sys</span><span class="p">.</span><span class="nf">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">travel</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
@@ -56,10 +56,10 @@
     <span class="n">flag</span> <span class="o">=</span> <span class="bp">False</span>
     <span class="n">res</span> <span class="o">=</span> <span class="nf">dfs</span><span class="p">(</span><span class="n">travel</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">travel</span><span class="p">[</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">visited</span><span class="p">)</span>      <span class="c1"># 매 경로마다 가능한지 여부 확인
 </span>    <span class="k">if</span> <span class="ow">not</span> <span class="n">res</span><span class="p">:</span>
-        <span class="nf">print</span><span class="p">(</span><span class="s">"NO"</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">NO</span><span class="sh">"</span><span class="p">)</span>
         <span class="k">break</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="nf">print</span><span class="p">(</span><span class="s">"YES"</span><span class="p">)</span>     
+    <span class="nf">print</span><span class="p">(</span><span class="sh">"</span><span class="s">YES</span><span class="sh">"</span><span class="p">)</span>     
 </code></pre></div></div>
 
 <p><br /></p>

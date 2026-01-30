@@ -1,4 +1,4 @@
-I"l1<p><br /></p>
+I"Ì4<p><br /></p>
 
 <h2 id="sarcasm-text-data">Sarcasm Text Data</h2>
 
@@ -20,26 +20,26 @@
 <span class="kn">from</span> <span class="n">tensorflow.keras.callbacks</span> <span class="kn">import</span> <span class="n">ModelCheckpoint</span>
 
 <span class="k">def</span> <span class="nf">solution_model</span><span class="p">():</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="s">'https://storage.googleapis.com/download.tensorflow.org/data/sarcasm.json'</span>
-    <span class="n">urllib</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="nf">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="s">'sarcasm.json'</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="sh">'</span><span class="s">https://storage.googleapis.com/download.tensorflow.org/data/sarcasm.json</span><span class="sh">'</span>
+    <span class="n">urllib</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="nf">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="sh">'</span><span class="s">sarcasm.json</span><span class="sh">'</span><span class="p">)</span>
 
     <span class="n">vocab_size</span> <span class="o">=</span> <span class="mi">1000</span>
     <span class="n">embedding_dim</span> <span class="o">=</span> <span class="mi">16</span>
     <span class="n">max_length</span> <span class="o">=</span> <span class="mi">120</span>
-    <span class="n">trunc_type</span><span class="o">=</span><span class="s">'post'</span>
-    <span class="n">padding_type</span><span class="o">=</span><span class="s">'post'</span>
-    <span class="n">oov_tok</span> <span class="o">=</span> <span class="s">"&lt;OOV&gt;"</span>
+    <span class="n">trunc_type</span><span class="o">=</span><span class="sh">'</span><span class="s">post</span><span class="sh">'</span>
+    <span class="n">padding_type</span><span class="o">=</span><span class="sh">'</span><span class="s">post</span><span class="sh">'</span>
+    <span class="n">oov_tok</span> <span class="o">=</span> <span class="sh">"</span><span class="s">&lt;OOV&gt;</span><span class="sh">"</span>
     <span class="n">training_size</span> <span class="o">=</span> <span class="mi">20000</span>
 
-    <span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="s">'sarcasm.json'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">'</span><span class="s">sarcasm.json</span><span class="sh">'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">datas</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="nf">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 
     <span class="n">sentences</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">labels</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">datas</span><span class="p">:</span>
-        <span class="n">sentences</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">'headline'</span><span class="p">])</span>
-        <span class="n">labels</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">'is_sarcastic'</span><span class="p">])</span>
+        <span class="n">sentences</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">headline</span><span class="sh">'</span><span class="p">])</span>
+        <span class="n">labels</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="sh">'</span><span class="s">is_sarcastic</span><span class="sh">'</span><span class="p">])</span>
     
     <span class="c1"># sentence, label -&gt; train, validation split
 </span>
@@ -71,20 +71,20 @@
                         <span class="nc">Bidirectional</span><span class="p">(</span><span class="nc">LSTM</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">return_sequences</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)),</span>
                         <span class="nc">Bidirectional</span><span class="p">(</span><span class="nc">LSTM</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">return_sequences</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)),</span>
                         <span class="nc">Bidirectional</span><span class="p">(</span><span class="nc">LSTM</span><span class="p">(</span><span class="mi">64</span><span class="p">)),</span>
-                        <span class="nc">Dense</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">),</span>
+                        <span class="nc">Dense</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="sh">'</span><span class="s">relu</span><span class="sh">'</span><span class="p">),</span>
                         <span class="c1"># Dense(32, activation='relu'),
-</span>                        <span class="nc">Dense</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">),</span>
+</span>                        <span class="nc">Dense</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="sh">'</span><span class="s">relu</span><span class="sh">'</span><span class="p">),</span>
                         <span class="c1"># Dense(4, activation='relu'),
-</span>                        <span class="nc">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'sigmoid'</span><span class="p">)</span>
+</span>                        <span class="nc">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="sh">'</span><span class="s">sigmoid</span><span class="sh">'</span><span class="p">)</span>
     <span class="p">])</span>
 
-    <span class="n">model</span><span class="p">.</span><span class="nf">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s">'adam'</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s">'binary_crossentropy'</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s">'acc'</span><span class="p">])</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="sh">'</span><span class="s">adam</span><span class="sh">'</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="sh">'</span><span class="s">binary_crossentropy</span><span class="sh">'</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="sh">'</span><span class="s">acc</span><span class="sh">'</span><span class="p">])</span>
 
-    <span class="n">checkpoint_path</span> <span class="o">=</span> <span class="s">'my_checkpoint_ckpt'</span>
+    <span class="n">checkpoint_path</span> <span class="o">=</span> <span class="sh">'</span><span class="s">my_checkpoint_ckpt</span><span class="sh">'</span>
     <span class="n">checkpoint</span> <span class="o">=</span> <span class="nc">ModelCheckpoint</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">checkpoint_path</span><span class="p">,</span>
                                  <span class="n">save_weights_only</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
                                  <span class="n">save_best_only</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
-                                 <span class="n">monitor</span> <span class="o">=</span> <span class="s">'val_loss'</span><span class="p">,</span>
+                                 <span class="n">monitor</span> <span class="o">=</span> <span class="sh">'</span><span class="s">val_loss</span><span class="sh">'</span><span class="p">,</span>
                                  <span class="n">verbose</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
     
     <span class="n">model</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">train_padded</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">,</span>
@@ -97,9 +97,9 @@
     <span class="k">return</span> <span class="n">model</span>
     
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="sh">'</span><span class="s">__main__</span><span class="sh">'</span><span class="p">:</span>
     <span class="n">model</span> <span class="o">=</span> <span class="nf">solution_model</span><span class="p">()</span>
-    <span class="n">model</span><span class="p">.</span><span class="nf">save</span><span class="p">(</span><span class="s">"TF4-sarcasm.h5"</span><span class="p">)</span>
+    <span class="n">model</span><span class="p">.</span><span class="nf">save</span><span class="p">(</span><span class="sh">"</span><span class="s">TF4-sarcasm.h5</span><span class="sh">"</span><span class="p">)</span>
 
 </code></pre></div></div>
 :ET
